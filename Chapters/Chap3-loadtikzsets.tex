@@ -1,0 +1,63 @@
+
+
+
+
+
+\newcommand{\savedx}{0}
+\newcommand{\savedy}{0}
+\newcommand{\savedz}{0}
+\newcommand{\bettii}[1]%
+{   
+\pgfmathsetmacro{\boxsize}{#1}
+\coordinate (O) at (0,0,0);
+\coordinate (Ox) at (#1,0,0);
+\coordinate (Oy) at (0,#1,0);
+\coordinate (Oz) at (0,0,#1);
+
+\coordinate (a) at (0.5*\boxsize,-4.5*\boxsize,0);
+\coordinate (b) at (0.5*\boxsize,4.5*\boxsize,0);
+\coordinate (c) at (-0.5*\boxsize,-4.5*\boxsize,0);
+\coordinate (d) at (-0.5*\boxsize,4.5*\boxsize,0);
+\coordinate (e) at (0.5*\boxsize,-3.5*\boxsize,-\boxsize);
+\coordinate (f) at (0.5*\boxsize,3.5*\boxsize,-\boxsize);
+\coordinate (g) at (-0.5*\boxsize,-3.5*\boxsize,-\boxsize);
+\coordinate (h) at (-0.5*\boxsize,3.5*\boxsize,-\boxsize);
+\coordinate (zc1) at (0.5*\boxsize,0.5*\boxsize,\boxsize);
+\coordinate (zc2) at (0.5*\boxsize,-0.5*\boxsize,\boxsize);
+\coordinate (zc3) at (-0.5*\boxsize,-.5*\boxsize,\boxsize);
+\coordinate (zc4) at (-0.5*\boxsize,.5*\boxsize,\boxsize);
+\coordinate (Oc1) at (0.5*\boxsize,0.5*\boxsize,0);
+\coordinate (Oc2) at (0.5*\boxsize,-0.5*\boxsize,0);
+\coordinate (Oc3) at (-0.5*\boxsize,-.5*\boxsize,0);
+\coordinate (Oc4) at (-0.5*\boxsize,.5*\boxsize,0);
+\coordinate (Bc1) at (0.5*\boxsize,0.5*\boxsize,-\boxsize);
+\coordinate (Bc2) at (0.5*\boxsize,-0.5*\boxsize,-\boxsize);
+\coordinate (Bc3) at (-0.5*\boxsize,-.5*\boxsize,-\boxsize);
+\coordinate (Bc4) at (-0.5*\boxsize,.5*\boxsize,-\boxsize);
+\coordinate (Dc1) at (0.5*\boxsize,1.5*\boxsize,0);
+\coordinate (Dc2) at (0.5*\boxsize,-1.5*\boxsize,0);
+\coordinate (Dc3) at (-0.5*\boxsize,-1.5*\boxsize,0);
+\coordinate (Dc4) at (-0.5*\boxsize,1.5*\boxsize,0);
+
+
+
+
+   \draw[thin,densely dashed] (a)--(b) (c)--(d) (a)--(c) (b)--(d) (e)--(f) (g)--(h) (e)--(g) (f)--(h) (a)--(e) (c)--(g) (b)--(f) (d)--(h) (zc1) -- (zc2) (zc2) -- (zc3) (zc3) -- (zc4) (zc4) -- (zc1) (zc1) -- (Dc1) (zc2) -- (Dc2) (zc3) -- (Dc3) (zc4) -- (Dc4) (Dc1) -- (Dc4) (Dc2) -- (Dc3) (zc1) -- (Bc1) (zc2) -- (Bc2) (zc3) -- (Bc3) (zc4) -- (Bc4) (Bc1) -- (Bc4) (Bc2) -- (Bc3) ;
+   \draw[thick](zc1) -- (Oc2) (zc4) -- (Oc3) (Oc3) -- (Bc4) (Oc2) -- (Bc1);
+%   \draw[->,thick] (O) -- (Ox) node[right] {x};
+%   \draw[->,thick] (O) -- (Oy) node[right] {y};
+%   \draw[->,thick] (O) -- (Oz) node[right] {z};
+%    \fill (a) circle (0.1cm);
+%    \fill (d) ++(0.1cm,0.1cm) rectangle ++(-0.2cm,-0.2cm);
+}
+
+
+\tikzset{
+%Define standard arrow tip
+>=stealth',
+%Define style for different line styles
+help lines/.style={dashed, thick},
+axis/.style={<->},
+important line/.style={thick},
+connection/.style={thick, dotted},
+}

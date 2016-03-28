@@ -1,0 +1,274 @@
+% ------------------------------------------------------------------------------------
+% Chapter 2
+% ------------------------------------------------------------------------------------
+
+% Units
+\def\um{\mu\textrm{m}}
+\def\asec{\textrm{arcsec}}
+\def\cm1{\textrm{cm}^{-1}}
+
+%angle definitonis
+\def\shat0{\hat{\textbf{s}}_0}
+%\def\Ds{\Delta\textbf{s}}
+\def\Ds{\xi}
+\def\urad{\mu\textrm{rad}}
+
+% Interferogram notations
+\def\samp{s}
+\def\baseline{\mathbf{B}}
+\def\B{B}
+\def\F{\mathcal{F}}
+\def\I{\textit{I}}
+\def\Im{\I_\textrm{measured}}
+\def\mI{\mathcal{I}}
+\def\xn{x_n}
+\def\xnp{x_{n'}}
+\def\pxn{(\xn)}
+\def\pxnp{(\xnp)}
+\def\Ixn{\mI\pxn}
+\def\Ikxn{\mI_k\pxn}
+\def\Iksxn{\mI_k^{*}\pxnp}
+\def\Vb{\mathcal{V}_\baseline}
+\def\Phib{\Phi_\mathbf{B}}
+\def\Phibp{\Phi_\textrm{bp}}
+\def\Vi{\mathcal{V}_\textrm{i}}
+\def\Phii{\Phi_\mathbf{i}}
+\def\V{\mathcal{V}}
+\def\S{\mathcal{S}}
+\def\R{\mathcal{R}}
+\def\oS{\overline{\S}}
+\def\etaBS{\eta_{\textrm{b}}}
+\def\etamf{\eta_\textrm{mf}}
+\def\etao{\eta_o}
+\def\s{\sigma}
+\def\sig{\Delta}
+\def\ps{(\s)}
+\def\pms{(-\s)}
+\def\Be{\B_e}
+\def\Phir{\Phi_r}
+\def\etaD{\eta_D}
+\def\Tbp{\mathcal{T}_\textrm{bp}}
+\def\A{\mathcal{A}}
+\def\F{\mathcal{F}}
+\def\Ahat{\hat{\mathcal{A}}}
+\def\Dx{dx}
+\def\Dt{dt}
+\def\D{d}
+\def\intinf{\int_{-\infty}^{+\infty}}
+\def\sinc{\textrm{sinc}}
+\def\real{\textrm{Re}}
+\def\imag{\textrm{Im}}
+\def\FT{\mathcal{F}}
+\def\DFT{\mathbf{DFT}}
+\def\dsig{\delta\s}
+\def\varPhir{\sig^2_\Phi}
+\def\sigPhir{\sig_\Phi}
+\def\Dopd{\sig_{\textrm{OPD}}}
+\def\varopd{\sig^2_{\textrm{OPD}}}
+\def\wk{w_k}
+\def\O{\mathcal{O}}
+
+% Noise definitons
+\def\SNR{\textrm{SNR}}
+\def\SNRnp{\SNR_\textrm{np}}
+\def\ni{n_\mI}
+\def\nA{n_+}
+\def\nB{n_-}
+\def\NEP{\textrm{NEP}}
+\def\NEPtot{\NEP_\textrm{tot}}
+\def\NEPph{\NEP_\textrm{ph}}
+\def\NEPdet{\NEP_\textrm{det}}
+\def\NEPsou{\NEP_\textrm{sou}}
+\def\VAR{\mathbf{VAR}}
+\def\varI{\sig_\mI^2}
+\def\sigI{\sig_\mI}
+\def\varspec{\sig_\mathcal{S}^2}
+\def\varspectot{\sig^2_{\mathcal{S}\textrm{,tot}}}
+\def\sigspec{\sig_\mathcal{S}}
+\def\sigk{\s_k}
+\def\mK{\mathcal{K}}
+\def\sigalpha{\sig_\alpha}
+\def\sigL{\sig_L}
+
+
+
+\def\delay{\delta}
+\def\delaytot{\delay_\textrm{tot}}
+\def\inst{\textrm{inst}}
+\def\col{\textrm{col}}
+
+\def\delayint{\delay_\textrm{int}}
+\def\delayext{\delay_\textrm{ext}}
+\def\thetacrossel{\theta_\textrm{cross-El}}
+
+
+
+
+
+
+% ------------------------------------------------------------------------------------
+% Chapter 3
+% ------------------------------------------------------------------------------------
+
+% Reference frames
+\def\G{\textrm{\textbf{G}}}
+\def\L{\textrm{\textbf{L}}}
+\def\X{\textrm{\textbf{I}}}
+\def\Y{\textrm{\textbf{J}}}
+\def\Z{\textrm{\textbf{K}}}
+\def\x{\textrm{\textbf{i}}}
+\def\y{\textrm{\textbf{j}}}
+\def\z{\textrm{\textbf{k}}}
+\def\I{\textrm{\textbf{I}}}
+\def\J{\textrm{\textbf{J}}}
+\def\K{\textrm{\textbf{K}}}
+\def\i{\textrm{\textbf{i}}}
+\def\j{\textrm{\textbf{j}}}
+\def\k{\textrm{\textbf{k}}}
+\def\M{\textrm{\textbf{M}}}
+\def\R{\textrm{\textbf{R}}}
+\def\RealNumbers{\boldsymbol{\mathcal{R}}}
+
+% General definitions
+\def\target{\textrm{target}}
+\def\dt{dt}
+\def\Deltat{\Delta t}
+\def\sig{\sigma}
+\newcommand{\Ang}[3]{{#1}^{#2}_{#3}} % angle symbol, raw/true/new (superscript), sensor symbol (subscript)
+\newcommand{\hatAng}[3]{\hat{{#1}}^{#2}_{#3}} % 
+\newcommand{\dotAng}[3]{\dot{{#1}}^{#2}_{#3}} % 
+\newcommand{\hatdotAng}[3]{\hat{\dot{{#1}}}^{#2}_{#3}} % 
+\newcommand{\angvar}[1]{\sig^2_{#1}} % angle symbol
+\newcommand{\invvar}[1]{\sig^{-2}_{#1}} % angle symbol
+\newcommand{\at}[1]{|_{#1}} % this adds the loop iteration number
+\newcommand{\on}[1]{^{#1}} % to indicate the loop at which the data is received
+
+\newcommand{\rotaxis}[2] % the angle, the axis of rotation
+{\mathcal{R}(#1,#2)}
+\newcommand{\rotmat}[2] % First argument is where we start (the vector that this matrix  multiplies is in that coordinate system), second argument is where we end up (resulting vector is in that coordinate system)
+{\mathcal{R}|_{#1}^{#2}}
+
+% rotations
+%\newcommand{\fromto}[2]{\prescript{#1}{#2}}
+\newcommand{\fromto}[2]{{}_{#1}^{#2}}
+
+
+
+\def\urad{\mu\textrm{rad}}
+\def\xEl{\Phi}
+\def\El{\Psi}
+\def\xElHat{\hatAng{\xEl}{}{}}
+\def\varxElHat{\angvar{\hatAng{\xEl}{}{}}}
+\def\invVarxElHat{\invvar{\hatAng{\xEl}{}{}}}
+
+% Star camera definitions
+\def\new{\textrm{new}}
+\def\raw{\textrm{raw}}
+\def\true{\textrm{true}}
+\def\starcam{\textrm{sc}}
+\def\xElsc{\ang{\xEl}{}{\starcam}}
+\def\xElnew{\ang{\xEl}{}{\starcam}}
+\def\varxElnew{\var{\ang{\xEl}{}{\starcam}}}
+\def\invVarxElnew{\invvar{\ang{\xEl}{}{\starcam}}}
+
+% telescope definitions
+\def\tel{\textrm{tel}}
+
+% Gyro definitions
+\def\gyro{\textrm{g}}
+\def\xElGyro{\ang{\xEl}{}{\gyro}}
+\def\vxEl{\dotAng{\xEl}{}{}}
+\def\vxElGyro{\hatdotAng{\xEl}{}{\gyro}}
+\def\vxElGyroRaw{\dotAng{\xEl}{}{\gyro}}
+\def\varVxElGyro{\angvar{\vxElGyro}}
+\def\gyroBias{\hat{b}}
+\def\newGyroBias{b}
+\def\gyroVec{\boldsymbol\omega}
+\def\EstGyroVec{\hat{\gyroVec}}
+\def\gyroVecMeas{\gyroVec^\textrm{meas}}
+\def\matOmega{\boldsymbol\Omega}
+
+
+% Vectors
+\newcommand{\vectors}[1]{\textrm{\textbf{#1}}}
+\newcommand{\vect}[3]{ \begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}}
+\newcommand{\vecttwod}[2]{ \begin{bmatrix} #1 \\ #2 \end{bmatrix}}
+\newcommand{\mattwod}[4]{ \begin{bmatrix} #1 & #2 \\ #3 & #4 \end{bmatrix}}
+\newcommand{\cov}[1]{\textrm{cov}\left[ #1 \right]}
+\def\idmat{\boldsymbol{\mathcal{I}}}
+
+\def\HRG{H1RG}
+
+% Mechanical
+\def\inertia{J}
+\def\inertial{I}
+\def\inertiaVec{\boldsymbol\inertia}
+\def\angpos{\theta}
+\def\angvel{\omega}
+\def\angvelvec{\vectors{\angvel}}
+\def\angvelvecdot{\dot{\vectors{\angvel}}}
+\def\angposvec{\vectors{\angpos}}
+\newcommand{\uVec}[1]{\vectors{u}_{#1}}
+\def\Yaw{\psi}
+\def\Pitch{\theta}
+\def\Roll{\phi}
+
+% azimuth & CCMG
+\def\CCMG{\textrm{CCMG}}
+\def\torque{\mathcal{T}}
+\def\MCCMGz{M_{\CCMG,z}}
+\def\thetaz{\theta_z}
+\def\exttorques{\torque_{\textrm{ext}}}
+\def\ccmgtorque{\torque_{\CCMG,z}}
+\def\momdumptorque{\torque_{\textrm{Mom.},z}}
+
+% Kalman filter
+\newcommand{\quat}[1]{\bar{#1}}
+\newcommand{\quatVec}[1]{\boldsymbol{#1}}
+\def\state{x}
+\def\stateVec{\vectors{\state}}
+\def\EstStateVec{\hat{\stateVec}}
+\def\attitudeLetter{q}
+\def\Attitude{\quat{\attitudeLetter}}
+\def\EstQuatVec{\hat{\quatVec{\attitudeLetter}}}
+\def\EstDeltaQuatVec{\hat{\delta\quatVec{\attitudeLetter}}}
+\def\DeltaQuatVec{\delta\quatVec{\attitudeLetter}}
+\def\EstAttitude{\hat{\Attitude}}
+\def\dotAttitude{\dot{\Attitude}}
+\def\dotEstAttitude{\dot{\EstAttitude}}
+\def\bias{\vectors{b}}
+\def\EstBias{\hat{\bias}}
+\def\nBias{\textbf{n}_b}
+\def\nGyros{\textbf{n}_g}
+\def\nStarcam{\textbf{n}^{SC}}
+\def\nProcess{\textbf{n}^\textrm{process}}
+\def\nMeas{\textbf{n}^\textrm{meas}}
+\def\EstErrorState{\hat{\tilde{\stateVec}}}
+\def\ErrorState{\tilde{\stateVec}}
+\def\deltaTheta{\delta\boldsymbol\theta}
+\def\deltaBias{\Delta\bias}
+\def\EstDeltaTheta{\hat{\deltaTheta}}
+\def\EstDeltaBias{\hat{\deltaBias}}
+\def\uCommand{\vectors{u}}
+\def\wNoise{\vectors{w}}
+\def\vNoise{\vectors{v}}
+\def\zMeasurement{\tilde{\vectors{z}}}
+\def\StateTransitionMat{\boldsymbol{\Phi}}
+\def\Fc{\textrm{\textbf{F}}}
+\def\Gc{\textrm{\textbf{G}}}
+\def\bzero{\boldsymbol{0}}
+\def\bI{\boldsymbol{I}}
+\def\omegaCross{\lfloor \EstGyroVec_\times \rfloor}
+\def\measErrMat{\textrm{\textbf{H}}}
+\def\noiseCovMat{\textrm{\textbf{Q}}}
+\def\N{\textrm{\textbf{N}}}
+\def\stateCovMat{\textrm{\textbf{P}}}
+\def\measCovMat{\textrm{\textbf{R}}}
+\def\measErrCovMat{\textrm{\textbf{S}}}
+\def\KalmanGain{\textrm{\textbf{K}}}
+\def\A{\textrm{\textbf{A}}}
+\def\B{\textrm{\textbf{B}}}
+\def\C{\textrm{\textbf{C}}}
+\def\thetaMat{\boldsymbol\Theta}
+
+

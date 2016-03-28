@@ -1,0 +1,30 @@
+\begin{figure}
+\begin{center}
+\tdplotsetmaincoords{0}{0}
+
+%start tikz picture, and use the tdplot_main_coords style to implement the display 
+%coordinate transformation provided by 3dplot
+\begin{tikzpicture}[scale=4.5,tdplot_main_coords,label/.style={%
+   postaction={ decorate,%transform shape,
+   decoration={ markings, mark=at position .8 with \node #1;}}}]
+
+\def\rvec{0.8}
+\coordinate (O) at (0,0,0);
+%draw the main coordinate system axes
+\draw[line width=0.3mm,->] (0,0,0) -- (\rvec,0,0) node[below,align=left]{$\X$};
+\draw[line width=0.3mm,->] (0,0,0) -- (0,\rvec,0) node[above left]{$\Y$};
+\draw[line width=0.3mm] (0,0,0) -- (0,0,\rvec) node[anchor=north]{$\Z=\z'$};
+
+\def\rotangle{30}
+\tdplotsetrotatedcoords{0}{0}{\rotangle}
+\draw[line width=0.3mm,->,tdplot_rotated_coords,color=blue] (0,0,0) -- (\rvec,0,0) node[below,align=left]{$\x'$};
+\draw[line width=0.3mm,->,tdplot_rotated_coords,color=blue] (0,0,0) -- (0,\rvec,0) node[above left]{$\y'$};
+
+\tdplotdrawarc[tdplot_main_coords,->]{(0,0,0)}{\rvec/3}{0}{\rotangle}{align=center,anchor=west}{$\theta$}
+
+
+\end{tikzpicture}
+\caption[Rotation of 30~degrees about $\Z$]{The $\{\x',\y',\z'\}$ reference frame (in blue) is rotated with respect to $\{\X,\Y,\Z\}$ (in black). The rotation is about the axis $\Z$ by an angle $\theta=30$~degrees.}
+\label{fig:TopViewSimpleRotate}
+\end{center}
+\end{figure}

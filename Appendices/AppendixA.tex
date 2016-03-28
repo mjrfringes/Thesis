@@ -1,0 +1,119 @@
+% Appendix A
+
+\chapter{Appendix Title Here} % Main appendix title
+
+\label{AppendixA} % For referencing this appendix elsewhere, use \ref{AppendixA}
+
+\section{Deriving the Interferogram Equation in a Double Fourier System}
+\label{ap:interfero}
+The interferogram from a double-Fourier system is different from the interferogram
+for an FTS in several ways that derive from the fact
+that the double-Fourier system starts with two independent input beams viewing the same astronomical target. For this derivation,
+we will follow the convention in the FTS literature and consider the propagation of a single plane wave (radiation from a point source at infinity) at wavenumber $\s\equiv{1/\lambda}$ through the system.
+
+Figure 2 in the main text shows the setup for a typical double-Fourier system with the K-mirror on one
+arm to keep the sky images at the same rotation on the two paths, and the delay line
+in the other arm to allow adjustment of the relative path lengths between path 1 and 2.
+The plane wave travels a distance $x_1$ on path 1 from an entrance aperture an arbitrary distance
+above the siderostat to the beam combiner: $a_1(\s) e^{-2\pi i \s x_1+\phi}$,
+where $a_1$ is the amplitude of the electric field and $\phi$ corresponds to an arbitrary phase offset. For convenience of notation, in the following derivation we drop the amplitudes' dependence on wavenumber by writing $a_1$ instead of $a_1(\s)$.
+
+The wave also undergoes phase shifts caused by reflections and partial reflections along
+the path. A full reflection for light traveling in air or a vacuum causes a 180~$\deg$ phase shift;
+a 50\% reflection at the beam splitter/combiner causes a 90~$\deg$ phase shift between reflected and transmitted beam \citep{2000plbs.conf.....L}. Since the instrument
+measures the combined light at the detectors, what matters is the difference in the
+numbers of reflections along path 1 and 2. In the case of the particular BETTII implementation, path 1 contains one more reflection than path 2.
+
+The electrical fields arriving at the ``+" and ``-" detectors are then:
+\begin{eqnarray}
+A_- &=& a_1 e^{-2\pi i \s x_1+ i \pi + i\pi /2+\phi} + a_2 e^{-2\pi i \s x_2 +\phi },\\
+A_+ &=& a_1 e^{-2\pi i \s x_1 + i \pi +\phi} + a_2 e^{-2\pi i \s x_2 + i\pi /2 +\phi},
+\end{eqnarray}
+where the $\pi$ phase shift on path 1 occurs because there is one extra reflection compared to path 2 (see Fig.~\ref{fig:optics}), and $\phi$ corresponds to an arbitrary phase offset. The detectors are power detectors so defining the intensity $ I = A^* A$:
+\begin{eqnarray}
+I_- &=& a_1^2 + a_2^2 + a_1 a_2 \left(e^{-2\pi i \s (x_1 - x_2) + 3i\pi /2} + e^{2\pi i \s (x_1 - x_2) - 3i \pi/ 2}\right),\\
+I_+ &=& a_1^2 + a_2^2 + a_1 a_2 \left(e^{-2\pi i \s (x_1 - x_2)  + i\pi /2} + e^{2\pi i \s (x_1 - x_2) -  i \pi/ 2}\right).
+\end{eqnarray}
+Defining $x \equiv x_1 - x_2$ and expanding the complex exponentials, the equations can be simplified to:
+\begin{eqnarray}
+I_- &=& (a_1^2 + a_2^2 ) \left( 1 - {2 a_1 a_2 \over a_1^2 + a_2^2} \sin( 2 \pi \s x) \right),\\
+I_+ &=& (a_1^2 + a_2^2 )\left ( 1 + {2 a_1 a_2 \over a_1^2 + a_2^2} \sin( 2 \pi \s x) \right),
+\end{eqnarray}
+where $x$ is now the difference in the physical length between the two light paths.
+For the case of equal wave amplitudes on path 1 and 2 ($a_1=a_2=a$):
+\begin{equation}
+I_\pm = 2 a^2 ( 1 \pm \sin( 2 \pi \s x) ).
+\end{equation}
+The generalization of this equation to a source distribution on the sky requires the recognition that $a_1$ and $a_2$
+are complex values such that $|a_1|^2(\s)$ and $|a_2|^2(\s)$ are
+power from the source at wavenumber $\s$, while $a_1 a_2^*$ is the correlated power seen through the two apertures which is
+the source spatial visibility, $\gamma(\baseline,\s)$, and is in general a complex valued function. $\gamma(\baseline,\s)$, which is a function of
+the baseline vector $\baseline$ connecting the two light collectors, and $\s$, is the Fourier transform of the
+source emission distribution on the sky.
+For the general case, the previous equations become:
+\begin{eqnarray}
+I_- & = & |a_1|^2 + |a_2|^2 + \gamma(\baseline,\s) e^{-2\pi i \s (x_1 - x_2) + 3i\pi /2} + \gamma^*(\baseline,\s) e^{2\pi i \s (x_1 - x_2) - i 3\pi/ 2},\\
+I_+ & = & |a_1|^2 + |a_2|^2 + \gamma(\baseline,\s) e^{-2\pi i \s (x_1 - x_2) + i\pi /2} +  \gamma^*(\baseline,\s) e^{2\pi i \s (x_1 - x_2) -i  \pi/ 2}.
+\end{eqnarray}
+The same simplification as before can be done except that $\gamma(\baseline,\s)$ is a complex-valued function. If we define the normalized spatial
+visibility as
+\begin{equation}
+\Vb(\s) = {2\gamma(\baseline,\s)\over a_1^2 + a_2^2},
+\end{equation}
+then the equation for $I_\pm$ becomes:
+\begin{eqnarray}
+I_\pm & = & ( |a_1|^2 + |a_2|^2 ) \left[ 1 \pm (\real\left(\Vb(\s)\right) \sin(2 \pi \s x) - \imag\left(\Vb(\s)\right) \cos(2 \pi \s x))\right],\\
+I_\pm & = & ( |a_1|^2 + |a_2|^2 ) \left[ 1 \pm \real\left( i \Vb(\s) e^{-2 \pi i \s x}\right)\right],
+\end{eqnarray}
+where $\real(f)$ is the real component of $f$ and $\imag(f)$ is the imaginary component.
+
+The same style of derivation can be done with for a realistic instrument with a complex transfer function.  If
+we characterize the spectral transmission function as $t_1(\s) = |t_1(\s)| e^{i\Phi_1(\s)} $ along path 1, and
+$t_2(\s) = |t_2(\s)| e^{i\Phi_2(\s)} $ on path 2, then the amplitude mismatch of the spectral transmission function in each path reduces the power in the interferogram and
+the phase differences introduce a phase factor $\Phi_{i} = \Phi_1 - \Phi_2$ into the exponential term.
+As a result, the source visibility in the previous equations is multiplied by a normalized, instrumental visibility loss term, $\Vi = |\Vi(\s)|e^{i\Phi_i(\s)}$:
+\begin{equation}
+I_\pm = ( |t_1|^2 |a_1|^2 + |t_2|^2 |a_2|^2 ) \left[ 1 \pm \real( i \Vb(\s)\V_i(\s) e^{-2 \pi i \s x})\right].
+\end{equation}
+%where $\Vb(\s)$ now also includes the normalizations does to the instrument transfer function.
+
+
+\section{Spectral noise in presence of gaussian phase noise}
+\label{ap:phasenoise}
+
+Suppose that the signal is a line of power density $2\S$ centered on bin number $k$ corresponding to wavenumber $\s_k$. In the complex interferogram, the line has a power density $\S$ in bin $k$ and $-\S$ at $-k$, and zero everywhere else. To simplify the analysis, let's focus on the positive frequencies, which only contain half the noise. The interferogram at delay $\xn = n\Dx$ is $\Ikxn =\S\dsig e^{-2i\pi \s_k\xn}$. Through a simple DFT, the value of the line in the spectrum in ideal conditions is:
+\begin{equation}
+\Dx\DFT(\Ikxn)[k'] = \Dx\sum_{n=-N/2}^{N/2-1}\S\dsig e^{-2i\pi \s_k\xn }e^{2i\pi n k'/N} = \Dx\sum_{n=-N/2}^{N/2-1}\S\dsig e^{-2i\pi (k-k')n/N },
+\end{equation}
+which is equal to $\Dx N\S\dsig = \S$ for $k=k'$ and zero everywhere else.
+Note that we have $\s_k\xn = k\dsig n\Dx = kn/N$. and $\dsig = (N\Dx)^{-1}$. The phase noise degrades the effective power of the line, so it is now $\S e^{-\varPhir/2}$ \citep{Richards:2003bp}. The noisy interferogram is $\Ikxn =\S\dsig e^{-2i\pi kn/N}e^{i\Phir\pxn}$.
+
+Designating the operator $\langle \rangle $ as the ensemble average, the noise $\varspec$ in the interferogram is the variance of the DFT:
+\begin{eqnarray}
+\varspec [k'] & = & \VAR(\Dx\DFT(\Ikxn)[k']) \\
+& = & \Dx^2\left(\left\langle\left\vert \sum_n \Ikxn e^{2i\pi n k'/N} \right\vert^2\right\rangle - \left\vert\left\langle \sum_n \Ikxn e^{2i\pi n k'/N} \right\rangle\right\vert^2\right) ,\\
+& = & \Dx^2\left(\sum_n\sum_{n'}\left\langle \Ikxn\Iksxn\right\rangle e^{2i\pi (n-n') k'/N} - \sum_n\sum_{n'}\left\langle \Ikxn\right\rangle\left\langle\Iksxn\right\rangle e^{2i\pi (n-n') k'/N}\right), \\
+& = & \Dx^2\sum_n\sum_{n'} \left[ \left\langle \Ikxn\Iksxn\right\rangle - \left\langle \Ikxn\right\rangle\left\langle\Iksxn\right\rangle\right] e^{2i\pi (n-n') k'/N}.
+\end{eqnarray}
+We can write $\langle \Ikxn\Iksxn\rangle = \langle \S^2\dsig^2 e^{-2i\pi (n-n') k/N} e^{i(\Phir\pxn - \Phir\pxnp)}\rangle$. This quantity is equal to  $\S^2\dsig^2 e^{-2i\pi (n-n') k/N} e^{-\varPhir}$ when $n\neq n'$ and equal to $\S^2\dsig^2$ when $n=n'$. The quantity $\langle \Ikxn\rangle\langle\Iksxn\rangle$ is equal to $\S^2\dsig^2 e^{-2i\pi (n-n') k/N} e^{-\varPhir}$ for all $n$ and $n'$. Hence, the term in the sum is nonzero only for $n=n'$, for which it is $\S^2\dsig^2(1 - e^{-\varPhir})$. The value of the sum is then:
+\begin{eqnarray}
+\varspec [k'] & = & \Dx^2\sum_n\S^2\dsig^2(1-e^{-\varPhir}), \\
+& = & \Dx^2N\S^2\dsig^2(1-e^{-\varPhir}),\\
+& = & \frac{1}{N}\S^2(1-e^{-\varPhir}).
+\end{eqnarray}
+This quantity is independent of $k'$, so the noise is white. The negative frequencies contribute the same amount, doubling the noise variance. However, we are only considering the imaginary part of the spectrum, so only half the noise variance is important in our calculation of our $\SNR$. The last expression thus represents the variance of the noise that is useful for our $\SNR$ calculations.
+
+\section{Fringe tracking in the science channels}
+
+For sufficiently bright sources, it is possible to self-calibrate the OPD between subsets of the $M$ interferograms in a track, to prevent the drift of an indirect OPD estimator. The idea is to bin consecutive interferograms in subsets in order to build up enough $\SNR$ to clearly see a fringe and be able to estimate its position with sufficient accuracy. Then, the different subsets within a track can be offset and co-added with better accuracy (smaller OPD noise) than if we were co-adding the $M$ interferogram individually with only the instrument OPD estimator noise. The best scenario would be when the fringe has a high $\SNR$ in each single interferogram - which will be the case of calibrators for BETTII.
+
+There are many ways to fit the location of the fringe center, and the error associated with each method is highly implementation-specific. Here, we consider the simple example of a fringe tracking algorithm in two steps \citep{Rizzo:2012jp}: a Hilbert transform of the interferogram to obtain its envelope; and a centroid of the points of the envelope above a certain $\SNR_\mI$ threshold. The Hilbert transform doubles the error variance in the interferogram, and in the worst case, the centroid has an error variance of approximately $ (n\times\SNR_\mI^2)^{-1}$, where $n$ is the number of data points above the threshold $\SNR_\mI$. The conversion to a phase leads to a phase error variance equal to $[\varPhir(\s)]_\textrm{direct} \sim 2\times(2\pi)^2 {\s^2/\s_0^2}/ (n\times\SNR_\mI^2)$. This indicates that when the $\SNR$ is high enough, this direct estimate of the phase can become better than the estimate coming from an indirect OPD estimator with corresponding phase error variance $[\varPhir(\s)]_\textrm{indirect}$, like the attitude estimator used on BETTII. 
+
+%With noisy data, we estimate that a reasonable parabolic fit on the envelope would lead to finding the fringe center with an error variance of $\varPhir(\s) = (2\pi)^2 {\s^2/\s_0^2}/ (N_f\times\samp\times\SNR_\mI^2)$, where $N_f$ is the number of fringes with good $\SNR$ so that $N_f\times\samp$ corresponds to the number of points effectively used for the fit. This simple expression merely states that our ability to find the fringe center improves with the square root of the number of samples with good $\SNR$.
+
+In Figure~\ref{fig:SpectralSNR}, we use Eq.~\ref{eq:noisephth} and a total phase error variance which is a combination of the phase noise from the direct and indirect methods, to ensure continuity:
+\begin{equation}
+\varPhir(\s) = \left( \frac{1}{[\varPhir(\s)]_\textrm{direct}} + \frac{1}{[\varPhir(\s)]_\textrm{indirect}}\right)^{-1}.
+\end{equation}
+
+On BETTII, the bulk of the phase noise comes from the uncertainties in co-adding consecutive scans (timescale~3), as the estimator uses an indirect method and never really measures the absolute phase for low-SNR targets. For high-SNR targets, the method described above can serve as a fringe tracker that not only is useful for calibration, but can also substantially improve the phase estimator's stability over long periods of time by preventing drifts.

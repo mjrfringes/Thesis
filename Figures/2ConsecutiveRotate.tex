@@ -1,0 +1,42 @@
+\begin{figure}
+\begin{center}
+\tdplotsetmaincoords{70}{110}
+
+%start tikz picture, and use the tdplot_main_coords style to implement the display 
+%coordinate transformation provided by 3dplot
+\begin{tikzpicture}[scale=4.5,tdplot_main_coords,label/.style={%
+   postaction={ decorate,%transform shape,
+   decoration={ markings, mark=at position .8 with \node #1;}}}]
+
+
+\coordinate (O) at (0,0,0);
+%draw the main coordinate system axes
+\draw[line width=0.3mm,->] (0,0,0) -- (\rvec,0,0) node[below,align=left]{$\X$};
+\draw[line width=0.3mm,->] (0,0,0) -- (0,\rvec,0) node[above left]{$\Y$};
+\draw[line width=0.3mm,->] (0,0,0) -- (0,0,\rvec) node[anchor=east]{$\Z=\z'$};
+
+% first rotation about Z
+\def\rotangleZ{-30}
+\def\rotangleY{45}
+\def\rotangleX{15}
+\tdplotsetrotatedcoords{\rotangleZ}{0}{0}
+\draw[line width=0.3mm,->,tdplot_rotated_coords,color=blue] (0,0,0) -- (\rvec,0,0) node[below,align=left]{$\x'$};
+\draw[line width=0.3mm,->,tdplot_rotated_coords,color=blue] (0,0,0) -- (0,\rvec,0) node[below left]{$\y'=\y''$};
+
+\tdplotdrawarc[tdplot_main_coords,->]{(0,0,0)}{\rvec/3}{0}{\rotangleZ}{align=center,anchor=north east}{$\theta$}
+\tdplotsetrotatedthetaplanecoords{0}
+\tdplotdrawarc[tdplot_rotated_coords,->]{(0,0,0)}{\rvec/2}{90}{90-\rotangleY}{align=center,anchor=east}{$\phi$}
+%\draw[tdplot_rotated_coords,->] (\rvec/3,0,0) arc (0:90:\rvec/3);
+
+
+% second rotation about y'
+\tdplotsetrotatedcoords{\rotangleZ}{-\rotangleY}{0}
+\draw[line width=0.3mm,->,tdplot_rotated_coords,color=red] (0,0,0) -- (\rvec,0,0) node[above,align=left]{$\x'' = \x$};
+%\draw[line width=0.3mm,->,tdplot_rotated_coords,color=red] (0,0,0) -- (0,\rvec,0);
+\draw[line width=0.3mm,->,tdplot_rotated_coords,color=red] (0,0,0) -- (0,0,\rvec) node[above right]{$\z''$};
+
+\end{tikzpicture}
+\caption[Two consecutive elementary rotations]{The $\{\x'',\y'',\z''\}$ reference frame (in red) is rotated with respect to $\{\x',\y',\z'\}$ (in blue). The rotation is about the axis $\y'$ by an angle $\phi=-45$~degrees.}
+\label{fig:3simpleRotate}
+\end{center}
+\end{figure}
