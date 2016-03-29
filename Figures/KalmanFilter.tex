@@ -7,18 +7,27 @@
     minimum height=3em, minimum width=6em,align=center]
 \tikzstyle{input} = [node distance=1cm]
 \tikzstyle{output} = [node distance=1cm]
-
+\newpage
 \begin{tikzpicture}[auto, >=latex',scale=0.8, every node/.style={transform shape}]
 \onehalfspacing
+
+
 % Inputs
-\node [input,name=measuredVelocity] {$\gyroVec^{\textrm{meas}}_k$};
+\node [input,name=measuredVelocity,shift={(2cm,0cm)}] {$\gyroVec^{\textrm{meas}}_k$};
 \node [input,above of=measuredVelocity,name=bias] {$\EstBias_{k|k-N}$};
 \node [input,above of=bias,name=attitude,node distance=1cm] {$\EstAttitude_{k-1|k-N}$};
 \node [input,above of=measuredVelocity,name=covariance,node distance=3cm] {$\noiseCovMat_k$};
 \node [input,below of=measuredVelocity,name=propagation matrices,node distance=4cm] {$\A_{k-1},\B_{k-1},\C_{k-1}$};
 
+% line break
+\node [input,name=line break left,above of=covariance,node distance=2cm] {};
+\node [input,name=line break left2,below of=line break left,node distance=0.5cm,right] {\large \textbf{Kalman Filter: Prediction}};
+\node [input,name=line break right,right of=line break left,node distance=15cm] {\large { }};
+\draw[dashed] ([xshift=-1cm]line break left.north west) -- (line break right.north east);
+
+
 % blocks
-\node [block, right of=measuredVelocity,node distance=2cm] (estimate velocity) {Estimate \\ Velocity};
+\node [block, right of=measuredVelocity,node distance=3cm] (estimate velocity) {Estimate \\ Velocity};
 \node [block, right of=estimate velocity,node distance=4cm] (predict attitude) {Predict \\ Attitude};
 \node [block, below of=predict attitude,node distance=2cm] (state transition) {State \\ transition};
 \node [block, right of=state transition,node distance=4cm] (estimate covariance) {Estimate \\ covariance};
@@ -45,38 +54,106 @@
 \draw[-] (mid) --  (mid2) ;
 \draw[->] (mid2) -|  (update propagation matrices.north) ;
 
-\node[name=mid,right of=estimate covariance,node distance=2cm]{};
+\node[name=mid,right of=estimate covariance,node distance=3cm]{};
 \node[above] at (mid){$\stateCovMat_{k|k-N}$};
-\draw[->] (estimate covariance.east) -- (estcovariance.west) ;
+\draw[->] (estimate covariance.east) -- (estcovariance) ;
 \draw[->] (covariance.east) -| (estimate covariance.north) ;
 
-\node[name=mid,right of=predict attitude,node distance=2cm]{};
+\node[name=mid,right of=predict attitude,node distance=3cm]{};
 \node[above] at (mid){$\EstAttitude_{k|k-N}$};
-\draw[->] (predict attitude.east) -- (estattitude.west);
+\draw[->] (predict attitude.east) -- (mid);
 
 \draw[->] (propagation matrices.east) -- (update propagation matrices.west);
 \draw[->] (update propagation matrices.east) -- (propmat);
-\node[name=mid,right of=update propagation matrices,node distance=2.5cm]{};
+\node[name=mid,right of=update propagation matrices,node distance=3cm]{};
 \node[above] at (mid){$\A_{k},\B_{k},\C_{k}$};
 
 
 % Kalman Update
+% line break
+\node [input,name=line break left,below of=propagation matrices,node distance=1.5cm] {};
+\node [input,name=line break left2,below of=line break left,node distance=0.5cm,right] {\large \textbf{Kalman Filter: Update}};
+\node [input,name=line break right,right of=line break left,node distance=15cm] {\large { }};
+\draw[dashed] ([xshift=-1cm]line break left.north west) -- (line break right.north east);
+
 % Inputs
-\node [input,name=measured attitude,below of=propagation matrices,node distance=2cm] {$\Attitude^\textrm{meas}_{\starcam}$};
+\node [input,name=measured attitude,below of=line break left,node distance=3cm] {$\Attitude^\textrm{meas}_{\starcam}$};
+\node [input,name=final matrices,above of=measured attitude,node distance=1cm] {$\A_{k},\B_{k},\C_{k}$};
+\node [input,name=covmat,below of=measured attitude,node distance=6cm] {$\stateCovMat_{k|k-N}$};
+\node [input,name=meascovmat,below of=measured attitude,node distance=2cm] {$\measCovMat_{k}$};
 
 % blocks
-\node [block, right of=measured attitude,node distance=2cm] (propagate attitude) {Rotate \& \\ Propagate};
+\node [block, right of=measured attitude,node distance=3cm] (propagate attitude) {Rotate \& \\ Propagate};
 \node [block, below of=propagate attitude,node distance=2cm] (innovation) {Innovation};
 \node [block, below of=innovation,node distance=2cm] (innovation covariance) {Innovation \\ covariance};
 \node [block, below of=innovation covariance,node distance=2cm] (kalman gain) {Kalman \\ gain};
 \node [block, right of=kalman gain,node distance=4cm] (calculate error) {Calculate \\ error};
 \node [block, right of=calculate error,node distance=4cm] (update bias) {Update \\ bias};
 \node [block, below of=update bias,node distance=2cm] (update attitude) {Update \\ attitude};
-\node [block, above of=update bias,node distance=2cm] (update velocity) {Update \\ velocity};
+\node [block, above of=update bias,shift={(3cm,1cm)}] (update velocity) {Update \\ velocity};
 \node [block, below of=update attitude,node distance=2cm] (update covariance) {Update \\ covariance};
 
 % arrows
+\draw[->] (measured attitude) -- (propagate attitude);
+\draw[->] (final matrices) -| (propagate attitude);
+\draw[->] (propagate attitude.south) -- (innovation.north);
+\draw[->] (innovation covariance.south) -| (kalman gain.north);
+\draw[->] (covmat.east) -- (kalman gain.west);
+\draw[->] (covmat.north) |- (innovation covariance.west);
+\draw[->] (meascovmat.east) -- (innovation.west);
+\draw[->] (covmat.south) |- (update covariance.190);
 
+% intermediary nodes
+\node[name=mid,right of=kalman gain,node distance=2cm,draw,fill,minimum size=3pt,circle]{};
+\node[above] at (mid){$\KalmanGain_{k}$};
+\draw[->] (kalman gain.east) -- (mid) -- (calculate error.west);
+\draw[->] (mid) |- (update covariance.165);
+
+\node[name=mid,below of=propagate attitude,node distance=1cm]{};
+\node[left] at (mid){$\Attitude^{\textrm{meas}}_{k}$};
+
+
+\node[name=mid,below of=innovation,node distance=1cm,draw,fill,minimum size=3pt,circle]{};
+\node[left] at (mid){$\zMeasurement_{k}$};
+\draw[->] (mid) -| (calculate error.north);
+\draw[->] (innovation.south) -- (mid) -- (innovation covariance.north);
+
+\node[name=mid,below of=innovation covariance,node distance=1cm]{};
+\node[left] at (mid){$\measErrCovMat_{k}$};
+
+
+\node[name=mid,right of=calculate error,node distance=2cm,draw,fill,minimum size=3pt,circle]{};
+\node[above] at (mid){$\ErrorState_{k|k}$};
+\draw[->] (calculate error.east) -- (mid) -- (update bias.west);
+
+\node [input,name=bias estimate,above of=mid,shift={(1cm,0cm)}] {$\EstBias_{k|k-N}$};
+\draw[->] (bias estimate) -| (update bias.north);
+
+\node [input,name=attitude estimate,below of=bias estimate,node distance=2cm] {$\EstAttitude_{k|k-N}$};
+\draw[->] (attitude estimate) -| (update attitude.north);
+
+
+\node [input,name=velocity estimate,above of=bias estimate,node distance=2cm] {$\EstGyroVec_{k|k-N}$};
+\draw[->] (velocity estimate) -| (update velocity.north);
+\draw[->] (mid) |- (update attitude.west);
+
+\node [output,name=velocity,right of=update velocity,node distance=2cm]{}; \node [output,right of=update velocity,node distance=2cm,above] {$\EstGyroVec_{k|k}$};
+\draw[->] (update velocity.east) -- (velocity);
+
+% outputs
+\node [output,name=mid,right of=update bias,node distance=3cm,draw,fill,minimum size=3pt,circle] {};
+\draw[->] (update bias.east) -- (mid);
+\draw[->] (mid) -- (update velocity.south);
+\node [output,name=bias,right of=mid,node distance=2cm] {};
+\node [output,right of=mid,node distance=2cm,above] {$\EstBias_{k|k}$};
+\draw[->] (mid) -- (bias.west);
+\node [output,name=attitude,right of=update attitude,node distance=2cm] {};
+\node [output,right of=update attitude,node distance=2cm,above] {$\EstAttitude_{k|k}$};
+\draw[->] (update attitude) -- (attitude);
+
+\node [output,name=covariances,right of=update covariance,node distance=2cm] {};
+\node [output,right of=update covariance,node distance=2cm,above] {$\stateCovMat_{k|k}$};
+\draw[->] (update covariance) -- (covariances);
 
 \end{tikzpicture}
 \end{document}

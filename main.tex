@@ -23,7 +23,7 @@
 %----------------------------------------------------------------------------------------
 
 \documentclass[
-11pt, % The default document font size, options: 10pt, 11pt, 12pt
+12pt, % The default document font size, options: 10pt, 11pt, 12pt
 %oneside, % Two side (alternating margins) for binding by default, uncomment to switch to one side
 english, % ngerman for German
 doublespacing, % Single line spacing, alternatives: onehalfspacing or doublespacing
@@ -39,9 +39,10 @@ headsepline, % Uncomment to get a line under the header
 \usepackage[utf8]{inputenc} % Required for inputting international characters
 \usepackage[T1]{fontenc} % Output font encoding for international characters
 \usepackage{standalone}
-\usepackage{palatino} % Use the Palatino font by default
-\usepackage{avant}
+%\usepackage{palatino} % Use the Palatino font by default
+%\usepackage{avant}
 %\usepackage{newcent}
+\usepackage[final]{pdfpages} % for PDF support
 
 \usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % User the bibtex backend with the authoryear citation style (which resembles APA)
 
@@ -68,16 +69,23 @@ headsepline, % Uncomment to get a line under the header
 %----------------------------------------------------------------------------------------
 %	MARGIN SETTINGS
 %----------------------------------------------------------------------------------------
+\renewcommand{\baselinestretch}{2}
+\setlength{\textwidth}{5.9in}
+\setlength{\textheight}{9in}
+\setlength{\topmargin}{-.50in}
+%\setlength{\topmargin}{0in}    %use this setting if the printer makes the the top margin 1/2 inch instead of 1 inch
+\setlength{\oddsidemargin}{.55in}
+\setlength{\parindent}{.4in}
 
-\geometry{
-	paper=letterpaper, % Change to letterpaper for US letter
-	inner=2.5cm, % Inner margin
-	outer=3.8cm, % Outer margin
-	bindingoffset=2cm, % Binding offset
-	top=1.5cm, % Top margin
-	bottom=1.5cm, % Bottom margin
-	%showframe,% show how the type block is set on the page
-}
+% \geometry{
+% 	paper=letterpaper, % Change to letterpaper for US letter
+% 	inner=2.5cm, % Inner margin
+% 	outer=3.8cm, % Outer margin
+% 	bindingoffset=2cm, % Binding offset
+% 	top=1.5cm, % Top margin
+% 	bottom=1.5cm, % Bottom margin
+% 	%showframe,% show how the type block is set on the page
+% }
 
 %----------------------------------------------------------------------------------------
 %	THESIS INFORMATION
@@ -100,100 +108,109 @@ headsepline, % Uncomment to get a line under the header
 \hypersetup{pdftitle=\ttitle} % Set the PDF's title to your title
 \hypersetup{pdfauthor=\authorname} % Set the PDF's author to your name
 \hypersetup{pdfkeywords=\keywordnames} % Set the PDF's keywords to your keywords
+%\pagestyle{plain} 
 
 \begin{document}
 
-\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
 
-\pagestyle{plain} % Default to the plain heading style until the thesis style is called for the body content
-
-%----------------------------------------------------------------------------------------
-%	TITLE PAGE
-%----------------------------------------------------------------------------------------
-
-\begin{titlepage}
-\begin{center}
-
-\textsc{\LARGE \univname}\\[1.5cm] % University name
-\textsc{\Large Doctoral Thesis}\\[0.5cm] % Thesis type
-
-\HRule \\[0.4cm] % Horizontal line
-{\huge \bfseries \ttitle}\\[0.4cm] % Thesis title
-\HRule \\[1.5cm] % Horizontal line
- 
-\begin{minipage}{0.4\textwidth}
-\begin{flushleft} \large
-\emph{Author:}\\
-\href{http://www.johnsmith.com}{\authorname} % Author name - remove the \href bracket to remove the link
-\end{flushleft}
-\end{minipage}
-\begin{minipage}{0.4\textwidth}
-\begin{flushright} \large
-\emph{Supervisors:} \\
-{\supname \\
-Dr. Stephen A. Rinehart} % Supervisor name - remove the \href bracket to remove the link  
-
-\end{flushright}
-\end{minipage}\\[3cm]
- 
-\large \textit{A thesis submitted in fulfillment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
-\textit{in the}\\[0.4cm]
-\deptname\\[2cm] % Research group name and department name
- 
-{\large \today}\\[4cm] % Date
-%\includegraphics{Logo} % University/department logo - uncomment to place it
- 
-\vfill
-\end{center}
-\end{titlepage}
-
-%----------------------------------------------------------------------------------------
-%	DECLARATION PAGE
-%----------------------------------------------------------------------------------------
-
-\begin{declaration}
-\addchaptertocentry{\authorshipname}
-
-\noindent I, \authorname, declare that this thesis titled, \enquote{\ttitle} and the work presented in it are my own. I confirm that:
-
-\begin{itemize} 
-\item This work was done wholly or mainly while in candidature for a research degree at this University.
-\item Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
-\item Where I have consulted the published work of others, this is always clearly attributed.
-\item Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
-\item I have acknowledged all main sources of help.
-\item Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.\\
-\end{itemize}
- 
-\noindent Signed:\\
-\rule[0.5em]{25em}{0.5pt} % This prints a line for the signature
- 
-\noindent Date:\\
-\rule[0.5em]{25em}{0.5pt} % This prints a line to write the date
-\end{declaration}
-
-\cleardoublepage
-
-%----------------------------------------------------------------------------------------
-%	QUOTATION PAGE
-%----------------------------------------------------------------------------------------
-
-\vspace*{0.2\textheight}
-
-\noindent\enquote{\itshape Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism.}\bigbreak
-
-\hfill Dave Barry
 
 %----------------------------------------------------------------------------------------
 %	ABSTRACT PAGE
 %----------------------------------------------------------------------------------------
 
 \begin{abstract}
-\addchaptertocentry{\abstractname} % Add the abstract to the table of contents
+%\addchaptertocentry{\abstractname} % Add the abstract to the table of contents
 
 The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
 
 \end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+% \begin{titlepage}
+% \begin{center}
+
+% \textsc{\LARGE \univname}\\[1.5cm] % University name
+% \textsc{\Large Doctoral Thesis}\\[0.5cm] % Thesis type
+
+% \HRule \\[0.4cm] % Horizontal line
+% {\huge \bfseries \ttitle}\\[0.4cm] % Thesis title
+% \HRule \\[1.5cm] % Horizontal line
+ 
+% \begin{minipage}{0.4\textwidth}
+% \begin{flushleft} \large
+% \emph{Author:}\\
+% \href{http://www.johnsmith.com}{\authorname} % Author name - remove the \href bracket to remove the link
+% \end{flushleft}
+% \end{minipage}
+% \begin{minipage}{0.4\textwidth}
+% \begin{flushright} \large
+% \emph{Supervisors:} \\
+% {\supname \\
+% Dr. Stephen A. Rinehart} % Supervisor name - remove the \href bracket to remove the link  
+
+% \end{flushright}
+% \end{minipage}\\[3cm]
+ 
+% \large \textit{A thesis submitted in fulfillment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
+% \textit{in the}\\[0.4cm]
+% \deptname\\[2cm] % Research group name and department name
+ 
+% {\large \today}\\[4cm] % Date
+% %\includegraphics{Logo} % University/department logo - uncomment to place it
+ 
+% \vfill
+%\end{center}
+% \end{titlepage}
+
+ \begin{titlepage}
+
+%\thispagestyle{empty}
+\hbox{\ }
+\vspace{1in}
+\renewcommand{\baselinestretch}{1}
+\small\normalsize
+\begin{center}
+
+\large{High angular resolution observations of star-forming regions with BETTII and SOFIA}\\
+\ \\
+\ \\
+\large{by} \\
+\ \\
+\large{Maxime J. Rizzo}%Your full name as it appears in University records.
+\ \\
+\ \\
+\ \\
+\ \\
+\normalsize
+Dissertation submitted to the Faculty of the Graduate School of the \\
+University of Maryland, College Park in partial fulfillment \\
+of the requirements for the degree of \\
+Doctor of Philosophy \\
+2016
+
+\vspace{7.5em}
+\end{center}
+
+\noindent Advisory Committee: \\
+Professor Lee G. Mundy, Chair/Advisor \\
+Dr. Stephen A. Rinehart, Co-Advisor \\
+Professor Andrew Harris \\
+Dr. Mark Wolfire \\
+Dr. Alison Nordt
+
+\end{titlepage}
+
+\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
+
+%----------------------------------------------------------------------------------------
+%	DEDICATION
+%----------------------------------------------------------------------------------------
+
+\dedicatory{To Michelle, my parents, and my brother.} 
+
 
 %----------------------------------------------------------------------------------------
 %	ACKNOWLEDGEMENTS
@@ -207,14 +224,26 @@ The acknowledgments and the people to thank go here, don't forget to include you
 \end{acknowledgements}
 
 %----------------------------------------------------------------------------------------
+%	QUOTATION PAGE
+%----------------------------------------------------------------------------------------
+
+\vspace*{0.2\textheight}
+
+\noindent\enquote{\itshape Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism.}\bigbreak
+
+\hfill Dave Barry
+
+
+%----------------------------------------------------------------------------------------
 %	LIST OF CONTENTS/FIGURES/TABLES PAGES
 %----------------------------------------------------------------------------------------
 
 \tableofcontents % Prints the main table of contents
 
+\listoftables % Prints the list of tables
+
 \listoffigures % Prints the list of figures
 
-\listoftables % Prints the list of tables
 
 %----------------------------------------------------------------------------------------
 %	ABBREVIATIONS
@@ -257,11 +286,6 @@ $\omega$ & angular frequency & \si{\radian} \\
 
 \end{symbols}
 
-%----------------------------------------------------------------------------------------
-%	DEDICATION
-%----------------------------------------------------------------------------------------
-
-\dedicatory{For/Dedicated to/To my\ldots} 
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - CHAPTERS
@@ -300,4 +324,5 @@ $\omega$ & angular frequency & \si{\radian} \\
 
 %----------------------------------------------------------------------------------------
 
+\includepdf[pages=-]{CV.pdf}
 \end{document}  

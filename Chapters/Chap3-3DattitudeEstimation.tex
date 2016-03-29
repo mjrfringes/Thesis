@@ -50,9 +50,15 @@ This represents how much what we are trying to estimate is expected to vary. Not
 
 \subsubsection{Star camera model}
 
-The star camera takes a picture of the sky to make noisy measurements of the right ascension (RA) and declination (DEC) of the boresight, as well as the roll angle (ROLL) in which the frame is taken. The RA and DEC typically are much more accurate than the roll angle. Each angle is can be used as en Euler angle to define the attitude of the payload in the inertial frame (or equivalently, the rotation from the inertial frame to the current attitude). Each angle corresponds to a quaternion rotation about a single axis: $\quat{q}_\textrm{RA} = [0, 0, \sin(\textrm{RA}/2),\cos(\textrm{RA}/2)]^T$, $\quat{q}_\textrm{DEC} = [ 0, \sin(\textrm{DEC}/2), 0,\cos(\textrm{DEC}/2)]^T$, $\quat{q}_\textrm{ROLL} = [  \sin(\textrm{ROLL}/2), 0,0,\cos(\textrm{ROLL}/2)]^T $, and $\Attitude^{\textrm{meas}} = \quat{q}_\textrm{ROLL}\quat{q}_\textrm{DEC}\quat{q}_\textrm{RA}$. 
+The star camera takes a picture of the sky to make noisy measurements of the right ascension (RA) and declination (DEC) of the boresight, as well as the roll angle (ROLL) in which the frame is taken. The RA and DEC typically are much more accurate than the roll angle. Each angle is can be used as en Euler angle to define the attitude of the payload in the inertial frame (or equivalently, the rotation from the inertial frame to the current attitude). Each angle corresponds to a quaternion rotation about a single axis: 
+\begin{eqnarray}
+\quat{q}_\textrm{RA} &=& [0, 0, \sin(\textrm{RA}/2),\cos(\textrm{RA}/2)]^T,\\
+\quat{q}_\textrm{DEC} &=& [ 0, \sin(\textrm{DEC}/2), 0,\cos(\textrm{DEC}/2)]^T,\\
+\quat{q}_\textrm{ROLL}& = &[  \sin(\textrm{ROLL}/2),0,0,\cos(\textrm{ROLL}/2)]^T,\\
+\Attitude^{\textrm{meas}}_{\starcam}& = &\quat{q}_\textrm{ROLL}\quat{q}_\textrm{DEC}\quat{q}_\textrm{RA}.
+\end{eqnarray}
 
-The errors associated with the three Euler angles are assumed to be a random vector $\nStarcam$, also with a diagonal covariance matrix. [MENTION TYPICAL STAR CAMERA NOISES]
+The errors associated with the three Euler angles are assumed to be a random vector $\nStarcam$, also with a diagonal covariance matrix $\measCovMat$. [MENTION TYPICAL STAR CAMERA NOISES]
 
 The star camera is often oriented at a fixed position on the payload, which is not necessarily aligned with the gyroscope reference frame. In that case, the attitude quaternion needs to be rotated by the quaternion representing the transformation between both reference frames. In addition, the covariance matrix needs to be rotated by the direction cosine matrix corresponding to the same transformation. This would not have an effect if the covariance matrix was a multiple of the identity matrix, but it usually is not the case since the Roll measurement is often much less sensitive. This can have implications while designing the balloon payload and deciding on the placement and orientation of the star camera: the attitude estimation will be less precise about the Roll axis of the star camera.
 

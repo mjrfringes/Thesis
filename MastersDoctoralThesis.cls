@@ -294,7 +294,7 @@ KOMA-script documentation for details.}]{fancyhdr}
 	\checktoopen
 	\tttypeout{\abstractname}
 	\null\vfil
-	\thispagestyle{plain}
+	\thispagestyle{empty}
 	\begin{center}
 	{\normalsize \MakeUppercase{\univname} \par} % University name in capitals
 	\bigskip

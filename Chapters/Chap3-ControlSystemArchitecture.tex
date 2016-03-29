@@ -1,8 +1,27 @@
 \section{Control system architecture}
 \subsection{Overall strategy}
+
+The strategy that we developed aims at satisfying the requirements established in the previous section, under the cost, time and personnel constraints that we were subject to. It fundamentally relies on the fact that knowledge is more important than \textit{control}. While several groups are attempting at providing sub-arcsecond balloon gondola control, we are not going to. This choice was made given the fundamental advantage that the interferometer has over traditional pointed observatories: the decoupling of the phase with the pointing. Although each telescope needs to be pointed to the target to within a fraction of a primary beam's size (many arcseconds), mispointings of the entire gondola is what creates external OPD errors. But fortunately, if these are known, they can be corrected directly in delay space; and if these errors vary slowly with respect to the data acquisition timescales, then they don't directly influence the scientific measurement - as long as they are known and corrected for in post-processing.
+
+Hence, instead of trying to maintain the gondola pointing at all times to within a fraction of an arcsecond, we choose to let it smoothly vary and correct the effects of the mispointings directly in OPD space.
 \subsection{Modes of operation}
+
+The payload has several modes of operation which are used in the various phases of a flight.
 \subsection{PID control loops}
+SWITCH TO A SUBSYSTEM APPROACH RATHER THAN AN ACTUATOR/SENSOR APPROACH?
 \subsection{Actuator description and characterization}
 \subsection{Sensor description and characterization}
+\subsubsection{Gyroscopes}
+Set up the conditions of the test (attached to a slab of metal, and set on the ground); mention that we introduced a random phase noise to prevent spikes in the signal, due to the internal close-loop control of the gyroscopes
+\begin{itemize}
+\item Show the noise of each gyro; short timescales, high freq; long timescale, low freq;
+\item Show the Allan variance for each gyro using R
+\item Compare the noise PSD to a gaussian
+\end{itemize}
+\subsubsection{Encoders}
+\subsubsection{Capacitive sensors}
+\subsubsection{}
 \subsection{Control electronics}
+Clocks and timings \\
+Computers
 \subsection{Software architecture}
