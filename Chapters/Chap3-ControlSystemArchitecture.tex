@@ -1,7 +1,7 @@
 \section{Control system architecture}
 \subsection{Overall strategy}
 
-The strategy that we developed aims at satisfying the requirements established in the previous section, under the cost, time and personnel constraints that we were subject to. It fundamentally relies on the fact that knowledge is more important than \textit{control}. While several groups are attempting at providing sub-arcsecond balloon gondola control, we are not going to. This choice was made given the fundamental advantage that the interferometer has over traditional pointed observatories: the decoupling of the phase with the pointing. Although each telescope needs to be pointed to the target to within a fraction of a primary beam's size (many arcseconds), mispointings of the entire gondola is what creates external OPD errors. But fortunately, if these are known, they can be corrected directly in delay space; and if these errors vary slowly with respect to the data acquisition timescales, then they don't directly influence the scientific measurement - as long as they are known and corrected for in post-processing.
+The strategy that we developed aims at satisfying the requirements established in the previous section, under the cost, time and personnel constraints that we were subject to. It fundamentally relies on the fact that knowledge is more important than \textit{control}. While several groups are attempting at providing sub-arcsecond balloon gondola control, we are not going to. This choice was made given the fundamental advantage that the interferometer has over traditional pointed observatories: the decoupling of the phase with the pointing. Although each telescope needs to be pointed to the target to within a fraction of a primary beam's size (many arcseconds), mispointings of the entire gondola are what create external OPD errors. But fortunately, if these are known, they can be corrected directly in delay space; and if these errors vary slowly with respect to the data acquisition timescales, then they don't directly influence the scientific measurement - as long as they are known and corrected for in post-processing.
 
 Hence, instead of trying to maintain the gondola pointing at all times to within a fraction of an arcsecond, we choose to let it smoothly vary and correct the effects of the mispointings directly in OPD space.
 \subsection{Modes of operation}
@@ -9,6 +9,54 @@ Hence, instead of trying to maintain the gondola pointing at all times to within
 The payload has several modes of operation which are used in the various phases of a flight.
 \subsection{PID control loops}
 SWITCH TO A SUBSYSTEM APPROACH RATHER THAN AN ACTUATOR/SENSOR APPROACH?
+
+\subsection{Gyroscopes}
+
+We purchased three SRS-2000 fiber-optic gyroscopes from Optolink. This gyroscope technology uses the Sagnac effect and is the cutting edge in inertial rotational velocity measurements \citep[for a review of the state-of-the-art see, \textit{e.g.}][]{ElBadaoui:2014fr}. We chose these devices for their incredibly low angular random walk, which is a measure of their inherent noise. If we were to trust the gyroscope measurement and integrate its velocity to obtain a position estimate, the estimation error we would make after 1 hour of integration has a standard deviation of about 2 arcseconds.
+
+The devices have a bandwidth of 50~Hz, but can be triggered at up to 2000~Hz. Their extreme stability is contingent upon proper temperature stabilization, which is done with a closed-loop set at their calibration temperature of 23.5$^{\circ}\pm 0.5$~C using an active built-in Peltier element. This Peltier element transforms electric power into either heating or cooling \citep{Peltier:1834vu}.
+
+However, their sensitivity has complicated some of their testing. As soon as we attach a gyroscope to any structure, it measures its vibrational modes, which makes it hard to make a stable measurement of the gyroscope's drift stability. This includes the vibrations that are inherent to the building in the which they are placed.
+
+We were successful at measuring the gyroscopes over long periods of time by attaching them flush to a heavy slab of metal, and putting the slab of metal flush on the floor of one of NASA Goddard's optics labs in building 34. These floors are especially made to isolate the room from vibrations.
+
+We proceeded to an identical series of tests for each gyroscope:
+\begin{enumerate}
+\item We acquired data at 2000~Hz for N minutes to measure a proper power spectral density and characterize the noise;
+\item We acquired data at 100~Hz for $\sim$ 8 hours to study the drift properties.
+\end{enumerate}
+
+The properties that we are looking for are typical instantaneous angular random walk, and the overall drift of the gyroscope's mean. When the gyroscopes are set on the floor, they measure a component of the Earth's rotation vector in inertial space. The mean of the measurement depends on the exact angle at which the device is placed with respect to the zenith vector, and is of no importance for this noise study. We seek to understand how much the mean varies over long periods of time. To avoid disturbances from the building vibrations (opening/closing of doors, etc), we operated entirely after regular working hours.
+
+Table of gyro specs and measurements for each gyro
+
+\subsubsection{Normality tests}
+First and foremost, we wanted to study the gyroscope's noise statistical distribution. We ran a few standard normality tests on chunks of the 8-hour data for each gyroscope. While the tests on individual small chunks of data never reject the null hypothesis (that the distribution is normal), the distribution of the total 8 hours does with a very high probability, using both the Anderson-Darling and the Kolmogorov-Smirnov test.
+
+Since the data is always consistent with being normally distributed over timescales of tens of minutes, after close inspection of the long-term quartile plots and histograms, we determined that it would be safe to consider the distribution as normal for the purpose of our attitude estimator. 
+
+It is important to note that in their factory settings, the gyroscopes' noise distribution was not normal at all. It exhibited electronic peaks with many harmonics, at frequencies that were varying as a function of the gyroscope inclination. After talking to the manufacturer, we determined that it was caused by the closed-loop algorithms inside the gyroscope electronics. The problem was known by them, and the remedy was to inject a random phase perturbation in the closed loop. This had the effects to get rid of those frequency peaks, at the cost of increasing the overall noise variance by a factor of 4. The noise levels that are specified by the company are very close to the noise seen when using that random phase modulation. Hence, if one does not care as much at the frequency content of the gyroscope, it is possible that this device could work even much better than it does for us.
+
+\subsubsection{PSD and Allan variance}
+
+The usual frequency-domain analysis tool is the power spectral density (PSD). This allows us to spot any frequency peaks in the data, and let us look at the $1/f$ noise behavior, which the typical low-frequency behavior that indicates drifts in the signal. The 100~Hz data is all we need, as the gyroscope's bandwidth is 50~Hz. Hence, the 2000~Hz data does not contain any more information than the 100~Hz. In fact, while plotting the PSD of the 2000~Hz data, we can see clearly the break at 50~Hz characteristic of a 50~Hz low-pass filter.
+
+Another common tool to study of the gyroscope's performance is to plot the Allan variance. The Allan variance gives a time-domain analysis of the gyroscope's noise that is complementary to the power spectral density.
+
+\subsection{Star cameras}
+
+
+
+\subsection{Azimuth control (CCMG)}
+
+T
+\subsection{Momentum dump mechanism}
+\subsection{Elevation control (Rotators)}
+\subsection{Delay lines}
+\subsection{Tip/tilt}
+\subsection{Fine guidance sensor}
+
+
 \subsection{Actuator description and characterization}
 \subsection{Sensor description and characterization}
 \subsubsection{Gyroscopes}

@@ -1,5 +1,5 @@
 \section{Attitude representation in three dimensions}
-
+\label{sec:attituderepresentation}
 %\subsection{Definitions and conventions}
 
 There are three common representations of the orientation, or \textit{attitude}, of an object in a 3-dimensional Euclidian reference frame: in the following we will discuss the Tait-Bryan angles (which are very similar to, and sometimes confused with proper Euler angles), rotation matrices, and quaternions. All of them can be understood as a rotation of the initial reference frame $I = \{\I,\J,\K\}$ into the object's local reference frame $L = \{\i,\j,\k\}$. The reference frame $I$ is assumed to be fixed while $L$ is allowed to move. We can write each unit vector as follows: $\I = \fromto{}{I}[1,0,0]^T$, $\J = \fromto{}{I}[0,1,0]^T$, $\K = \fromto{}{I}[0,0,1]^T$, and $\i = \fromto{}{L}[1,0,0]^T$, $\j = \fromto{}{L}[0,1,0]^T$, $\k = \fromto{}{L}[0,0,1]^T$. $\{\I,\J,\K\}$ and $\{\i,\j,\k\}$ are  orthonormal bases to $I$ and $L$, respectively. The subscript before the vector indicates in which reference frame the vector is expressed, and the $T$ after the vector indicates the transpose operation. We will keep this formalism for all vectors and matrices in this work.
@@ -58,11 +58,11 @@ Note that the rotation matrix $\fromto{I}{L}\R$ is an orthogonal matrix of deter
 
 %What is the matrix that corresponds to the \textit{passive} transformation from $I$ to $L$? In other words, what is the matrix that will pre-multiply vectors originally expressed in $I$ and express them in $L$? It is precisely the inverse (or transpose) of the matrix $\R = [\fromto{}{I}\i,\fromto{}{I}\j,\fromto{}{I}\k]$ described earlier, so that $\fromto{}{L}\vectors{u} = \fromto{I}{L}\R \fromto{}{I}\vectors{u}$. 
 
-Let's take an example and consider the unit vector $\fromto{}{I}\vectors{u} = \fromto{}{I}(1, 0, 0)$, expressed in $I$ originally. Now, let's rotate the coordinate frame $I$ by an angle $\theta$ with respect to the axis $\k$. The new reference frame is $L' = \{\i',\j',\k'\}$. For simplification, let's consider that $\theta = +90$~degrees, as it is shown in Fig.~\ref{fig:rot90}. It is clear that the vector $\i$ is now equal to $-\j'$, and $\fromto{}{L'}\i = \fromto{}{L'}(0,-1,0)$. 
+Let's take an example and consider the unit vector $\fromto{}{I}\vectors{u} = \fromto{}{I}(1, 0, 0)$, expressed in $I$ originally. Now, let's rotate the coordinate frame $I$ by an angle $\theta$ with respect to the axis $\k$. The new reference frame is $L' = \{\i',\j',\k'\}$. For simplification, let's consider that $\theta = +90$~degrees. It is clear that the vector $\i$ is now equal to $-\j'$, and $\fromto{}{L'}\i = \fromto{}{L'}(0,-1,0)$. 
 
 \input{Figures/TopViewRotate}
 
-In the more general case, let's suppose that the local reference frame $L'$ is rotated by an angle $\theta$ about the $\k$ axis (Fig.~ \ref{fig:simpleRotate}) with respect to the reference frame $I$. The traditional convention sets the rotation matrix for this transformation as being:
+In the more general case, let's suppose that the local reference frame $L'$ is rotated by an angle $\theta$ about the $\k$ axis (Fig.~ \ref{fig:simpleRotate}) with respect to the reference frame $I$. The convention we adopt sets the rotation matrix for this transformation as being:
 \begin{equation}
 \fromto{I}{L'}\R = \R_\k(\theta) = 
 \begin{bmatrix} \cos\theta & \sin\theta & 0 \\
@@ -70,7 +70,7 @@ In the more general case, let's suppose that the local reference frame $L'$ is r
                 0 & 0 & 1
 \end{bmatrix},
 \end{equation}
-where $\k$ indicates the third axis of the current basis ($\i$ and $\j$ represent the first and second axes, respectively). This will transform vectors from $L'$ to $I$. Suppose now that we further rotate our reference frame by angle $\phi$ about the new rotated $\j'$ axis. The rotation for this elementary transformation is:
+where $\k$ indicates the third axis of the current basis ($\i$ and $\j$ represent the first and second axes, respectively). This will transform vectors from $I$ to $L'$. Suppose now that we further rotate our reference frame by an angle $\phi$ about the newly-rotated $\j'$ axis. The rotation for this elementary transformation is:
 \begin{equation}
 \fromto{L'}{L''}\R = \R_\j(\phi) = 
 \begin{bmatrix} \cos\phi  & 0 & -\sin\phi\\
@@ -88,12 +88,12 @@ And let's do one last rotation about $\i''$, of an angle $\psi$, for which the t
 \end{bmatrix}.
 \end{equation}
 
-The matrix that corresponds to the active transformation of $I$ to $L$ will multiply vectors expressed in $L$ and express them in $I$. Hence, this matrix can be written:
+The matrix that corresponds to the active transformation of $I$ to $L$ will multiply vectors expressed in $I$ and express them in $L$. Hence, this matrix can be written:
 \begin{equation}
-\fromto{L}{I}\R = 
+\fromto{I}{L}\R = 
 \fromto{L''}{L}\R\fromto{L'}{L''}\R\fromto{I}{L'}\R = \R_\i(\psi)\R_\j(\phi)\R_\k(\theta),
 \end{equation}
-where we pre-multiply the matrix for each consecutive rotation of reference frames. This corresponds to the "natural order" of rotations [CITE], and is especially relevant when related to quaternions. While the first axis of rotation, $\k$, is defined in the initial reference frame, it is important to realize that the axes corresponding to the second and third rotations are defined in the intermediate frames $L'$ and $L''$, respectively. We can understand this by thinking that the transformations follow the \textit{body}, as each rotation is done in the body axis, and is a particularly useful approach to our problem.
+where we pre-multiply the matrix for each consecutive rotation of reference frames. This corresponds to the "natural order" of rotations [CITE], and is especially relevant when related to quaternions. While the first axis of rotation, $\k$, is defined in the initial reference frame, it is important to realize that the axes corresponding to the second and third rotations are defined in the intermediate frames $L'$ and $L''$, respectively. We can understand this by thinking that the transformations follow the \textit{body}, as each rotation is done in the body reference frame, and is a particularly useful approach to our problem.
 
 
 \def\rvec{0.8}
@@ -104,7 +104,7 @@ where we pre-multiply the matrix for each consecutive rotation of reference fram
 
 \subsection{Quaternions}
 \label{subsec:Quaternions}
-Quaternions are a more modern way to describe the orientation of a reference frame with respect to another, and are today widely used to describe spacecraft orientation [QUOTE]. From a strictly mathematical point of view, quaternions form a normed algebra over the real numbers that is an extension of traditional complex numbers. The quaternion normed algebra has four dimensions, instead of just two for the complex numbers. To its fundamental level, the basis for the quaternion algebra consists of one real axis and three imaginary axes \{1, $\i$, $\j$, $\k$\}. Like complex numbers (which have a basis \{1, $\i$\}), there are fundamental relations between the basis elements that govern the multiplication operation, such as the well known identity $\i^2=-1$, that we will discuss at length later in this section. In this document, we will write a quaternion using one of the following equivalent notations (Coutsias 1999) and (Schmidt 2001) :
+Quaternions are a more modern way to describe the orientation of a reference frame with respect to another, and are today widely used to describe spacecraft orientation [QUOTE]. From a strictly mathematical point of view, quaternions form a normed algebra over the real numbers that is an extension of traditional complex numbers. The quaternion normed algebra has four dimensions, instead of just two for the complex numbers. At its fundamental level, the basis for the quaternion algebra consists of one real axis and three imaginary axes \{1, $\i$, $\j$, $\k$\}. Like complex numbers (which have a basis \{1, $\i$\}), there are fundamental relations between the basis elements that govern the multiplication operation, such as the well known identity $\i^2=-1$, that we will discuss at length later in this section. In this document, we will write a quaternion using one of the following equivalent notations (Coutsias 1999) and (Schmidt 2001) :
 \begin{equation}
 \quat{q} = q_r\times 1 + q_i\i + q_j\j + q_r\k = q_r + \vectors{q} =
 \begin{bmatrix}
@@ -117,15 +117,15 @@ q_r
 q_r
 \end{bmatrix} = \begin{bmatrix}  \vectors{q}^T & q_r\end{bmatrix}^T,
 \end{equation}
-where we make a clear distinction between the quaternion's real part $q_r$, and its 3-dimensional imaginary part that we choose to represent as a vector $\vectors{q} =q_i\i + q_j\j + q_r\k$. [ talk about quaternion conjugate]
+where we make a clear distinction between the quaternion's real part $q_r$, and its 3-dimensional imaginary part that we choose to represent as a vector $\vectors{q} =q_i\i + q_j\j + q_r\k$. Like complex numbers, quaternion have a conjugate operation, which negates the imaginary part: $\quat{q}^* = \begin{bmatrix}  -\vectors{q}^T & q_r\end{bmatrix}^T$.
 
-Quaternions are interesting beyond their pure mathematical definition because the subset of quaternions of unit norm can be used to represent a coordinate frame rotation in three dimensions. The Euler rotation theorem states that any coordinate frame rotation can be described by a rotation of an angle $\theta$ about a unit vector $\vectors{u} = x\i + y\j + z\k$ (also called the "Euler axis" or "Euler vector"). This formalism has 3 degrees of freedom, the minimum needed to describe a rotation between two reference frames: two degrees of freedom in the vector (which is constrained to be of unit norm), and one in the rotation angle. If we encode this information in a quaternion using Euler's exponential notation for vectors [need references here], we have:
+Quaternions are interesting beyond their pure mathematical definition because the subset of quaternions of unit norm can be used to represent a coordinate frame rotation in three dimensions. The Euler rotation theorem states that any coordinate frame rotation can be described by a rotation of an angle $\theta$ about an appropriately-chosen unit vector $\vectors{u} = x\i + y\j + z\k$ (also called the "Euler axis" or "Euler vector"). This formalism has 3 degrees of freedom, the minimum needed to describe a rotation between two reference frames: two degrees of freedom in the vector (which is constrained to be of unit norm), and one in the rotation angle. If we encode this information in a quaternion using Euler's exponential notation for vectors [need references here], this precisely defines the quaternion:
 \begin{equation}
 \quat{q} = \exp\left[\frac{\theta}{2}(x\i + y\j + z\k)\right] = \cos\frac{\theta}{2} + (x\i + y\j + z\k)\sin\frac{\theta}{2}.
 \end{equation}
 This quaternion completely describes the rotation between the two reference frames and has unit norm. Conversely, every quaternion of unit norm can be decomposed like this and represent a rotation in three-dimensional Euclidian space. Like rotation matrices, the unit quaternions form a group under the quaternion multiplication operation, which is isomorphic to the special unitary group SU(2) [reference]. It is known that SU(2) is a surjective 2:1 homomorphism of SO(3). This means that each element in SO(3) can be described by exactly two elements in SU(2), or equivalently, two distinct unit quaternions: the quaternion $\quat{q}$, and its opposite $-\quat{q}$.
 
-Quaternions use 4 numbers to describe 3 degrees of freedom: an advantage over matrices (9 elements), but an apparent disadvantage over Tait-Bryan angles, which consist of an optimal number of 3 elements. However, Tait-Bryan angles can be shown to exhibit a phenomenon called \textit{gimbal lock} [references], which leads to a degeneracy when describing the set of angles corresponding to some rotations when pitch angle (second rotation angle, about $\j$) is $\pm\pi/2$. This creates situations where some rotations and sequences of rotation would have to be avoided by fear of creating numerical issues caused to gimbal lock [footnote: for an example of gimbal lock, refer to the Apollo program!]. Quaternions, while needing an extra number to represent the rotation, are free of this concern. This is one of the main reasons that they were originally preferred to Tait-Bryan angles early in the spaceflight era [WERTZ 1985?]. [talk more about the advantages of quaternions: number of multiplications, etc - see Shuster et al 1993]
+Quaternions use 4 numbers to describe 3 degrees of freedom: an advantage over matrices (9 elements), but an apparent disadvantage over Tait-Bryan angles, which consist of an optimal number of 3 elements. However, Tait-Bryan angles can be shown to exhibit a phenomenon called \textit{gimbal lock} [references], which leads to a degeneracy when describing the set of angles corresponding to rotations when the pitch angle (second rotation angle, about $\j$) is $\pm\pi/2$. This creates situations where some rotations and sequences of rotation would have to be avoided by fear of creating numerical issues caused by gimbal lock [footnote: for an example of gimbal lock, refer to the Apollo program!]. Quaternions, while needing an extra number to represent the rotation, are free of this concern. This is one of the main reasons that they were originally preferred to Tait-Bryan angles early in the spaceflight era [WERTZ 1985?]. [talk more about the advantages of quaternions: number of multiplications, etc - see Shuster et al 1993]
 
 \subsubsection{Quaternion multiplication}
 
@@ -187,9 +187,9 @@ For example, let's consider the elementary rotation described in Fig~\ref{fig:si
 \sin\frac{\theta}{2}\\
 \cos\frac{\theta}{2}
 \end{bmatrix}\\
- & = \R_\i(\psi)\R_\j(\phi)\R_\k(\theta).
-\end{split}.
+\end{split},
 \end{equation}
+which forms a quaternion that is equivalent to the rotation matrix multiplication $ \R_\i(\psi)\R_\j(\phi)\R_\k(\theta).$
 Note that the order of the quaternions is the same as the order of the matrices. This is one of the advantages of choosing this "natural order" convention [cite Shuster].
 
 
