@@ -49,8 +49,48 @@ Another common tool to study of the gyroscope's performance is to plot the Allan
 
 \subsection{Azimuth control (CCMG)}
 
-T
+The CCMG features multiple encoders and motors. First, there is a brushless DC motor that spins each wheel, with a relative 13-bit encoder that monitors where the wheel is in its rotation. Second, there is a Beckhoff AS1050 stepper motor that controls the wheels' shaft angle. On the gimbal, there is a 13-bit  absolute magnetic encoder that measures the angle of the wheels from some reference. 
+
+The motion controller that we use to monitor the wheel's speed is a brushless-DC Galil motion controller DMC-4020. It reads out the wheel encoders and controls the current to the wheels accordingly. It directly, independently implements the closed-loop system of the wheels, including all of the gains, acceleration/deceleration, and jogging speeds associated with the desired motion.
+
+The motion controller was modified to accept an external clock pulse in order to synchronize the wheels' motion with our master clock signal. It requires a clock pulse at 1.024~kHz, and deviations from this value will require changing some of the gains - it is our understanding that the controller uses a 1.024~kHz crystal oscillator to generate it's time basis, as some of the gains and parameters to the controller can directly be entered as, for example, "steps per second". 
+
+At power-up, the wheels immediately start accelerating to their cruising speed of 3000~rpm. They take about 10 minutes to reach their target. The wheels' frequency is set for the entire duration of the flight.
+
+The gimbal is controlled with another Galil Motion controller, a 2-axis stepper driver DMC-4020, which can also be synchronized with an external clock. Only one axis is used for the CCMG, while the second axis is used by the momentum dump motor (see section~\ref{subsec:chap3momdumpmotor}). The controller operates in micro-stepping mode and has a very smooth response, in contrast to previous controllers we tested which create a lot of vibrations. The controller is set always to use 64 micro-steps per step, and the motor is a [REFERENCE] with 200 steps per revolution. The motor is outfitted with a Beckhoff AG1000 planetary gearhead with a 3.7:1 reduction ratio. The gearbox itself has a ratio of 25, which creates a total gear ratio of 92.5. Hence, a 360$^\circ$ revolution of the stepper corresponds to $360/92.5=3.9^\circ$ motion of the shaft. A motion of 1$^\circ$ of the shaft correspond to 3889 motion controller steps. A motion of 90$^\circ$ of the shaft correspond to 296000 motion controller steps. Finally, the same 90$^\circ$ motion will translate to a 2048 step change in the gimbal magnetic encoder.
+
+In practice, all of the control is done using the regular stepper motor encoder. The magnetic encoder is used for limit-checking and to feed back to the momentum dump mechanism. With this in mind, we can now relate the control signal (stepper motor micro-steps per second) to the physical torque that the wheels provide. 
+\begin{eqnarray}
+\Delta\theta[\textrm{rad}] &= &\frac{2\pi}{92.5\times 200\times 64}\Delta(\textrm{micro-steps}) \\ 
+& \sim & 5.3\times 10^{-6} \Delta(\textrm{micro-steps})\\
+\Delta\theta[\textrm{arcsec}] &\sim &  1.09 \Delta(\textrm{micro-steps})
+\end{eqnarray}
+
+At 3000~rpm, the CCMG has a total stored momentum $\MCCMG = 20.8$~N.m.s. Of course, depending on the orientation of the wheels, the momentum along the $\z$ axis is only the projection of this momentum vector, $\MCCMGz = 20.8\sin\theta$, where $\theta$ is the angle between the horizontal axis and the rotation axis of the wheels. This makes sense: when the wheels are horizontal, there is no momentum projected on the $\z$ axis because the rotation vectors of the wheels are orthogonal to $\z$. When the rotation axes are along $\z$, that is when we have the maximum momentum along $\z$. 
+
+The torque is the variation of the momentum with time. So we can write:
+\begin{eqnarray}
+\ccmgtorque &= & 20.8\times \dot{\theta}[\textrm{rad.s}^{-1}] \cos\theta\\
+ &= & 1.1\times 10^{-4}\times \velstepper[\textrm{micro-steps.s}^{-1}]\cos\theta
+\end{eqnarray}
+
+\begin{figure}[!ht]
+	\centering
+	\includestandalone{Figures/CCMG-nocase-axes}
+	\caption{}
+	\label{fig:CCMGnocase}
+    \end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{Figures/CCMG-case.png}
+	\caption{}
+	\label{fig:CCMGcase}
+    \end{figure}
+
+
 \subsection{Momentum dump mechanism}
+\label{subsec:chap3momdumpmotor}
 \subsection{Elevation control (Rotators)}
 \subsection{Delay lines}
 \subsection{Tip/tilt}
