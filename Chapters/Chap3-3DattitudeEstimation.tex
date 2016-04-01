@@ -33,18 +33,18 @@ $5\times 10^{-4}$~deg~$\sim 1.8$~arcsec. For an integration time of 1 second, it
 
 The units required for $\sigma_\gyro$ are [rad.s$^{-0.5}$], so we convert:
 \begin{equation}
-\sigma_\gyro\left[\textrm{rad}.\textrm{s}^{-0.5}\right] = \frac{\pi}{60\times180}\times \textrm{ARW}\left[\textrm{deg}.\textrm{hr}^{-0.5}\right] \sim 1.5\times 10^{-7}~\textrm{rad}.\textrm{s}^{-0.5}.
+\sigma_\gyro\units{rad.s$^{-0.5}$} = \frac{\pi}{60\times180}\times \textrm{ARW}\units{deg.hr$^{-0.5}$} \sim 1.5\times 10^{-7}~\textrm{rad}.\textrm{s}^{-0.5}.
 \end{equation}
 
 Note that we can relate the ARW to the measured discrete rate noise uncertainty $\sigma(\nGyros^\textrm{meas})$ with:
 \begin{equation}
-\sigma(\nGyros^\textrm{meas})\left[\textrm{deg}.\textrm{s}^{-1}\right] = \textrm{ARW}\left[\textrm{deg}.\textrm{hr}^{-0.5}\right]\times 60\sqrt{\textrm{BW}\left[\textrm{Hz}\right]}
+\sigma(\nGyros^\textrm{meas})\units{deg.s$^{-1}$} = \textrm{ARW}\units{deg.hr$^{-0.5}$}\times 60\sqrt{\textrm{BW}\units{Hz}}
 \end{equation}
-where $\textrm{BW}\left[\textrm{Hz}\right]$ is the gyroscope's bandwidth, equal to 50~Hz for our system. We obtain a quantity close to the measured quantity, $\sigma(\nGyros^\textrm{meas})\sim 0.2$~arcsec.s$^{-1}$.
+where $\textrm{BW}\units{Hz}$ is the gyroscope's bandwidth, equal to 50~Hz for our system. We obtain a quantity close to the measured quantity, $\sigma(\nGyros^\textrm{meas})\sim 0.2$~arcsec.s$^{-1}$.
 
 The bias instability units are [rad.s$^{-3/2}$]. The manufacturer specification gives a maximum bias instability over a wide range of temperatures equal to 0.005 deg.hr$^{-1}$. This is for a bandwidth of 50~Hz, so we obtain the bias instability term, which also corresponds to the process noise of our Kalman filter:
 \begin{equation}
-\sigma_\bias\left[\textrm{rad}.\textrm{s}^{-3/2}\right] = 0.005~\textrm{deg.hr}^{-1}\times \sqrt{\textrm{BW}[\textrm{Hz}]}  \sim 1.8\times 10^{-7}~\textrm{rad}.\textrm{s}^{-3/2}.
+\sigma_\bias\units{rad.s$^{-3/2}$} = 0.005~\textrm{deg.hr}^{-1}\times \sqrt{\textrm{BW}\units{Hz}}  \sim 1.8\times 10^{-7}~\textrm{rad}.\textrm{s}^{-3/2}.
 \end{equation}
 This represents how much what we are trying to estimate is expected to vary. Note drift is extremely slow for our gyroscopes, so in practice we will be dominated by the changes in the alignment of the system for all relevant timescales before the gyroscope bias becomes a problem.
 

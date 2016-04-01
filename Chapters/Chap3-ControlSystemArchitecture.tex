@@ -61,17 +61,17 @@ The gimbal is controlled with another Galil Motion controller, a 2-axis stepper 
 
 In practice, all of the control is done using the regular stepper motor encoder. The magnetic encoder is used for limit-checking and to feed back to the momentum dump mechanism. With this in mind, we can now relate the control signal (stepper motor micro-steps per second) to the physical torque that the wheels provide. 
 \begin{eqnarray}
-\Delta\theta[\textrm{rad}] &= &\frac{2\pi}{92.5\times 200\times 64}\Delta(\textrm{micro-steps}) \\ 
+\Delta\theta\units{rad} &= &\frac{2\pi}{92.5\times 200\times 64}\Delta(\textrm{micro-steps}) \\ 
 & \sim & 5.3\times 10^{-6} \Delta(\textrm{micro-steps})\\
-\Delta\theta[\textrm{arcsec}] &\sim &  1.09 \Delta(\textrm{micro-steps})
+\Delta\theta\units{arcsec} &\sim &  1.09 \Delta(\textrm{micro-steps})
 \end{eqnarray}
 
-At 3000~rpm, the CCMG has a total stored momentum $\MCCMG = 20.8$~N.m.s. Of course, depending on the orientation of the wheels, the momentum along the $\z$ axis is only the projection of this momentum vector, $\MCCMGz = 20.8\sin\theta$, where $\theta$ is the angle between the horizontal axis and the rotation axis of the wheels. This makes sense: when the wheels are horizontal, there is no momentum projected on the $\z$ axis because the rotation vectors of the wheels are orthogonal to $\z$. When the rotation axes are along $\z$, that is when we have the maximum momentum along $\z$. 
+At 3000~rpm, the CCMG has a total stored momentum $\MCCMG\units{\textrm{N.m.s}} = 20.8$. Of course, depending on the orientation of the wheels, the momentum along the $\z$ axis is only the projection of this momentum vector, $\MCCMGz\units{\textrm{N.m.s}} = 20.8\sin\theta$, where $\theta\units{\textrm{rad}}$ is the angle between the horizontal axis and the rotation axis of the wheels. This makes sense: when the wheels are horizontal, there is no momentum projected on the $\z$ axis because the rotation vectors of the wheels are orthogonal to $\z$. When the rotation axes are along $\z$, that is when we have the maximum momentum along $\z$. 
 
 The torque is the variation of the momentum with time. So we can write:
 \begin{eqnarray}
-\ccmgtorque &= & 20.8\times \dot{\theta}[\textrm{rad.s}^{-1}] \cos\theta\\
- &= & 1.1\times 10^{-4}\times \velstepper[\textrm{micro-steps.s}^{-1}]\cos\theta
+\ccmgtorque\units{N.m} &= & 20.8\times \dot{\theta}\units{rad.s$^{-1}$} \cos\theta\\
+ &= & 1.1\times 10^{-4}\times \velstepper\units{micro-steps.s$^{-1}$}\cos\theta
 \end{eqnarray}
 
 \begin{figure}[!ht]
@@ -91,6 +91,15 @@ The torque is the variation of the momentum with time. So we can write:
 
 \subsection{Momentum dump mechanism}
 \label{subsec:chap3momdumpmotor}
+
+\begin{figure}[!ht]
+	\centering
+	\includestandalone{Figures/rotator}
+	\caption[Momentum dump assembly]{Momentum dump assembly}
+	\label{fig:rotator}
+    \end{figure}
+
+
 \subsection{Elevation control (Rotators)}
 \subsection{Delay lines}
 \subsection{Tip/tilt}
