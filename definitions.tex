@@ -110,6 +110,16 @@
 % Chapter 3
 % ------------------------------------------------------------------------------------
 
+% change spacing in equations
+\newenvironment{equations}{\begin{doublespace}\begin{equation}}{\end{equation}\end{doublespace}}
+\newenvironment{eqnarrays}{\begin{doublespace}\begin{eqnarray}}{\end{eqnarray}\end{doublespace}}
+
+
+\def\Az{\phi_\textrm{Az}}
+\def\dAz{\dot{\phi}_\textrm{Az}}
+\def\El{\phi_\textrm{El}}
+\def\dOPD{\dot{\textrm{OPD}}}
+
 % Reference frames
 \def\G{\textrm{\textbf{G}}}
 \def\L{\textrm{\textbf{L}}}
@@ -156,7 +166,7 @@
 
 \def\urad{\mu\textrm{rad}}
 \def\xEl{\Phi}
-\def\El{\Psi}
+%\def\El{\Psi}
 \def\xElHat{\hatAng{\xEl}{}{}}
 \def\varxElHat{\angvar{\hatAng{\xEl}{}{}}}
 \def\invVarxElHat{\invvar{\hatAng{\xEl}{}{}}}
@@ -188,6 +198,8 @@
 \def\gyroVecMeas{\gyroVec^\textrm{meas}}
 \def\matOmega{\boldsymbol\Omega}
 
+% fine guidance sensor defitions
+\def\fine{\textrm{fgs}}
 
 % Vectors
 \newcommand{\units}[1]{{}_{[\textrm{#1}]}}
@@ -224,6 +236,10 @@
 \def\exttorques{\torque_{\textrm{ext}}}
 \def\ccmgtorque{\torque_{\CCMG,z}}
 \def\momdumptorque{\torque_{\textrm{Mom.},z}}
+
+\def\Kp{\textrm{K}_\textrm{p}}
+\def\Kd{\textrm{K}_\textrm{d}}
+\def\Ki{\textrm{K}_\textrm{i}}
 
 % Kalman filter
 \newcommand{\quat}[1]{\bar{#1}}
@@ -274,4 +290,6 @@
 \def\C{\textrm{\textbf{C}}}
 \def\thetaMat{\boldsymbol\Theta}
 
-
+% modes
+\def\BRAKE{\textrm{BRAKE}}
+\def\SLEW{\textrm{SLEW}}

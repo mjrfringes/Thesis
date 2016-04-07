@@ -9,7 +9,7 @@
 \tikzstyle{output} = [node distance=1cm]
 \newpage
 \begin{tikzpicture}[auto, >=latex',scale=0.8, every node/.style={transform shape}]
-\onehalfspacing
+\linespread{1}
 
 
 % Inputs
@@ -50,9 +50,9 @@
 \node[name=mid,right of=state transition,node distance=2cm,draw,fill,minimum size=3pt,circle]{};
 \node[above] at (mid){$\StateTransitionMat_k$};
 \draw[->] (state transition.east) -- (mid) -- (estimate covariance.west) ;
-\node[name=mid2,below of=mid,node distance=1cm,draw,fill,minimum size=3pt,circle]{};
-\draw[-] (mid) --  (mid2) ;
-\draw[->] (mid2) -|  (update propagation matrices.north) ;
+\node[name=mid2,below of=mid,node distance=1cm,outer sep=0cm,inner sep=0cm]{};
+\draw[-] (mid) --  (mid2.north) ;
+\draw[->] (mid2.north) -|  (update propagation matrices.north) ;
 
 \node[name=mid,right of=estimate covariance,node distance=3cm]{};
 \node[above] at (mid){$\stateCovMat_{k|k-N}$};

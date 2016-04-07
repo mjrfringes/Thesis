@@ -6,9 +6,10 @@
 
 
 \begin{document}
+\linespread{1}
 
 \begin{tikzpicture}
-\pgfmathsetmacro{\thetaX}{60}
+\pgfmathsetmacro{\thetaX}{80}
 \pgfmathsetmacro{\phiZ}{-125}
 \tdseteulerxyz
 
@@ -17,28 +18,35 @@
 \pgfmathsetmacro{\REarth}{4}
 \pgfmathsetmacro{\RHorizon}{6}
 \pgfmathsetmacro{\starAz}{30-125}
-\pgfmathsetmacro{\starEl}{65}
+\pgfmathsetmacro{\starEl}{45}
 \pgfmathsetmacro{\starRoll}{-15}
+\pgfmathsetmacro{\starcamElevation}{-45}
+\pgfmathsetmacro{\telElevation}{-25}
 
 \coordinate (O) at (0,0,0);
 
 % draw main axes
-\draw[tdplot_main_coords,->,thick,orange] (O) -- (0,0,\REarth) node[above]{$\vectors{z}_\gyro$};
-\draw[tdplot_main_coords,->,thick,orange] (O) -- (0,\REarth,0) node[above]{$\vectors{y}_\gyro$};
-\draw[tdplot_main_coords,->,thick,orange] (O) -- (\REarth,0,0) node[above]{$\vectors{x}_\gyro$};
+\draw[tdplot_main_coords,->,thick,\gondolacolor] (O) -- (0,0,\REarth) node[above]{$\vectors{z}_\gyro$};
+\draw[tdplot_main_coords,->,thick,\gondolacolor] (O) -- (0,\REarth,0) node[above]{$\vectors{y}_\gyro$};
+\draw[tdplot_main_coords,->,thick,\gondolacolor] (O) -- (\REarth,0,0) node[above]{$\vectors{x}_\gyro$};
 \node[tdplot_main_coords,draw,fill,minimum size=3pt,circle] at (O){};
 
 
 
 % draw horizon
 \tdplotdrawarc[tdplot_main_coords,thin]{(O)}{\RHorizon}{0}{360}{below=1em, right,align=center}{Local \\ horizon};
-    \filldraw[tdplot_main_coords,\celestialcolor, fill opacity=0.2] (O) circle (\RHorizon);
+\filldraw[tdplot_main_coords,\celestialcolor, fill opacity=0.2] (O) circle (\RHorizon);
 
 
 % draw azimuth arc
 \tdplotsetrotatedcoords{90}{0}{0}
 \tdplotsetrotatedthetaplanecoords{90}
-\tdplotdrawarc[tdplot_rotated_coords,thick,red,->]{(O)}{0.6*\REarth}{0}{\starAz}{above}{azimuth};
+\tdplotdrawarc[tdplot_rotated_coords,thick,\telcolor,->]{(O)}{0.6*\REarth}{0}{\starAz}{above}{$\Az$};
+
+\tdplotsetrotatedcoords{0}{\telElevation}{0}
+\draw[tdplot_rotated_coords,->,thick,\telcolor] (O) -- (\REarth,0,0) node[above]{$\vectors{x}_\tel$};
+\tdplotsetrotatedthetaplanecoords{0}
+\tdplotdrawarc[tdplot_rotated_coords,thick,\telcolor,<-]{(O)}{0.6*\REarth}{90}{90-\telElevation}{left,align=center}{$\El$};
 
 % draw elevation arc
 \tdplotsetrotatedcoords{\starAz}{-\starEl}{0}
@@ -46,25 +54,25 @@
 \tdplotsetrotatedcoords{\starAz}{0}{0}
 \draw[tdplot_rotated_coords,dashed] (O) -- (\RHorizon,0,0);
 \tdplotsetrotatedthetaplanecoords{0}
-\tdplotdrawarc[tdplot_rotated_coords,thick,red,->]{(O)}{0.6*\REarth}{90}{90-\starEl}{right=1em}{elevation};
+\tdplotdrawarc[tdplot_rotated_coords,thick,\telcolor,->]{(O)}{0.6*\REarth}{90}{90-\starEl}{right=0.3em,align=center}{desired \\ elevation};
+\tdplotdrawarc[tdplot_rotated_coords,thin,gray!20]{(O)}{\RHorizon}{90}{-90}{}{};
 
 
 %draw star and reference frame
 \tdplotsetrotatedcoords{\starAz}{-\starEl}{\starRoll}
 \node[tdplot_rotated_coords,draw=black,fill=yellow,star,star points=10,minimum size=10pt] at (\RHorizon,0,0){}; %star
 \begin{scope}[tdplot_rotated_coords,shift={(\RHorizon,0,0)}]
-\draw[tdplot_rotated_coords,->,\celestialcolor
-] (0,0,0) -- (2,0,0)node[above]{$\vectors{x}$};
+\draw[tdplot_rotated_coords,->,\celestialcolor] (0,0,0) -- (2,0,0)node[above]{$\vectors{x}$};
 \draw[tdplot_rotated_coords,->,\celestialcolor] (0,0,0) -- (0,2,0)node[above]{$\vectors{y}$};
-\draw[tdplot_rotated_coords,dashed,\celestialcolor] (0,0,0) -- (0,-2,0) node[below right,rotate=-50,midway]{constant DEC};
+\draw[tdplot_rotated_coords,dashed,\celestialcolor] (0,0,0) -- (0,-2,0) node[above right,rotate=2,midway]{constant DEC};
 \draw[tdplot_rotated_coords,->,\celestialcolor] (0,0,0) -- (0,0,2)node[above]{$\vectors{z}$};
 \draw[tdplot_rotated_coords,dashed,\celestialcolor] (0,0,0) -- (0,0,-2)
-node[above ,rotate=-15,align=center,\celestialcolor]{constant RA};
+node[above ,rotate=-43,align=center,\celestialcolor]{constant RA};
 \end{scope}
 
 % draw star camera and coordinates
 \pgfmathsetmacro{\sizeStarcamFrame}{1.5}
-\tdplotsetrotatedcoords{0}{-25}{0}
+\tdplotsetrotatedcoords{0}{\starcamElevation}{0}
 \draw[tdplot_rotated_coords,\starcamcolor,thick] (0,0,0) -- (\RHorizon,0,0);
 \begin{scope}[tdplot_rotated_coords,shift={(\RHorizon,0,0)}]
 \draw[tdplot_rotated_coords,\starcamcolor] (0,-\sizeStarcamFrame,-\sizeStarcamFrame)  -- (0,-\sizeStarcamFrame,\sizeStarcamFrame);
@@ -77,20 +85,24 @@ node[above ,rotate=-15,align=center,\celestialcolor]{constant RA};
 \end{scope}
 
 % plot celestial coordinates
-\tdplotsetrotatedcoords{0}{-25}{\starRoll}
+\tdplotsetrotatedcoords{0}{\starcamElevation}{\starRoll}
 \begin{scope}[tdplot_rotated_coords,shift={(\RHorizon,0,0)}]
+
 %\draw[tdplot_rotated_coords,->,\celestialcolor] (0,0,0) -- (2,0,0);
-\node[tdplot_rotated_coords,right=1em,red] at (0,0,0){(RA,DEC)$_\starcam$};
+\node[tdplot_rotated_coords,right=1em,\starcamcolor] at (0,0,0){(RA,DEC)$_\starcam$};
 \draw[tdplot_rotated_coords,->,\celestialcolor] (0,0,0) -- (0,2,0)node[left]{$\vectors{y}$};
 \draw[tdplot_rotated_coords,\celestialcolor,dashed] (0,0,0) -- (0,-2,0) node[below,rotate=22,right=0.1em,midway]{};
 \draw[tdplot_rotated_coords,->,\celestialcolor] (0,0,0) -- (0,0,4)node[above]{$\vectors{z}$};
 \draw[tdplot_rotated_coords,\celestialcolor,dashed] (0,0,0) -- (0,0,-2)
 node[above left,rotate=90,align=center,midway]{};
-\node[draw,fill,circle,minimum size=3pt,tdplot_rotated_coords,red] at (0,0,0){};
+\node[draw,fill,circle,minimum size=3pt,tdplot_rotated_coords,\starcamcolor] at (0,0,0){};
 \end{scope}
-\tdplotsetrotatedcoords{0}{90-25}{0}
+\tdplotsetrotatedthetaplanecoords{0}
+\tdplotdrawarc[tdplot_rotated_coords,thin,gray!20]{(O)}{\RHorizon}{90-\starcamElevation+1}{-90-\starcamElevation+1}{}{};
+
+\tdplotsetrotatedcoords{0}{90+\starcamElevation}{0}
 \tdplotsetrotatedthetaplanecoords{90}
-\tdplotdrawarc[tdplot_rotated_coords,red,<-,thick]{(0,0,\RHorizon)}{3}{270}{270+\starRoll}{right=1.0em}{ROLL$_\starcam$};
+\tdplotdrawarc[tdplot_rotated_coords,\starcamcolor,<-,thick]{(0,0,\RHorizon)}{3}{270}{270+\starRoll}{right=1.0em}{ROLL$_\starcam$};
 
 
 %\tdplotsetrotatedthetaplanecoords{90}

@@ -1,0 +1,38 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+\begin{document}
+\tikzstyle{block} = [draw, fill=black!20, rectangle, 
+    minimum height=3em, minimum width=6em,align=center]
+\tikzstyle{sum} = [draw, fill=black!20, circle, 
+    minimum height=2em, minimum width=2em,align=center]
+\tikzstyle{input} = [node distance=1cm,align=center]
+\tikzstyle{output} = [node distance=1cm,align=center,above]
+\begin{tikzpicture}[auto, scale=0.8, every node/.style={transform shape}]
+\linespread{1}
+
+\node[input,name=desired state,above=2em]{Desired \\ state};
+\node[sum,name=sum,right of=desired state,node distance=2cm]{};
+\draw[->] (desired state.east) -- (sum.west);
+\node[block,name=PID,right of=sum,node distance=3cm]{PID \\controller};
+\draw[->] (sum.east) -- (PID.west);
+\node[right of=sum,node distance = 1cm,above,yshift=0.2cm]{Error};
+\node[block,name=actuator,right of=PID,node distance=5cm]{System};
+\draw[->] (PID.east) -- (actuator.west);
+\node[right of=PID,node distance = 2.3cm,above,yshift=0.2cm]{Command};
+\node[output,name=out,right of=actuator,node distance=3cm]{};
+\node[output,name=mid,right of=actuator,node distance=2cm,draw,fill,minimum size=3pt,circle]{};
+\draw[->] (actuator.east) -- (mid.west);
+\draw[->] (mid.east) -- (out.west);
+
+\node[block,name=sensor,below of=PID,node distance=3cm,shift={(2cm,0cm)}]{Sensors \\ or Estimator};
+\draw[->] (mid.south) |- (sensor.east);
+\draw[->] (sensor.west) -| (sum.south);
+\node[left of=sensor,above,node distance=3cm,align=center,yshift=0.1cm]{Measured or \\  estimated state};
+
+\node[left of=sum,shift={(0.2cm,0.2cm)}]{+};
+\node[below of=sum,shift={(-0.2cm,0.2cm)},align=center]{-};
+
+\end{tikzpicture}
+\end{document}

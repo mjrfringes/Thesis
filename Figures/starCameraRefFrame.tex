@@ -6,7 +6,7 @@
 \begin{document}
 
 \begin{tikzpicture}[cross/.style={path picture={ 
-  \draw[black]
+  \draw[black,thick]
 (path picture bounding box.south east) -- (path picture bounding box.north west) (path picture bounding box.south west) -- (path picture bounding box.north east);
 }},label/.style={%
    postaction={ decorate,transform shape,
@@ -15,24 +15,26 @@
 %%% draw the star camera frame box
 \def\starcamerotateangle{30}
 \def\telescoperotateangle{10}
+\def\colortelaxes{\celestialcolor!20}
+
 \def\angledist{1}
 %\draw (0,0) rectangle (13,10);
 \tikzset{>=latex}
 
 %%% drawing the inertial reference frame
 \begin{scope}[shift={(8,7.5)},rotate=\starcamerotateangle]
-\draw[->] (7,0) -- (-7,0) node[above,pos=0.9,rotate=\starcamerotateangle] {increasing RA} node[below,pos=0.9,rotate=\starcamerotateangle] {line of constant DEC};
+\draw[->,\celestialcolor] (7,0) -- (-7,0) node[above,pos=0.9,rotate=\starcamerotateangle] {increasing RA} node[below,pos=0.9,rotate=\starcamerotateangle] {line of constant DEC};
 \coordinate (RAnode) at (-\angledist,0);
-\draw[->] (0,-1.5) -- (0,4.5) node[above,pos=0.8,rotate=\starcamerotateangle-90] {increasing DEC} node[below,pos=0.8,rotate=\starcamerotateangle-90] {line of constant RA} ;
+\draw[->,\celestialcolor] (0,-1.5) -- (0,4.5) node[above,pos=0.8,rotate=\starcamerotateangle-90] {increasing DEC} node[below,pos=0.8,rotate=\starcamerotateangle-90] {line of constant RA} ;
 \coordinate (DECnode) at (0,\angledist);
 %%% drawing the star camera reference frame
 \begin{scope}[rotate=-\starcamerotateangle]
-\node[circle,draw,cross,fill,minimum size=3pt] (center) at (0,0) {};
-\node[right,align=left] at (0.2,-0.1) {$\vectors{x}_\starcam$= star camera \\ boresight vector};
-\draw[->,line width=0.2mm] (0,0) -- (0,3);
-\node[right] at (0,3) {$\vectors{z}_\starcam$};
-\draw[->,line width=0.2mm] (0,0) -- (-3,0);
-\node[above] at (-3,0) {$\vectors{y}_\starcam$};
+\node[circle,draw,cross,minimum size=10pt,thick,\starcamcolor] (center) at (0,0) {};
+\node[right,align=left,\starcamcolor] at (0.2,-0.1) {$\vectors{x}_\starcam$= star camera \\ boresight vector};
+\draw[->,line width=0.2mm,\starcamcolor] (0,0) -- (0,3);
+\node[right,\starcamcolor] at (0,3) {$\vectors{z}_\starcam$};
+\draw[->,line width=0.2mm,\starcamcolor] (0,0) -- (-3,0);
+\node[above,\starcamcolor] at (-3,0) {$\vectors{y}_\starcam$};
 \coordinate (znode) at (0,\angledist);
 \coordinate (ynode) at (-\angledist,0);
 %%% need to rotate angles once more
@@ -43,7 +45,7 @@
 
 \end{scope}
 %%% drawing roll angle
-\draw[->,label={[above]{Roll}}] (DECnode) to [bend left] (znode);
+\draw[->,label={[above]{Roll}},\starcamcolor] (DECnode) to [bend left] (znode);
 \end{scope}
 
 %%% drawing the star camera reference frame
@@ -52,11 +54,11 @@
 
 
 %%% drawing the telescope's reference frame
-\def\colortelaxes{gray!60}
 \begin{scope}[shift={(7,1)},rotate=\starcamerotateangle]
 \begin{scope}[rotate=\telescoperotateangle-\starcamerotateangle]
-\node[circle,draw, fill, minimum size=3pt] (telescope center) at (0,0) {};
-\node[right,align=left,rotate=\telescoperotateangle] at (0.1,-0.3) {$\vectors{x}_\tel=$ telescope \\  line of sight};
+%\node[circle,draw, fill, minimum size=3pt] (telescope center) at (0,0) {};
+\node[circle,cross,draw,minimum size=10pt,thick] (telescope center) at (0,0) {};
+\node[right,align=left,rotate=\telescoperotateangle] at (0.2,-0.5) {$\vectors{x}_\tel=$ telescope \\  line of sight};
 \draw[->,line width=0.2mm] (0,0) -- (-3,0);
 \draw[line width=0.2mm] (0,0) -- (6,0);
 \node[right,rotate=\telescoperotateangle] at (0,3) {$\vectors{z}_\tel$};
@@ -68,17 +70,17 @@
 \node[above,align=center] at (3.5,2.6) {Telescope \\ target};
 \coordinate (ztarget) at (0,2.5);
 \coordinate (ytarget) at (3.5,0);
-\draw[dashed] (target) --  (ztarget) node[below,near end,rotate=\telescoperotateangle] {$\Delta\xEl=\Delta$xEl};
-\draw[dashed] (target) -- node[right,near end,rotate=\telescoperotateangle] {$\Delta\El=\Delta$El}  (ytarget);
+\draw[dashed] (target) --  (ztarget) node[below,near end,rotate=\telescoperotateangle] {$\approx\Delta\Az$};
+\draw[dashed] (target) -- node[right,near end,rotate=\telescoperotateangle] {$\approx\Delta\El$}  (ytarget);
 \draw[fill] (ztarget) circle [radius=0.5mm];
 \draw[fill] (ytarget) circle [radius=0.5mm];
 %\node[below right] at (ytarget) {$\Delta\xEl=\Delta$xEl};
 %\node[below right] at (ztarget) {$\Delta\El=\Delta$El};
-\draw[->,line width=0.3mm] (telescope center) -- (target) node [below,midway,sloped,rotate=\telescoperotateangle] {error vector};
+\draw[->,line width=0.3mm] (telescope center) -- (target) node [below,midway,sloped,rotate=\telescoperotateangle,align=center] {error vector\\};
 \end{scope}
 \draw[color=\colortelaxes] (9,0) -- (-2,0);
 \draw[color=\colortelaxes] (0,-1.2) -- (0,5);
-\node[circle,draw, fill, minimum size=3pt] (telescope center) at (0,0) {};
+%\node[circle,draw, fill, minimum size=3pt] (telescope center) at (0,0) {};
 
 %%% find out the coordinates of the target in the rotated reference frame
 \path let \p{test} = (target) in coordinate (target_y) at (\x{test},0);

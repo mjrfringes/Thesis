@@ -1,0 +1,105 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+\begin{document}
+\tikzstyle{block} = [draw, fill=black!20, rectangle, 
+    minimum height=3em, minimum width=6em,align=center,node distance=4cm]
+\tikzstyle{sum} = [draw, fill=black!20, circle, 
+    minimum height=2em, minimum width=2em,align=center,node distance=3cm]
+\tikzstyle{input} = [node distance=1cm,align=center]
+\tikzstyle{output} = [node distance=1cm,align=center]
+\begin{tikzpicture}[auto, scale=0.7, every node/.style={transform shape}]
+\linespread{1}
+
+% blocks
+\node[sum,name=calculate az el]{Calculate \\ $\Az$, $\El$,\\ $\dAz$};
+\node[block,name=az pid controller,right of=calculate az el]{Azimuth PID \\ controller};
+\node[block,name=ccmg,right of=az pid controller]{CCMG};
+\node[block,name=momentum dump,above of=ccmg,node distance=3cm]{Momentum \\ Dump};
+\node[block,name=galil elevation controller,above of=az pid controller][xshift=4cm][yshift=1cm]{Galil \\ Controller};
+\node[block,name=griffin,right of=galil elevation controller]{Griffin \\ stages};
+\node[block,name=gondola,right of=ccmg]{Gondola \\ System};
+\node[block,name=gyroscopes,below of=gondola,node distance=2cm]{Gyroscopes};
+\node[block,name=star camera,below of=gyroscopes,node distance=2cm]{Star\\Camera};
+\node[block,name=fine guiding,below of=star camera,node distance=2cm]{Fine guidance\\Sensor};
+\node[block,name=estimator,below of=ccmg,minimum height=5cm,node distance=4cm]{Estimator\\Kalman\\filter};
+
+\node[block,name=rotate,below of=calculate az el,node distance=6cm]{Rotate};
+\node[block,name=calculate opd,below of=rotate,node distance=3cm]{Calculate \\OPD, $\dOPD$};
+\node[sum,name=sum,right of=calculate opd,node distance=5cm]{};
+\node[block,name=wdl controller,right of=sum,node distance=3cm]{WDL \\ controller};
+\node[block,name=wdl system,right of=wdl controller]{WDL \\ system};
+\node[block,name=wdl sensor,below of=wdl controller,node distance=2cm]{Position \\ sensor};
+
+% inputs
+\node[input,name=target,left of=calculate az el,node distance=5cm]{};
+\node[align=center][shift={(2cm,0.5cm)}] at (target) {Target RA, DEC\\Desired $\dAz$};
+\node[name=target2,outer sep=0pt][shift={(2cm,0cm)}] at (target) {};
+
+% outputs
+\node[output,name=gondola out,right of=gondola,node distance=4cm]{};
+\node[shift={(-1.5cm,0.5cm)},align=center,font=\bf] at (gondola out) {Gondola \\Attitude $\Attitude$};
+\node[name=gondola out mid,shift={(-1.5cm,0cm)},outer sep=0pt] at (gondola out) {};
+\node[output,name=griffin out,right of=griffin,node distance=4cm]{};
+\node[shift={(-1.5cm,0.5cm)},align=center,font=\bf] at (griffin out) {Telescopes\\elevation};
+\node[output,name=wdl out,right of=wdl system,node distance=4cm]{};
+\node[shift={(-1.5cm,0.5cm)},align=center,font=\bf] at (wdl out) {Delay line\\position};
+\node[name=wdl out mid,shift={(-1.5cm,0cm)},outer sep=0pt] at (wdl out) {};
+
+% lines
+\draw[->] (target) -- (calculate az el);
+\draw[->] (calculate az el.east) -- (az pid controller.west);
+\draw[->] (az pid controller.east) -- (ccmg.west);
+\draw[->] (ccmg.east) -- (gondola.west);
+\draw[->] (gondola.east) -- (gondola out);
+\draw[->] (calculate az el.north) |- (galil elevation controller.west);
+\draw[->] (galil elevation controller.east) -- (griffin.west);
+\draw[->] (griffin.east) -- (griffin out.west);
+\draw[->] (gondola out mid) |- (gyroscopes.east);
+\draw[->] (gondola out mid) |- (star camera.east);
+\draw[->] (gondola out mid) |- (fine guiding.east);
+
+\node[name = estimator east] at (estimator.east){};
+\node[name = estimator north east,above of = estimator east][yshift=1cm]{};
+\node[name = estimator south east,below of = estimator east][yshift=-1cm]{};
+\draw[->] (star camera.west) -- (estimator east);
+\draw[->] (gyroscopes.west) -- (estimator north east) ;
+\draw[->] (fine guiding.west) -- (estimator south east);
+
+\draw[->] (estimator.west) -| (calculate az el);
+\draw[->] (estimator.west) -| (rotate.north);
+\draw[->] (rotate.south) -- (calculate opd.north);
+\draw[->] (target2) |- (calculate opd.west);
+\draw[->] (calculate opd.east) -- (sum.west);
+\draw[->] (sum.east) -- (wdl controller.west);
+\draw[->] (wdl controller.east) -- (wdl system.west);
+\draw[->] (wdl system.east) -- (wdl out);
+\draw[->] (wdl out mid) |- (wdl sensor.east);
+\draw[->] (wdl sensor.west) -| (sum.south);
+\draw[->] (gondola.north) |- (momentum dump.20);
+\draw[->] (momentum dump.-20) -| (gondola.130);
+\draw[->] (ccmg.north) -- (momentum dump.south);
+
+% more text
+\node[shift={(-0.3cm,-0.3cm)}] at (calculate az el.south){-};
+\node[shift={(-0.3cm,-0.3cm)}] at (calculate az el.west){+};
+\node[shift={(-0.3cm,-0.3cm)}] at (sum.south){-};
+\node[shift={(-0.3cm,-0.3cm)}] at (sum.west){+};
+\node[shift={(-3cm,0cm)},align=center,above=0.5em] at (estimator.west){Estimated gongola\\angular position and velocity\\ in inertial frame};
+\node[shift={(0cm,-0.7cm)},align=left,right=0.5em] at (rotate.south){Estimated telescope\\angular position and velocity\\ in inertial frame};
+\node[shift={(0cm,2cm)},align=left,right=0.5em] at (gondola.north){Gondola angular\\ momentum};
+\node[shift={(0cm,-0.5cm)},align=right,left] at (momentum dump.south){CCMG angular\\ momentum};
+\node[shift={(0cm,5.2cm)},align=center,above] at (calculate az el){Desired elevation\\$\El$};
+\node[shift={(-0.5cm,0.0cm)},above] at (gyroscopes.west){$\boldsymbol{\theta_\gyro}$};
+\node[shift={(-0.5cm,0.0cm)},above] at (star camera.west){$\Attitude^\textrm{meas}_\starcam$};
+\node[shift={(-0.5cm,0.0cm)},above] at (fine guiding.west){$\Attitude^\textrm{meas}_\fine$};
+\node[shift={(-0.7cm,0.1cm)},above] at (gondola.west){Torque};
+\node[shift={(-0.7cm,-0.1cm)},below] at (gondola.west){$\ccmgtorque$};
+\node[shift={(-0.5cm,0.1cm)},above] at (ccmg.west){$n$};
+\node[shift={(-0.5cm,0.1cm)},align=center,above] at (az pid controller.west){$\Az$\\$\dAz$};
+\node[shift={(0.8cm,-0.5cm)},align=center,below] at (momentum dump.east){Torque \\ $\momdumptorque$};
+
+
+\end{tikzpicture}
+\end{document}

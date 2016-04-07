@@ -1,8 +1,6 @@
 \documentclass{standalone}
 \usepackage{tikz}
 \usetikzlibrary{positioning,intersections,calc,fadings,decorations.pathreplacing}
-\def\starcamcolor{purple}
-\def\celestialcolor{blue}
 
 
 \begin{document}
@@ -10,6 +8,7 @@
 \pgfmathsetmacro{\thetaXt}{80}
 \pgfmathsetmacro{\phiZ}{140}
 \tdplotsetmaincoords{\thetaXt}{\phiZ}
+\linespread{1}
 
 % rotate reference frames according to the Z, Y, X order instead of the default Z, Y, Z
 \tdseteulerxyz
@@ -43,7 +42,7 @@
 \draw[->,thick] (O) -- (1.5*\RSphere,0,0); % axis to vernal equinox
 
 % Earth
-\filldraw[name path=earth,tdplot_screen_coords,ball color=blue, fill opacity=0.1] (O) circle (\REarth);
+\filldraw[name path=earth,tdplot_screen_coords,ball color=\celestialcolor, fill opacity=0.1] (O) circle (\REarth);
 \node[tdplot_screen_coords,above] at (4,-2.5) {Earth}; % Earth label
 
 % draw equator
@@ -54,9 +53,9 @@
 \filldraw[tdplot_screen_coords,ball color=white, fill opacity=0.05,name path=celsphere] (O) circle (\RSphere);
 \node[tdplot_screen_coords,above] at (4,\RSphere-0.5) {Celestial sphere}; % celestial sphere label
 \tdplotsetthetaplanecoords{90} % rotate the theta plane
-\tdplotdrawarc[name path=celeq,tdplot_main_coords,thick,blue]{(O)}{\RSphere}{90-\phiZ}{275-\phiZ}{anchor=north}{Celestial equator}; % draw equator front
-\tdplotdrawarc[tdplot_main_coords,dashed,thick,blue]{(O)}{\RSphere}{90-\phiZ}{-\phiZ-90}{}{};% draw equator back
-\tdplotdrawarc[draw=none,name path=celeq2,tdplot_main_coords,thick,blue]{(O)}{\RSphere}{0}{360}{}{}; % create full 360 degree equator line, but don't draw it
+\tdplotdrawarc[name path=celeq,tdplot_main_coords,thick,\celestialcolor]{(O)}{\RSphere}{90-\phiZ}{275-\phiZ}{anchor=north}{Celestial equator}; % draw equator front
+\tdplotdrawarc[tdplot_main_coords,dashed,thick,\celestialcolor]{(O)}{\RSphere}{90-\phiZ}{-\phiZ-90}{}{};% draw equator back
+\tdplotdrawarc[draw=none,name path=celeq2,tdplot_main_coords,thick,\celestialcolor]{(O)}{\RSphere}{0}{360}{}{}; % create full 360 degree equator line, but don't draw it
 
 % draw star
 \node[draw=black,fill=yellow,star,star points=10,minimum size=10pt] at (S){};
@@ -64,12 +63,12 @@
 % RA star arc
 \tdplotsetrotatedcoords{90}{0}{0}
 \tdplotsetrotatedthetaplanecoords{90}
-\tdplotdrawarc[tdplot_rotated_coords,red,->]{(O)}{0.8*\REarth}{0}{\starRA}{above=0.5em}{RA};
+\tdplotdrawarc[tdplot_rotated_coords,\celestialcolor,->]{(O)}{0.8*\REarth}{0}{\starRA}{above=0.5em}{RA};
 
 % DEC star arc
 \tdplotsetrotatedcoords{\starRA}{0}{0}
 \tdplotsetrotatedthetaplanecoords{0}
-\tdplotdrawarc[tdplot_rotated_coords,red,->]{(O)}{0.8*\REarth}{90}{90-\starDEC}{below,rotate=80}{DEC};
+\tdplotdrawarc[tdplot_rotated_coords,\celestialcolor,->]{(O)}{0.8*\REarth}{90}{90-\starDEC}{below,rotate=80}{DEC};
 % meridian that goes through the star's projection on the Earth
 %\tdplotdrawarc[tdplot_rotated_coords]{(O)}{\REarth}{180}{0}{}{}; % front
 %\tdplotdrawarc[tdplot_rotated_coords,dashed]{(O)}{\REarth}{180}{360}{}{}; % back
@@ -86,8 +85,8 @@
 % ecliptic plane
 \tdplotsetrotatedcoords{0}{0}{90-\ecliptic}
 \tdplotsetrotatedthetaplanecoords{0}
-\tdplotdrawarc[name path=ecl,tdplot_rotated_coords,thick,blue]{(O)}{\RSphere}{180-\phiZ}{360-\phiZ}{anchor=north,rotate=-\ecliptic}{Ecliptic plane}; % front
-\tdplotdrawarc[tdplot_rotated_coords,dashed,thick,blue]{(O)}{\RSphere}{180-\phiZ}{-\phiZ}{}{}; % back
+\tdplotdrawarc[name path=ecl,tdplot_rotated_coords,thick,\celestialcolor]{(O)}{\RSphere}{180-\phiZ}{360-\phiZ}{anchor=north,rotate=-\ecliptic}{Ecliptic plane}; % front
+\tdplotdrawarc[tdplot_rotated_coords,dashed,thick,\celestialcolor]{(O)}{\RSphere}{180-\phiZ}{-\phiZ}{}{}; % back
 
 % intersections
 \path[name intersections={of= celeq and ecl,by={vereq}}]; % find vernal equinox point
@@ -96,9 +95,9 @@
 
 % draw payload reference frame at center of sphere
 \tdplotsetrotatedcoords{\thetaZ}{\thetaY}{\thetaX}
-\draw[tdplot_rotated_coords,orange,->,thick] (O) -- (0,0,\gondolaCSsize) node[above left]{$\vectors{z}_\gyro$};
-\draw[tdplot_rotated_coords,orange,->,thick] (O) -- (0,\gondolaCSsize,0) node[right]{$\vectors{y}_\gyro$};
-\draw[tdplot_rotated_coords,orange,->,thick] (O) -- (\gondolaCSsize,0,0) node[above right]{$\vectors{x}_\gyro$};
+\draw[tdplot_rotated_coords,\gondolacolor,->,thick] (O) -- (0,0,\gondolaCSsize) node[above left]{$\vectors{z}_\gyro$};
+\draw[tdplot_rotated_coords,\gondolacolor,->,thick] (O) -- (0,\gondolaCSsize,0) node[right]{$\vectors{y}_\gyro$};
+\draw[tdplot_rotated_coords,\gondolacolor,->,thick] (O) -- (\gondolaCSsize,0,0) node[above right]{$\vectors{x}_\gyro$};
 
 % % draw star camera elevation arc
 %\tdplotsetrotatedthetaplanecoords{0}
@@ -133,13 +132,14 @@
 % plot celestial coordinates of star camera field
 \tdplotsetrotatedcoords{\thetaZ}{\thetaY-\elevationangle}{0}
 \begin{scope}[tdplot_rotated_coords,shift={(\RSphere,0,0)}]
-\node[tdplot_rotated_coords,above right,red] at (0,0,0){}; 
+
+\node[tdplot_rotated_coords,above right] at (0,0,0){}; 
 \draw[tdplot_rotated_coords,->,\celestialcolor] (0,0,0) -- (0,3,0);
 \draw[tdplot_rotated_coords,->,\celestialcolor] (0,0,0) -- (0,0,3);
-\node[draw,fill,circle,minimum size=3pt,tdplot_rotated_coords,red] at (0,0,0){};
+\node[draw,fill,circle,minimum size=3pt,tdplot_rotated_coords,\starcamcolor] at (0,0,0){};
 \end{scope}
 \tdplotsetrotatedthetaplanecoords{0}
-\tdplotdrawarc[name path=meridianstarcam,tdplot_rotated_coords,thin,blue,draw=none]{(O)}{\RSphere}{0}{180}{}{};
+\tdplotdrawarc[name path=meridianstarcam,tdplot_rotated_coords,thin,\celestialcolor,draw=none]{(O)}{\RSphere}{0}{180}{}{};
 \path[name intersections={of= celeq and meridianstarcam,by={celstarcam}}];%, 
 %\node[draw,fill,circle,minimum size=3pt,tdplot_rotated_coords,red] at (celstarcam){};
 \draw[tdplot_rotated_coords,thin] (O) -- (celstarcam);
@@ -147,18 +147,18 @@
 % RA starcam arc
 \tdplotsetrotatedcoords{90}{0}{0}
 \tdplotsetrotatedthetaplanecoords{90}
-\tdplotdrawarc[tdplot_rotated_coords,red,->,thick]{(O)}{1*\REarth}{0}{\thetaZ}{below=2em, right=5em}{\small RA$_\starcam$};
+\tdplotdrawarc[tdplot_rotated_coords,\starcamcolor,->,thick]{(O)}{1*\REarth}{0}{\thetaZ}{below=2em, right=5em}{\small RA$_\starcam$};
 
 % DEC starcam arc
 \tdplotsetrotatedcoords{\thetaZ}{0}{0}
 \tdplotsetrotatedthetaplanecoords{0}
-\tdplotdrawarc[tdplot_rotated_coords,red,->,thick]{(O)}{1*\REarth}{90}{90-\elevationangle+\thetaY}{left=0.2em}{\small DEC$_\starcam$};
+\tdplotdrawarc[tdplot_rotated_coords,\starcamcolor,->,thick]{(O)}{1*\REarth}{90}{90-\elevationangle+\thetaY}{left=0.2em}{\small DEC$_\starcam$};
 \tdplotdrawarc[tdplot_rotated_coords,thin]{(O)}{1*\RSphere}{90}{90-\elevationangle+\thetaY}{}{};
 
 % roll angle
 \tdplotsetrotatedcoords{\thetaZ}{90-\elevationangle+\thetaY}{0}
 \tdplotsetrotatedthetaplanecoords{90}
-\tdplotdrawarc[tdplot_rotated_coords,red,->,thick]{(0,0,\RSphere)}{2.5}{270}{270+\thetaX}{right=0.4em}{ROLL$_\starcam$};
+\tdplotdrawarc[tdplot_rotated_coords,\starcamcolor,->,thick]{(0,0,\RSphere)}{2.5}{270}{270+\thetaX}{right=0.4em}{ROLL$_\starcam$};
 
 % translated gondola reference frame
 \tdplotsetrotatedcoords{\thetaZ}{\thetaY}{\thetaX}
@@ -166,16 +166,16 @@
 \tdplotsetrotatedcoordsorigin{(G)};
 
 % plot local horizon
-\filldraw[tdplot_rotated_coords,blue, fill opacity=0.2] (G) circle (0.2*\REarth);
-\node[left=1.5em,align=center,blue] at (G){Local \\ horizon};
+\filldraw[tdplot_rotated_coords,\celestialcolor, fill opacity=0.2] (G) circle (0.2*\REarth);
+\node[left=1.5em,align=center,\celestialcolor] at (G){Local \\ horizon};
 
 %\coordinate[mark coordinate] (T) at (G);
-\draw[tdplot_rotated_coords,orange,->,thick] (G) --  (0,0,\gondolaCSsize) node[above,align=center]{Gondola \\ frame \\ $\vectors{z}_\gyro$};
-\draw[tdplot_rotated_coords,orange,->,thick] (G) -- (0,\gondolaCSsize,0) node[right] {$\vectors{y}_\gyro$};
-\draw[tdplot_rotated_coords,orange,->,thick] (G) -- (\gondolaCSsize,0,0) node[right] {$\vectors{x}_\gyro$};
+\draw[tdplot_rotated_coords,\gondolacolor,->,thick] (G) --  (0,0,\gondolaCSsize) node[above,align=center]{Gondola \\ frame \\ $\vectors{z}_\gyro$};
+\draw[tdplot_rotated_coords,\gondolacolor,->,thick] (G) -- (0,\gondolaCSsize,0) node[right] {$\vectors{y}_\gyro$};
+\draw[tdplot_rotated_coords,\gondolacolor,->,thick] (G) -- (\gondolaCSsize,0,0) node[right] {$\vectors{x}_\gyro$};
 \node[draw,fill,minimum size=3pt,circle,tdplot_rotated_coords] at (G){};
 \tdplotsetrotatedcoords{\thetaZ}{\thetaY-\elevationangle}{\thetaX}
-\draw[tdplot_rotated_coords,->,purple,thick] (G) -- (\gondolaCSsize,0,0) node[below=0.2em,align=center]{$\vectors{x}_\starcam$};
+\draw[tdplot_rotated_coords,->,\starcamcolor,thick] (G) -- (\gondolaCSsize,0,0) node[below=0.2em,align=center]{$\vectors{x}_\starcam$};
 
 
 \end{tikzpicture}

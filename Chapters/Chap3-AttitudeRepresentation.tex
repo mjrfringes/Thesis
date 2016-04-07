@@ -12,26 +12,6 @@ With this formalism, we start in the global reference frame and rotate the refer
 
 This sequence of rotation can be used to represent the rotation matrix that describes the attitude of an image of the sky. Celestial coordinates are usually given in terms of right ascension, declination. To fully describe the image of a patch of sky, we need another degree of freedom, which is the roll of the image about the boresight. When given these three angles: RA, DEC, and ROLL, one can reconstruct the attitude using the Tait-Bryan angles in the $z-y'-x''$ order, where the first, second and third elementary rotations correspond to the rotations in right ascension, declination and roll, respectively.
 
-\begin{figure}[!ht]
-	\centering
-	\includestandalone{Figures/CelestialSphereRAandDEC2}
-	\caption{}
-	\label{fig:celestialSphere}
-    \end{figure}
-    
-%     \begin{figure}[!ht]
-% 	\centering
-% 	\includestandalone{Figures/starCameraRefFrame}
-% 	\caption{Star camera angles. The star camera reference frame as well as the telescope reference frame are represented here with the celestial sphere local RA and DEC axes in the background. There is a known matrix that transforms the star camera reference frame, where inertial attitude is measured, to the telescope reference frame, where error vectors are computed. The error vector is determined on the plane of the sky and has two projections on the telescope reference frame. The $\Delta\El=\Delta$El component corresponds to the elevation error and is corrected by the siderostat angle. The $\Delta\xEl=\Delta$xEl component corresponds to the cross-elevation error, and is corrected by the CCMG gimbal angle. Note that as the siderostat elevation is adjusted to reduce the elevation error, the transformation matrix between the star camera and telescope reference frames is adjusted as well.}
-% 	\label{fig:starcamRefFrame}
-%     \end{figure}
-
-\begin{figure}[!ht]
-	\centering
-	\includestandalone{Figures/AzEl}
-	\caption{}
-	\label{fig:AzEl}
-    \end{figure}
 
 
 \subsection{Rotation matrices}
@@ -40,13 +20,13 @@ Perhaps the most common way to express the orientation of an object within a giv
 
 We are interested in matrices describing rotations of entire coordinate systems, which are also called \textit{passive} rotations. This is different from matrices describing rotations of vectors within a given coordinate system (called \textit{active} rotations), and an important distinction that can often lead to confusion. Let's suppose that we have an initial coordinate system $I$ of basis $\{\I,\J,\K\}$, and a second coordinate system $L$ of basis $\{\i,\j,\k\}$. For example, this applies when $L$ is the body reference frame, and we want to understand its orientation with respect to an initial reference frame, such as the inertial reference frame. The basis vectors of $L$ can all be expressed by a linear combination of the basis vector of $I$. This transformation can be described using the \textit{direction cosine matrix}, which has the following expression:
 
-\begin{equation}
+\begin{equations}
 \fromto{I}{L}\R = 
 \begin{bmatrix}  \I\cdot\i & \J\cdot\i  & \K\cdot\i\\
                 \I\cdot\j &\J\cdot\j  & \K\cdot\j \\
 				\I\cdot\k & \J\cdot\k  & \K\cdot\k
 \end{bmatrix}.
-\end{equation}
+\end{equations}
 
 The columns of this matrix correspond to the expression of the basis vectors of $I$ expressed in the basis of $L$. This is what we call the \textit{rotation matrix} between $I$ and $L$, and transforms vectors expressed in $I$ into their representation in $L$. With this convention, the matrix pre-multiplies the vector. For example, if we have some vector $\fromto{}{I}\vectors{u}$ expressed in the initial reference frame $I$, its expression in the reference frame $L$ will be $\fromto{}{L}\vectors{u} = \fromto{I}{L}\R \fromto{}{I}\vectors{u}$.
 
@@ -63,36 +43,36 @@ Let's take an example and consider the unit vector $\fromto{}{I}\vectors{u} = \f
 \input{Figures/TopViewRotate}
 
 In the more general case, let's suppose that the local reference frame $L'$ is rotated by an angle $\theta$ about the $\k$ axis (Fig.~ \ref{fig:simpleRotate}) with respect to the reference frame $I$. The convention we adopt sets the rotation matrix for this transformation as being:
-\begin{equation}
+\begin{equations}
 \fromto{I}{L'}\R = \R_\k(\theta) = 
 \begin{bmatrix} \cos\theta & \sin\theta & 0 \\
 				-\sin\theta & \cos\theta & 0 \\
                 0 & 0 & 1
 \end{bmatrix},
-\end{equation}
+\end{equations}
 where $\k$ indicates the third axis of the current basis ($\i$ and $\j$ represent the first and second axes, respectively). This will transform vectors from $I$ to $L'$. Suppose now that we further rotate our reference frame by an angle $\phi$ about the newly-rotated $\j'$ axis. The rotation for this elementary transformation is:
-\begin{equation}
+\begin{equations}
 \fromto{L'}{L''}\R = \R_\j(\phi) = 
 \begin{bmatrix} \cos\phi  & 0 & -\sin\phi\\
                 0  & 1 & 0 \\
 				\sin\phi  & 0 & \cos\phi
 \end{bmatrix}.
-\end{equation}
+\end{equations}
 And let's do one last rotation about $\i''$, of an angle $\psi$, for which the transformation matrix is:
 
-\begin{equation}
+\begin{equations}
 \fromto{L''}{L}\R = \R_\i(\psi) = 
 \begin{bmatrix}  1& 0  & 0\\
                 0 &\cos\psi  &  \sin\psi \\
 				0 & -\sin\psi  &  \cos\psi
 \end{bmatrix}.
-\end{equation}
+\end{equations}
 
 The matrix that corresponds to the active transformation of $I$ to $L$ will multiply vectors expressed in $I$ and express them in $L$. Hence, this matrix can be written:
-\begin{equation}
+\begin{equations}
 \fromto{I}{L}\R = 
 \fromto{L''}{L}\R\fromto{L'}{L''}\R\fromto{I}{L'}\R = \R_\i(\psi)\R_\j(\phi)\R_\k(\theta),
-\end{equation}
+\end{equations}
 where we pre-multiply the matrix for each consecutive rotation of reference frames. This corresponds to the "natural order" of rotations [CITE], and is especially relevant when related to quaternions. While the first axis of rotation, $\k$, is defined in the initial reference frame, it is important to realize that the axes corresponding to the second and third rotations are defined in the intermediate frames $L'$ and $L''$, respectively. We can understand this by thinking that the transformations follow the \textit{body}, as each rotation is done in the body reference frame, and is a particularly useful approach to our problem.
 
 
@@ -105,7 +85,7 @@ where we pre-multiply the matrix for each consecutive rotation of reference fram
 \subsection{Quaternions}
 \label{subsec:Quaternions}
 Quaternions are a more modern way to describe the orientation of a reference frame with respect to another, and are today widely used to describe spacecraft orientation [QUOTE]. From a strictly mathematical point of view, quaternions form a normed algebra over the real numbers that is an extension of traditional complex numbers. The quaternion normed algebra has four dimensions, instead of just two for the complex numbers. At its fundamental level, the basis for the quaternion algebra consists of one real axis and three imaginary axes \{1, $\i$, $\j$, $\k$\}. Like complex numbers (which have a basis \{1, $\i$\}), there are fundamental relations between the basis elements that govern the multiplication operation, such as the well known identity $\i^2=-1$, that we will discuss at length later in this section. In this document, we will write a quaternion using one of the following equivalent notations (Coutsias 1999) and (Schmidt 2001) :
-\begin{equation}
+\begin{equations}
 \quat{q} = q_r\times 1 + q_i\i + q_j\j + q_r\k = q_r + \vectors{q} =
 \begin{bmatrix}
 q_i\\
@@ -116,13 +96,13 @@ q_r
 \vectors{q}\\
 q_r
 \end{bmatrix} = \begin{bmatrix}  \vectors{q}^T & q_r\end{bmatrix}^T,
-\end{equation}
+\end{equations}
 where we make a clear distinction between the quaternion's real part $q_r$, and its 3-dimensional imaginary part that we choose to represent as a vector $\vectors{q} =q_i\i + q_j\j + q_r\k$. Like complex numbers, quaternion have a conjugate operation, which negates the imaginary part: $\quat{q}^* = \begin{bmatrix}  -\vectors{q}^T & q_r\end{bmatrix}^T$.
 
 Quaternions are interesting beyond their pure mathematical definition because the subset of quaternions of unit norm can be used to represent a coordinate frame rotation in three dimensions. The Euler rotation theorem states that any coordinate frame rotation can be described by a rotation of an angle $\theta$ about an appropriately-chosen unit vector $\vectors{u} = x\i + y\j + z\k$ (also called the "Euler axis" or "Euler vector"). This formalism has 3 degrees of freedom, the minimum needed to describe a rotation between two reference frames: two degrees of freedom in the vector (which is constrained to be of unit norm), and one in the rotation angle. If we encode this information in a quaternion using Euler's exponential notation for vectors [need references here], this precisely defines the quaternion:
-\begin{equation}
+\begin{equations}
 \quat{q} = \exp\left[\frac{\theta}{2}(x\i + y\j + z\k)\right] = \cos\frac{\theta}{2} + (x\i + y\j + z\k)\sin\frac{\theta}{2}.
-\end{equation}
+\end{equations}
 This quaternion completely describes the rotation between the two reference frames and has unit norm. Conversely, every quaternion of unit norm can be decomposed like this and represent a rotation in three-dimensional Euclidian space. Like rotation matrices, the unit quaternions form a group under the quaternion multiplication operation, which is isomorphic to the special unitary group SU(2) [reference]. It is known that SU(2) is a surjective 2:1 homomorphism of SO(3). This means that each element in SO(3) can be described by exactly two elements in SU(2), or equivalently, two distinct unit quaternions: the quaternion $\quat{q}$, and its opposite $-\quat{q}$.
 
 Quaternions use 4 numbers to describe 3 degrees of freedom: an advantage over matrices (9 elements), but an apparent disadvantage over Tait-Bryan angles, which consist of an optimal number of 3 elements. However, Tait-Bryan angles can be shown to exhibit a phenomenon called \textit{gimbal lock} [references], which leads to a degeneracy when describing the set of angles corresponding to rotations when the pitch angle (second rotation angle, about $\j$) is $\pm\pi/2$. This creates situations where some rotations and sequences of rotation would have to be avoided by fear of creating numerical issues caused by gimbal lock [footnote: for an example of gimbal lock, refer to the Apollo program!]. Quaternions, while needing an extra number to represent the rotation, are free of this concern. This is one of the main reasons that they were originally preferred to Tait-Bryan angles early in the spaceflight era [WERTZ 1985?]. [talk more about the advantages of quaternions: number of multiplications, etc - see Shuster et al 1993]
@@ -134,8 +114,7 @@ In order to form the unit quaternion group, one has to define an appropriate mul
 [Add more philosophical dwelling on the hows and whys of this notation; including references still on page]
 
 To avoid confusion, we will not mention the original Hamilton rules in this work. Instead, we define the quaternion elementary multiplication rules as follows[CITE]:
-
-\begin{equation}
+\begin{equations}
 \label{eq:QuaternionRules}
 \begin{split}
  \i^2 = \j^2 = \k^2 &= -1;\\
@@ -143,10 +122,10 @@ To avoid confusion, we will not mention the original Hamilton rules in this work
  \k\j = -\j\k &= \i;\\
  \i\k = -\k\i &= \j.
 \end{split}
-\end{equation}
+\end{equations}
 
 Using the relations in Eq.~\ref{eq:QuaternionRules}, we define the general quaternion multiplication operator $\otimes$:
-\begin{equation}
+\begin{equations}
 \begin{split}
 \quat{p}\otimes\quat{q} & =  (p_r + p_i\i + p_j\j + p_r\k)\times(q_r + q_i\i + q_j\j + q_r\k) \\
 & =  (p_rq_r - p_iq_i - p_jq_j- p_kq_k)\\
@@ -154,12 +133,12 @@ Using the relations in Eq.~\ref{eq:QuaternionRules}, we define the general quate
 & \;\;\;\;\;\; +  (p_rq_j + p_jq_r - p_kq_i + p_iq_k)\j\\
 & \;\;\;\;\;\; +  (p_rq_k + p_kq_r - p_iq_j + p_jq_i)\k\\
 \end{split}.
-\end{equation}
+\end{equations}
 
 To express a vector $\fromto{}{I}\vectors{v} = \fromto{}{I}(x,y,z)$ in the new frame $L$, we construct a purely imaginary quaternion from this vector: $\quat{q}_\vectors{v} = 0 + x\i + y\j + z\k$, and we use the quaternion multiplication to obtain:
-\begin{equation}
+\begin{equations}
 \begin{bmatrix} \fromto{}{L}\vectors{v}\\ 0 \end{bmatrix}= \fromto{I}{L}\quat{q}\otimes\quat{q}_\vectors{v}\otimes\fromto{I}{L}\quat{q}^{-1},
-\end{equation} 
+\end{equations} 
 and extract the vector $\fromto{}{L}\vectors{v}$ from the resulting quaternion.
 
 Note that the quaternion inverse operation for quaternions of unit norm is the same as the conjugate operation. 
@@ -168,7 +147,7 @@ Note that the quaternion inverse operation for quaternions of unit norm is the s
 Using this formalism, a quaternion is behaving in the same way as the corresponding \textit{passive} transformation matrix to describe a reference frame rotation. This means that consecutive rotations are multiplying in the "natural order", which makes it more intuitive.
 
 For example, let's consider the elementary rotation described in Fig~\ref{fig:simpleRotate} that represents a rotation of the initial reference frame $I$ into a reference frame $L$ about $\k$. Using the "left-hand" rule, the angle $\theta$ of rotation about $\k$ is now $\theta = +30$~degrees. This quaternion is $\fromto{I}{L}\quat{q} = \quat{q}_\k(\theta) = \cos\frac{\theta}{2} + \sin\frac{\theta}{2}\k$, and represents the same rotation as the passive rotation matrix $\R_\k(\theta)$ discussed in Section \ref{subsec:rotationMatrices}. [WORK OUT THE MATHS FOR THE VECTOR TRANSFORMATION] If the rotation of the reference frame is described by three consecutive rotations of angles $\theta$, $\phi$ and $\psi$ about $\k$, $\j'$, and $\i''$, respectively [see some figure], we can write:
-\begin{equation}
+\begin{equations}
 \begin{split}
 \fromto{I}{L}\quat{q} & =  \quat{q}_{\i}(\psi)\quat{q}_{\j}(\phi)\quat{q}_\k(\theta) \\
 & = \begin{bmatrix}
@@ -188,7 +167,8 @@ For example, let's consider the elementary rotation described in Fig~\ref{fig:si
 \cos\frac{\theta}{2}
 \end{bmatrix}\\
 \end{split},
-\end{equation}
+\end{equations}
+
 which forms a quaternion that is equivalent to the rotation matrix multiplication $ \R_\i(\psi)\R_\j(\phi)\R_\k(\theta).$
 Note that the order of the quaternions is the same as the order of the matrices. This is one of the advantages of choosing this "natural order" convention [cite Shuster].
 
@@ -200,13 +180,13 @@ Properly defining the derivative and integral of quaternions is necessary for ou
 In the following, we consider the body reference frame $L(t)$ which evolves as a function of time with respect to a fixed, inertial reference frame $I$. 
 
 The mathematical derivations leading to those results can be found elsewhere [CITE]. Over an infinitesimal time step $dt$, the local frame is rotating by an angular vector $\delta\boldsymbol{\theta}$. The instantaneous angular velocity, expressed in the body reference frame $\L(t)$, is $\fromto{}{L(t)}\gyroVec(t) = \lim_{dt\to 0}\frac{\delta\boldsymbol{\theta}}{\delta t}$. It can be shown [CITE TRAWNY] that with this formalism, the quaternion derivative is defined using either a quaternion multiplication, or an equivalent matrix multiplication:
-
-\begin{equation}
+\begin{equations}
 \fromto{I}{L(t)}\dotAttitude(t) = \frac{1}{2}\begin{bmatrix} \gyroVec \\ 0 \end{bmatrix}\otimes \fromto{I}{L(t)}\Attitude =  \frac{1}{2}\matOmega(\gyroVec)\fromto{I}{L(t)}\Attitude,
 \label{eq:quaternionDerivation}
-\end{equation}
+\end{equations}
+
 where the matrix
-\begin{equation}
+\begin{equations}
 \matOmega(\gyroVec) = 
 \begin{bmatrix}
 0 & \omega_z & -\omega_y & \omega_x \\
@@ -215,19 +195,20 @@ where the matrix
 -\omega_x & -\omega_y & -\omega_z & 0
 \end{bmatrix}
 \label{eq:Omega}
-\end{equation}
+\end{equations}
+
 is going to play an important in the later sections. 
 
 The integrator formulas are derived in []. The problem is to find a matrix $\thetaMat$ to integrate a quaternion $\fromto{I}{L(t)}\Attitude(t)$, and estimate attitude at time $t+\Deltat$, knowing the instantaneous angular velocity $\gyroVec(t)$: 
-\begin{equation}
+\begin{equations}
 \Attitude(t+\Deltat) = \thetaMat(t,t+\Deltat)\Attitude(t)
-\end{equation}
+\end{equations}
 A zeroth-order solution assumes that the angular velocity $\gyroVec$ is a constant over the timestep $\Deltat$, an important special case since it describes the typical discrete representation that we will use in our software. The solution can be expressed as:
 
-\begin{equation}
+\begin{equations}
 \thetaMat(t,t+\Deltat) \equiv \thetaMat(\Delta t) = \exp\left(\frac{1}{2}\matOmega(\gyroVec)\Deltat\right),
 \label{eq:quaternionIntegration}
-\end{equation}
+\end{equations}
 where the matrix exponential is defined using a Taylor expansion [give reference for that]. 
 
 
@@ -243,16 +224,16 @@ If we rotate the gyroscopes' frame with a rotation matrix $\R$, the new covarian
 \subsection{Small angle approximation}
 
 Quaternions become more intuitive in the small angle approximation. Indeed, when all angles are small with respect to $\pi$, we can write:
-\begin{equation}
+\begin{equations}
 \fromto{I}{L}\Attitude \approx \begin{bmatrix}  \frac{1}{2}\delta\boldsymbol{\theta} \\ 1 \end{bmatrix},
-\end{equation}
+\end{equations}
 where $\frac{1}{2}\delta\boldsymbol{\theta} = \frac{1}{2}[\delta\theta_i,  \delta\theta_j, \delta\theta_k]^T$ corresponds to three small rotations about all the three axes of the initial reference frame. Because we are in the small angle approximation, the order of the rotations does not matter. Hence, if the imaginary part of a quaternion has small values $q_i, q_j, q_k$, and if $q_r\approx 1$, this quaternion represents a rotation of the reference frame by an angle $\delta\theta_i = 2q_i$, then by an angle $\delta\theta_j = 2q_j$, and finally by an angle $\delta\theta_k = 2q_k$, where all the angles are expressed in radians.
 
 More simplifications can also be found. For example, in the limit where $\gyroVec \to \boldsymbol{0}$, the matrix exponential defined in Eq.~\ref{eq:quaternionIntegration} simplifies into:
-\begin{equation}
+\begin{equations}
 \thetaMat(\Deltat) \stackrel{\gyroVec \to \boldsymbol{0}}{=} \I_{4\times 4} + \frac{\Deltat}{2}\matOmega(\gyroVec).
 \label{eq:quaternionIntegrationSimple}
-\end{equation}
+\end{equations}
 
 
 

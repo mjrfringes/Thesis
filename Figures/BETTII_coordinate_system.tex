@@ -1,0 +1,108 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning,intersections,calc,fadings,decorations.pathreplacing}
+
+\begin{document}
+\pgfmathsetmacro{\thetaXt}{80}
+\pgfmathsetmacro{\phiZ}{30}
+\tdplotsetmaincoords{\thetaXt}{\phiZ}
+\linespread{1}
+
+% rotate reference frames according to the Z, Y, X order instead of the default Z, Y, Z
+%\tdseteulerxyz
+
+\begin{tikzpicture}[tdplot_main_coords] 
+
+\pgfmathsetmacro{\boxsize}{2.5}
+\pgfmathsetmacro{\mirrorsize}{0.42*\boxsize} %(50cm diameter/60cm truss size/2 for radius)
+\pgfmathsetmacro{\axislength}{1}
+\pgfmathsetmacro{\RHorizon}{6}
+
+\bettii{\boxsize}{thin}
+\coordinate (S1) at (0,-4*\boxsize,0.5*\boxsize);
+\coordinate (S2) at (0,4*\boxsize,0.5*\boxsize);
+\coordinate (O) at (0,0,0);
+\coordinate (gondola) at (0,0,0.5*\boxsize);
+\coordinate (H) at (0,0,-\boxsize);
+\coordinate (G) at (0,\boxsize,-0.5*\boxsize);
+\coordinate (SC) at (-0.5*\boxsize,-1.5*\boxsize,-0.8*\boxsize);
+
+% gondola
+\draw[tdplot_main_coords,->,\gondolacolor]  (gondola) -- ++(\axislength,0,0)node[right]{$\vectors{x}$};
+\draw[tdplot_main_coords,->,\gondolacolor]  (gondola) -- ++(0,\axislength,0)node[above]{$\vectors{y}$};
+\draw[tdplot_main_coords,->,\gondolacolor]  (gondola) -- ++(0,0,\axislength)node[above]{$\vectors{z}$};
+
+% % draw horizon
+% \tdplotdrawarc[tdplot_main_coords,thin]{(H)}{\RHorizon}{0}{360}{below=1em, right,align=center}{Local \\ horizon};
+% \filldraw[tdplot_main_coords,\celestialcolor, fill opacity=0.2] (H) circle (\RHorizon);
+
+
+% gyroscope
+\tdplotsetrotatedcoords{0}{0}{0}
+\tdplotsetrotatedcoordsorigin{(G)};
+
+\draw[tdplot_rotated_coords,->,\gondolacolor]  (G) -- (\axislength,0,0)node[right]{$\vectors{x}_\gyro$};
+\draw[tdplot_rotated_coords,->,\gondolacolor]  (G) -- (0,\axislength,0)node[above]{$\vectors{y}_\gyro$};
+\draw[tdplot_rotated_coords,->,\gondolacolor]  (G) -- (0,0,\axislength)node[above]{$\vectors{z}_\gyro$};
+
+% star camera
+\tdplotsetrotatedcoords{0}{-47}{0}
+\tdplotsetrotatedcoordsorigin{(SC)};
+\draw[tdplot_rotated_coords,->,\starcamcolor]  (SC) -- (\axislength,0,0)node[right]{$\vectors{x}_\starcam$};
+\draw[tdplot_rotated_coords,->,\starcamcolor]  (SC) -- (0,\axislength,0)node[below right]{$\vectors{y}_\starcam$};
+\draw[tdplot_rotated_coords,->,\starcamcolor]  (SC) -- (0,0,\axislength)node[above right]{$\vectors{z}_\starcam$};
+
+% right siderostat reference frame
+\tdplotsetrotatedcoords{0}{0}{0}
+\tdplotsetrotatedcoordsorigin{(S1)};
+\draw[tdplot_rotated_coords,->,red]  (S1) -- (2*\axislength,0,0)node[below]{$\vectors{x}_R$};
+\draw[tdplot_rotated_coords,->,red]  (S1) -- (0,2*\axislength,0)node[above]{$\vectors{y}_R$};
+\draw[tdplot_rotated_coords,->,red]  (S1) -- (0,0,2*\axislength)node[above]{$\vectors{z}_R$};
+
+\tdplotsetrotatedthetaplanecoords{0}
+\tdplotdrawarc[tdplot_rotated_coords,->,thick]{(0,0,0)}{2*\axislength}{90}{30}{right=0.2cm}{$\El$};
+\tdplotsetrotatedcoords{0}{-60}{0}
+\tdplotsetrotatedcoordsorigin{(S1)};
+\draw[tdplot_rotated_coords,->,thick,\telcolor]  (S1) -- (2.5*\axislength,0,0)node[right,sloped]{$\vectors{x}_\tel$};
+\draw[tdplot_rotated_coords,->,thick,\telcolor]  (S1) -- (0,0,2.5*\axislength)node[above right]{$\vectors{z}_\tel$};
+
+
+% \draw[tdplot_rotated_coords]  (O) -- (1,0,0)node{$\vectors{x}_r$};
+% \draw[tdplot_rotated_coords]  (O) -- (0,1,0)node{$\vectors{y}_r$};
+% \draw[tdplot_rotated_coords]  (O) -- (0,0,1)node{$\vectors{z}_r$};
+
+
+% \tdplotsetrotatedcoordsorigin{(S1)};
+% % \draw[tdplot_rotated_coords]  (S1) -- (1,0,0)node{$\vectors{x}_m$};
+% % \draw[tdplot_rotated_coords]  (S1) -- (0,1,0)node{$\vectors{y}_m$};
+% % \draw[tdplot_rotated_coords]  (S1) -- (0,0,1)node{$\vectors{z}_m$};
+% \filldraw[tdplot_rotated_coords,fill=blue!20,rotate=25] (S1) circle [x radius=\mirrorsize, y radius=1.41*\mirrorsize];
+
+% left siderostat ellipse
+\tdplotsetrotatedcoords{90}{-45}{-30}
+\tdplotsetrotatedcoordsorigin{(S2)};
+\filldraw[tdplot_rotated_coords,fill=gray!20] (S2) circle [y radius=\mirrorsize, x radius=1.41*\mirrorsize];
+% \tdplotsetrotatedcoords{0}{0}{0}
+% \tdplotsetrotatedcoordsorigin{(S2)};
+\draw[tdplot_rotated_coords,->,green!20!gray]  (S2) -- (\axislength,0,0)node[right]{$\vectors{y}_{LS}$};
+\draw[tdplot_rotated_coords,->,green!20!gray]  (S2) -- (0,-\axislength,0)node[below]{$\vectors{x}_{LS}$};
+\draw[tdplot_rotated_coords,->,green!20!gray]  (S2) -- (0,0,\axislength)node[above]{$\vectors{z}_{LS}$};
+
+% left siderostat reference frame
+\tdplotsetrotatedcoords{0}{0}{0}
+\tdplotsetrotatedcoordsorigin{(S2)};
+\draw[tdplot_rotated_coords,->,red]  (S2) -- (2*\axislength,0,0)node[right]{$\vectors{x}_L$};
+\draw[tdplot_rotated_coords,->,red]  (S2) -- (0,-2*\axislength,0)node[below,midway]{$-\vectors{y}_L$};
+\draw[tdplot_rotated_coords,->,red]  (S2) -- (0,0,2*\axislength)node[above]{$\vectors{z}_L$};
+\draw[tdplot_rotated_coords,red,dashed]  (S2) -- (S1)node[above,pos=0.2,align=center]{optical \\axis};
+
+\tdplotsetrotatedthetaplanecoords{0}
+\tdplotdrawarc[tdplot_rotated_coords,->,thick]{(0,0,0)}{2*\axislength}{90}{30}{right=0.2cm}{$\El$};
+
+
+\tdplotsetrotatedcoords{0}{-60}{0}
+\tdplotsetrotatedcoordsorigin{(S2)};
+\draw[tdplot_rotated_coords,->,thick,\telcolor]  (S2) -- (2.5*\axislength,0,0)node[right,sloped,align=left]{$\vectors{x}_\tel$ \\ to target};
+\draw[tdplot_rotated_coords,->,thick,\telcolor]  (S2) -- (0,0,2.5*\axislength)node[above right]{$\vectors{z}_\tel$};
+\end{tikzpicture}
+\end{document} 
