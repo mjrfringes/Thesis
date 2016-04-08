@@ -45,18 +45,18 @@ The estimator is also used to realize \textit{sensor fusion}. This consists of c
 
 For BETTII, each subsystem has its own PID control loop. Each PID loop structure consists of 7 variables: the $\Kp$, $\Kd$, $\Ki$ gains, and overall scaling factor, an upper and a lower limit on the command, and a boolean value that is used to reset the content of the integral term used to multiply $\Ki$. 
 
-\subsubsection{Control loop design}
+\subsubsection{Control loop design and operating modes}
 
 The three levels of control that we need are:
 \begin{enumerate}
-\item Coarse control of the entire gondola to within $\pm~15$",
-\item Fine pointing control of each beam to 1.5" r.m.s.,
-\item Fine knowledge of the attitude to $\approx 0.15"$ r.m.s., followed by appropriate OPD control
+\item Coarse control of the entire gondola to within $\pm~$\ang{;;15} of the target,
+\item Fine pointing control of each beam to \ang{;;1.5} r.m.s. at the science detector,
+\item Fine knowledge of the inertial attitude to $\approx$~\ang{;;0.15} r.m.s., followed by appropriate OPD control
 \end{enumerate}
 
 At its fundamental level, the problem is to implement a system that satisfies these requirements, starting with only the target's location in right ascension (RA) and declination (DEC). Ideally, the system needs to be able to achieve these goals autonomously. All of the operating modes follow from this.
 
-All of the pointing will be done in the reference frame of the gondola, which is tied solidly to the reference frame of the gondola (nominally they are the same) and the star cameras (nominally off by -45~degrees about the $\vectors{y} axis$. In the following sections, we describe how the inertial attitude of the gondola is determined. Once it is known, a target's RA and DEC can be converted to a desired local azimuth $\Az$ and elevation $\El$ in the spherical coordinates attached to the gondola reference frame (see Fig.~\ref{fig:AzEl}). It is important to note that when we mention "azimuth", we are not referencing to any cardinal directions, as it can be done for other applications. For us, an azimuth is one of the two spherical angles that describe the position of our target in the current gondola reference frame. Note that the elevation angle is defined as being zero in the ($\vectors{x}_\gyros$,$\vectors{y}_\gyros$)-plane.
+All of the pointing will be done in the reference frame of the gondola, which is tied solidly to the reference frame of the gondola (nominally they are the same) and the star cameras (nominally off by \SI{-45}{\degree} about the $\vectors{y}$~axis. In the following sections, we describe how the inertial attitude of the gondola is determined. Once it is known, a target's RA and DEC can be converted to a desired local azimuth $\Az$ and elevation $\El$ in the spherical coordinates attached to the gondola reference frame (see Fig.~\ref{fig:AzEl}). It is important to note that when we mention "azimuth", we are not referencing to any cardinal directions, as it can be done for other applications. For us, an azimuth is one of the two spherical angles that describe the position of our target in the current gondola reference frame. Note that the elevation angle is defined as being zero in the ($\vectors{x}_\gyro$,$\vectors{y}_\gyro$)-plane.
 
 \begin{figure}[!ht]
 	\centering
@@ -66,9 +66,32 @@ All of the pointing will be done in the reference frame of the gondola, which is
     \end{figure}
 
 
-Once the turbulence from the ascent have died out, the control system starts to determine where the gondola is currently pointing using the star cameras. For the software to process the star camera image, the payload has to be still to avoid blurring of the stars on the CCD. Hence, the first order of business is to slow down the payload's inertial velocity, which is measured by the gyroscopes. This is also called $\BRAKE$ mode.
+Once the turbulence from the ascent have died out, the control system determines where the gondola is currently pointing using the star cameras. For the software to process the star camera image, the payload has to be still to avoid blurring of the stars on the CCD. Hence, the first order of business is to slow down the payload's inertial velocity, which is measured by the gyroscopes. This is also called $\BRAKE$ mode.
 
-The first time the system receives a star camera frame and identifies its inertial position, this triggers the estimator algorithm that constantly combines gyroscope and star camera information. From this point on, we have a reasonable estimate of where we are pointed in the inertial frame at all times. When a new target in RA and DEC is set by the flight computer, the system will enter the $\SLEW$ mode. This creates a profile of azimuth position and velocity
+The first time the system receives a star camera frame and identifies its inertial position, this triggers the estimator algorithm that constantly combines gyroscope and star camera information. From this point on, we have a reasonable estimate of where the gyroscope reference frame is pointed in the inertial frame at all times. 
+
+When a new target in RA and DEC is set by the flight computer, the system will enter the $\SLEW$ mode. This creates a profile of desired azimuth position and velocity as a function of time. The software actuates the reaction wheels to turn the payload about its $\vectors{z}$ axis. At the same time, it commands the rotation stages that control the telescopes' elevation, to go to the desired elevation. The control in elevation and control in azimuth are entirely decoupled.
+
+When we complete the deceleration phase as we get close to our target, we switch to $\TRACK$ mode. This mode is attempting at maintaining control of the telescope within $\pm$~\ang{;;15} of our target.
+
+Finally, for each of the two arms, we need to acquire a guide star onto our guide camera [section]. This requires a fast imaging capability and a fast-steering tip/tilt correction mechanism to freeze the motion of the sky on the guide camera. This is $\ACQUIRE$ mode. Two images of the sky are made on the detector, one from each arm; the guide star is located in each image, and the tip/tilt mechanisms are actuated to center this star onto a location of the detector that corresponds to maximum overlap at the science detectors. One the star is centered onto that location, the window size of the camera decreases, and the acquisition speed increases. Ultimately, we will get two patches of 35$\times$35 pixels at $\approx$~\SI{50}{\hertz}. When this acquisition speed is reached we consider ourselves in $\LOCKED$ mode.
+
+When the two guide star images are centered, this means proper overlap of the far-infrared beams at the science detectors. Hence, we are in a position to spot interferometric signal, which will translate to a modulation of the intensity of the coherently combined image as a function of OPD. The OPD is constantly modulated with the Cold Delay Line [section], independently of the mode in which we are. However, residual mispointings can create large unwanted OPD perturbations. Hence, during $\TRACK$ and $\ACQUIRE$ mode, the Warm Delay Line mechanism is activated. Its goal is to use the estimated change in baseline position to predict the resulting OPD variations - and correct them directly in OPD space. 
+
+\capstartfalse
+\begin{deluxetable*}{c||c|c|c|c|c|c}
+\tablecaption{Operating modes}
+%\tablenum{1}
+\tablehead{ & $\SAFE$ & $\BRAKE$ &  $\SLEW$ & $\TRACK$ & $\ACQUIRE$ & $\LOCKED$ }
+\startdata
+Gains & & & & & &  \\
+Usage & & & & & & \\
+Motors & & & & & & \\
+Actuators & & & & & &
+\enddata
+\label{tab:modes}
+\end{deluxetable*}
+\capstarttrue 
 
 
 \begin{figure}[!ht]
@@ -127,7 +150,7 @@ The payload has several modes of operation which are used in the various phases 
 
 We purchased three SRS-2000 fiber-optic gyroscopes from Optolink. This gyroscope technology uses the Sagnac effect and is the cutting edge in inertial rotational velocity measurements \citep[for a review of the state-of-the-art see, \textit{e.g.}][]{ElBadaoui:2014fr}. We chose these devices for their incredibly low angular random walk, which is a measure of their inherent noise. If we were to trust the gyroscope measurement and integrate its velocity to obtain a position estimate, the estimation error we would make after 1 hour of integration has a standard deviation of about 2 arcseconds.
 
-The devices have a bandwidth of 50~Hz, but can be triggered at up to 2000~Hz. Their extreme stability is contingent upon proper temperature stabilization, which is done with a closed-loop set at their calibration temperature of 23.5$^{\circ}\pm 0.5$~C using an active built-in Peltier element. This Peltier element transforms electric power into either heating or cooling \citep{Peltier:1834vu}.
+The devices have a bandwidth of \SI{50}{\hertz}, but can be triggered at up to \SI{2000}{\hertz}. Their extreme stability is contingent upon proper temperature stabilization, which is done with a closed-loop set at their calibration temperature of $\SI{23.5}{\celsius}\pm\SI{0.5}{\celsius}$ using an active built-in Peltier element. This Peltier element transforms electric power into either heating or cooling \citep{Peltier:1834vu}.
 
 However, their sensitivity has complicated some of their testing. As soon as we attach a gyroscope to any structure, it measures its vibrational modes, which makes it hard to make a stable measurement of the gyroscope's drift stability. This includes the vibrations that are inherent to the building in the which they are placed.
 
@@ -135,8 +158,8 @@ We were successful at measuring the gyroscopes over long periods of time by atta
 
 We proceeded to an identical series of tests for each gyroscope:
 \begin{enumerate}
-\item We acquired data at 2000~Hz for N minutes to measure a proper power spectral density and characterize the noise;
-\item We acquired data at 100~Hz for $\sim$ 8 hours to study the drift properties.
+\item We acquired data at \SI{2000}{\hertz} for N minutes to measure a proper power spectral density and characterize the noise;
+\item We acquired data at \SI{10}{\hertz} for $\sim$ \SI{8}{\hour} to study the drift properties.
 \end{enumerate}
 
 The properties that we are looking for are typical instantaneous angular random walk, and the overall drift of the gyroscope's mean. When the gyroscopes are set on the floor, they measure a component of the Earth's rotation vector in inertial space. The mean of the measurement depends on the exact angle at which the device is placed with respect to the zenith vector, and is of no importance for this noise study. We seek to understand how much the mean varies over long periods of time. To avoid disturbances from the building vibrations (opening/closing of doors, etc), we operated entirely after regular working hours.
@@ -152,7 +175,7 @@ It is important to note that in their factory settings, the gyroscopes' noise di
 
 \subsubsection{PSD and Allan variance}
 
-The usual frequency-domain analysis tool is the power spectral density (PSD). This allows us to spot any frequency peaks in the data, and let us look at the $1/f$ noise behavior, which the typical low-frequency behavior that indicates drifts in the signal. The 100~Hz data is all we need, as the gyroscope's bandwidth is 50~Hz. Hence, the 2000~Hz data does not contain any more information than the 100~Hz. In fact, while plotting the PSD of the 2000~Hz data, we can see clearly the break at 50~Hz characteristic of a 50~Hz low-pass filter.
+The usual frequency-domain analysis tool is the power spectral density (PSD). This allows us to spot any frequency peaks in the data, and let us look at the $1/f$ noise behavior, which the typical low-frequency behavior that indicates drifts in the signal. The \SI{100}{\hertz} data is all we need, as the gyroscope's bandwidth is \SI{50}{\hertz}. Hence, the \SI{2000}{\hertz} data does not contain any more information than the \SI{100}{\hertz}. In fact, while plotting the PSD of the \SI{2000}{\hertz} data, we can see clearly the break at \SI{50}{\hertz} characteristic of a \SI{50}{\hertz} low-pass filter.
 
 Another common tool to study of the gyroscope's performance is to plot the Allan variance. The Allan variance gives a time-domain analysis of the gyroscope's noise that is complementary to the power spectral density.
 
@@ -166,25 +189,25 @@ The CCMG features multiple encoders and motors. First, there is a brushless DC m
 
 The motion controller that we use to monitor the wheel's speed is a brushless-DC Galil motion controller DMC-4020. It reads out the wheel encoders and controls the current to the wheels accordingly. It directly, independently implements the closed-loop system of the wheels, including all of the gains, acceleration/deceleration, and jogging speeds associated with the desired motion.
 
-The motion controller was modified to accept an external clock pulse in order to synchronize the wheels' motion with our master clock signal. It requires a clock pulse at 1.024~kHz, and deviations from this value will require changing some of the gains - it is our understanding that the controller uses a 1.024~kHz crystal oscillator to generate it's time basis, as some of the gains and parameters to the controller can directly be entered as, for example, "steps per second". 
+The motion controller was modified to accept an external clock pulse in order to synchronize the wheels' motion with our master clock signal. It requires a clock pulse at \SI{1.024}{\kilo\hertz}, and deviations from this value will require changing some of the gains - it is our understanding that the controller uses a \SI{1.024}{\kilo\hertz} crystal oscillator to generate it's time basis, as some of the gains and parameters to the controller can directly be entered as, for example, "steps per second". 
 
 At power-up, the wheels immediately start accelerating to their cruising speed of 3000~rpm. They take about 10 minutes to reach their target. The wheels' frequency is set for the entire duration of the flight.
 
-The gimbal is controlled with another Galil Motion controller, a 2-axis stepper driver DMC-4020, which can also be synchronized with an external clock. Only one axis is used for the CCMG, while the second axis is used by the momentum dump motor (see section~\ref{subsec:chap3momdumpmotor}). The controller operates in micro-stepping mode and has a very smooth response, in contrast to previous controllers we tested which create a lot of vibrations. The controller is set always to use 64 micro-steps per step, and the motor is a [REFERENCE] with 200 steps per revolution. The motor is outfitted with a Beckhoff AG1000 planetary gearhead with a 3.7:1 reduction ratio. The gearbox itself has a ratio of 25, which creates a total gear ratio of 92.5. Hence, a 360$^\circ$ revolution of the stepper corresponds to $360/92.5=3.9^\circ$ motion of the shaft. A motion of 1$^\circ$ of the shaft correspond to 3889 motion controller steps. A motion of 90$^\circ$ of the shaft correspond to 296000 motion controller steps. Finally, the same 90$^\circ$ motion will translate to a 2048 step change in the gimbal magnetic encoder.
+The gimbal is controlled with another Galil Motion controller, a 2-axis stepper driver DMC-4020, which can also be synchronized with an external clock. Only one axis is used for the CCMG, while the second axis is used by the momentum dump motor (see section~\ref{subsec:chap3momdumpmotor}). The controller operates in micro-stepping mode and has a very smooth response, in contrast to previous controllers we tested which create a lot of vibrations. The controller is set always to use 64 micro-steps per step, and the motor is a [REFERENCE] with 200 steps per revolution. The motor is outfitted with a Beckhoff AG1000 planetary gearhead with a 3.7:1 reduction ratio. The gearbox itself has a ratio of 25, which creates a total gear ratio of 92.5. Hence, a \SI{360}{\degree} revolution of the stepper corresponds to $360/92.5=3.9^\circ$ motion of the shaft. A motion of \SI{1}{\degree} of the shaft correspond to 3889 motion controller steps. A motion of \SI{90}{\degree} of the shaft correspond to 296000 motion controller steps. Finally, the same \SI{90}{\degree} motion will translate to a 2048 step change in the gimbal magnetic encoder.
 
 In practice, all of the control is done using the regular stepper motor encoder. The magnetic encoder is used for limit-checking and to feed back to the momentum dump mechanism. With this in mind, we can now relate the control signal (stepper motor micro-steps per second) to the physical torque that the wheels provide. 
 \begin{eqnarray}
-\Delta\theta\units{rad} &= &\frac{2\pi}{92.5\times 200\times 64}\Delta(\textrm{micro-steps}) \\ 
-& \sim & 5.3\times 10^{-6} \Delta(\textrm{micro-steps})\\
-\Delta\theta\units{arcsec} &\sim &  1.09 \Delta(\textrm{micro-steps})
+\Delta\theta\units{\si{\radian}} &= &\frac{2\pi}{92.5\times 200\times 64}\Delta(\textrm{micro-steps}) \\ 
+& \sim & \num{5.3e-6} \Delta(\textrm{micro-steps})\\
+\Delta\theta\units{\si{\arcsecond}} &\sim &  1.09 \Delta(\textrm{micro-steps})
 \end{eqnarray}
 
-At 3000~rpm, the CCMG has a total stored momentum $\MCCMG\units{\textrm{N.m.s}} = 20.8$. Of course, depending on the orientation of the wheels, the momentum along the $\z$ axis is only the projection of this momentum vector, $\MCCMGz\units{\textrm{N.m.s}} = 20.8\sin\theta$, where $\theta\units{\textrm{rad}}$ is the angle between the horizontal axis and the rotation axis of the wheels. This makes sense: when the wheels are horizontal, there is no momentum projected on the $\z$ axis because the rotation vectors of the wheels are orthogonal to $\z$. When the rotation axes are along $\z$, we have the maximum momentum along $\z$. 
+At 3000~rpm, the CCMG has a total stored momentum $\MCCMG\units{\si{\newton\meter\second}} = 20.8$. Of course, depending on the orientation of the wheels, the momentum along the $\z$ axis is only the projection of this momentum vector, $\MCCMGz\units{\si{\newton\meter\second}} = 20.8\sin\theta$, where $\theta\units{\si{\radian}}$ is the angle between the horizontal axis and the rotation axis of the wheels. This makes sense: when the wheels are horizontal, there is no momentum projected on the $\z$ axis because the rotation vectors of the wheels are orthogonal to $\z$. When the rotation axes are along $\z$, we have the maximum momentum along $\z$. 
 
 The torque is the variation of the momentum with time. So we can write:
 \begin{eqnarray}
-\ccmgtorque\units{N.m} &= & 20.8\times \dot{\theta}\units{rad.s$^{-1}$} \cos\theta\\
- &= & 1.1\times 10^{-4}\times \velstepper\units{micro-steps.s$^{-1}$}\cos\theta
+\ccmgtorque\units{\si{\newton\meter}} &= & 20.8\times \dot{\theta}\units{\si{\radian\per\second}} \cos\theta\\
+ &= & \num{1.1e-4}\times \velstepper\units{micro-step~\si{\per\second}}\cos\theta
 \end{eqnarray}
 
 \begin{figure}[!ht]
