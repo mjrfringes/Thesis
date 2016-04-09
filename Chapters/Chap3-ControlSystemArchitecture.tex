@@ -76,30 +76,50 @@ When we complete the deceleration phase as we get close to our target, we switch
 
 Finally, for each of the two arms, we need to acquire a guide star onto our guide camera [section]. This requires a fast imaging capability and a fast-steering tip/tilt correction mechanism to freeze the motion of the sky on the guide camera. This is $\ACQUIRE$ mode. Two images of the sky are made on the detector, one from each arm; the guide star is located in each image, and the tip/tilt mechanisms are actuated to center this star onto a location of the detector that corresponds to maximum overlap at the science detectors. One the star is centered onto that location, the window size of the camera decreases, and the acquisition speed increases. Ultimately, we will get two patches of 35$\times$35 pixels at $\approx$~\SI{50}{\hertz}. When this acquisition speed is reached we consider ourselves in $\LOCKED$ mode.
 
+In both $\ACQUIRE$ and $\LOCKED$ mode, the position of the two tip/tilt platforms contains information on the overall mispointing of the optical train: when the actuators are both off in the same direction with respect to their nominal position, it means that the entire truss is off the guide star by this amount. When available, this information is used by the estimator along with the gyroscope and star camera information to compute the best possible attitude estimate. Since the tip/tilt is tied to the actual optics train, its information is heavily weighted compared to the other sensors. 
+
 When the two guide star images are centered, this means proper overlap of the far-infrared beams at the science detectors. Hence, we are in a position to spot interferometric signal, which will translate to a modulation of the intensity of the coherently combined image as a function of OPD. The OPD is constantly modulated with the Cold Delay Line [section], independently of the mode in which we are. However, residual mispointings can create large unwanted OPD perturbations. Hence, during $\TRACK$ and $\ACQUIRE$ mode, the Warm Delay Line mechanism is activated. Its goal is to use the estimated change in baseline position to predict the resulting OPD variations - and correct them directly in OPD space. 
 
-\capstartfalse
-\begin{deluxetable*}{c||c|c|c|c|c|c}
-\tablecaption{Operating modes}
-%\tablenum{1}
-\tablehead{ & $\SAFE$ & $\BRAKE$ &  $\SLEW$ & $\TRACK$ & $\ACQUIRE$ & $\LOCKED$ }
-\startdata
-Gains & & & & & &  \\
-Usage & & & & & & \\
-Motors & & & & & & \\
-Actuators & & & & & &
-\enddata
+During the $\LOCKED$ mode, we need to consider what happens if we lose the guide star. Since the field of view is relatively small compared to the expected motions of the gondola, the guide star could technically walk outside the range of the guide camera - at which point the attitude estimation relies temporarily on the gyroscopes as we switch back to $\ACQUIRE$ mode and the guide camera increases its field of view (and decreases its speed) until it finds the guide star.
+
+\renewcommand{\arraystretch}{1.5}
+\begin{table}[htbp]
+\small
+\begin{tabular}{|c||p{6cm}|p{2.2cm}|p{3cm}|}
+\hline
+Mode  & Description &  Actuators & Sensors \\
+\hline
+\hline
+$\SAFE$ & All PID gains set to 0; siderostats point towards zenith; azimuth is not commanded;  used during ascent, emergencies &
+CDL &
+Gyros\newline Star cameras \\
+\hline
+$\BRAKE$ & Used to slow down the payload after undesired motion; derivative gains only, no position loop & CCMG \newline Rotators\newline CDL\newline Mom. Dump &
+Gyros\newline Star cameras \newline Elevation encoder \newline Gimbal encoder \\
+\hline
+$\SLEW$ &Used to move to target with a set velocity profile &
+CCMG \newline Rotators\newline CDL\newline Mom. Dump &
+Gyros\newline Star cameras \newline Elevation encoder \newline Gimbal encoder\\
+\hline
+$\TRACK$ & Used to stabilize payload after slew, track target coarsely &
+CCMG \newline Rotators\newline CDL\newline Mom. Dump\newline WDL &
+Gyros\newline Star cameras \newline Elevation encoder \newline Gimbal encoder\\
+\hline
+$\ACQUIRE$ & The guide camera grabs images for each arm and identifies the location of a guide star in increasingly smaller quadrant sizes &
+CCMG \newline Rotators\newline CDL\newline Mom. Dump\newline WDL \newline Tip/Tilts&
+Gyros\newline Star cameras \newline Elevation encoder \newline Gimbal encoder \newline Tip/Tilt encoders\newline Guide camera \\
+\hline
+$\LOCKED$ & The intensity of the target in the science detector is measured, and the central phase is estimated &
+CCMG \newline Rotators\newline CDL\newline Mom. Dump\newline WDL \newline Tip/Tilts&
+Gyros\newline Star cameras \newline Elevation encoder \newline Gimbal encoder \newline Tip/Tilt encoders\newline Guide camera \newline Science detector \\
+\hline
+\end{tabular}
+\caption[Operating modes]{BETTII operating modes. Each operating mode has a set of PID gains for each individual loop.}
 \label{tab:modes}
-\end{deluxetable*}
-\capstarttrue 
+\end{table}
 
+Note that the Cold Delay Line (CDL) is running in closed loop during all the modes. Since the environment inside the cryostat is not changing from test to flight, there is no reason to ever turn the loop off or keep different sets of gains for different operating modes. The CDL is its own closed system.
 
-\begin{figure}[!ht]
-	\centering
-	\includestandalone{Figures/ControlSystem}
-	\caption[Control System Design]{}
-	\label{fig:ControlSystem}
-    \end{figure}
 
 
 \subsection{Coordinate systems}
@@ -228,6 +248,17 @@ The torque is the variation of the momentum with time. So we can write:
 \subsection{Momentum dump mechanism}
 \label{subsec:chap3momdumpmotor}
 
+The momentum management strategy consists of using the balloon as a large momentum reservoir. The control system then needs to be equipped with a system that allows a transfer of momentum between the gondola and the balloon, which are connected through the parachute and ladder. 
+
+For this purpose, BETTII uses a design which has successfully flown on previous balloon payload (Fig.~\ref{fig:rotator}), with several improvements over its predecessors. It consists of a steel an titanium setup which will make the junction between to the bottom of the balloon train (at the very bottom of the ladder) and the very top of the gondola. The critical material is an alloy of steel that has been heat treated and is particularly strong. The setup consists essentially of a pivot and a pin made with this allow, connected together with grade 8 bolts. The top of the pin is attached to the pivot, and has a lip at the bottom on which two circular bearings are stacked: the bottom one uses ceramic balls (for their excellent friction properties and long lifetime), and the top one uses steel balls (for their excellent strength). Between the two bearings, there is a metal holder that extends all the way down below the pin. On top of the steel bearing, a titanium case sits, which attaches to the entire gondola. 
+
+The momentum dump mechanism is a simple rotary stepper motor. Its housing attaches to the steel case of the assembly - while its shaft attaches to the metal holder between the two bearings. With an assembly like this, when a vertical upward force is exerted, the gondola's weight pushes on the bearings, which then push onto the pin's lip. When the stepper motor starts spinning, it spins only the top part of the bottom bearing, and the bottom part of the top bearing: the friction force that this exerts allows to slowly dump momentum into the pin, hence into the balloon train. 
+
+This configuration seems dangerous since the entire weight of the payload rests on the two bearings and the pin's bottom lip, which can be hazardous during descent when the parachutes open and the payload can experience up to a 10~g vertical load. Hence, this piece of the assembly needs to be thoroughly tested and certified before launch. 
+
+In practice, the momentum unloading happens quite slowly due to the very low friction of the bearing. As the stepper turns the bearing, it slowly turns the entire train along with the pivot for a few tens of seconds. When the train has experienced sufficient twist, it then unfurls and gives a slight kick in the opposite direction. We observed this in our data and will discuss this more in [SECTION].
+
+[TALK ABOUT GALIL]
 \begin{figure}[!ht]
 	\centering
 	\includestandalone{Figures/rotator}
@@ -237,8 +268,19 @@ The torque is the variation of the momentum with time. So we can write:
 
 
 \subsection{Elevation control (Rotators)}
+
+When put in terms of ground-based telescopes, BETTII is fundamentally an Alt-Az telescope: to reach a target, it has to move in azimuth, and in elevation (also called \textit{altitude}). Instead of moving the entire payload in elevation, which would have conserved the optical setup constant for all targets, we chose to move only the siderostats for increased reliability. We paid one cost: as the siderostat cover different elevations, the fields rotate on the detector, and in opposite directions. So as the elevation changes, an active compensation needs to happen, which consists of a third rotation mechanism located downstream.
+
+These rotation mechanisms have multiple requirements: they need to operate at \SI{90}{\degree} from the gravity axis; they need to operate well at \SI{-40}{\celsius}; they need to have an inner clearance to let our \SI{2.5}{\cm} beam through; they need to be able to support many kilograms of cantilevered mass; and they need to have a precise encoder that allows not only smooth motion, but also accurate knowledge of the elevation angle. Griffin Motion LLC makes an industrial rotator that satisfies all of these conditions [Griffin picture].
+
+These are industrial-grade brushless DC rotators. They are controlled by a three-axis Galil Motion controller DMC-4030 with sinusoidal drives. The requirement for sinusoidal drives as opposed to pulsewidth-modulated (PWM) drives stemmed from the fact that these motors were going to be \SI{5}{\meter} away from their controller at the end of each arm, and we wanted to avoid creating electromagnetic noise by having high-frequency pulses going through such a large distance. The rotary encoder is a RENISHAW RESOLUTE absolute encoder with 26 bit resolution, which corresponds to a \ang{;;0.019} angular resolution. However, the controller ignores the two bits of lowest significance, effectively giving a 24 bit resolution, corresponding to a \ang{;;0.08} angular resolution.
+
+
 \subsection{Delay lines}
 \subsection{Tip/tilt}
+
+
+
 \subsection{Fine guidance sensor}
 
 
@@ -246,3 +288,11 @@ The torque is the variation of the momentum with time. So we can write:
 Clocks and timings \\
 Computers
 \subsection{Software architecture}
+
+A diagram showing the flow of the control software is shown in Fig.~\ref{fig:ControlSystem}. 
+\begin{figure}[!ht]
+	\centering
+	\includestandalone{Figures/ControlSystem}
+	\caption[Control System Design]{Control system architecture}
+	\label{fig:ControlSystem}
+    \end{figure}
