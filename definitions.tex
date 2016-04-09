@@ -111,9 +111,10 @@
 % ------------------------------------------------------------------------------------
 
 % change spacing in equations
-\newenvironment{equations}{\begin{doublespace}\begin{equation}}{\end{equation}\end{doublespace}}
-\newenvironment{eqnarrays}{\begin{doublespace}\begin{eqnarray}}{\end{eqnarray}\end{doublespace}}
-
+%\newenvironment{equations}{\begin{doublespace}\begin{equation}}{\end{equation}\end{doublespace}}
+%\newenvironment{eqnarrays}{\begin{doublespace}\begin{eqnarray}}{\end{eqnarray}\end{doublespace}}
+\newenvironment{equations}{\renewcommand*{\arraystretch}{0.75}\begin{equation}}{\end{equation}}
+\newenvironment{eqnarrays}{\renewcommand*{\arraystretch}{0.75}\begin{eqnarray}}{\end{eqnarray}}
 
 \def\Az{\phi_\textrm{Az}}
 \def\dAz{\dot{\phi}_\textrm{Az}}

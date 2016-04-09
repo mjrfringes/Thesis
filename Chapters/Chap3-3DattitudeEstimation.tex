@@ -1,5 +1,8 @@
 \section{3D attitude estimation and sensor fusion}
 \label{sec:KalmanFilter}
+\renewcommand*{\arraystretch}{0.75}
+
+
 The attitude estimation consists of combining high-frequency angular velocity measurements of the payload with low-frequency attitude measurements. The high-frequency measurements, usually from gyroscopes, are relative measurements, and exhibit biases and noise. The attitude measurements are absolute, but they are usually very noisy. The Kalman filter combines these two measurements in a mathematical formalism that uses the physical relationship between them. The goal of the filter is to estimate the bias of the high-frequency measurements, hence providing bias-corrected, trustworthy dynamical information that can be used to estimate the attitude at all times, even when there is no absolute measurement.
 
 In our situation, gyroscopes will provide high-frequency velocity data (typically at 100~Hz), while star cameras will provide absolute measurements every few seconds. The gyroscopes are much more trustworthy over short periods, so they won't be influenced by just a few star camera measurements. However, on long timescales, the attitude as propagated using the gyroscopes will drift with respect of the star cameras because of the gyroscopes' inherent biases. The Kalman filter will estimate those biases and provide a bias-corrected angular velocity to make sure that the gyroscopes do not drift away from the star camera results.
@@ -138,6 +141,7 @@ and:
 
 Using this error representation allows us to fully describe the state error covariance matrix that will be minimized during the Kalman filter steps. 
 
+%\renewcommand*{\arraystretch}{0.75}
 It is important here to introduce the expression of the covariance matrix of this continuous representation. Writing the noise vector $\vectors{n} = \begin{bmatrix} \nGyros \\ \nBias \end{bmatrix}$, the covariance matrix is the expected value of the product of two noise vectors taken at different times [cite TRAWNY]:
 \begin{equations}
 \noiseCovMat_c = E[\vectors{n}(t+\tau)\vectors{n}^T(t)] = 
