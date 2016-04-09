@@ -1,0 +1,41 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+\begin{document}
+\tikzstyle{block} = [draw, fill=black!20, rectangle, 
+    minimum height=4em, minimum width=6em,align=center,inner sep=5pt]
+\tikzstyle{input} = [node distance=1cm,align=center]
+\tikzstyle{output} = [node distance=1cm,align=center]
+\begin{tikzpicture}[auto, scale=0.7, every node/.style={transform shape}]
+\linespread{1}
+
+\coordinate (O) at (0,0);
+\node[block,name=gyro loop,anchor=west] at (O){BOOP FPGA\\ Trigger sensors};
+\node[block,right of=gyro loop,name=estimator loop,node distance=5cm, minimum width=4cm]{BOOP RT\\ Mode manager \& \\Estimator};
+\node[block,below=2.5cm of gyro loop.west,name=apply command,anchor=west]{BOOP FPGA\\ Apply \\commands};
+\node[block,below=1.5cm of apply command.south,name=star camera,anchor=west,fill=\starcamcolor]{FORD\\ Star camera \\solution};
+
+\draw[thick,double] (-0.3,-8) -- (-0.3,2)node[above=1em,align=center]{\SI{100}{\hertz} Control \\ clock tick};
+\draw[thick,double] (9.7,-8) -- (9.7,2)node[above=1em,align=center]{\SI{100}{\hertz} Control \\ clock tick};
+\draw[thick,double] (19.7,-8) -- (19.7,2)node[above=1em,align=center]{\SI{100}{\hertz} Control \\ clock tick};
+
+\node[block,name=gyro loop2,anchor=west,xshift=10cm] at (O){BOOP FPGA\\ Trigger sensors};
+\node[block,right of=gyro loop2,name=estimator loop2,node distance=5cm, minimum width=4cm]{BOOP RT\\ Mode manager \& \\Estimator};
+\node[block,below=2.5cm of gyro loop2.west,name=apply command2,anchor=west]{BOOP FPGA\\ Apply \\commands};
+\node[block,right=8.5cm of star camera,name=fine guidance sensor,anchor=west]{FORD\\ Fine guide \\ camera solution};
+\node[block,below=1.5cm of fine guidance sensor.west,name=detector data]{FORD\\ Science detector \\solution};
+
+\draw[->] (star camera.east) -| (estimator loop.-110);
+\draw[->] (fine guidance sensor.east) -| (estimator loop2.-110);
+\draw[->] (detector data.east) -| (estimator loop2.-90);
+\draw[->] (gyro loop.east)node[right,align=left]{Gyro\\data} -- (estimator loop.west);
+\draw[->] (estimator loop.-50) |- (apply command2.west)node[above left=0.5em and 1 em,align=right]{$\Az$, $\dAz$, \\$\El$, OPD};
+\draw[->] (gyro loop2.east)node[right,align=left]{Gyro\\data} -- (estimator loop2.west);
+\draw[<->] ([yshift=1cm]gyro loop.west) -- ([yshift=1cm]estimator loop.east)node[above,pos=0.5]{<\SI{10}{\milli\second}};
+\draw[->] (estimator loop2.-50) |- ([xshift=10cm]apply command2.west)node[above left=0.5em and 1 em,align=right]{$\Az$, $\dAz$, \\$\El$, OPD};
+\draw[<->] ([yshift=1cm]gyro loop2.west) -- ([yshift=1cm]estimator loop2.east)node[above,pos=0.5]{<\SI{10}{\milli\second}};
+
+
+\end{tikzpicture}
+\end{document}

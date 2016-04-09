@@ -296,6 +296,14 @@ In practice, the momentum unloading happens quite slowly due to the very low fri
 
 The momentum dump mechanism has not been tested in the environmental chamber - however, the stepper motor was rated for vacuum and extreme environments. One of the big unknowns is the value of the bearings' friction coefficients in the balloon environment. When powered, the stepper motor dissipates quite a large amount of heat, which will help maintain the whole assembly to a reasonable temperature. 
 
+\begin{figure}[!ht]
+	\centering
+	\includestandalone{Figures/MomDumpPID}
+	\caption[Momentum dump PID]{Momentum dump control loop}
+	\label{fig:MomDumpPID}
+    \end{figure}
+
+
 \subsubsection{Elevation control (Rotators)}
 
 When put in terms of ground-based telescopes, BETTII is fundamentally an Alt-Az telescope: to reach a target, it has to move in azimuth, and in elevation (also called \textit{altitude}). Instead of moving the entire payload in elevation, which would have conserved the optical setup constant for all targets, we chose to move only the siderostats for increased reliability. We paid one cost: as the siderostat cover different elevations, the fields rotate on the detector, and in opposite directions. So as the elevation changes, an active compensation needs to happen, which consists of a third rotation mechanism located downstream.
@@ -341,6 +349,14 @@ BETTII will have two on-board computers (see also diagram [REF]:
 \subsection{Software architecture}
 
 A diagram showing the flow of the control software is shown in Fig.~\ref{fig:ControlSystem}. 
+\begin{figure}[!ht]
+	\centering
+	\includestandalone{Figures/SoftwareFlow}
+	\caption[Software disgram]{Software layout}
+	\label{fig:SoftwareFlow}
+    \end{figure}
+
+
 \begin{figure}[!ht]
 	\centering
 	\includestandalone{Figures/ControlSystem}

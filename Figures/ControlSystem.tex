@@ -22,7 +22,7 @@
 \node[block,name=gondola,right of=ccmg]{Gondola \\ System};
 \node[block,name=gyroscopes,below of=gondola,node distance=2cm]{Gyroscopes};
 \node[block,name=star camera,below of=gyroscopes,node distance=2cm]{Star\\Camera};
-\node[block,name=fine guiding,below of=star camera,node distance=2cm]{Fine guidance\\Sensor};
+\node[block,name=fine guiding,below of=star camera,node distance=2cm]{Fine guidance\\Sensor loop};
 \node[block,name=estimator,below of=ccmg,minimum height=5cm,node distance=4cm]{Estimator\\Kalman\\filter};
 
 \node[block,name=rotate,below of=calculate az el,node distance=6cm]{Rotate};
@@ -72,7 +72,7 @@
 \draw[->] (rotate.south) -- (calculate opd.north);
 \draw[->] (target2) |- (calculate opd.west);
 \draw[->] (calculate opd.east) -- (sum.west);
-\draw[->] (sum.east) -- (wdl controller.west);
+\draw[->] (sum.east)node[right,align=left]{OPD \\error} -- (wdl controller.west);
 \draw[->] (wdl controller.east) -- (wdl system.west);
 \draw[->] (wdl system.east) -- (wdl out);
 \draw[->] (wdl out mid) |- (wdl sensor.east);
@@ -96,7 +96,7 @@
 \node[shift={(-0.5cm,0.0cm)},above] at (fine guiding.west){$\Attitude^\textrm{meas}_\fine$};
 \node[shift={(-0.7cm,0.1cm)},above] at (gondola.west){Torque};
 \node[shift={(-0.7cm,-0.1cm)},below] at (gondola.west){$\ccmgtorque$};
-\node[shift={(-0.5cm,0.1cm)},above] at (ccmg.west){$n$};
+\node[shift={(-0.5cm,0.1cm)},above] at (ccmg.west){$n\units{steps\si{\per\second}}$};
 \node[shift={(-0.5cm,0.1cm)},align=center,above] at (az pid controller.west){$\Az$\\$\dAz$};
 \node[shift={(0.8cm,-0.5cm)},align=center,below] at (momentum dump.east){Torque \\ $\momdumptorque$};
 
