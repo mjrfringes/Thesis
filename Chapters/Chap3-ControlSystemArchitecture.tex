@@ -201,7 +201,16 @@ Another common tool to study of the gyroscope's performance is to plot the Allan
 
 \subsection{Star cameras}
 
+We have designed, built and tested a custom star camera setup that provides higher accuracy measurements than commercially available devices. Our collaborators from Cardiff University provided the star camera software, which solves for the inertial orientation from a given picture. This software is a C++ set of routines that was originally developed for the EBEX balloon experiment \citep{Oxley:2004hl}. 
 
+Our star camera design features an old-generation Nikon NIKKOR \SI{300}{\mm} f/2.8 with manual focus and extended hood. These lenses were manufactured between 1977 and 1982 and can be found today online through websites like e-Bay. The advantage of these lenses are the lack of automatic focus electronics: the lenses are entirely electronics-free, which makes them more reliable to work a very low-air-density environments. We anticipated that the 
+
+
+FOV: 2.14 x 1.34 deg
+pixel scale: 	4.02 arcsec/pixel
+
+Dominic's text: Our star tracker concept is based a PCO.Edge scientific camera[8]. The detector is a Fairchild CMOS 5.5 megapixel array with a 6.5 micron pitch[9]. The typical quantum efficiency at red bands is 40\%, with typical read noise 1.1 electrons. The readout rate is fast enough to permit 100 fps continuous acquisition, but speed and sensitivity requirements allow us to operate it at a 10 Hz rate. Data are acquired by a computer interfacing with the camera via a CameraLink acquisition card. A Nikon Nikkor f/2.8 lens[10] with 300 mm focal length provides high magnification (688′′/mm), an adequate field of view (≈10° diameter), and large collecting area (90 cm2). This older lens (c. 1980) features a very low dispersion glass to mitigate chromatic aberration and a manual focus lock; it does not feature built-in autofocus and image motion compensation mechanisms, which could become liabilities when uncontrolled in a balloon environment.
+The star tracker has a designed plate scale of \ang{;;4.47}/pixel and a field of view of \SI{3.18}{\degree}\times\SI{2.68}{\degree}. A baffle of 21 cm diameter and 60 cm long provides a Sun avoidance angle of about ±16 degrees, which allows the star camera to be operated easily during daytime with suitable precautions. A long wavelength (R-I band) filter improves the contrast between typical stars and the bluer atmospheric background. The star tracker should be able to determine our elevation and cross- elevation to within \ang{;;0.35}, and our roll angle to within \ang{;;22}, at a frequency of 1 Hz. We plan on using exposure times of 100 ms in nominal operation. An early ground-based demonstration with a lower-performing camera validates these results in both angular resolution and overall design, but at poorer sensitivity (Figures 2 and 3).
 
 \subsection{Azimuth control (CCMG)}
 
