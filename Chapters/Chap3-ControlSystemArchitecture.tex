@@ -122,7 +122,7 @@ Note that the Cold Delay Line (CDL) is running in closed loop during all the mod
 
 
 
-\subsection{Coordinate systems}
+\subsubsection{BETTII Coordinate systems}
 
 
 \begin{figure}[!ht]
@@ -155,18 +155,12 @@ Note that the Cold Delay Line (CDL) is running in closed loop during all the mod
 	\label{fig:starcamRefFrame}
     \end{figure}
 
-\subsection{Modes of operation}
-
-Make table with all modes; from launch to obtaining fringes
-
-The payload has several modes of operation which are used in the various phases of a flight.
-
 
 \subsection{Subsystems}
 
 
 
-\subsection{Gyroscopes}
+\subsubsection{Gyroscopes}
 
 We purchased three SRS-2000 fiber-optic gyroscopes from Optolink. This gyroscope technology uses the Sagnac effect and is the cutting edge in inertial rotational velocity measurements \citep[for a review of the state-of-the-art see, \textit{e.g.}][]{ElBadaoui:2014fr}. We chose these devices for their incredibly low angular random walk, which is a measure of their inherent noise. If we were to trust the gyroscope measurement and integrate its velocity to obtain a position estimate, the estimation error we would make after 1 hour of integration has a standard deviation of about 2 arcseconds.
 
@@ -186,33 +180,56 @@ The properties that we are looking for are typical instantaneous angular random 
 
 Table of gyro specs and measurements for each gyro
 
-\subsubsection{Normality tests}
+\paragraph{Normality tests}
 First and foremost, we wanted to study the gyroscope's noise statistical distribution. We ran a few standard normality tests on chunks of the 8-hour data for each gyroscope. While the tests on individual small chunks of data never reject the null hypothesis (that the distribution is normal), the distribution of the total 8 hours does with a very high probability, using both the Anderson-Darling and the Kolmogorov-Smirnov test.
 
 Since the data is always consistent with being normally distributed over timescales of tens of minutes, after close inspection of the long-term quartile plots and histograms, we determined that it would be safe to consider the distribution as normal for the purpose of our attitude estimator. 
 
 It is important to note that in their factory settings, the gyroscopes' noise distribution was not normal at all. It exhibited electronic peaks with many harmonics, at frequencies that were varying as a function of the gyroscope inclination. After talking to the manufacturer, we determined that it was caused by the closed-loop algorithms inside the gyroscope electronics. The problem was known by them, and the remedy was to inject a random phase perturbation in the closed loop. This had the effects to get rid of those frequency peaks, at the cost of increasing the overall noise variance by a factor of 4. The noise levels that are specified by the company are very close to the noise seen when using that random phase modulation. Hence, if one does not care as much at the frequency content of the gyroscope, it is possible that this device could work even much better than it does for us.
 
-\subsubsection{PSD and Allan variance}
+\paragraph{PSD and Allan variance}
 
 The usual frequency-domain analysis tool is the power spectral density (PSD). This allows us to spot any frequency peaks in the data, and let us look at the $1/f$ noise behavior, which the typical low-frequency behavior that indicates drifts in the signal. The \SI{100}{\hertz} data is all we need, as the gyroscope's bandwidth is \SI{50}{\hertz}. Hence, the \SI{2000}{\hertz} data does not contain any more information than the \SI{100}{\hertz}. In fact, while plotting the PSD of the \SI{2000}{\hertz} data, we can see clearly the break at \SI{50}{\hertz} characteristic of a \SI{50}{\hertz} low-pass filter.
 
 Another common tool to study of the gyroscope's performance is to plot the Allan variance. The Allan variance gives a time-domain analysis of the gyroscope's noise that is complementary to the power spectral density.
 
-\subsection{Star cameras}
+The gyroscopes were successfully tested in the environmental chamber, with no noticeable change in performance except a much larger power draw, due to the Peltier element maintaining the fiber temperature.
+
+\subsubsection{Star cameras}
 
 We have designed, built and tested a custom star camera setup that provides higher accuracy measurements than commercially available devices. Our collaborators from Cardiff University provided the star camera software, which solves for the inertial orientation from a given picture. This software is a C++ set of routines that was originally developed for the EBEX balloon experiment \citep{Oxley:2004hl}. 
 
-Our star camera design features an old-generation Nikon NIKKOR \SI{300}{\mm} f/2.8 with manual focus and extended hood. These lenses were manufactured between 1977 and 1982 and can be found today online through websites like e-Bay. The advantage of these lenses are the lack of automatic focus electronics: the lenses are entirely electronics-free, which makes them more reliable to work a very low-air-density environments. We anticipated that the 
+Our star camera design features an old-generation Nikon Nikkor \SI{300}{\mm} f/2.8 telefocal lens with manual focus and extended hood. These lenses were manufactured between 1977 and 1982 and can be found today online through websites like e-Bay. The lens provides low chromatic aberration, a magnification of \SI{688}{\arcsecond\per\mm}, a wide field of view ($\approx$~\SI{10}{\degree}) and a collecting area of \SI{90}{\mm\squared} which is is larger than most star tracking assemblies. This old lens does not feature a built-in autofocus or any of the image stabilization actuators commonly found in modern lens assemblies: these could have become a liability in the severe balloon environment. 
 
+Our camera is a USB3.0 Point Grey Grasshopper3. The CCD is a Sony Pregius IMX174 CMOS sensor with 1920$\times$1200 pixels at \SI{5.86}{\um} pitch. This provides a field of view of \SI{2.14}{\degree}$\times$\SI{1.34}{\degree} and a pixel scale of \ang{;;4.02}/pixel. It features a very convenient software suite which works with all the Point Grey camera products, and leaves room for future potential upgrades of the camera. The detector characteristics are summarized in table~\ref{tab:starcamproperties}.
 
-FOV: 2.14 x 1.34 deg
-pixel scale: 	4.02 arcsec/pixel
+\renewcommand{\arraystretch}{1.5}
+\begin{table}[htbp]
+\small
+\begin{tabular}{|p{4cm}|p{1cm}|p{8.5cm}|}
+\hline
+Property & Value & Description \\
+\hline
+Quantum efficiency at \SI{525}{\nm} (\%) & 76 & Fraction of incoming photons that create signal \\
+\hline
+Read noise (electrons) & 6.83 & Error made when reading the pixel's value \\
+\hline
+Absolute sensitivity threshold (photons) & 9.77 & Minimum number of photons required to get a $\SNR=1$ on a pixel\\
+\hline
+Well depth (electrons) & \num{32513} & Maximum number of electrons a pixel can store\\
+\hline
+\end{tabular}
+\label{tab:starcamproperties}
+\caption[Star camera properties]{Star camera properties}
+\end{table}
 
-Dominic's text: Our star tracker concept is based a PCO.Edge scientific camera[8]. The detector is a Fairchild CMOS 5.5 megapixel array with a 6.5 micron pitch[9]. The typical quantum efficiency at red bands is 40\%, with typical read noise 1.1 electrons. The readout rate is fast enough to permit 100 fps continuous acquisition, but speed and sensitivity requirements allow us to operate it at a 10 Hz rate. Data are acquired by a computer interfacing with the camera via a CameraLink acquisition card. A Nikon Nikkor f/2.8 lens[10] with 300 mm focal length provides high magnification (688′′/mm), an adequate field of view (≈10° diameter), and large collecting area (90 cm2). This older lens (c. 1980) features a very low dispersion glass to mitigate chromatic aberration and a manual focus lock; it does not feature built-in autofocus and image motion compensation mechanisms, which could become liabilities when uncontrolled in a balloon environment.
-The star tracker has a designed plate scale of \ang{;;4.47}/pixel and a field of view of \SI{3.18}{\degree}\times\SI{2.68}{\degree}. A baffle of 21 cm diameter and 60 cm long provides a Sun avoidance angle of about ±16 degrees, which allows the star camera to be operated easily during daytime with suitable precautions. A long wavelength (R-I band) filter improves the contrast between typical stars and the bluer atmospheric background. The star tracker should be able to determine our elevation and cross- elevation to within \ang{;;0.35}, and our roll angle to within \ang{;;22}, at a frequency of 1 Hz. We plan on using exposure times of 100 ms in nominal operation. An early ground-based demonstration with a lower-performing camera validates these results in both angular resolution and overall design, but at poorer sensitivity (Figures 2 and 3).
+We have successfully cycled the camera in the environmental chamber all the way until the camera's internal thermometer indicated a temperature of \SI{-80}{\celsius}, and it continued operating fine.
 
-\subsection{Azimuth control (CCMG)}
+Focusing the camera could be required at float due to the change in temperatures that could create a shift of the focal plane. We implemented our own autofocus mechanism, a belt is attached between the lens' focus ring and a stepper motor. When the stepper motor turns, it turns the focus ring. We tested this very simple configuration in our environmental chamber only to realize that the belt was loosing grip when the temperature was too cold. To fix this problem, we added a spring-based belt tensioner which adds a $\approx$~\SI{20}{\newton} of force to the belt.
+
+At cold temperature and low pressure, we noted that the glass in the lens began to exhibit radial cracks, presumably caused by the CTE difference between the steel housing and the glass material. These cracks don't noticeably affect image quality, but of course they could cause the glass to shatter if they become too large. Hence, it was decided to maintain the outside temperature of the lens above \SI{0}{\celsius} at all times during flight.
+
+\subsubsection{Azimuth control (CCMG)}
 
 The CCMG features multiple encoders and motors. First, there is a brushless DC motor that spins each wheel, with a relative 13-bit encoder that monitors where the wheel is in its rotation. Second, there is a Beckhoff AS1050 stepper motor that controls the wheels' shaft angle. On the gimbal, there is a 13-bit  absolute magnetic encoder that measures the angle of the wheels from some reference. 
 
@@ -220,9 +237,9 @@ The motion controller that we use to monitor the wheel's speed is a brushless-DC
 
 The motion controller was modified to accept an external clock pulse in order to synchronize the wheels' motion with our master clock signal. It requires a clock pulse at \SI{1.024}{\kilo\hertz}, and deviations from this value will require changing some of the gains - it is our understanding that the controller uses a \SI{1.024}{\kilo\hertz} crystal oscillator to generate it's time basis, as some of the gains and parameters to the controller can directly be entered as, for example, "steps per second". 
 
-At power-up, the wheels immediately start accelerating to their cruising speed of 3000~rpm. They take about 10 minutes to reach their target. The wheels' frequency is set for the entire duration of the flight.
+At power-up, the wheels immediately start accelerating to their cruising speed of \num{3000}~rpm. They take about 10 minutes to reach their target. The wheels' frequency is set for the entire duration of the flight.
 
-The gimbal is controlled with another Galil Motion controller, a 2-axis stepper driver DMC-4020, which can also be synchronized with an external clock. Only one axis is used for the CCMG, while the second axis is used by the momentum dump motor (see section~\ref{subsec:chap3momdumpmotor}). The controller operates in micro-stepping mode and has a very smooth response, in contrast to previous controllers we tested which create a lot of vibrations. The controller is set always to use 64 micro-steps per step, and the motor is a [REFERENCE] with 200 steps per revolution. The motor is outfitted with a Beckhoff AG1000 planetary gearhead with a 3.7:1 reduction ratio. The gearbox itself has a ratio of 25, which creates a total gear ratio of 92.5. Hence, a \SI{360}{\degree} revolution of the stepper corresponds to $360/92.5=3.9^\circ$ motion of the shaft. A motion of \SI{1}{\degree} of the shaft correspond to 3889 motion controller steps. A motion of \SI{90}{\degree} of the shaft correspond to 296000 motion controller steps. Finally, the same \SI{90}{\degree} motion will translate to a 2048 step change in the gimbal magnetic encoder.
+The gimbal is controlled with another Galil Motion controller, a 2-axis stepper driver DMC-4020, which can also be synchronized with an external clock. Only one axis is used for the CCMG, while the second axis is used by the momentum dump motor (see section~\ref{subsec:chap3momdumpmotor}). The controller operates in micro-stepping mode and has a very smooth response, in contrast to previous controllers we tested which create a lot of vibrations. The controller is set always to use 64 micro-steps per step, and the motor is a [REFERENCE] with 200 steps per revolution. The motor is outfitted with a Beckhoff AG1000 planetary gearhead with a 3.7:1 reduction ratio. The gearbox itself has a ratio of 25, which creates a total gear ratio of 92.5. Hence, a \SI{360}{\degree} revolution of the stepper corresponds to $360/92.5=3.9^\circ$ motion of the shaft. A motion of \SI{1}{\degree} of the shaft correspond to \num{3889} motion controller steps. A motion of \SI{90}{\degree} of the shaft correspond to \num{296000} motion controller steps. Finally, the same \SI{90}{\degree} motion will translate to a \num{2048} step change in the gimbal magnetic encoder.
 
 In practice, all of the control is done using the regular stepper motor encoder. The magnetic encoder is used for limit-checking and to feed back to the momentum dump mechanism. With this in mind, we can now relate the control signal (stepper motor micro-steps per second) to the physical torque that the wheels provide. 
 \begin{eqnarray}
@@ -231,7 +248,7 @@ In practice, all of the control is done using the regular stepper motor encoder.
 \Delta\theta\units{\si{\arcsecond}} &\sim &  1.09 \Delta(\textrm{micro-steps})
 \end{eqnarray}
 
-At 3000~rpm, the CCMG has a total stored momentum $\MCCMG\units{\si{\newton\meter\second}} = 20.8$. Of course, depending on the orientation of the wheels, the momentum along the $\z$ axis is only the projection of this momentum vector, $\MCCMGz\units{\si{\newton\meter\second}} = 20.8\sin\theta$, where $\theta\units{\si{\radian}}$ is the angle between the horizontal axis and the rotation axis of the wheels. This makes sense: when the wheels are horizontal, there is no momentum projected on the $\z$ axis because the rotation vectors of the wheels are orthogonal to $\z$. When the rotation axes are along $\z$, we have the maximum momentum along $\z$. 
+At \num{3000}~rpm, the CCMG has a total stored momentum $\MCCMG\units{\si{\newton\meter\second}} = 20.8$. Of course, depending on the orientation of the wheels, the momentum along the $\z$ axis is only the projection of this momentum vector, $\MCCMGz\units{\si{\newton\meter\second}} = 20.8\sin\theta$, where $\theta\units{\si{\radian}}$ is the angle between the horizontal axis and the rotation axis of the wheels. This makes sense: when the wheels are horizontal, there is no momentum projected on the $\z$ axis because the rotation vectors of the wheels are orthogonal to $\z$. When the rotation axes are along $\z$, we have the maximum momentum along $\z$. 
 
 The torque is the variation of the momentum with time. So we can write:
 \begin{eqnarray}
@@ -254,7 +271,9 @@ The torque is the variation of the momentum with time. So we can write:
     \end{figure}
 
 
-\subsection{Momentum dump mechanism}
+The entire CCMG assembly was tested in a vacuum chamber at cold temperatures, and operates fine. Several heaters are strategically located in the assembly to allow some thermal control for all the electronics in case issues arise.
+
+\subsubsection{Momentum dump mechanism}
 \label{subsec:chap3momdumpmotor}
 
 The momentum management strategy consists of using the balloon as a large momentum reservoir. The control system then needs to be equipped with a system that allows a transfer of momentum between the gondola and the balloon, which are connected through the parachute and ladder. 
@@ -275,8 +294,9 @@ In practice, the momentum unloading happens quite slowly due to the very low fri
 	\label{fig:rotator}
     \end{figure}
 
+The momentum dump mechanism has not been tested in the environmental chamber - however, the stepper motor was rated for vacuum and extreme environments. One of the big unknowns is the value of the bearings' friction coefficients in the balloon environment. When powered, the stepper motor dissipates quite a large amount of heat, which will help maintain the whole assembly to a reasonable temperature. 
 
-\subsection{Elevation control (Rotators)}
+\subsubsection{Elevation control (Rotators)}
 
 When put in terms of ground-based telescopes, BETTII is fundamentally an Alt-Az telescope: to reach a target, it has to move in azimuth, and in elevation (also called \textit{altitude}). Instead of moving the entire payload in elevation, which would have conserved the optical setup constant for all targets, we chose to move only the siderostats for increased reliability. We paid one cost: as the siderostat cover different elevations, the fields rotate on the detector, and in opposite directions. So as the elevation changes, an active compensation needs to happen, which consists of a third rotation mechanism located downstream.
 
@@ -284,19 +304,41 @@ These rotation mechanisms have multiple requirements: they need to operate at \S
 
 These are industrial-grade brushless DC rotators. They are controlled by a three-axis Galil Motion controller DMC-4030 with sinusoidal drives. The requirement for sinusoidal drives as opposed to pulsewidth-modulated (PWM) drives stemmed from the fact that these motors were going to be \SI{5}{\meter} away from their controller at the end of each arm, and we wanted to avoid creating electromagnetic noise by having high-frequency pulses going through such a large distance. The rotary encoder is a RENISHAW RESOLUTE absolute encoder with 26 bit resolution, which corresponds to a \ang{;;0.019} angular resolution. However, the controller ignores the two bits of lowest significance, effectively giving a 24 bit resolution, corresponding to a \ang{;;0.08} angular resolution.
 
+An old version of these rotation stages was tested in our environmental chamber, but not under load. These devices are rated to operate nominally down to \SI{-40}{\celsius}, but because of their self-heating, we do not expect that they will reach that temperature. During our cold tests of the device, we noted that the friction seemed to change, which required a re-adjustment of the PID coefficients inside the Galil controller. 
 
-\subsection{Delay lines}
-\subsection{Tip/tilt}
+\subsubsection{Delay lines}
+\subsubsection{Tip/tilt}
+
+Our tip/tilt mechanisms are Physik Instrumente S330 piezo-electric actuators that move a flat platform in tip and tilt. We attach a mirror to that platform, and put that mirror close to a pupil of the optical system, to correct for angular errors without creating beam walk. After long discussions with the company's engineers, we ordered a custom strain gauge sensor especially tune and tested to resist low temperatures: this sensor tells the angle of the platform, which is important for our control system [see section]. Similar devices have been successfully used on sounding rocket before to provide milli-arcsecond angular control \citep{Mendillo:2012fh}. 
+
+The piezo-electric driver electronics provide the required \SI{100}{\volt} to operate the platform, and amplify 10 times an analog 0-10~\si{\volt} command signal. Despite its broad range of motion ($\approx$~\SI{10}{\milli\radian}), they can still operate at multiple hundred of of \si{\hertz} bandwidth, even with a mirror load on top of the platform. The resonant frequency of the structure under load, which needs to be avoided at all costs to avoid severe damage, is at more than \SI{2}{\kilo\hertz}, way beyond the frequency at which we need to command the device.
+
+The platform can be controlled in open-loop mode, where there is a simple gain between the command and the voltage applied to the piezo crystals. However, we baseline to use the closed-loop mode during flight. In this configuration, the electronics close the loop using the strain gauge sensor and the command corresponds to an angle rather than simply a voltage. The drawbacks of the closed-loop mode are a slightly decreased bandwidth and overall range of motion. In case more range is needed during flight, it is possible to switch back to open-loop mode. 
 
 
+ 
+ 
+\subsubsection{Fine guidance sensor}
 
-\subsection{Fine guidance sensor}
+The fine guidance sensor is a HAWAII-1RG detector with 1024$\times$1024 pixels that is sensitive to infrared wavelengths between \SI{1}{\um} and \SI{2.5}{\um}. The device will be operated at a cryogenic temperature of \SI{77}{\kelvin}, at which the expected read noise is 18~electrons r.m.s.
 
-
-\subsection{Control electronics}
+\subsubsection{Control electronics}
 Clocks and timings \\
 Computers
-\subsection{Software architecture}
+
+BETTII will have two on-board computers (see also diagram [REF]: 
+\begin{enumerate}
+\item a computer which operates a real-time Linux kernel will be used to store all the date, process the up/down telemetry, acquire star camera images, solve for inertial attitude, and process the science detector and H1RG frames. This computer is named \textit{ford}.
+\item an FPGA and real-time computer from National Instruments to process the sensor input/outputs, implement the attitude estimation, and synchronize all the control loops. This computer is named \textit{boop}. This is the brain of the control system. 
+\end{enumerate}
+
+[MAKE DIAGRAM WITH ALL COMPUTERS]
+\textit{ford} is an Adlink Extreme Rugged Express-IBR 3517UE with a dual-core i7 CPU and 4 GB of ECC (Error Checking and Correction) memory. The ECC memory is helpful in mitigating some of the side effects of cosmic ray hits on the memory chips. The computer has a low power consumption, which allows it to function with a simple radiator instead of a fan. 
+\textit{ford} has been successfully tested at in the environmental chamber, and the temperatures of its cores under maximum CPU stress have been monitored over long periods of time. 
+
+\textit{boop} is a National Instrument cRIO- system. It features a reprogrammable FPGA chip in addition to a dual-core real-time operating system. NI LabView is the software interface to the system. \textit{boop} will generate and distribute BETTII's master clock signal at \SI{50}{\mega\hertz}.
+
+\subsubsection{Software architecture}
 
 A diagram showing the flow of the control software is shown in Fig.~\ref{fig:ControlSystem}. 
 \begin{figure}[!ht]
@@ -305,3 +347,5 @@ A diagram showing the flow of the control software is shown in Fig.~\ref{fig:Con
 	\caption[Control System Design]{Control system architecture}
 	\label{fig:ControlSystem}
     \end{figure}
+
+[MAKE SOFTWARE DIAGRAM ARCHITECTURE]
