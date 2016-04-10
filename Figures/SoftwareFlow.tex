@@ -35,7 +35,7 @@
 \draw[<->] ([yshift=1cm]gyro loop.west) -- ([yshift=1cm]estimator loop.east)node[above,pos=0.5]{<\SI{10}{\milli\second}};
 \draw[->] (estimator loop2.-50) |- ([xshift=10cm]apply command2.west)node[above left=0.5em and 1 em,align=right]{$\Az$, $\dAz$, \\$\El$, OPD};
 \draw[<->] ([yshift=1cm]gyro loop2.west) -- ([yshift=1cm]estimator loop2.east)node[above,pos=0.5]{<\SI{10}{\milli\second}};
-
+\draw[->,double,thick] (-1,-9) -- (21,-9)node[below left=0.2cm and 0.2cm]{Time};
 
 \end{tikzpicture}
 \end{document}

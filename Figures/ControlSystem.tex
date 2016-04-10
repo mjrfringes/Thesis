@@ -14,8 +14,8 @@
 
 % blocks
 \node[sum,name=calculate az el]{Calculate \\ $\Az$, $\El$,\\ $\dAz$};
-\node[block,name=az pid controller,right of=calculate az el]{Azimuth PID \\ controller};
-\node[block,name=ccmg,right of=az pid controller]{CCMG};
+\node[block,name=az pid controller,right=1cm of calculate az el]{Azimuth PID \\ controller};
+\node[block,name=ccmg,right=2cm of az pid controller]{CCMG};
 \node[block,name=momentum dump,above of=ccmg,node distance=3cm]{Momentum \\ Dump};
 \node[block,name=galil elevation controller,above of=az pid controller][xshift=4cm][yshift=1cm]{Galil \\ Controller};
 \node[block,name=griffin,right of=galil elevation controller]{Rotation \\ stages};
@@ -50,7 +50,7 @@
 % lines
 \draw[->] (target) -- (calculate az el);
 \draw[->] (calculate az el.east) -- (az pid controller.west);
-\draw[->] (az pid controller.east) -- (ccmg.west);
+\draw[->] (az pid controller.east)node[above right=0.1cm and 0.1cm]{$n\units{steps~\si{\per\second}}$} -- (ccmg.west);
 \draw[->] (ccmg.east) -- (gondola.west);
 \draw[->] (gondola.east) -- (gondola out);
 \draw[->] (calculate az el.north) |- (galil elevation controller.west);
@@ -79,7 +79,7 @@
 \draw[->] (wdl sensor.west) -| (sum.south);
 \draw[->] (gondola.north) |- (momentum dump.20);
 \draw[->] (momentum dump.-20) -| (gondola.130);
-\draw[->] (ccmg.north) -- (momentum dump.south);
+\draw[->] (ccmg.north) -- (momentum dump.south)node[below left = 0.1cm and 0.1cm,align=center]{CCMG angular\\ momentum};
 
 % more text
 \node[shift={(-0.3cm,-0.3cm)}] at (calculate az el.south){-};
@@ -89,14 +89,12 @@
 \node[shift={(-3cm,0cm)},align=center,above=0.5em] at (estimator.west){Estimated gongola\\angular position and velocity\\ in inertial frame};
 \node[shift={(0cm,-0.7cm)},align=left,right=0.5em] at (rotate.south){Estimated telescope\\angular position and velocity\\ in inertial frame};
 \node[shift={(0cm,2cm)},align=left,right=0.5em] at (gondola.north){Gondola angular\\ momentum};
-\node[shift={(0cm,-0.5cm)},align=right,left] at (momentum dump.south){CCMG angular\\ momentum};
 \node[shift={(0cm,5.2cm)},align=center,above] at (calculate az el){Desired elevation\\$\El$};
-\node[shift={(-0.5cm,0.0cm)},above] at (gyroscopes.west){$\boldsymbol{\theta_\gyro}$};
+\node[shift={(-0.5cm,0.0cm)},above] at (gyroscopes.west){$\gyroVec_\gyro$};
 \node[shift={(-0.5cm,0.0cm)},above] at (star camera.west){$\Attitude^\textrm{meas}_\starcam$};
 \node[shift={(-0.5cm,0.0cm)},above] at (fine guiding.west){$\Attitude^\textrm{meas}_\fine$};
 \node[shift={(-0.7cm,0.1cm)},above] at (gondola.west){Torque};
 \node[shift={(-0.7cm,-0.1cm)},below] at (gondola.west){$\ccmgtorque$};
-\node[shift={(-0.5cm,0.1cm)},above] at (ccmg.west){$n\units{steps\si{\per\second}}$};
 \node[shift={(-0.5cm,0.1cm)},align=center,above] at (az pid controller.west){$\Az$\\$\dAz$};
 \node[shift={(0.8cm,-0.5cm)},align=center,below] at (momentum dump.east){Torque \\ $\momdumptorque$};
 

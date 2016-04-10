@@ -13,21 +13,26 @@
 \linespread{1}
 
 \node[input,name=desired state,above=2em]{Desired \\ momentum \\ (usually 0)};
-\node[sum,name=sum,right of=desired state,node distance=2cm]{};
-\draw[->] (desired state.east) -- (sum.west);
+\node[sum,name=sum,right=2cm of desired state]{};
+\draw[->] (desired state.east) -- (sum.west)node[above left=0.1cm and 0.1cm]{+};
 \node[block,name=PID,right of=sum,node distance=3cm]{$\Kp$};
-\draw[->] (sum.east)node[above right]{Error} -- (PID.west);
+\draw[->] (sum.east)node[above right=0.1cm and 0.1cm]{Error} -- (PID.west);
 %\node[right of=sum,node distance = 1cm,above,yshift=0.2cm]{Error};
 \node[block,name=actuator,right of=PID,node distance=4cm]{Galil controller\\and motor};
 \draw[->] (PID.east)node[above right,align=center]{steps \si{\per\second}} -- (actuator.west);
 \node[block,name=gondola,right of=actuator,node distance=5cm]{Gondola};
 \draw[->] (actuator.east)node[right,align=center]{Torque\\ $\momdumptorque$} -- (gondola.west);
-\draw[->] (gondola.east) -- ++(1,0);
-\node[block,name=inertia,below=3cm of gondola.west]{Inertia\\about $\vectors{z}$};
-\draw[->] ([xshift=0.5cm]gondola.east) |- (inertia.east)node[above right]{$\omega_z$};
-\node[sum,name=sum,right=3cm of inertia.west]{};
-\draw[->] (inertia.west) -- (sum.east)node[above right]{+};
-\draw[->] ([yshift=-2cm]inertia)node[above,align=center]{CCMG angular\\momentum} -|(sum.south)node[below left]{+};
+\draw[->] (gondola.east)node[above right=0.1cm and 0.5cm]{$\Attitude$} -- ++(1,0);
+\node[sum,name=sum2,below=2cm of sum]{};
+\node[block,name=inertia,right=2cm of sum2]{Inertia};
+\node[block,name=gyros,right=2cm of inertia]{Gyroscopes};
+\draw[->] ([xshift=0.5cm]gondola.east) |- (gyros.east);
+\draw[->] (gyros.west)node[above left=0.1cm and 0.1cm]{$\gyroVec$} -- (inertia.east);
+\node[sum,name=sum2,below=2cm of sum]{};
+\draw[->] (inertia.west)node[above left=0.1cm and 0.1cm]{$(\inertiaVec\gyroVec)_z$} -- (sum2.east)node[above right=0.1cm and 0.1cm]{+};
+\node[input,name=ccmg,left=2cm of sum2]{CCMG $\vectors{z}$\\momentum};
+\draw[->] (ccmg) --(sum2.west)node[above left=0.1cm and 0.1cm]{+};
+\draw[->] (sum2.north)node[left=0.1cm,align=right,yshift=1cm]{Total $\vectors{z}$\\momentum} --(sum.south)node[below right=0.1cm and 0.1cm]{-};
 
 
 \end{tikzpicture}
