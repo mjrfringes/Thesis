@@ -30,7 +30,7 @@
 \draw[->] (gyros.west)node[above left=0.1cm and 0.1cm]{$\gyroVec$} -- (inertia.east);
 \node[sum,name=sum2,below=2cm of sum]{};
 \draw[->] (inertia.west)node[above left=0.1cm and 0.1cm]{$(\inertiaVec\gyroVec)_z$} -- (sum2.east)node[above right=0.1cm and 0.1cm]{+};
-\node[input,name=ccmg,left=2cm of sum2]{CCMG $\vectors{z}$\\momentum};
+\node[input,name=ccmg,left=2cm of sum2]{CCMG $\vectors{z}$\\momentum\\$\MCCMGz$};
 \draw[->] (ccmg) --(sum2.west)node[above left=0.1cm and 0.1cm]{+};
 \draw[->] (sum2.north)node[left=0.1cm,align=right,yshift=1cm]{Total $\vectors{z}$\\momentum} --(sum.south)node[below right=0.1cm and 0.1cm]{-};
 
