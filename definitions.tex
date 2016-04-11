@@ -3,15 +3,15 @@
 % ------------------------------------------------------------------------------------
 
 % Units
-\def\um{\mu\textrm{m}}
+\def\um{\ensuremath{\mu\textrm{m}}}
 \def\asec{\textrm{arcsec}}
-\def\cm1{\textrm{cm}^{-1}}
+\def\cm1{\ensuremath{\textrm{cm}^{-1}}}
 
 %angle definitonis
 \def\shat0{\hat{\textbf{s}}_0}
 %\def\Ds{\Delta\textbf{s}}
 \def\Ds{\xi}
-\def\urad{\mu\textrm{rad}}
+\def\urad{\ensuremath{\mu\textrm{rad}}}
 
 % Interferogram notations
 \def\samp{s}
@@ -69,7 +69,7 @@
 \def\O{\mathcal{O}}
 
 % Noise definitons
-\def\SNR{\textrm{SNR}}
+\def\SNR{\ensuremath{\textrm{SNR}}}
 \def\SNRnp{\SNR_\textrm{np}}
 \def\ni{n_\mI}
 \def\nA{n_+}
@@ -116,10 +116,10 @@
 \newenvironment{equations}{\renewcommand*{\arraystretch}{0.75}\begin{equation}}{\end{equation}}
 \newenvironment{eqnarrays}{\renewcommand*{\arraystretch}{0.75}\begin{eqnarray}}{\end{eqnarray}}
 
-\def\Az{\phi_\textrm{Az}}
-\def\dAz{\dot{\phi}_\textrm{Az}}
-\def\El{\phi_\textrm{El}}
-\def\dOPD{\dot{\textrm{OPD}}}
+\def\Az{\ensuremath{\phi_\textrm{Az}}}
+\def\dAz{\ensuremath{\dot{\phi}_\textrm{Az}}}
+\def\El{\ensuremath{\phi_\textrm{El}}}
+\def\dOPD{\ensuremath{\dot{\textrm{OPD}}}}
 
 % Reference frames
 \def\G{\textrm{\textbf{G}}}
@@ -142,9 +142,9 @@
 
 % General definitions
 \def\target{\textrm{target}}
-\def\dt{dt}
-\def\Deltat{\Delta t}
-\def\sig{\sigma}
+\def\dt{\ensuremath{\textrm{dt}}}
+\def\Deltat{\ensuremath{\Delta t}}
+\def\sig{\ensuremath{\sigma}}
 \newcommand{\Ang}[3]{{#1}^{#2}_{#3}} % angle symbol, raw/true/new (superscript), sensor symbol (subscript)
 \newcommand{\hatAng}[3]{\hat{{#1}}^{#2}_{#3}} % 
 \newcommand{\dotAng}[3]{\dot{{#1}}^{#2}_{#3}} % 
@@ -299,4 +299,8 @@
 \def\ACQUIRE{\textrm{ACQUIRE}}
 \def\LOCKED{\textrm{LOCKED}}
 
-
+\newcommand{\boop}{\ensuremath{boop} }
+\newcommand{\boopRT}{\ensuremath{boop|\textrm{RT}} }
+\newcommand{\boopFPGA}{\ensuremath{boop|\textrm{FPGA}} }
+\newcommand{\ford}{\ensuremath{ford} }
+\newcommand{\heartbeat}{\SI{100}{\hertz}}

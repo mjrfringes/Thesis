@@ -228,9 +228,17 @@ Results from the camera and the star camera software are shown in Fig
 \begin{landscape}
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=1.6\textwidth]{Figures/starcam_images.pdf}
-	\caption[Star camera example WISE]{Star camera image (left) with identified sources circled in red. WISE \SI{3.4}{\um} image (right) with the same circles overlaid.}
+	\includegraphics[width=1.5\textwidth]{Figures/starcam_images.pdf}
+	\caption[Star camera example WISE]{\textit{Left}: Example of a background-subtracted star camera image with identified $>5\sigma$ sources circled in red. The orientation of the image on the celestial sphere is the one provided by BETTII's embedded star camera solver. This image corresponds to a field in the Scorpius constellation\textit{Right}: WISE \SI{3.4}{\um} mosaic from the online archive, centered on the same location. This image is composed of 9 individual WISE images that we patched into a mosaic using the \textit{Montage}[CITE] software package.}
 	\label{fig:starcamexample}
+    \end{figure}
+\end{landscape}
+\begin{landscape}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1.5\textwidth]{Figures/starcam_SDSSr_zoom.pdf}
+	\caption[Star camera individual star]{\textit{Left}: Snapshot of a bright star seen within the background-subtracted star camera frame. \textit{Right}: Snapshot taken at the same location from the WISE \SI{3.4}{\um} archive.}
+	\label{fig:starcamzoom}
     \end{figure}
 \end{landscape}
 
@@ -260,10 +268,15 @@ In practice, all of the control is done using the regular stepper motor encoder.
 \Delta\theta\units{\si{\arcsecond}} &\sim &  1.09 \Delta(\textrm{micro-steps})
 \end{eqnarray}
 
-At \num{3000}~rpm, the CCMG has a total stored momentum $\MCCMG\units{\si{\newton\meter\second}} = 20.8$. Of course, depending on the orientation of the wheels, the momentum along the $\z$ axis is only the projection of this momentum vector, $\MCCMGz\units{\si{\newton\meter\second}} = 20.8\sin\theta$, where $\theta\units{\si{\radian}}$ is the angle between the horizontal axis and the rotation axis of the wheels. This makes sense: when the wheels are horizontal, there is no momentum projected on the $\z$ axis because the rotation vectors of the wheels are orthogonal to $\z$. When the rotation axes are along $\z$, we have the maximum momentum along $\z$. 
+At \num{3000}~rpm, the CCMG has a total stored momentum $\MCCMG= \SI{20.8}{\newton\meter\second}$. Of course, depending on the orientation of the wheels, the momentum along the $\z$ axis is only the projection of this momentum vector,
+\begin{equation}
+\MCCMGz\units{\si{\newton\meter\second}} = 20.8\sin\theta,
+\end{equation}
+where $\theta\units{\si{\radian}}$ is the angle between the horizontal axis and the rotation axis of the wheels. This makes sense: when the wheels are horizontal, there is no momentum projected on the $\z$ axis because the rotation vectors of the wheels are orthogonal to $\z$. When the rotation axes are along $\z$, we have the maximum momentum along $\z$. 
 
 The torque is the variation of the momentum with time. So we can write:
 \begin{eqnarray}
+\ccmgtorque\units{\si{\newton\meter}} &= \frac{d}{dt}\MCCMGz\\
 \ccmgtorque\units{\si{\newton\meter}} &= & 20.8\times \dot{\theta}\units{\si{\radian\per\second}} \cos\theta\\
  &= & \num{1.1e-4}\times \velstepper\units{micro-step~\si{\per\second}}\cos\theta
 \end{eqnarray}
@@ -342,15 +355,73 @@ The platform can be controlled in open-loop mode, where there is a simple gain b
 
 The fine guidance sensor is a HAWAII-1RG detector with 1024$\times$1024 pixels that is sensitive to infrared wavelengths between \SI{1}{\um} and \SI{2.5}{\um}. The device will be operated at a cryogenic temperature of \SI{77}{\kelvin}, at which the expected read noise is 18~electrons r.m.s.
 
-\subsubsection{Control electronics}
+\subsubsection{Clocks and timing}
 Clocks and timings \\
 Computers
 
-BETTII will have two on-board computers (see also diagram [REF]: 
+Synchronization of the sensors and actuators are of prime importance for our payload. As an interferometer, we are extremely sensitive to vibrations which could be injected in our system by the motors. While everything was designed to maintain a very good symmetry, slight differences in the inertias or mass distribution of the reaction wheels, for example, could create a beat frequency that would be noticeable in our science data. The existence of multiple clocks, each with their own slight temperature-dependent drift, can dramatically complicate the proper retrieval of the data.
+
+To avoid future complications, all BETTII actuators and sensors are slaved to one single \SI{50}{\mega\hertz} master clock, or an integer divider of that master clock. The cascade of the various clock dividers meets at the common value of \num{124800}, which corresponds to \SI{2496000}{\nano\second}. This is BETTII's heartbeat. Hence, \num{124800} master clock ticks correspond to the elementary cycle of all critical processes:
+\begin{itemize}
+\item The CDL moves of one single step
+\item The H1RG reads one single frame
+\item The science detector reads one single frame
+\item The CCMG wheel position about its axis is checked and a correction is applied.
+\end{itemize}
+
+The advantage of this strategy can be illustrated as follows. The time it takes for a wheel to complete a revolution is set to be an integer multiple of this heartbeat, $\num{998400}=\num{124800}\times 8$ master clock ticks (about 50 revolutions per second). Hence, each 8 heartbeats, each wheel is supposed to be in the same position, and it will controlled 8 times during one revolution to make sure it is. This completely locks in their relative velocities. Let's suppose now that in their 8th position, a mechanical defects in the wheel or the bearing triggers a small vibration. This vibration will occur at a frequency which is locked with respect to our science data, such that we will see its effects every 8 data samples. In the case where these clocks are not synchronized and would unpredictably drift with respect to each other, a perturbation that occurs every 8th of a revolution has repercussions not exactly at every 8 data samples. If we think about this in the frequency domain, it means that the power peak caused by the vibration is now broadened, whereas it is very sharp in the synchronized case.
+
+In practice, however, implementing this "single clock" approach is not straightforward for a project that has modest resources and relies heavily on commercial electronics. Most commercial motion controllers do not allow for external clock synchronization. We came up with a solution with the engineers at Galil Motion, and found a way to change their controller to accept an external TTL signal that would bypass their internal crystal oscillator at \SI{1.024}{\kilo\hertz}. The controller normally uses the internal oscillator as a definition of its time basis, so the user can send input in physical units (like acceleration or velocity) - a change in the clock frequency from the introduction of an external signal will have non-trivial repercussions.
+
+The attitude control and sensing occurs every 4 heartbeats, which corresponds to $\approx$\SI{100.16}{\hertz}. In the rest of this discussion, we will always refer to this frequency as being at \SI{100}{\hertz} for simplicity of notation - but it important to remember that it is in fact derived from the master clock.
+
+[PUT here the clock diagram]
+
+\subsubsection{Computers}
+
+BETTII will have two on-board computers (see also diagram [REF]): 
 \begin{enumerate}
 \item a computer which operates a real-time Linux kernel will be used to store all the date, process the up/down telemetry, acquire star camera images, solve for inertial attitude, and process the science detector and H1RG frames. This computer is named \textit{ford}.
 \item an FPGA and real-time computer from National Instruments to process the sensor input/outputs, implement the attitude estimation, and synchronize all the control loops. This computer is named \textit{boop}. This is the brain of the control system. 
 \end{enumerate}
+
+
+\renewcommand{\arraystretch}{1.5}
+\begin{table}[htbp]
+\small
+\begin{tabular}{|c||p{12cm}|}
+\hline
+Name  & Description \& tasks  \\
+\hline
+\hline
+\boopFPGA & 
+$\bullet$ Generate \SI{50}{\mega\hertz} master clock \newline
+$\bullet$ Generate all other system clocks derived from master clock\newline
+$\bullet$ Trigger gyroscopes, star cameras\newline
+$\bullet$ Read sensors: gyroscopes, galil controllers, \ford at \heartbeat \newline
+$\bullet$ Send actuator commands at \heartbeat \newline
+$\bullet$ Implement hardware protection (limit, overdrive, etc) \newline
+\\
+\hline
+\boopRT & 
+$\bullet$ Collects all sensors from \boopFPGA and estimate gondola's attitude and velocity \newline
+$\bullet$ Create proper commands to all actuators and sends them to \boopFPGA  \newline
+$\bullet$ Manages operating modes [REF SECTION] \newline
+$\bullet$ Manages FIFOs and communication channels with \ford  \newline
+\\
+\hline
+\ford & 
+$\bullet$ Processes star camera frames to determine attitude \newline
+$\bullet$ Processes science detector frames \newline
+$\bullet$ Processes fine guidance sensor frames \newline
+$\bullet$ Handles communication with the ground (through the CIP) and from/to \boop \newline
+$\bullet$ Automatically applies observing plan if no commands from the ground: send targets to \boopRT \newline
+\\
+\hline
+\end{tabular}
+\caption[BETTII embedded computers]{}
+\label{tab:computers}
+\end{table}
 
 [MAKE DIAGRAM WITH ALL COMPUTERS]
 \textit{ford} is an Adlink Extreme Rugged Express-IBR 3517UE with a dual-core i7 CPU and 4 GB of ECC (Error Checking and Correction) memory. The ECC memory is helpful in mitigating some of the side effects of cosmic ray hits on the memory chips. The computer has a low power consumption, which allows it to function with a simple radiator instead of a fan. 
