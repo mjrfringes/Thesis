@@ -166,34 +166,123 @@ We purchased three SRS-2000 fiber-optic gyroscopes from Optolink. This gyroscope
 
 The devices have a bandwidth of \SI{50}{\hertz}, but can be triggered at up to \SI{2000}{\hertz}. Their extreme stability is contingent upon proper temperature stabilization, which is done with a closed-loop set at their calibration temperature of $\SI{23.5}{\celsius}\pm\SI{0.5}{\celsius}$ using an active built-in Peltier element. This Peltier element transforms electric power into either heating or cooling \citep{Peltier:1834vu}.
 
-However, their sensitivity has complicated some of their testing. As soon as we attach a gyroscope to any structure, it measures its vibrational modes, which makes it hard to make a stable measurement of the gyroscope's drift stability. This includes the vibrations that are inherent to the building in the which they are placed.
+However, their sensitivity has complicated some of their testing. As soon as we attach a gyroscope to any structure, it measures its vibrational modes, which makes it hard to make a stable measurement of the gyroscope's drift stability. This includes the vibrations that are inherent to the building in which they are placed.
 
-We were successful at measuring the gyroscopes over long periods of time by attaching them flush to a heavy slab of metal, and putting the slab of metal flush on the floor of one of NASA Goddard's optics labs in building 34. These floors are especially made to isolate the room from vibrations.
+We were successful at measuring the gyroscope properties over long periods of time by attaching them flush to a heavy slab of metal, and putting the slab of metal flush on the vibration-isolating floor of one of NASA Goddard's optics labs in building 34.
 
 We proceeded to an identical series of tests for each gyroscope:
 \begin{enumerate}
-\item We acquired data at \SI{2000}{\hertz} for N minutes to measure a proper power spectral density and characterize the noise;
-\item We acquired data at \SI{10}{\hertz} for $\sim$ \SI{8}{\hour} to study the drift properties.
+\item We acquired data at \SI{2000}{\hertz} for \SI{10}{\minute} to measure a proper power spectral density and characterize the noise;
+\item We acquired data at \SI{100}{\hertz} for $\sim$ \SI{8}{\hour} to study the drift properties.
 \end{enumerate}
 
-The properties that we are looking for are typical instantaneous angular random walk, and the overall drift of the gyroscope's mean. When the gyroscopes are set on the floor, they measure a component of the Earth's rotation vector in inertial space. The mean of the measurement depends on the exact angle at which the device is placed with respect to the zenith vector, and is of no importance for this noise study. We seek to understand how much the mean varies over long periods of time. To avoid disturbances from the building vibrations (opening/closing of doors, etc), we operated entirely after regular working hours.
+The properties that we are looking for are typical instantaneous angular random walk, and the overall drift instability of the gyroscope's mean. When the gyroscopes are set on the floor, they measure a component of the Earth's rotation vector in inertial space. The mean of the measurement depends on the exact angle at which the device is placed with respect to the zenith vector, and is of no importance for this noise study. We seek to understand how much the mean varies over long periods of time. To avoid disturbances from the building vibrations (opening/closing of doors, etc), we operated entirely after regular working hours.
 
-Table of gyro specs and measurements for each gyro
+[Add a discussion of the units here, take it from the other section.]
 
-\paragraph{Normality tests}
-First and foremost, we wanted to study the gyroscope's noise statistical distribution. We ran a few standard normality tests on chunks of the 8-hour data for each gyroscope. While the tests on individual small chunks of data never reject the null hypothesis (that the distribution is normal), the distribution of the total 8 hours does with a very high probability, using both the Anderson-Darling and the Kolmogorov-Smirnov test.
+\paragraph{Power spectral density}
 
-Since the data is always consistent with being normally distributed over timescales of tens of minutes, after close inspection of the long-term quartile plots and histograms, we determined that it would be safe to consider the distribution as normal for the purpose of our attitude estimator. 
+The usual frequency-domain analysis tool is the power spectral density (PSD). This allows us to spot any frequency peaks in the data, and let us look at the $1/f$ noise behavior, which the typical low-frequency behavior that indicates drifts in the signal. The \SI{100}{\hertz} data is all we need, as the gyroscope's bandwidth is \SI{50}{\hertz}. Hence, the \SI{2000}{\hertz} data does not contain any more information than the \SI{100}{\hertz}. In fact, while plotting the PSD of the \SI{2000}{\hertz} data, we can see clearly the break at \SI{50}{\hertz} characteristic of a \SI{50}{\hertz} low-pass filter.
+
+\begin{figure}[!ht]
+\begin{subfigure}[b]{0.5\textwidth}
+
+		\centering
+		\includegraphics[width=0.98\textwidth]{Figures/sspwsd_11005.png} 
+		\caption{Single-sided power spectral density for gyro 11005, an \SI{8}{\hour} sample with a sampling rate of \SI{2000}{\hertz}, showing no electronic resonance peak or other feature. We can notice the \SI{-3}{\decibel} break at around \SI{50}{\hertz}.}
+		\label{fig:sspsd11005}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.98\textwidth]{Figures/sspwsd2000_11005.png} 
+		\caption{Single-sided power spectral density for gyro 11005, an \SI{10}{\minute} sample with a sampling rate of \SI{2000}{\hertz}, showing no electronic resonance peak or other feature. We can notice the \SI{-3}{\decibel} break at around \SI{50}{\hertz}.}
+		\label{fig:sspsd2000-11005}
+\end{subfigure}
+\label{fig:gyrospectra}
+\caption{Normality analysis of the gyroscope signal over \SI{8}{\hour} of data taken at \SI{100}{\hertz}. While the data is not strictly normally distributed, we consider that it is sufficiently close to a gaussian distribution}
+\end{figure}
 
 It is important to note that in their factory settings, the gyroscopes' noise distribution was not normal at all. It exhibited electronic peaks with many harmonics, at frequencies that were varying as a function of the gyroscope inclination. After talking to the manufacturer, we determined that it was caused by the closed-loop algorithms inside the gyroscope electronics. The problem was known by them, and the remedy was to inject a random phase perturbation in the closed loop. This had the effects to get rid of those frequency peaks, at the cost of increasing the overall noise variance by a factor of 4. The noise levels that are specified by the company are very close to the noise seen when using that random phase modulation. Hence, if one does not care as much at the frequency content of the gyroscope, it is possible that this device could work even much better than it does for us.
 
-\paragraph{PSD and Allan variance}
+\paragraph{Normality tests}
 
-The usual frequency-domain analysis tool is the power spectral density (PSD). This allows us to spot any frequency peaks in the data, and let us look at the $1/f$ noise behavior, which the typical low-frequency behavior that indicates drifts in the signal. The \SI{100}{\hertz} data is all we need, as the gyroscope's bandwidth is \SI{50}{\hertz}. Hence, the \SI{2000}{\hertz} data does not contain any more information than the \SI{100}{\hertz}. In fact, while plotting the PSD of the \SI{2000}{\hertz} data, we can see clearly the break at \SI{50}{\hertz} characteristic of a \SI{50}{\hertz} low-pass filter.
+We ran a few standard normality tests on chunks of the 8-hour data for each gyroscope. While the tests on individual small chunks of data never reject the null hypothesis (that the distribution is normal), the distribution of the total 8 hours does with a very high probability, using both the Anderson-Darling and the Kolmogorov-Smirnov test. It means that it is extremely unlikely that the measured noise over \SI{8}{\hour} is coming from a normal distribution.
+
+Since the data is always consistent with being normally distributed over timescales of tens of minutes, after close inspection of the long-term quartile plots and histograms, we determined that it would be safe to consider the distribution as normal for the purpose of our attitude estimator (see Fig.~\ref{fig:gyroprobdensity}). 
+
+
+\begin{figure}[!ht]
+
+\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.98\textwidth]{Figures/qqplot_11005.png} 
+		\caption{Normal quantile-quantile plot for an \SI{8}{\hour} sample with a sampling rate at \SI{100}{\hertz}. Here the measured quantiles (fraction of the measured values under a certain value) are plotted against the theoretical qunatiles from a normal distribution. The red line is the theoretical distribution if the data was taken from a normal distribution.}
+		\label{subfig:probplot11005}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.98\textwidth]{Figures/distrib_11005.png} 
+		\caption{Probability density distribution for an \SI{8}{\hour} sample with a sampling rate at \SI{100}{\hertz}. In red, the theoretical normal distribution we obtain from the measured mean and standard deviation from the sample.}
+		\label{fig:density11005}
+\end{subfigure}
+\label{fig:gyroprobdensity}
+\caption{Normality analysis of the gyroscope signal over \SI{8}{\hour} of data taken at \SI{100}{\hertz}. While the data is not strictly normally distributed, we consider that it is sufficiently close to a gaussian distribution}
+\end{figure}
+
+
+\paragraph{Allan variance}
+
 
 Another common tool to study of the gyroscope's performance is to plot the Allan variance. The Allan variance gives a time-domain analysis of the gyroscope's noise that is complementary to the power spectral density.
 
 The gyroscopes were successfully tested in the environmental chamber, with no noticeable change in performance except a much larger power draw, due to the Peltier element maintaining the fiber temperature.
+
+
+\renewcommand{\arraystretch}{1.5}
+\begin{table}[htbp]
+\small
+\begin{tabular}{|p{4cm}|p{3cm}|p{3cm}|p{3cm}|}
+\hline
+Property & Gyro \# 11005 & Gyro \# 12003 & Gyro \# 12004\\
+\hline
+\hline
+Standard deviation (\si{\deg\per\hour}) & 0.237 & 0.199 & 0.217\\
+\hline
+Angular random walk (\si{\deg\raiseto{-0.5}\hour}) & \num{4.31e-4} & \num{3.79e-4} & \num{4.02e-4}\\
+\hline
+Bias instability (\si{\deg\per\hour}) & \num{3.11e-4} & \num{1.8e-3} & \num{3.05e-4} \\
+\hline
+\end{tabular}
+\label{tab:gyroproperties}
+\caption[Gyroscope properties]{Properties of the gyroscopes determined from the Allan variance analysis on an \SI{8}{\hour} sample with a sampling rate at \SI{100}{\hertz}. Note that \SI{1}{\deg\per\hour} =  \SI{1}{\arcsec\per\second}, and the Earth rotates at about \SI{15}{\arcsec\per\second} about the line joining the two poles.}
+\end{table}
+
+
+
+%\begin{figure}[!ht]
+%
+%	\begin{subfigure}[b]
+%		\centering
+%		\includegraphics[width=0.98\textwidth]{Figures/allandev_11005.png} 
+%		\caption{Allan deviation of gyro 11005}
+%		\label{subfig:allan11005}
+%	\end{subfigure}
+%
+%	\begin{subfigure}[b]
+%		\centering
+%		\includegraphics[width=0.98\textwidth]{Figures/allandev_12003.png} 
+%		\caption{Allan deviation of gyro 12003}
+%		\label{subfig:allan12003}
+%	\end{subfigure}
+%
+%	\begin{subfigure}[b]
+%		\centering
+%		\includegraphics[width=0.98\textwidth]{Figures/allandev_12004.png} 
+%		\caption{Allan deviation of gyro 12004}
+%		\label{subfig:allan12004}
+%	\end{subfigure}
+%
+%\end{figure}
 
 \subsubsection{Star cameras}
 
@@ -209,6 +298,7 @@ Our camera is a USB3.0 Point Grey Grasshopper3. The CCD is a Sony Pregius IMX174
 \begin{tabular}{|p{4cm}|p{1cm}|p{8.5cm}|}
 \hline
 Property & Value & Description \\
+\hline
 \hline
 Quantum efficiency at \SI{525}{\nm} (\%) & 76 & Fraction of incoming photons that create signal \\
 \hline
@@ -229,7 +319,7 @@ Results from the camera and the star camera software are shown in Fig
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=1.5\textwidth]{Figures/starcam_images.pdf}
-	\caption[Star camera example WISE]{\textit{Left}: Example of a background-subtracted star camera image with identified $>5\sigma$ sources circled in red. The orientation of the image on the celestial sphere is the one provided by BETTII's embedded star camera solver. This image corresponds to a field in the Scorpius constellation\textit{Right}: WISE \SI{3.4}{\um} mosaic from the online archive, centered on the same location. This image is composed of 9 individual WISE images that we patched into a mosaic using the \textit{Montage}[CITE] software package.}
+	\caption[Star camera example WISE]{\textit{Left}: Example of a background-subtracted star camera image with identified $>5\sigma$ sources circled in red. The orientation of the image on the celestial sphere is the one provided by BETTII's embedded star camera solver. This image corresponds to a field in the Scorpius constellation. \textit{Right}: WISE \SI{3.4}{\um} mosaic from the online archive, centered on the same location. This image is composed of 9 individual WISE images that we patched into a mosaic using the \textit{Montage}[CITE] software package.}
 	\label{fig:starcamexample}
     \end{figure}
 \end{landscape}
@@ -276,7 +366,7 @@ where $\theta\units{\si{\radian}}$ is the angle between the horizontal axis and 
 
 The torque is the variation of the momentum with time. So we can write:
 \begin{eqnarray}
-\ccmgtorque\units{\si{\newton\meter}} &= \frac{d}{dt}\MCCMGz\\
+\ccmgtorque\units{\si{\newton\meter}} &= &\frac{d}{dt}\MCCMGz\\
 \ccmgtorque\units{\si{\newton\meter}} &= & 20.8\times \dot{\theta}\units{\si{\radian\per\second}} \cos\theta\\
  &= & \num{1.1e-4}\times \velstepper\units{micro-step~\si{\per\second}}\cos\theta
 \end{eqnarray}
@@ -389,7 +479,7 @@ BETTII will have two on-board computers (see also diagram [REF]):
 \renewcommand{\arraystretch}{1.5}
 \begin{table}[htbp]
 \small
-\begin{tabular}{|c||p{12cm}|}
+\begin{tabular}{|c||p{11cm}|}
 \hline
 Name  & Description \& tasks  \\
 \hline
