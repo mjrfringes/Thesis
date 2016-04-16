@@ -15,6 +15,15 @@ Once the instrument is pointed to the desired target to within $\pm\ang{;;15}$, 
 
 Finally, an angular mispointing of the baseline vector with respect to the target can be might still exist, even if both beams are overlapped properly. This introduces an unwanted optical delay that can push the fringe packets outside our nominal OPD scanning range. Control of this optical delay is critical for interferometry, as it is required to properly reconstruct the OPD axis of the interferograms that are the elementary data blocks of the instrument. This can be achieved using a delay line . This is commonly done for all interferometers on the ground [CITE], and we will implement a device like this on BETTII as well [section]. For this to work, we need to be able to monitor the changes in OPD accurately, which is equivalent, on short timescales, to accurately estimate the attitude of the payload.
 
+
+%\begin{figure}[!ht]
+%	\centering
+%	\includestandalone{Figures/InterferometryBaseline}
+%	\caption[Relationship between pointing error and OPD]{Relationship between pointing error and OPD}
+%	\label{fig:interferometrybaseline}
+%    \end{figure}
+%
+
 A good estimate of the attitude of our payload can lead to an accurate angular difference between our baseline vector and our target. This angular difference can be converted to an OPD using simple geometric arguments, and can then be fed to the delay line for correction. With an 8~m baseline length, an mispointing of \ang{;;1} along the baseline direction corresponds to an OPD of about \SI{40}{\um}, or one full wavelength of BETTII's short-wavelength band. In order to produce quality interferograms, we will need to know the OPD to a fraction of this [SEE previous section]. 
 
 
@@ -83,37 +92,131 @@ When the two guide star images are centered, this means proper overlap of the fa
 During the $\LOCKED$ mode, we need to consider what happens if we lose the guide star. Since the field of view is relatively small compared to the expected motions of the gondola, the guide star could technically walk outside the range of the guide camera - at which point the attitude estimation relies temporarily on the gyroscopes as we switch back to $\ACQUIRE$ mode and the guide camera increases its field of view (and decreases its speed) until it finds the guide star.
 
 \renewcommand{\arraystretch}{1.5}
+\newlength\mylen
+\settowidth\mylen{\textbullet}
+\addtolength\mylen{-3mm}
+\setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
+\def\labelitemi{--}
 \begin{table}[htbp]
 \small
-\begin{tabular}{|c||p{6cm}|p{2.2cm}|p{3cm}|}
-\hline
+\begin{longtable}{cp{5cm}p{2.5cm}p{3.5cm}}
+\toprule
 Mode  & Description &  Actuators & Sensors \\
-\hline
-\hline
+\midrule
 $\SAFE$ & All PID gains set to 0; siderostats point towards zenith; azimuth is not commanded;  used during ascent, emergencies &
-CDL &
-Gyros\newline Star cameras \\
+\begin{minipage}[t]{\linewidth}%
+\begin{itemize}[align=parleft]
+\item CDL
+\end{itemize}
+\end{minipage} &
+\begin{minipage}[t]{\linewidth}%
+\begin{itemize}[align=parleft]
+\item Gyros
+\item Star cameras
+\end{itemize}
+\end{minipage} \\
 \hline
-$\BRAKE$ & Used to slow down the payload after undesired motion; derivative gains only, no position loop & CCMG \newline Rotators\newline CDL\newline Mom. Dump &
-Gyros\newline Star cameras \newline Elevation encoder \newline Gimbal encoder \\
+$\BRAKE$ & Used to slow down the payload after undesired motion; derivative gains only, no position loop & 
+\begin{minipage}[t]{\linewidth}%
+\begin{itemize}[align=parleft]
+\item CCMG 
+\item Rotators
+\item  CDL
+\item  Mom. Dump
+\end{itemize}
+\end{minipage} &
+\begin{minipage}[t]{\linewidth}%
+\begin{itemize}[align=parleft]
+\item Gyros
+\item Star cameras 
+\item Elevation encoder 
+\item Gimbal encoder
+\end{itemize}
+\end{minipage} \\
 \hline
 $\SLEW$ &Used to move to target with a set velocity profile &
-CCMG \newline Rotators\newline CDL\newline Mom. Dump &
-Gyros\newline Star cameras \newline Elevation encoder \newline Gimbal encoder\\
+\begin{minipage}[t]{\linewidth}%
+\begin{itemize}[align=parleft]
+\item CCMG 
+\item  Rotators
+\item  CDL
+\item  Mom. Dump
+\end{itemize}
+\end{minipage} &
+\begin{minipage}[t]{\linewidth}%
+\begin{itemize}[align=parleft]
+\item Gyros 
+\item Star cameras  
+\item Elevation encoder  
+\item Gimbal encoder
+\end{itemize}
+\end{minipage}\\
 \hline
 $\TRACK$ & Used to stabilize payload after slew, track target coarsely &
-CCMG \newline Rotators\newline CDL\newline Mom. Dump\newline WDL &
-Gyros\newline Star cameras \newline Elevation encoder \newline Gimbal encoder\\
+\begin{minipage}[t]{\linewidth}%
+\begin{itemize}[align=parleft]
+\item CCMG 
+\item  Rotators
+\item  CDL
+\item  Mom. Dump
+\item  WDL
+\end{itemize}
+\end{minipage} &
+\begin{minipage}[t]{\linewidth}%
+\begin{itemize}[align=parleft]
+\item Gyros
+\item  Star cameras 
+\item  Elevation encoder 
+\item  Gimbal encoder
+\end{itemize}
+\end{minipage}\\
 \hline
 $\ACQUIRE$ & The guide camera grabs images for each arm and identifies the location of a guide star in increasingly smaller quadrant sizes &
-CCMG \newline Rotators\newline CDL\newline Mom. Dump\newline WDL \newline Tip/Tilts&
-Gyros\newline Star cameras \newline Elevation encoder \newline Gimbal encoder \newline Tip/Tilt encoders\newline Guide camera \\
+\begin{minipage}[t]{\linewidth}%
+\begin{itemize}[align=parleft]
+\item CCMG 
+\item  Rotators
+\item  CDL
+\item  Mom. Dump
+\item  WDL 
+\item Tip/Tilts
+\end{itemize}
+\end{minipage}&
+\begin{minipage}[t]{\linewidth}%
+\begin{itemize}[align=parleft]
+\item Gyros
+\item  Star cameras 
+\item  Elevation encoder 
+\item  Gimbal encoder 
+\item  Tip/Tilt encoders
+\item  Guide camera
+\end{itemize}
+\end{minipage} \\
 \hline
 $\LOCKED$ & The intensity of the target in the science detector is measured, and the central phase is estimated &
-CCMG \newline Rotators\newline CDL\newline Mom. Dump\newline WDL \newline Tip/Tilts&
-Gyros\newline Star cameras \newline Elevation encoder \newline Gimbal encoder \newline Tip/Tilt encoders\newline Guide camera \newline Science detector \\
-\hline
-\end{tabular}
+\begin{minipage}[t]{\linewidth}%
+\begin{itemize}[align=parleft]
+\item CCMG 
+\item  Rotators
+\item  CDL
+\item  Mom. Dump
+\item  WDL 
+\item  Tip/Tilts
+\end{itemize}
+\end{minipage}&
+\begin{minipage}[t]{\linewidth}%
+\begin{itemize}[align=parleft]
+\item Gyros
+\item  Star cameras 
+\item  Elevation encoder 
+\item  Gimbal encoder
+\item  Tip/Tilt encoders
+\item  Guide camera 
+\item  Science detector
+\end{itemize}
+\end{minipage} \\
+\bottomrule
+\end{longtable}
 \caption[Operating modes]{BETTII operating modes. Each operating mode has a set of PID gains for each individual loop.}
 \label{tab:modes}
 \end{table}
@@ -178,6 +281,14 @@ We proceeded to an identical series of tests for each gyroscope:
 
 The properties that we are looking for are typical instantaneous angular random walk, and the overall drift instability of the gyroscope's mean. When the gyroscopes are set on the floor, they measure a component of the Earth's rotation vector in inertial space. The mean of the measurement depends on the exact angle at which the device is placed with respect to the zenith vector, and is of no importance for this noise study. We seek to understand how much the mean varies over long periods of time. To avoid disturbances from the building vibrations (opening/closing of doors, etc), we operated entirely after regular working hours.
 
+\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=0.98\textwidth]{Figures/snapshot_11005.png} 
+		\caption[\SI{1000}{\second} of gyroscope data]{Snapshot of \SI{1000}{\second} of gyroscope data, taken from our \SI{8}{\hour} data sample.}
+		\label{fig:snapshot11005}
+\end{figure}
+
+
 The angular random walk (ARW) is a measure of the effects of integrating a noisy velocity measurement. The specification from the manufacturer is ARW = \SI{5e-4}{\deg\raiseto{-0.5}\hour}. This means that if we integrate the gyroscope's rate for 1~hour, the $1-\sigma$ uncertainty on our position would be 
 $\SI{5e-4}{\deg}\sim\ang{;;1.8}$. For an integration time of 1 second, it would be \ang{;;0.03}. For a single integration time step $\Deltat = \SI{10}{\milli\second}$, it would be \ang{;;0.003}. 
 
@@ -203,16 +314,10 @@ The usual frequency-domain analysis tool is the power spectral density (PSD). Th
 		\label{subfig:sspsd2000-11005}
 \end{subfigure}
 \label{fig:gyrospectra}
-\caption[Power spectral density]{\subref{subfig:sspsd11005}: Single-sided power spectral density for gyro 11005, an \SI{8}{\hour} sample with a sampling rate of \SI{2000}{\hertz}, showing no electronic resonance peak or other feature. We can notice the \SI{-3}{\decibel} break at around \SI{50}{\hertz}. \subref{subfig:sspsd2000-11005}:Single-sided power spectral density for gyro 11005, an \SI{10}{\minute} sample with a sampling rate of \SI{2000}{\hertz}, showing no electronic resonance peak or other feature. We can notice the \SI{-3}{\decibel} break at around \SI{50}{\hertz}.}
+\caption[Power spectral density]{(\subref{subfig:sspsd11005}): Single-sided power spectral density for gyro 11005, an \SI{8}{\hour} sample with a sampling rate of \SI{2000}{\hertz}, showing no electronic resonance peak or other feature. We can notice the \SI{-3}{\decibel} break at around \SI{50}{\hertz}. (\subref{subfig:sspsd2000-11005}): Single-sided power spectral density for gyro 11005, an \SI{10}{\minute} sample with a sampling rate of \SI{2000}{\hertz}, showing no electronic resonance peak or other feature. We can notice the \SI{-3}{\decibel} break at around \SI{50}{\hertz}.}
 \end{figure}
 
 It is important to note that in their factory settings, the gyroscopes' noise distribution was not normal at all. It exhibited electronic peaks with many harmonics, at frequencies that were varying as a function of the gyroscope inclination. After talking to the manufacturer, we determined that it was caused by the closed-loop algorithms inside the gyroscope electronics. The problem was known by them, and the remedy was to inject a random phase perturbation in the closed loop. This had the effects to get rid of those frequency peaks, at the cost of increasing the overall noise variance by a factor of 4. The noise levels that are specified by the company are very close to the noise seen when using that random phase modulation. Hence, if one does not care as much at the frequency content of the gyroscope, it is possible that this device could work even much better than it does for us.
-
-\paragraph{Normality tests}
-
-We ran a few standard normality tests on chunks of the 8-hour data for each gyroscope. While the tests on individual small chunks of data never reject the null hypothesis (that the distribution is normal), the distribution of the total 8 hours does with a very high probability, using both the Anderson-Darling and the Kolmogorov-Smirnov test. It means that it is extremely unlikely that the measured noise over \SI{8}{\hour} is coming from a normal distribution.
-
-Since the data is always consistent with being normally distributed over timescales of tens of minutes, after close inspection of the long-term quartile plots and histograms, we determined that it would be safe to consider the distribution as normal for the purpose of our attitude estimator (see Fig.~\ref{fig:gyroprobdensity}). 
 
 
 \begin{figure}[!ht]
@@ -229,9 +334,18 @@ Since the data is always consistent with being normally distributed over timesca
 		\caption{}
 		\label{subfig:density11005}
 \end{subfigure}
+\caption[Normality analysis]{Normality analysis of the gyroscope signal over \SI{8}{\hour} of data taken at \SI{100}{\hertz}. (\subref{subfig:probplot11005}): Normal quantile-quantile plot for an \SI{8}{\hour} sample with a sampling rate at \SI{100}{\hertz}. Here the measured quantiles (fraction of the measured values under a certain value) are plotted against the theoretical quantiles from a normal distribution. The red line is the theoretical distribution if the data were taken from a normal distribution. (\subref{subfig:density11005}): Probability density distribution for an \SI{8}{\hour} sample with a sampling rate at \SI{100}{\hertz}. In red, the theoretical normal distribution we obtain with the measured mean and standard deviation from the sample. While the data is not strictly normally distributed, we consider that it is sufficiently close to a gaussian distribution.}
 \label{fig:gyroprobdensity}
-\caption[Normality analysis]{Normality analysis of the gyroscope signal over \SI{8}{\hour} of data taken at \SI{100}{\hertz}. \subref{subfig:probplot11005}: Normal quantile-quantile plot for an \SI{8}{\hour} sample with a sampling rate at \SI{100}{\hertz}. Here the measured quantiles (fraction of the measured values under a certain value) are plotted against the theoretical qunatiles from a normal distribution. The red line is the theoretical distribution if the data was taken from a normal distribution. \subref{subfig:density11005}: Probability density distribution for an \SI{8}{\hour} sample with a sampling rate at \SI{100}{\hertz}. In red, the theoretical normal distribution we obtain from the measured mean and standard deviation from the sample. While the data is not strictly normally distributed, we consider that it is sufficiently close to a gaussian distribution.}
 \end{figure}
+
+\paragraph{Normality tests}
+
+We ran a few standard normality tests on chunks of the 8-hour data for each gyroscope. While the tests on individual small chunks of data never reject the null hypothesis (that the distribution is normal), the distribution of the total 8 hours does with a very high probability, using both the Anderson-Darling and the Kolmogorov-Smirnov test. It means that it is extremely unlikely that the measured noise over \SI{8}{\hour} is coming from a normal distribution.
+
+Since the data is always consistent with being normally distributed over timescales of tens of minutes, after close inspection of the long-term quartile plots and histograms, we determined that it would be safe to consider the distribution as normal for the purpose of our attitude estimator (see Fig.~\ref{fig:gyroprobdensity}). 
+
+
+
 
 
 \paragraph{Allan variance}
@@ -245,17 +359,16 @@ The gyroscopes were successfully tested in the environmental chamber, with no no
 \renewcommand{\arraystretch}{1.5}
 \begin{table}[htbp]
 \small
-\begin{tabular}{|p{5.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|}
-\hline
-Property & Gyro \# 11005 & Gyro \# 12003 & Gyro \# 12004\\
-\hline
-\hline
+\begin{tabular}{p{5.5cm}p{2.5cm}p{2.5cm}p{2.5cm}}
+\toprule
+Measured property & Gyro \#11005 & Gyro \#12003 & Gyro \#12004\\
+\midrule
 Standard deviation (\si{\deg\per\hour}) & 0.237 & 0.199 & 0.217\\
-\hline
+
 Angular random walk (\si{\deg\raiseto{-0.5}\hour}) & \num{4.31e-4} & \num{3.79e-4} & \num{4.02e-4}\\
-\hline
+
 Bias instability (\si{\deg\per\hour}) & \num{3.11e-4} & \num{1.8e-3} & \num{3.05e-4} \\
-\hline
+\bottomrule
 \end{tabular}
 \label{tab:gyroproperties}
 \caption[Gyroscope properties]{Properties of the gyroscopes determined from the Allan variance analysis on an \SI{8}{\hour} sample with a sampling rate at \SI{100}{\hertz}. Note that \SI{1}{\deg\per\hour} =  \SI{1}{\arcsec\per\second}, and the Earth rotates at about \SI{15}{\arcsec\per\second} about the line joining the two poles.}
@@ -297,26 +410,31 @@ Our camera is a USB3.0 Point Grey Grasshopper3. The CCD is a Sony Pregius IMX174
 
 \renewcommand{\arraystretch}{1.5}
 \begin{table}[htbp]
-\small
-\begin{tabular}{|p{4cm}|p{1cm}|p{8.5cm}|}
-\hline
-Property & Value & Description \\
-\hline
-\hline
-Quantum efficiency at \SI{525}{\nm} (\%) & 76 & Fraction of incoming photons that create signal \\
-\hline
-Read noise (electrons) & 6.83 & Error made when reading the pixel's value \\
-\hline
-Absolute sensitivity threshold (photons) & 9.77 & Minimum number of photons required to get a $\SNR=1$ on a pixel\\
-\hline
-Well depth (electrons) & \num{32513} & Maximum number of electrons a pixel can store\\
-\hline
-\end{tabular}
 \label{tab:starcamproperties}
+\small
+\begin{tabular}{p{4cm}|p{1cm}|p{8.5cm}}
+\toprule
+Property & Value & Description \\
+\midrule
+Quantum efficiency at \SI{525}{\nm} (\%) & 76 & Fraction of incoming photons that create signal \\
+
+Read noise (electrons) & 6.83 & Error made when reading the pixel's value \\
+
+Absolute sensitivity threshold (photons) & 9.77 & Minimum number of photons required to get a $\SNR=1$ on a pixel\\
+
+Well depth (electrons) & \num{32513} & Maximum number of electrons a pixel can store\\
+\bottomrule
+\end{tabular}
 \caption[Star camera properties]{Star camera properties}
 \end{table}
 
-Results from the camera and the star camera software are shown in Fig
+
+
+We have successfully cycled the camera in the environmental chamber all the way until the camera's internal thermometer indicated a temperature of \SI{-80}{\celsius}, and it continued operating fine.
+
+Focusing the camera could be required at float due to the change in temperatures that could create a shift of the focal plane. We implemented our own autofocus mechanism, a belt is attached between the lens' focus ring and a stepper motor. When the stepper motor turns, it turns the focus ring. We tested this very simple configuration in our environmental chamber only to realize that the belt was loosing grip when the temperature was too cold. To fix this problem, we added a spring-based belt tensioner which adds a $\approx$~\SI{20}{\newton} of force to the belt.
+
+At cold temperature and low pressure, we noted that the glass in the lens began to exhibit radial cracks, presumably caused by the CTE difference between the steel housing and the glass material. These cracks don't noticeably affect image quality, but of course they could cause the glass to shatter if they become too large. Hence, it was decided to maintain the outside temperature of the lens above \SI{0}{\celsius} at all times during flight.
 
 \begin{landscape}
 \begin{figure}[!ht]
@@ -336,11 +454,6 @@ Results from the camera and the star camera software are shown in Fig
 \end{landscape}
 
 
-We have successfully cycled the camera in the environmental chamber all the way until the camera's internal thermometer indicated a temperature of \SI{-80}{\celsius}, and it continued operating fine.
-
-Focusing the camera could be required at float due to the change in temperatures that could create a shift of the focal plane. We implemented our own autofocus mechanism, a belt is attached between the lens' focus ring and a stepper motor. When the stepper motor turns, it turns the focus ring. We tested this very simple configuration in our environmental chamber only to realize that the belt was loosing grip when the temperature was too cold. To fix this problem, we added a spring-based belt tensioner which adds a $\approx$~\SI{20}{\newton} of force to the belt.
-
-At cold temperature and low pressure, we noted that the glass in the lens began to exhibit radial cracks, presumably caused by the CTE difference between the steel housing and the glass material. These cracks don't noticeably affect image quality, but of course they could cause the glass to shatter if they become too large. Hence, it was decided to maintain the outside temperature of the lens above \SI{0}{\celsius} at all times during flight.
 
 \subsubsection{Azimuth control (CCMG)}
 
@@ -422,6 +535,10 @@ The momentum dump mechanism has not been tested in the environmental chamber - h
     \end{figure}
 
 
+\paragraph{Inertia determination}
+
+Talk about method used to determine the inertia of the payload.
+
 \subsubsection{Elevation control (Rotators)}
 
 When put in terms of ground-based telescopes, BETTII is fundamentally an Alt-Az telescope: to reach a target, it has to move in azimuth, and in elevation (also called \textit{altitude}). Instead of moving the entire payload in elevation, which would have conserved the optical setup constant for all targets, we chose to move only the siderostats for increased reliability. We paid one cost: as the siderostat cover different elevations, the fields rotate on the detector, and in opposite directions. So as the elevation changes, an active compensation needs to happen, which consists of a third rotation mechanism located downstream.
@@ -482,12 +599,10 @@ BETTII will have two on-board computers (see also diagram [REF]):
 \renewcommand{\arraystretch}{1.5}
 \begin{table}[htbp]
 \small
-\begin{tabular}{|c||p{11cm}|}
-\hline
+\begin{tabular}{c|p{12.5cm}}
+\toprule
 Name  & Description \& tasks  \\
-\hline
-\hline
-\boopFPGA & 
+\midrule\boopFPGA & 
 $\bullet$ Generate \SI{50}{\mega\hertz} master clock \newline
 $\bullet$ Generate all other system clocks derived from master clock\newline
 $\bullet$ Trigger gyroscopes, star cameras\newline
@@ -510,7 +625,7 @@ $\bullet$ Processes fine guidance sensor frames \newline
 $\bullet$ Handles communication with the ground (through the CIP) and from/to \boop \newline
 $\bullet$ Automatically applies observing plan if no commands from the ground: send targets to \boopRT \newline
 \\
-\hline
+\bottomrule
 \end{tabular}
 \caption[BETTII embedded computers]{}
 \label{tab:computers}
@@ -528,7 +643,7 @@ A diagram showing the flow of the control software is shown in Fig.~\ref{fig:Con
 \begin{figure}[!ht]
 	\centering
 	\includestandalone{Figures/SoftwareFlow}
-	\caption[Software disgram]{Software layout}
+	\caption[Software diagram]{Software layout}
 	\label{fig:SoftwareFlow}
     \end{figure}
 
@@ -540,4 +655,3 @@ A diagram showing the flow of the control software is shown in Fig.~\ref{fig:Con
 	\label{fig:ControlSystem}
     \end{figure}
 
-[MAKE SOFTWARE DIAGRAM ARCHITECTURE]

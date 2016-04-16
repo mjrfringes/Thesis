@@ -50,6 +50,13 @@ headsepline, % Uncomment to get a line under the header
 \usepackage{subcaption}
 \captionsetup[subfigure]{labelfont=rm}
 
+\renewcommand\thechapter{\Roman{chapter}}
+\renewcommand\thesection{\Roman{section}}
+%\renewcommand\thesubsection{\thesection.\Alph{section}}
+\renewcommand\thesubsubsection{\thesubsection.\arabic{subsubsection}}
+\renewcommand\theparagraph{\thesubsection.\thesubsubsection.\alph{subsection}}
+
+
 
 \usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % User the bibtex backend with the authoryear citation style (which resembles APA)
 
@@ -70,6 +77,9 @@ headsepline, % Uncomment to get a line under the header
 \DeclareSIUnit\deg{deg}
 \DeclareSIUnit\arcsec{arcsec}
 
+% nice tables
+\usepackage{booktabs}
+\usepackage{enumitem}
 
 
 %\addbibresource{references.bib} % The filename of the bibliography
@@ -102,7 +112,7 @@ headsepline, % Uncomment to get a line under the header
 %	THESIS INFORMATION
 %----------------------------------------------------------------------------------------
 
-\thesistitle{Instrumentation for infrared balloon-borne observations at high resolution} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
+\thesistitle{The Balloon Experimental Twin Telescope for Infrared Interferometry} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
 \supervisor{Dr. Lee G.\textsc{Mundy}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
 \examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
 \degree{Doctor of Philosophy} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
@@ -185,7 +195,7 @@ The Thesis Abstract is written here (and usually kept to just this page). The pa
 \small\normalsize
 \begin{center}
 
-\large{Instrumentation for infrared balloon-borne observations at high resolution }\\
+\large{\ttitle }\\
 
 % Strastospheric instrumentation towards high angular resolution in the far-infrared
 % Balloon-borne instrumentation towards far-infrared, free-flying interferometry
@@ -312,8 +322,8 @@ $\omega$ & angular frequency & \si{\radian} \\
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
 % loads up the file with all the definitions
-%\include{Chapters/Chapter1}
-%\include{Chapters/Chapter2} 
+\include{Chapters/Chapter1}
+\include{Chapters/Chapter2} 
 \include{Chapters/Chapter3}
 %\include{Chapters/Chapter4} 
 %\include{Chapters/Chapter5} 
