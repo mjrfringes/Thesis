@@ -17,14 +17,70 @@ In here, describe
 
 \section{The Ballon Experimental Twin Telescope for Infrared Interferometry}
 
-Start by describing the context for BETTII; interferometry as a means to getting high angular resolution
-\subsection{A brief history of interferometry}
-I have always wanted to talk about this!
+\subsection{Towards higher angular resolution in the far-IR}
+Observations at mid- to far-infrared wavelengths from the Earth's surface are extremely 
+limited by the large atmospheric opacity in this region of the spectrum. Space-based telescopes 
+like IRAS \cite[12-100 \um;][]{1984ApJ...278L...1N}, ISO \cite[2.5-240 $\um$;][]{1996A&A...315L..27K}, \textit{Spitzer} \cite[3.6-160 $\um$;][]{2004ApJS..154....1W}, AKARI  \cite[1.7-180 $\um$;][]{2007PASJ...59S.369M}, WISE \cite[3.4-22 $\um$;][]{2010AJ....140.1868W} and \textit{Herschel} \cite[55-672 $\um$;][]{2010A&A...518L...1P} have demonstrated the scientific value of observations at 
+these wavelengths; but the spatial resolution of space-based observatories is limited by the cost 
+and complexity of building and flying progressively larger aperture telescopes. 
+
+In this work, we discuss progress in understanding clustered star formatino through increased angular resolution, by using SOFIA and BETTII, both operating at high altitudes in the atmosphere. High--altitude observatories are a good compromise between ground and space observatories: while less sensitive because of the surrounding thermal emission from the atmosphere, they can still feature larger optics, more experimental setups, and instrumentation that can be changed on a more frequent basis.
+
+SOFIA has a \SI{2.7}{\meter} primary mirror which is a significant size improvement over \Spitzer. The instrument we have used, FORCAST, observes in multiple continuum bands from \SI{5.5}{\micro\meter} to \SI{37}{\micro\meter}, the long half of which is also an unexplored region of phase space.
+
+BETTII is an experiment to break from the single-aperture paradigm by using interferometry at those wavelengths. Interferometry is commonly used on the ground at other wavelengths such as optical and radio, and is a viable path forward to obtain much
+higher resolution than what single apertures can provide. 
+
+In this work we focus on the particular technique called \textit{spatio-spectral interferometry} \citep{Mariotti:1988vea}, which is a way to achieve 
+high angular and spectral resolutions at far-IR wavelengths from above the atmosphere, without the cost and limitations of large single apertures. 
+
+
+\subsection{BETTII description}
+
+%The Ballon Experimental Twin Telescope for Infrared Interferometr (BETTII) project is pioneering a new technique that could lead to dramatically increased spatial resolution in the far-infrared: spatio-spectral interferometry. 
+As a cryogenic payload flying at an altitude of \SI{37}{\kilo\meter}, BETTII is the first flying "direct detection" interferometer: it will attempt to coherently combine light from two different telescopes to provide increased angular resolution. Because it is operating from above the atmosphere, it can see the far-infrared universe: BETTII will operate between 30 and 90 \si{\micro\meter}, and provide \ang{;;0.5}-\ang{;;1} spatial resolution at these wavelengths - a key region of parameter space well-suited to study protostars evolving in dense clustered environments.
+
+To provide this resolution which matches that of \JWST at \SI{25}{\micro\meter}, BETTII needs to be have two collectors separated by $\approx$\SI{8}{\meter}; Because of its operating wavelength, it needs to have a cryogenic instrument; because it is an interferometer, it needs optics with exquisite surface quality; and because it flies on a balloon platform, it needs to be robust to large changes in temperature, large pointing errors, and severe shock resistance for the landing phase.
+
+Throughout this chapter, we will first discuss the basics of double-Fourier interferometers, before presenting the general design of BETTII payload and most of its subsystems.
+
 
 \subsection{Basics of interferometry}
 
+Since the end of the 19th century with Michelson [reference], scientists have learned how to use the wave properties of light to learn about new astrophysical phenomena. It did not take long for what first started as a laboratory experiment by Michelson and Morley [cite] to be applied to astronomy, with Michelson Stellar Interferometer experiment. 
+
+The principle of interferometry is simple. Because light can be described as a wave, if you have two beams of light coming from the same source, you can make them combine coherently if you manage to control their amplitudes and phases. If we were to image the result of the combination, the intensity we would measure would be a function of a) the brightness of the light beam, but also b) the relative phase and amplitude of one beam with respect to another, which can create a modulation of that brightness.
+
+Michelson and Morley created what became the standard Michelson interferometer. It uses one single source of light, but uses a beam splitter to create two coherent light beams from that one source. The two light beams go through two separate \textit{arms} (in which one can alter one or the other), before being recombined. While adjusting the length of one arm with respect to the other, one modulates the phase difference between the two arms, leaving everything else the same. This creates a modulation called an interferogram, which describes the measured intensity as a function of the phase difference between the two arms.
+
+The phase difference is expressed in radians and depends on the wavelength of the light that is used. In this work, we will usually refer to this difference in terms of an actually physical distance instead: the optical path difference (\OPD). This has the advantage of being wavelength-independent and relate more easily to opto-mechanical considerations.
+
+[image of a standard Michelson interferometer]
+
+[Explain here the combination of two monochromatic beams]
+
+
 \subsubsection{Fourier transform spectroscopy}
-Using Michelson interferometry to determine the spectrum of a source
+
+One immediate consequence of the original Michelson experiment is to realize that the interferogram actually contains spectral information. For an ideally monochromatic source, the intensity modulation (or \textit{fringe}) depends on the \OPD only modulo a wavelength. This means that the modulation is identical whether we introduce an \OPD = $\lambda$, or \OPD = $n\lambda$, where $n$ is an integer. This is because the monochromatic wave can essentially be represented by an amplitude times a cosine function of phase (or a function of $lambda$ and \OPD).
+
+The intensity of modulation for a given wavelength is then a cosine wave as well, with an amplitude related to the intensity of the signal, and a wavelength equal to the wavelength of the incident light.
+
+If we consider a polychromatic signal as a sum of monochromatic wavelengths, this phenomenon happens for each single wavelength, and the resulting intentisy modulations add \textit{in phase}: the total intensity is the coherent sum of the intensity modulations created by each individual wavelength. This has the effect of smearing the resulting modulation in most places except around the precise location where the \OPD is zero. Around this location, the modulation is not wavelength dependent, and fringes are always seen. These are commonly referred to as \textit{white light fringes}. The range of wavelength in which fringes can be seen is called the coherence length \Lc. When all wavelength are weighted equally in a square bandpass $\Delta\lambda$, the coherence length can be expressed as:
+\begin{equation}
+\Lc = \frac{\lambda^2}{\Delta\lambda},
+\end{equation}
+and the interferogram can be represented by a carrier frequency modulated by an envelope function:
+
+[add equation for the integral of interferograms]
+%\begin{equation}
+%\sum_{\lambda_i}\I_i = \frac{\lambda^2}{\Delta\lambda},
+%\end{equation}
+
+
+
+Since the modulation is a coherent superposition of cosine waves, it contains spectral information. A cosine transform of the interferogram will decompose the contribution of each individual wavelength, hence reproducing the spectrum of the polychromatic source. This realization has led to many scientific discoveries in astronomy and other fields.
+
 \subsubsection{Aperture synthesis}
 Mention here details of interferometry, start by using the appendix 3 of the paper (chap2). 
 
