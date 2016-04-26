@@ -26,19 +26,18 @@ and complexity of building and flying progressively larger aperture telescopes.
 
 In this work, we discuss progress in understanding clustered star formatino through increased angular resolution, by using SOFIA and BETTII, both operating at high altitudes in the atmosphere. High--altitude observatories are a good compromise between ground and space observatories: while less sensitive because of the surrounding thermal emission from the atmosphere, they can still feature larger optics, more experimental setups, and instrumentation that can be changed on a more frequent basis.
 
-SOFIA has a \SI{2.7}{\meter} primary mirror which is a significant size improvement over \Spitzer. The instrument we have used, FORCAST, observes in multiple continuum bands from \SI{5.5}{\micro\meter} to \SI{37}{\micro\meter}, the long half of which is also an unexplored region of phase space.
+SOFIA has a \SI{2.7}{\meter} primary mirror which is a significant size improvement over \Spitzer. The instrument we have used, FORCAST, provides unprecedented high angular resolution of 2-3.5~\si{\micro\meter} in multiple continuum bands from \SI{5.5}{\micro\meter} to \SI{37}{\micro\meter}, which allows us to probe a relatively unexplored region of phase space.
 
-BETTII is an experiment to break from the single-aperture paradigm by using interferometry at those wavelengths. Interferometry is commonly used on the ground at other wavelengths such as optical and radio, and is a viable path forward to obtain much
-higher resolution than what single apertures can provide. 
+BETTII is an experiment that aims at breaking from the single-aperture paradigm by using interferometry between 30 and \SI{90}{\micro\meter}. Interferometry is commonly used on the ground at other wavelengths such as optical and radio, and is a viable path forward to obtain much higher resolution than what single apertures can provide. 
 
 In this work we focus on the particular technique called \textit{spatio-spectral interferometry} \citep{Mariotti:1988vea}, which is a way to achieve 
-high angular and spectral resolutions at far-IR wavelengths from above the atmosphere, without the cost and limitations of large single apertures. 
+high angular and moderate spectral resolutions at far-IR wavelengths from above the atmosphere, without the cost and limitations of large single apertures. 
 
 
 \subsection{BETTII description}
 
 %The Ballon Experimental Twin Telescope for Infrared Interferometr (BETTII) project is pioneering a new technique that could lead to dramatically increased spatial resolution in the far-infrared: spatio-spectral interferometry. 
-As a cryogenic payload flying at an altitude of \SI{37}{\kilo\meter}, BETTII is the first flying "direct detection" interferometer: it will attempt to coherently combine light from two different telescopes to provide increased angular resolution. Because it is operating from above the atmosphere, it can see the far-infrared universe: BETTII will operate between 30 and 90 \si{\micro\meter}, and provide \ang{;;0.5}-\ang{;;1} spatial resolution at these wavelengths - a key region of parameter space well-suited to study protostars evolving in dense clustered environments.
+As a cryogenic payload flying at an altitude of \SI{37}{\kilo\meter}, BETTII is the first flying "direct detection" interferometer: it will attempt to coherently combine light from two different telescopes to provide increased angular resolution. Because it is operating from above the atmosphere, it can see the far-infrared universe between 30 and 90 \si{\micro\meter}, and provide \ang{;;0.5}-\ang{;;1} spatial resolution at these wavelengths - a key region of parameter space well-suited to study protostars evolving in dense clustered environments.
 
 To provide this resolution which matches that of \JWST at \SI{25}{\micro\meter}, BETTII needs to be have two collectors separated by $\approx$\SI{8}{\meter}; Because of its operating wavelength, it needs to have a cryogenic instrument; because it is an interferometer, it needs optics with exquisite surface quality; and because it flies on a balloon platform, it needs to be robust to large changes in temperature, large pointing errors, and severe shock resistance for the landing phase.
 
@@ -49,9 +48,9 @@ Throughout this chapter, we will first discuss the basics of double-Fourier inte
 
 Since the end of the 19th century with Michelson [reference], scientists have learned how to use the wave properties of light to learn about new astrophysical phenomena. It did not take long for what first started as a laboratory experiment by Michelson and Morley [cite] to be applied to astronomy, with Michelson Stellar Interferometer experiment. 
 
-The principle of interferometry is simple. Because light can be described as a wave, if you have two beams of light coming from the same source, you can make them combine coherently if you manage to control their amplitudes and phases. If we were to image the result of the combination, the intensity we would measure would be a function of a) the brightness of the light beam, but also b) the relative phase and amplitude of one beam with respect to another, which can create a modulation of that brightness.
+The principle of interferometry is simple. Because light behaves like a wave, two beams of light coming from the same source can be combined \textit{coherently}, provided that their amplitudes and phases are controlled. The intensity of the combined signal is a function of a) the brightness of the light beam, but also b) the relative phase and wavefront of each beam, which can create a modulation of that brightness.
 
-Michelson and Morley created what became the standard Michelson interferometer. It uses one single source of light, but uses a beam splitter to create two coherent light beams from that one source. The two light beams go through two separate \textit{arms} (in which one can alter one or the other), before being recombined. While adjusting the length of one arm with respect to the other, one modulates the phase difference between the two arms, leaving everything else the same. This creates a modulation called an interferogram, which describes the measured intensity as a function of the phase difference between the two arms.
+Michelson and Morley created what became the standard Michelson interferometer. It uses one single source of light and a beam splitter that creates two coherent light beams from that one source. The two light beams go through two separate \textit{arms} (in which we can alter one or the other), before being recombined. While adjusting the length of one arm with respect to the other, we modulate the phase difference between the two arms, leaving everything else the same. This creates a modulation called an \textit{interferogram}, which describes the measured intensity variation as a function of the phase difference between the two arms.
 
 The phase difference is expressed in radians and depends on the wavelength of the light that is used. In this work, we will usually refer to this difference in terms of an actually physical distance instead: the optical path difference (\OPD). This has the advantage of being wavelength-independent and relate more easily to opto-mechanical considerations.
 
@@ -62,11 +61,11 @@ The phase difference is expressed in radians and depends on the wavelength of th
 
 \subsubsection{Fourier transform spectroscopy}
 
-One immediate consequence of the original Michelson experiment is to realize that the interferogram actually contains spectral information. For an ideally monochromatic source, the intensity modulation (or \textit{fringe}) depends on the \OPD only modulo a wavelength. This means that the modulation is identical whether we introduce an \OPD = $\lambda$, or \OPD = $n\lambda$, where $n$ is an integer. This is because the monochromatic wave can essentially be represented by an amplitude times a cosine function of phase (or a function of $lambda$ and \OPD).
+One immediate consequence of the original Michelson experiment is to realize that the interferogram actually contains spectral information. For an ideally monochromatic source, the intensity modulation (or \textit{fringe}) depends on the \OPD only modulo a wavelength. This means that the modulation is identical whether we introduce an \OPD = $\lambda$, or \OPD = $n\lambda$, where $n$ is an integer. This is because the monochromatic wave can essentially be represented by an amplitude times a cosine function of phase (or a cosine function of $\OPD/\lambda$).
 
 The intensity of modulation for a given wavelength is then a cosine wave as well, with an amplitude related to the intensity of the signal, and a wavelength equal to the wavelength of the incident light.
 
-If we consider a polychromatic signal as a sum of monochromatic wavelengths, this phenomenon happens for each single wavelength, and the resulting intentisy modulations add \textit{in phase}: the total intensity is the coherent sum of the intensity modulations created by each individual wavelength. This has the effect of smearing the resulting modulation in most places except around the precise location where the \OPD is zero. Around this location, the modulation is not wavelength dependent, and fringes are always seen. These are commonly referred to as \textit{white light fringes}. The range of wavelength in which fringes can be seen is called the coherence length \Lc. When all wavelength are weighted equally in a square bandpass $\Delta\lambda$, the coherence length can be expressed as:
+If we consider a polychromatic signal as a sum of monochromatic wavelengths, this phenomenon happens for each single wavelength, and the resulting intensity modulations add \textit{coherently}: the total intensity is the coherent sum of the intensity modulations created by each individual wavelength. This has the effect of smearing the resulting modulation in most places except around the precise location where the \OPD is zero. Around this location, the modulation is not wavelength dependent, and fringes are always seen. These are commonly referred to as \textit{white light fringes}. The range of wavelengths in which fringes can be seen is called the \textit{coherence length} \Lc. When all wavelengths are weighted equally in a bandpass $\Delta\lambda$, the coherence length can be expressed as:
 \begin{equation}
 \Lc = \frac{\lambda^2}{\Delta\lambda},
 \end{equation}
@@ -77,18 +76,28 @@ and the interferogram can be represented by a carrier frequency modulated by an 
 %\sum_{\lambda_i}\I_i = \frac{\lambda^2}{\Delta\lambda},
 %\end{equation}
 
-
-
-Since the modulation is a coherent superposition of cosine waves, it contains spectral information. A cosine transform of the interferogram will decompose the contribution of each individual wavelength, hence reproducing the spectrum of the polychromatic source. This realization has led to many scientific discoveries in astronomy and other fields.
+Since the modulation is a coherent superposition of cosine waves, it contains spectral information. A cosine transform of the interferogram will decompose the contribution of each individual wavelength, hence reproducing the spectrum of the polychromatic source. This realization has led to many scientific discoveries in astronomy, chemistry and other fields over the last 100 years.
 
 \subsubsection{Aperture synthesis}
-Mention here details of interferometry, start by using the appendix 3 of the paper (chap2). 
+
+An interferogram is produced by coherently combining the light from one single source of light. This can be applied for example for an infinitely far astronomical source: as the light propagates from the source, by the time it reaches our instrument the radius of curvature of its wavefront is extremely large, and the latter can be assumed to be flat. This means that photons from this source nominally enter each arm of the interferometer with the same phase, when the alignment is perfect. These photons would create an interferogram.
+
+However, let's suppose that a second source is sufficiently far away from the first source that its wavefront enters the interferometer at an angle. This means that the photons enter one arm slight later than the other - or that photons need to cross more optical path in one arm than in the other. These photons would also create an interferogram, but the latter will be centered about a different position in \OPD space than the interferogram created by the photons from the first source. Now let's suppose that the second source is exactly as bright as the first one, and that the second source is apart from the first by an angle $\theta$ such that $\baseline\sin\theta = \lambda/2$. In this case,  the interferogram created by the photons from the second source has the same amplitude as the first interferogram, but is shifted by $\lambda/2$ in \OPD, which corresponds to exactly one half wavelength. As a result, the two interferograms would exactly cancel each other, and we would say that the \textit{spatial degree of coherence} between the two sources is zero. Although the sources are not coherent in the strict sense because they are completely independent sources, they add coherently in the interferometer's image plane. If the angular separation was such that $\baseline\sin\theta = \lambda$, then the resulting interferogram would be twice that with just one single source. We would say that the spatial degree of coherence between the two sources is unity. 
+
+One way to formalize this important property is to consider an interferometer with a given baseline length and angle as a filter of the source's spatial distribution on the sky. For a given baseline length and angle with respect to the sky, the interferometer is only sensitive to a single angular frequency in a single direction on the sky. Various sources observed simultaneously by the interferometer will all contribute coherently to a single measured interferogram, which can be characterized in terms of the spatial degree of coherence, also called \textit{ complex visibility}, between the sources for a given baseline angle and length. 
+
+The generalization of this property is called the Van Cittert-Zernike theorem: the 2D Fourier transform of the source's angular distribution on the sky is its complex visibility function. This means that my mapping the complex visibility (through measuring interferograms) for all baseline angles and lengths, we can reconstruct the original image through an inverse Fourier transform. The plane of complex visibilities is commonly referred to as the (u,v)-plane [CITE THOMPSON 2008].
+
+
+
+
 
 Pictures:
 \begin{itemize}
 \item Picture of single wavelength interferogram (use Python to generate values, and tikz to display?)
 \item Picture of multi-wavelength interferogram, with envelope, etc.
 - Optics diagram of two-aperture Michelson interferometer FTS vs single-aperture FTS
+- picture of the interferometer as a spatial filter on the sky
 \end{itemize}
 
 Watch out, we are being redundant with chapter 2. what do we do?
