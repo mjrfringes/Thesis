@@ -36,6 +36,7 @@ toctotoc, % Uncomment to add the main table of contents to the table of contents
 headsepline, % Uncomment to get a line under the header
 ]{MastersDoctoralThesis} % The class file specifying the document structure
 
+\usepackage{aas_macros} % required for bibliography
 \usepackage[utf8]{inputenc} % Required for inputting international characters
 \usepackage[T1]{fontenc} % Output font encoding for international characters
 \usepackage{standalone}
@@ -45,6 +46,14 @@ headsepline, % Uncomment to get a line under the header
 \usepackage[final]{pdfpages} % for PDF support
 \usepackage{hhline}  % fancy lines in tables
 \usepackage{tablefootnote}  % footnotes in tables
+\usepackage{verbatim} % comments
+\usepackage{epigraph} % quotes
+
+\setlength\epigraphwidth{8cm}
+\setlength\epigraphrule{0pt}
+
+
+
 
 % some figure packages
 \usepackage{subcaption}
@@ -52,9 +61,9 @@ headsepline, % Uncomment to get a line under the header
 
 \renewcommand\thechapter{\Roman{chapter}}
 \renewcommand\thesection{\arabic{section}}
-\renewcommand\thesubsection{\thesection.\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
 \renewcommand\thesubsubsection{\thesubsection.\arabic{subsubsection}}
-\renewcommand\theparagraph{\thesubsection.\thesubsubsection.\alph{subsection}}
+\renewcommand\theparagraph{\thesubsubsection.\alph{subsection}}
 
 
 
@@ -83,7 +92,7 @@ headsepline, % Uncomment to get a line under the header
 
 
 %\addbibresource{references.bib} % The filename of the bibliography
-\bibliography{references.bib}
+\bibliography{references.bib,n2071refs.bib,extrabib.bib}
 
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
 
@@ -112,7 +121,7 @@ headsepline, % Uncomment to get a line under the header
 %	THESIS INFORMATION
 %----------------------------------------------------------------------------------------
 
-\thesistitle{BETTII: A pathfinder for high angular resolution far-infrared observations of star-forming regions} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
+\thesistitle{BETTII: A pathfinder for high angular resolution observations of star-forming regions in the far-infrared} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
 \supervisor{Dr. Lee G.\textsc{Mundy}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
 \examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
 \degree{Doctor of Philosophy} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
@@ -251,11 +260,11 @@ The acknowledgments and the people to thank go here, don't forget to include you
 %	QUOTATION PAGE
 %----------------------------------------------------------------------------------------
 
-\vspace*{0.2\textheight}
-
-\noindent\enquote{\itshape Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism.}\bigbreak
-
-\hfill Dave Barry
+%\vspace*{0.2\textheight}
+%
+%\noindent\enquote{\itshape Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism.}\bigbreak
+%
+%\hfill Dave Barry
 
 
 %----------------------------------------------------------------------------------------
@@ -323,9 +332,9 @@ $\omega$ & angular frequency & \si{\radian} \\
 % Uncomment the lines as you write the chapters
 % loads up the file with all the definitions
 \include{Chapters/Chapter1}
-%\include{Chapters/Chapter2} 
-%\include{Chapters/Chapter3}
-%\include{Chapters/Chapter4} 
+\include{Chapters/Chapter2} 
+\include{Chapters/Chapter3}
+\include{Chapters/Chapter4} 
 %\include{Chapters/Chapter5} 
 
 %----------------------------------------------------------------------------------------
