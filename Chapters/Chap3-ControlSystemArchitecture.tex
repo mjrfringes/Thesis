@@ -265,6 +265,7 @@ Note that the Cold Delay Line (CDL) is running in closed loop during all the mod
 
 \subsubsection{Gyroscopes}
 
+\paragraph{Sensitivity tests}
 We purchased three SRS-2000 fiber-optic gyroscopes from Optolink. This gyroscope technology uses the Sagnac effect and is the cutting edge in inertial rotational velocity measurements \citep[for a review of the state-of-the-art see, \textit{e.g.}][]{ElBadaoui:2014fr}. We chose these devices for their incredibly low angular random walk, which is a measure of their inherent noise. If we were to trust the gyroscope measurement and integrate its velocity to obtain a position estimate, the estimation error we would make after 1 hour of integration has a standard deviation of about 2 arcseconds.
 
 The devices have a bandwidth of \SI{50}{\hertz}, but can be triggered at up to \SI{2000}{\hertz}. Their extreme stability is contingent upon proper temperature stabilization, which is done with a closed-loop set at their calibration temperature of $\SI{23.5}{\celsius}\pm\SI{0.5}{\celsius}$ using an active built-in Peltier element. This Peltier element transforms electric power into either heating or cooling \citep{Peltier:1834vu}.
@@ -292,12 +293,12 @@ The properties that we are looking for are typical instantaneous angular random 
 The angular random walk (ARW) is a measure of the effects of integrating a noisy velocity measurement. The specification from the manufacturer is ARW = \SI{5e-4}{\deg\raiseto{-0.5}\hour}. This means that if we integrate the gyroscope's rate for 1~hour, the $1-\sigma$ uncertainty on our position would be 
 $\SI{5e-4}{\deg}\sim\ang{;;1.8}$. For an integration time of 1 second, it would be \ang{;;0.03}. For a single integration time step $\Deltat = \SI{10}{\milli\second}$, it would be \ang{;;0.003}. 
 
-The manufacturer specification gives a maximum bias instability over a wide range of temperatures less than \SI{0.005}{\deg\per\hour}. This represents how much the mean angular velocity is expected to vary.
+The manufacturer specification gives a maximum bias instability over a wide range of temperatures less than \SI{0.005}{\deg\per\hour}. This represents how much the mean angular velocity is expected to vary. These tests are an attempt to verify these numbers.
 
 
 \paragraph{Power spectral density}
 
-The usual frequency-domain analysis tool is the power spectral density (PSD). This allows us to spot any frequency peaks in the data, and let us look at the $1/f$ noise behavior, which the typical low-frequency behavior that indicates drifts in the signal. The \SI{100}{\hertz} data is all we need, as the gyroscope's bandwidth is \SI{50}{\hertz}. Hence, the \SI{2000}{\hertz} data does not contain any more information than the \SI{100}{\hertz}. In fact, while plotting the PSD of the \SI{2000}{\hertz} data, we can see clearly the break at \SI{50}{\hertz} characteristic of a \SI{50}{\hertz} low-pass filter.
+The usual frequency-domain analysis tool is the power spectral density (PSD). This allows us to spot any frequency peaks in the data, and let us look at the $1/f$ noise behavior, which is the typical low-frequency behavior that indicates drifts in the signal. The \SI{100}{\hertz} data is all we need, as the gyroscope's bandwidth is \SI{50}{\hertz}. Hence, the \SI{2000}{\hertz} data does not contain any more information than the \SI{100}{\hertz}. In fact, while plotting the PSD of the \SI{2000}{\hertz} data, we can see clearly the break at \SI{50}{\hertz} characteristic of a \SI{50}{\hertz} low-pass filter.
 
 \begin{figure}[!ht]
 \begin{subfigure}[b]{0.5\textwidth}
@@ -314,10 +315,10 @@ The usual frequency-domain analysis tool is the power spectral density (PSD). Th
 		\label{subfig:sspsd2000-11005}
 \end{subfigure}
 \label{fig:gyrospectra}
-\caption[Power spectral density]{(\subref{subfig:sspsd11005}): Single-sided power spectral density for gyro 11005, an \SI{8}{\hour} sample with a sampling rate of \SI{2000}{\hertz}, showing no electronic resonance peak or other feature. We can notice the \SI{-3}{\decibel} break at around \SI{50}{\hertz}. (\subref{subfig:sspsd2000-11005}): Single-sided power spectral density for gyro 11005, an \SI{10}{\minute} sample with a sampling rate of \SI{2000}{\hertz}, showing no electronic resonance peak or other feature. We can notice the \SI{-3}{\decibel} break at around \SI{50}{\hertz}.}
+\caption[Power spectral density]{(\subref{subfig:sspsd11005}): Single-sided power spectral density for gyro 11005, an \SI{8}{\hour} sample with a sampling rate of \SI{100}{\hertz}, showing no particular feature (large peaks or resonances). (\subref{subfig:sspsd2000-11005}): Single-sided power spectral density for gyro 11005, a \SI{10}{\minute} sample with a sampling rate of \SI{2000}{\hertz}, showing no electronic resonance peak or other feature. We can notice the \SI{-3}{\decibel} break at around \SI{50}{\hertz}.}
 \end{figure}
 
-It is important to note that in their factory settings, the gyroscopes' noise distribution was not normal at all. It exhibited electronic peaks with many harmonics, at frequencies that were varying as a function of the gyroscope inclination. After talking to the manufacturer, we determined that it was caused by the closed-loop algorithms inside the gyroscope electronics. The problem was known by them, and the remedy was to inject a random phase perturbation in the closed loop. This had the effects to get rid of those frequency peaks, at the cost of increasing the overall noise variance by a factor of 4. The noise levels that are specified by the company are very close to the noise seen when using that random phase modulation. Hence, if one does not care as much at the frequency content of the gyroscope, it is possible that this device could work even much better than it does for us.
+It is important to note that in their factory settings, the gyroscopes' noise distribution was not normal at all. It exhibited electronic peaks with many harmonics, at frequencies that were varying as a function of the gyroscope inclination (as it was measuring different components of the Earth's rotation). After talking to the manufacturer, we determined that it was caused by the closed-loop algorithms inside the gyroscope electronics. The problem was known by them, and the remedy was to inject a random phase perturbation in the closed loop. This had the effects to get rid of those frequency peaks, at the cost of increasing the overall noise variance by a factor of 4. The noise levels that are specified by the company are very close to the noise seen when using that random phase modulation. Hence, if one does not care as much at the frequency content of the gyroscope, it is possible that this device could work even much better than it does for us.
 
 
 \begin{figure}[!ht]
@@ -343,7 +344,6 @@ It is important to note that in their factory settings, the gyroscopes' noise di
 We ran a few standard normality tests on chunks of the 8-hour data for each gyroscope. While the tests on individual small chunks of data never reject the null hypothesis (that the distribution is normal), the distribution of the total 8 hours does with a very high probability, using both the Anderson-Darling and the Kolmogorov-Smirnov test. It means that it is extremely unlikely that the measured noise over \SI{8}{\hour} is coming from a normal distribution.
 
 Since the data is always consistent with being normally distributed over timescales of tens of minutes, after close inspection of the long-term quartile plots and histograms, we determined that it would be safe to consider the distribution as normal for the purpose of our attitude estimator (see Fig.~\ref{fig:gyroprobdensity}). 
-
 
 
 
@@ -399,6 +399,10 @@ Bias instability (\si{\deg\per\hour}) & \num{3.11e-4} & \num{1.8e-3} & \num{3.05
 	\end{subfigure}
 
 \end{figure}
+
+\paragraph{Gyro unit alignment}
+
+
 
 \subsubsection{Star cameras}
 
