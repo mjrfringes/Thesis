@@ -436,6 +436,7 @@ Well depth (electrons) & \num{32513} & Maximum number of electrons a pixel can s
 
 We have successfully cycled the camera in the environmental chamber all the way until the camera's internal thermometer indicated a temperature of \SI{-80}{\celsius}, and it continued operating fine.
 
+\paragraph{Focusing strategy}
 Focusing the camera could be required at float due to the change in temperatures that could create a shift of the focal plane. We implemented our own autofocus mechanism, a belt is attached between the lens' focus ring and a stepper motor. When the stepper motor turns, it turns the focus ring. We tested this very simple configuration in our environmental chamber only to realize that the belt was loosing grip when the temperature was too cold. To fix this problem, we added a spring-based belt tensioner which adds a $\approx$~\SI{20}{\newton} of force to the belt.
 
 At cold temperature and low pressure, we noted that the glass in the lens began to exhibit radial cracks, presumably caused by the CTE difference between the steel housing and the glass material. These cracks don't noticeably affect image quality, but of course they could cause the glass to shatter if they become too large. Hence, it was decided to maintain the outside temperature of the lens above \SI{0}{\celsius} at all times during flight.
@@ -457,8 +458,9 @@ At cold temperature and low pressure, we noted that the glass in the lens began 
     \end{figure}
 \end{landscape}
 
+\paragraph{Star camera algorithm tuning}
 
-
+Talk about the algorithm and its tuning: bandpass filter; field of view; new BETTII catalog;
 \subsubsection{Azimuth control (CCMG)}
 
 The CCMG features multiple encoders and motors. First, there is a brushless DC motor that spins each wheel, with a relative 13-bit encoder that monitors where the wheel is in its rotation. Second, there is a Beckhoff AS1050 stepper motor that controls the wheels' shaft angle. On the gimbal, there is a 13-bit  absolute magnetic encoder that measures the angle of the wheels from some reference. 
@@ -583,7 +585,7 @@ To avoid future complications, all BETTII actuators and sensors are slaved to on
 \item The CCMG wheel position about its axis is checked and a correction is applied.
 \end{itemize}
 
-The advantage of this strategy can be illustrated as follows. The time it takes for a wheel to complete a revolution is set to be an integer multiple of this heartbeat, $\num{998400}=\num{124800}\times 8$ master clock ticks (about 50 revolutions per second). Hence, each 8 heartbeats, each wheel is supposed to be in the same position, and it will controlled 8 times during one revolution to make sure it is. This completely locks in their relative velocities. Let's suppose now that in their 8th position, a mechanical defects in the wheel or the bearing triggers a small vibration. This vibration will occur at a frequency which is locked with respect to our science data, such that we will see its effects every 8 data samples. In the case where these clocks are not synchronized and would unpredictably drift with respect to each other, a perturbation that occurs every 8th of a revolution has repercussions not exactly at every 8 data samples. If we think about this in the frequency domain, it means that the power peak caused by the vibration is now broadened, whereas it is very sharp in the synchronized case.
+The advantage of this strategy can be illustrated as follows. The time it takes for a wheel to complete a revolution is set to be an integer multiple of this heartbeat, $\num{998400}=\num{124800}\times 8$ master clock ticks (about 50 revolutions per second). Hence, every 8 heartbeats, each wheel is supposed to be in the same position, and it will be controlled 8 times during one revolution to make sure it is. This completely locks in their relative velocities, on average. Let's suppose now that in their 8th position, a mechanical defects in the wheel or the bearing triggers a small vibration. This vibration will occur at a frequency which is locked with respect to our science data, such that we will see its effects every 8 data samples. In the case where these clocks are not synchronized and would unpredictably drift with respect to each other, a perturbation that occurs every 8th of a revolution has repercussions not exactly at every 8 data samples. If we think about this in the frequency domain, it means that the power peak caused by the vibration is now broadened, whereas it is very sharp in the synchronized case.
 
 In practice, however, implementing this "single clock" approach is not straightforward for a project that has modest resources and relies heavily on commercial electronics. Most commercial motion controllers do not allow for external clock synchronization. We came up with a solution with the engineers at Galil Motion, and found a way to change their controller to accept an external TTL signal that would bypass their internal crystal oscillator at \SI{1.024}{\kilo\hertz}. The controller normally uses the internal oscillator as a definition of its time basis, so the user can send input in physical units (like acceleration or velocity) - a change in the clock frequency from the introduction of an external signal will have non-trivial repercussions.
 
