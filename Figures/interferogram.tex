@@ -1,0 +1,63 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+
+\begin{document}
+\pgfmathsetmacro{\xsize}{16}
+\begin{tikzpicture}[domain=-\xsize:\xsize]
+
+%\foreach \a in {0.5,0.6,...,1.5}
+%\foreach \k in {-4.,-3.95,...4}
+%\draw[color=blue,smooth] plot (\x,{sin(\x r)+sin(0.1*\x+0.1 r)}) node[right] {$f(x) = \sin x$};
+%\draw[color=blue!30] at (\k,{cos(100*\a*\k)});
+\definecolor{palered}{RGB}{217,84,77}
+\pgfplotscreateplotcyclelist{mycolorlist}{%
+{palered,opacity=1},
+{palered,opacity=0.9},
+{palered,opacity=0.8},
+{palered,opacity=0.7},
+{palered,opacity=0.6},
+{palered,opacity=0.5},
+{palered,opacity=0.4},
+{palered,opacity=0.3},
+}
+\pgfplotsset{every axis/.append style={line width=1pt}}
+\begin{axis}[
+%colormap name=hot,
+%cycle list={[of colormap]},
+  height=8cm,
+  width=\textwidth,
+  axis lines=middle,
+%grid=major,
+  clip=false,
+  ymin=-0.1,
+  ymax = 1.1,
+  xmax = \xsize+0.5,
+  xmin = -\xsize-0.5,
+  xlabel = {OPD},
+  xticklabels=\empty,
+  yticklabels=\empty,
+  legend pos=north west,
+  every axis x label/.style={at={(current axis.right of origin)},anchor=north east,below left=0.2cm},
+  %
+%cycle from colormap manual style,
+]
+% add cosine waves
+\foreach \a in {0.8,0.9,...,1.2}{
+	\addplot+[mark=none,samples=400,line width=0.5,opacity=0.75] {0.5*cos(200*8/\xsize*\a*x)+0.5};};
+% construct sum of cosine waves
+\xdef\interfero{}
+\foreach \m in {0.8,0.9,...,1.2} {
+	\xdef\interfero{\interfero+0.5*cos(200*8/\xsize*\m*x)/(1.3-0.8)*0.1}
+}
+% plot sum
+\addplot[black,mark=none,samples=400,line width=1.5] {\interfero+0.5};
+
+%\node[right = 0.1em] at (axis cs:\xsize+0.5,0){OPD};
+%\node[below right = 0.1em,align=center] at (axis cs:0,1.5){Relative \\ intensity};
+
+\end{axis}
+\end{tikzpicture}
+
+\end{document} 
