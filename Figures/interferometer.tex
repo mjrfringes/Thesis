@@ -1,0 +1,123 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning,intersections,calc,fadings,decorations.pathreplacing}
+\usetikzlibrary{shapes,arrows}
+\input{../definitions}
+\begin{document}
+\begin{tikzpicture}[x = 1.2 cm,y=1.2 cm]
+\tikzset{>=latex}
+\tikzset{font={\fontsize{10pt}{10}\selectfont}}
+\linespread{1}
+
+\pgfmathsetmacro{\baseline}{10}
+\pgfmathsetmacro{\siderostatradius}{1}
+\pgfmathsetmacro{\linelength}{4}
+\pgfmathsetmacro{\tiltangle}{15}
+\pgfmathsetmacro{\opticslw}{1}
+\pgfmathsetmacro{\raylw}{0.5}
+\pgfmathsetmacro{\arcangle}{60}
+
+\tikzstyle{optics} = [line width = \opticslw]
+\tikzstyle{rays} = [line width = \raylw,red]
+
+
+% draw siderostats
+\coordinate (O) at (0,0);
+\coordinate (L) at (-\baseline/2,0);
+\coordinate (R) at (\baseline/2,0);
+\begin{scope}[rotate = 45,shift = {(L)}]
+\draw[optics] (0,-\siderostatradius) -- (0,\siderostatradius);
+\end{scope}
+\begin{scope}[rotate = -45,shift = {(R)}]
+\draw[optics] (0,-\siderostatradius) -- (0,\siderostatradius);
+\end{scope}
+\node[below left,align=center]  at (L) { Left \\   siderostat};
+\node[below right,align=center]  at (R) {Right \\  siderostat};
+
+% draw delay line and other mirrors
+\pgfmathsetmacro{\delaylineradius}{0.2}
+\coordinate (LDLtop) at (-.2,0);
+\coordinate (RDLtop) at (.2,0);
+\coordinate (LDLbot) at (-.2,-.3);
+\coordinate (RDLbot) at (.2,-.3);
+\coordinate (LDLpickup) at (-1,-0.3);
+\coordinate (RDLpickup) at (1,-0.3);
+\begin{scope}[rotate = 45,shift = {(LDLtop)}]
+\draw[optics] (0,-\delaylineradius) -- (0,\delaylineradius);
+\end{scope}
+\begin{scope}[rotate = -45,shift = {(RDLtop)}]
+\draw[optics] (0,-\delaylineradius) -- (0,\delaylineradius);
+\end{scope}
+\begin{scope}[rotate = -45,shift = {(LDLbot)}]
+\draw[optics] (0,-\delaylineradius) -- (0,\delaylineradius);
+\end{scope}
+\begin{scope}[rotate = 45,shift = {(RDLbot)}]
+\draw[optics] (0,-\delaylineradius) -- (0,\delaylineradius);
+\end{scope}
+\draw[<->,line width = 0.3] (-0.4,0.35) -- (0.4,0.35)node[above=0.2cm,midway,align=center]{$\OPD_\textrm{int}$};
+\node[below] at (0,-0.5){ Delay line};
+\begin{scope}[rotate = -45,shift = {(LDLpickup)}]
+\draw[optics] (0,-\delaylineradius) -- (0,\delaylineradius);
+\end{scope}
+\begin{scope}[rotate = 45,shift = {(RDLpickup)}]
+\draw[optics] (0,-\delaylineradius) -- (0,\delaylineradius);
+\end{scope}
+
+% draw vertical lines
+\draw[dash pattern=on 6pt off 6pt,->] (L) -- ($(L) + (0,\linelength*1.2)$)node[above,align=center]{Line of sight \\ vector $\hat{\vectors{s}}$};
+\draw[dash pattern=on 6pt off 6pt,->] (R) -- ($(R) + (0,\linelength*1.2)$);
+
+% draw tilted vertical lines
+\begin{scope}[rotate = -\tiltangle,shift = {(L)}]
+\draw[rays] (0,0) -- (0,\linelength*1.7)node[pos=0.15,right=0.2cm,align=center,black]{ $\OPD_\textrm{ext}=$ \\ $\vectors{B}\cdot\hat{\vectors{s}} = B\sin\theta$} ;
+\pgfmathsetmacro{\OPD}{\baseline*sin(\tiltangle)}
+\draw[<->] (0.1,0.1) -- (0.1,\OPD);
+\end{scope}
+\begin{scope}[rotate = -\tiltangle,shift = {(R)}]
+\draw[rays] (0,0) -- (0,\linelength*1.1);
+\end{scope}
+
+% draw source
+\begin{scope}[rotate = -\tiltangle]
+\node[draw=black,fill=yellow,star,star points=10,minimum size=0.2cm] (star) at (0,\linelength*2) {};
+\node[right=0.2] at (star) {Off-axis source at infinity};
+\end{scope}
+
+% draw wavefronts
+\begin{scope}[rotate = -\tiltangle,shift={(star)}]
+\draw ([shift=(-90+\arcangle:0.2)]0,-0.2) arc (-90+\arcangle:-90-\arcangle:0.2);
+\draw ([shift=(-90+\arcangle:0.4)]0,-0.4) arc (-90+\arcangle:-90-\arcangle:0.4);
+\draw ([shift=(-90+\arcangle:0.6)]0,-0.6) arc (-90+\arcangle:-90-\arcangle:0.6);
+\draw ([shift=(-90+\arcangle:0.8)]0,-0.8) arc (-90+\arcangle:-90-\arcangle:0.8);
+\draw (-\baseline/2+1,-4)node[above right,rotate = -\tiltangle]{  Parallel wavefronts} -- (\baseline/2-1,-4);
+\draw (-\baseline/2+0.5,-4.2) -- (\baseline/2-0.5,-4.2);
+\draw (-\baseline/2+0.2,-4.4) -- (\baseline/2-0.2,-4.4);
+\end{scope}
+% last wavefront
+\begin{scope}[rotate = -\tiltangle,shift={(R)}]
+\pgfmathsetmacro{\lengthrotatedbaseline}{\baseline*cos(\tiltangle)}
+\draw (-\lengthrotatedbaseline,0)node[above right,rotate = -\tiltangle]{ Entrance pupil} -- (0,0);
+\end{scope}
+
+% draw light coming through the delay line
+\draw[rays] (L) -- (LDLtop);
+\draw[rays] (LDLtop) -- (LDLbot);
+\draw[rays] (LDLbot) -- (LDLpickup);
+\draw[rays] (LDLpickup) -- ($(LDLpickup) + (0,-1)$);
+\draw[rays] (R) -- (RDLtop);
+\draw[rays] (RDLtop) -- (RDLbot);
+\draw[rays] (RDLbot) -- (RDLpickup);
+\draw[rays] (RDLpickup) -- ($(RDLpickup) + (0,-1)$);
+
+% draw combiner block
+\node[draw,rectangle,minimum height=1.7cm,minimum width=3cm,align=center] at (0,-2) {Beam Combiner, \\ OAPs, \\ Detectors};
+
+% draw baseline vector
+\draw[<->, line width =1] (-\baseline/2,-3) -- (\baseline/2,-3)node[midway,below=0.1cm]{Baseline vector $\vectors{B}$};
+
+% draw pointing angle
+\draw ([shift=(180:2)]R) arc (180:180-\tiltangle:2) node[above left,pos=0.2]{$\theta$};
+\end{tikzpicture}
+
+
+\end{document}

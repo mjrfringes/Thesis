@@ -1,5 +1,4 @@
 % Chapter 1
-
 \chapter{Introduction} % Main chapter title
 
 \label{chap:introduction} % For referencing the chapter elsewhere, use \ref{Chapter1} 
@@ -65,6 +64,12 @@ The phase difference is expressed in radians and depends on the wavelength of th
 	\caption[Simple interferogram]{An interferogram here is shown as a sum of cosine waves of different frequencies.}
 	\label{fig:interferogram}
     \end{figure}
+\begin{figure}[!ht]
+	\centering
+	\includestandalone[width=\textwidth]{Figures/interferometer}
+	\caption[Michelson interferometer]{A Michelson Stellar interferometer.}
+	\label{fig:interferometer}
+    \end{figure}
 
 
 \subsubsection{Fourier transform spectroscopy}
@@ -102,6 +107,7 @@ The generalization of this property is called the Van Cittert-Zernike theorem: t
 
 Pictures:
 \begin{itemize}
+\item Show source plane, u,v plane, baseline sampling, and image plane
 \item Picture of single wavelength interferogram (use Python to generate values, and tikz to display?)
 \item Picture of multi-wavelength interferogram, with envelope, etc.
 - Optics diagram of two-aperture Michelson interferometer FTS vs single-aperture FTS
@@ -112,12 +118,17 @@ Watch out, we are being redundant with chapter 2. what do we do?
 
 \subsubsection{Double-Fourier interferometry}
 
-Explain how this comes together.
+Interferometry and aperture synthesis is used commonly at radio wavelengths, where coherent detectors can obtain the direct phase of the incoming light by mixing the signal with local oscillator. Both the amplitude and the phase of the signal can be recorded for each antenna, and can be combined with all the other antennas at a later time.
 
-Pictures:
-\begin{itemize}
-\item Put here the picture of the detector plane (again, taken from the paper!)
-\end{itemize}
+Aperture synthesis has also been achieved at optical and near-infrared wavelengths, where a nearby guide star is used to determine the absolute phase of the incoming beam. The fringe patterns measured for the science sources can then be non-ambiguously aligned with each other. This process requires very rapid imaging capabilities (on the order of \SI{10}{\milli\second}, a typical atmospheric coherence timescales) to freeze the atmospheric variations across the synthetic aperture. This requires bright guide stars. In addition, because of the large baselines, the field of view is very limited, so the targets accessible by optical interferometers are limited to scientific sources which are a few arcseconds of a bright guide star: this dramatically limits the capabilities of ground-based interferometry at these wavelengths.
+
+In the far-infrared, coherent-detection interferometers are a possibility [ESPRIT], but they presently lack sensitivity and may be fundamentally less efficient than direct-detection arrays. In this work, we take advantage of recently-developed Transition Edge Sensor bolometer arrays, which are direct-detection, power sensors (which means that we do not have access to the phase information). Hence phase referencing during flight will have to be achieved very carefully.
+
+We adopt a Michelson interferometer configuration that we use in pupil-plane combination. Unlike image-plane combination, where fringes are seen across a single Airy disk in the image plane, no fringes are visible across the field of view for a given \OPD. Instead, the intensity of the entire field of view is modulated as a function of \OPD. 
+
+By scanning the \OPD, we obtain a modulation of each pixel on the detector, which combines information on both the spectral (through the Fourier transform of the scan) and the spatial (through the amplitude of the fringe packet) content of the source, at that baseline orientation and length. By repeating the measurement over multiple baseline angles and lengths, one can unambiguously retrieve both the spatial and spectral content of the astronomical scene. 
+
+Pupil-plane combination allows for an interferometric response of the entire field of view. The price we pay is that the \OPD scans need to be longer in order to cover enough spectral range for each pixel in the field of view. For a single-pixel detector, the \OPD scan would only need to cover enough stroke to obtain the desired spectral resolution over that one single pixel.
 
 
 \subsection{BETTII Instrument design}
@@ -140,8 +151,10 @@ Just explain how we get from our detector images to the science-ready products
 
 \subsection{Sensitivity analysis}
 
+\subsubsection{Instrument and observing parameters}
+Show here things like bands, AOmega, timing, etc
 \subsubsection{Far-IR background noise estimation}
-Stack up all of the noise sources
+Stack up all of the noise sources; Add table of temperatures
 \subsubsection{Interferometric visibility budget}
 both in the science and the tracking channel
 \subsubsection{Science channel estimated sensitivity}
@@ -153,3 +166,4 @@ make sure to add the formulas that we use
 \subsection{Scientific targets}
 
 introduce the SOFIA work here
+
