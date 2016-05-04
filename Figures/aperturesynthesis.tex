@@ -15,12 +15,15 @@
 \tdseteulerxyz
 
 \begin{tikzpicture}[x = 1 cm,y=1 cm,tdplot_main_coords]
+\tikzset{font={\fontsize{10pt}{10}\selectfont}}
+
 \pgfmathsetmacro{\axislength}{3}
+\pgfmathsetmacro{\baselinelength}{0.8*\axislength}
 \pgfmathsetmacro{\planedist}{4}
 \pgfmathsetmacro{\spacing}{0.4}
 
 % sky plane
-\draw[->] (0,0,\axislength) -- (0,0,-\axislength)node[below]{$\theta'_x$};
+\draw[->] (0,0,\axislength) -- (0,0,-\axislength)node[below,align=center]{$\theta'_x$ \\ Sky/source plane};
 \draw[->] (0,-\axislength,0) -- (0,\axislength,0)node[above]{$\theta'_y$};
 \coordinate (starA) at (0,0.2*\axislength,0.3*\axislength);
 \coordinate (starB) at (0,-0.4*\axislength,0.1*\axislength);
@@ -31,22 +34,26 @@
 
 
 % pupil plane
-\draw[->] (\planedist,0,-\axislength) -- (\planedist,0,\axislength)node[above]{$u$};
+\pgfmathsetmacro{\baselineangle}{60}
+\pgfmathsetmacro{\baselinecos}{cos(\baselineangle)}
+\pgfmathsetmacro{\baselinesin}{sin(\baselineangle)}
+
+\draw[->] (\planedist,0,-\axislength)node[below,align=center]{Entrance pupil/ \\ aperture plane} -- (\planedist,0,\axislength)node[above]{$u$};
 \draw[->] (\planedist,\axislength,0) -- (\planedist,-\axislength,0)node[above]{$v$};
 \tdplotsetrotatedcoords{0}{90}{0}
-\draw[tdplot_rotated_coords,dashed] (0,0,\planedist) circle (0.4*1.41*\axislength);
-\draw[tdplot_rotated_coords,fill opacity=0.5,fill=gray] (-0.4*\axislength,0.4*\axislength,\planedist) circle (0.1*\axislength);
-\draw[tdplot_rotated_coords,fill opacity=0.5,fill=gray] (0.4*\axislength,-0.4*\axislength,\planedist) circle (0.1*\axislength);
-\draw[tdplot_rotated_coords,<->] (-0.4*\axislength,0.4*\axislength,\planedist) -- (0.4*\axislength,-0.4*\axislength,\planedist)node[pos=0.2,below,fill=white,inner sep=0.1cm]{\vectors{B}};
+\draw[tdplot_rotated_coords,dashed] (0,0,\planedist) circle (\baselinelength);
+\draw[tdplot_rotated_coords,fill opacity=0.5,fill=gray] (-\baselinecos*\baselinelength,\baselinesin*\baselinelength,\planedist) circle (0.2*\axislength);
+\draw[tdplot_rotated_coords,fill opacity=0.5,fill=gray] (\baselinecos*\baselinelength,-\baselinesin*\baselinelength,\planedist) circle (0.2*\axislength);
+\draw[tdplot_rotated_coords,<->,thick] (-\baselinecos*\baselinelength,\baselinesin*\baselinelength,\planedist) -- (\baselinecos*\baselinelength,-\baselinesin*\baselinelength,\planedist)node[pos=0.3,fill=white,inner sep=0.1cm]{\vectors{B}};
 
 % pupil plane #2
-\draw[->] (2*\planedist,0,-\axislength) -- (2*\planedist,0,\axislength)node[above]{$u$};
-\draw[->] (2*\planedist,\axislength,0) -- (2*\planedist,-\axislength,0)node[above]{$v$};
-\draw[tdplot_rotated_coords,fill opacity=0.5,fill=gray] (-0.02*\axislength,0.02*\axislength,2*\planedist) circle (0.1*\axislength);
-\draw[tdplot_rotated_coords,fill opacity=0.5,fill=gray] (0.02*\axislength,-0.02*\axislength,2*\planedist) circle (0.1*\axislength);
+\draw[->] (2*\planedist,0,-\axislength)node[below,align=center]{Pupil plane} -- (2*\planedist,0,\axislength)node[above]{$u'$};
+\draw[->] (2*\planedist,\axislength,0) -- (2*\planedist,-\axislength,0)node[above]{$v'$};
+\draw[tdplot_rotated_coords,fill opacity=0.5,fill=gray] (-0.02*\axislength,0.02*\axislength,2*\planedist) circle (0.2*\axislength);
+\draw[tdplot_rotated_coords,fill opacity=0.5,fill=gray] (0.02*\axislength,-0.02*\axislength,2*\planedist) circle (0.2*\axislength);
 
 % image plane
-\draw[->] (3*\planedist,0,-\axislength) -- (3*\planedist,0,\axislength)node[above]{$\theta_x$};
+\draw[->] (3*\planedist,0,-\axislength)node[below,align=center]{Image plane} -- (3*\planedist,0,\axislength)node[above]{$\theta_x$};
 \draw[->] (3*\planedist,\axislength,0) -- (3*\planedist,-\axislength,0)node[above]{$\theta_y$};
 %\node[draw=black,fill=gray,star,star points=10,minimum size=0.2cm] at ($-1*(starA)+(3*\planedist,0,0)$) {};
 %\node[draw=black,fill=gray,star,star points=10,minimum size=0.2cm] at ($-1*(starB)+(3*\planedist,0,0)$)  {};
@@ -54,13 +61,16 @@
 \draw[tdplot_rotated_coords,fill=black] (0.3*\axislength,-0.2*\axislength,3*\planedist) circle (0.6*\spacing);
 \draw[tdplot_rotated_coords,fill=black] (0.1*\axislength,0.4*\axislength,3*\planedist) circle (0.6*\spacing);
 \draw[tdplot_rotated_coords,fill=black] (-0.4*\axislength,-0.1*\axislength,3*\planedist) circle (0.6*\spacing);
-\draw[tdplot_rotated_coords] (-0.7*\axislength,0.7*\axislength,3*\planedist) -- (0.7*\axislength,-0.7*\axislength,3*\planedist)node[below,align=center]{baseline \\ direction};
+\draw[tdplot_rotated_coords,thick] (-\baselinecos*\axislength,\baselinesin*\axislength,3*\planedist) -- (\baselinecos*\axislength,-\baselinesin*\axislength,3*\planedist)node[below,align=center]{baseline \\ direction};
 
 \foreach \n in {-4.5,-3.5,...,4.5}
 {
 \draw[-,opacity=0.3] (3*\planedist,\n*\spacing,4.5*\spacing) -- (3*\planedist,\n*\spacing,-4.5*\spacing);
 \draw[-,opacity=0.3] (3*\planedist,4.5*\spacing,\n*\spacing) -- (3*\planedist,-4.5*\spacing,\n*\spacing);
 }
+
+% draw line between the centers of all the planes
+\draw[dashed,opacity=0.5] (0,0,0) -- (3*\planedist,0,0);
 \end{tikzpicture}
 
 

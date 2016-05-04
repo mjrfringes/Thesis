@@ -4,8 +4,8 @@
 
 There are three common representations of the orientation, or \textit{attitude}, of an object in a 3-dimensional Euclidian reference frame: in the following we will discuss the Tait-Bryan angles (which are very similar to, and sometimes confused with proper Euler angles), rotation matrices, and quaternions. All of them can be understood as a rotation of the initial reference frame $I = \{\I,\J,\K\}$ into the object's local reference frame $L = \{\i,\j,\k\}$. The reference frame $I$ is assumed to be fixed while $L$ is allowed to move. We can write each unit vector as follows: $\I = \fromto{}{I}[1,0,0]^T$, $\J = \fromto{}{I}[0,1,0]^T$, $\K = \fromto{}{I}[0,0,1]^T$, and $\i = \fromto{}{L}[1,0,0]^T$, $\j = \fromto{}{L}[0,1,0]^T$, $\k = \fromto{}{L}[0,0,1]^T$. $\{\I,\J,\K\}$ and $\{\i,\j,\k\}$ are  orthonormal bases to $I$ and $L$, respectively. The subscript before the vector indicates in which reference frame the vector is expressed, and the $T$ after the vector indicates the transpose operation. We will keep this formalism for all vectors and matrices in this work.
 
-\subsection{Tait-Bryan/Euler angles}
-\label{subsec:Tait-Bryan}
+\section{Tait-Bryan/Euler angles}
+\label{sec:Tait-Bryan}
 The Tait-Bryan formalism [CITE] corresponds to a sequence of three angles, each corresponding to a rotation about one of the object's main axes: these are also called "intrinsic" rotations. They differ from "extrinsic" rotation, sometimes called "Euler angles", which correspond to a rotation about one of the axes of the global (fixed) reference frame. In the following, we will focus on using exclusively intrinsic rotations, as they are more intuitive. Note that sometimes people call this formalism "Euler angles" as well, so it is important to understand how this works.
 With this formalism, we start in the global reference frame and rotate the reference frame three times to end up in the 
 \textit{body} reference frame, which describes the final orientation of an object. We will most often choose a well-known sequence of rotation such as the $z-y'-x''$ order, which corresponds to the angles used to describe the heading, elevation and bank of an aircraft with respect to a reference frame attached to the Earth, for example the North-East-Down reference frame. The first rotation about $\k$ will transform $I$ into $L'$. The second rotation, about the $\j$ axis of the rotated frame $L'$, transforms $L'$ into $L''$. The third and last rotation, about the $\i$ axis of $L''$, will transform $L''$ into the final orientation, $L$, of the object (see Fig.~\ref{fig:3simpleRotate}).
@@ -14,8 +14,8 @@ This sequence of rotation can be used to represent the rotation matrix that desc
 
 
 
-\subsection{Rotation matrices}
-\label{subsec:rotationMatrices}
+\section{Rotation matrices}
+\label{sec:rotationMatrices}
 Perhaps the most common way to express the orientation of an object within a given reference frame is to use the matrix that describes the rotation from one reference frame to the other. Since rotations are linear transformations of $\RealNumbers^3$, there always exists a matrix to represent it. If we choose an orthonormal basis to $\RealNumbers^3$, matrices representing rotations are $3\times 3$ orthogonal matrices. When given the traditional matrix multiplication operation, $3\times 3$ orthogonal matrices with determinant of $+1$ form a group which is an isomorphism of the group of all 3-D rotations of Euclidian space (subsequently called SO(3) for "special orthogonal group") [REFERENCE?]: it means that each rotation can always be represented by exactly one $3\times 3$ orthogonal matrix. This theorem is the mathematical translation of the sometimes obvious intuition that rotation matrices always exist, are unique for a given rotation, and that the composition of two rotations is still a rotation. It also expresses the requirement that the corresponding rotation matrices have a determinant of $+1$, which can be useful when we consider numerical implementations of these matrices, as rounding errors might require a periodic normalization of the matrices to ensure they stay in this group. Note that the group of rotation is a cyclic group, since a rotation of an angle $\theta$ is the same as a rotation of $\theta+2\pi$.
 
 We are interested in matrices describing rotations of entire coordinate systems, which are also called \textit{passive} rotations. This is different from matrices describing rotations of vectors within a given coordinate system (called \textit{active} rotations), and an important distinction that can often lead to confusion. Let's suppose that we have an initial coordinate system $I$ of basis $\{\I,\J,\K\}$, and a second coordinate system $L$ of basis $\{\i,\j,\k\}$. For example, this applies when $L$ is the body reference frame, and we want to understand its orientation with respect to an initial reference frame, such as the inertial reference frame. The basis vectors of $L$ can all be expressed by a linear combination of the basis vector of $I$. This transformation can be described using the \textit{direction cosine matrix}, which has the following expression:
@@ -82,8 +82,8 @@ where we pre-multiply the matrix for each consecutive rotation of reference fram
 \input{Figures/3ConsecutiveRotate}
 
 
-\subsection{Quaternions}
-\label{subsec:Quaternions}
+\section{Quaternions}
+\label{sec:Quaternions}
 Quaternions are a more modern way to describe the orientation of a reference frame with respect to another, and are today widely used to describe spacecraft orientation [QUOTE]. From a strictly mathematical point of view, quaternions form a normed algebra over the real numbers that is an extension of traditional complex numbers. The quaternion normed algebra has four dimensions, instead of just two for the complex numbers. At its fundamental level, the basis for the quaternion algebra consists of one real axis and three imaginary axes \{1, $\i$, $\j$, $\k$\}. Like complex numbers (which have a basis \{1, $\i$\}), there are fundamental relations between the basis elements that govern the multiplication operation, such as the well known identity $\i^2=-1$, that we will discuss at length later in this section. In this document, we will write a quaternion using one of the following equivalent notations (Coutsias 1999) and (Schmidt 2001) :
 \begin{equations}
 \quat{q} = q_r\times 1 + q_i\i + q_j\j + q_r\k = q_r + \vectors{q} =
@@ -107,7 +107,7 @@ This quaternion completely describes the rotation between the two reference fram
 
 Quaternions use 4 numbers to describe 3 degrees of freedom: an advantage over matrices (9 elements), but an apparent disadvantage over Tait-Bryan angles, which consist of an optimal number of 3 elements. However, Tait-Bryan angles can be shown to exhibit a phenomenon called \textit{gimbal lock} [references], which leads to a degeneracy when describing the set of angles corresponding to rotations when the pitch angle (second rotation angle, about $\j$) is $\pm\pi/2$. This creates situations where some rotations and sequences of rotation would have to be avoided by fear of creating numerical issues caused by gimbal lock [footnote: for an example of gimbal lock, refer to the Apollo program!]. Quaternions, while needing an extra number to represent the rotation, are free of this concern. This is one of the main reasons that they were originally preferred to Tait-Bryan angles early in the spaceflight era [WERTZ 1985?]. [talk more about the advantages of quaternions: number of multiplications, etc - see Shuster et al 1993]
 
-\subsubsection{Quaternion multiplication}
+\subsection{Quaternion multiplication}
 
 In order to form the unit quaternion group, one has to define an appropriate multiplication operation. We warn that the formulation that we use and present in the next few paragraphs does not correspond to the commonly accepted rules for quaternion operations (also called "Hamilton notation", from W. R. Hamilton who is attributed the discovery of quaternions). We use a formalism that was popularized by Caley [CITE] and adopted in most of the aerospace community [cite JPL quaternion standard], mostly to describe the orientation of satellites in inertial space. Its main advantage is that consecutive transformations using quaternions consist of multiplying elementary quaternions in a "natural order", exactly in the same order as the rotation matrices mentioned at the end of the previous section. 
 
@@ -143,7 +143,7 @@ and extract the vector $\fromto{}{L}\vectors{v}$ from the resulting quaternion.
 
 Note that the quaternion inverse operation for quaternions of unit norm is the same as the conjugate operation. 
 
-\subsubsection{Relationship with matrices and elementary quaternions}
+\subsection{Relationship with matrices and elementary quaternions}
 Using this formalism, a quaternion is behaving in the same way as the corresponding \textit{passive} transformation matrix to describe a reference frame rotation. This means that consecutive rotations are multiplying in the "natural order", which makes it more intuitive.
 
 For example, let's consider the elementary rotation described in Fig~\ref{fig:simpleRotate} that represents a rotation of the initial reference frame $I$ into a reference frame $L$ about $\k$. Using the "left-hand" rule, the angle $\theta$ of rotation about $\k$ is now $\theta = +30$~degrees. This quaternion is $\fromto{I}{L}\quat{q} = \quat{q}_\k(\theta) = \cos\frac{\theta}{2} + \sin\frac{\theta}{2}\k$, and represents the same rotation as the passive rotation matrix $\R_\k(\theta)$ discussed in Section \ref{subsec:rotationMatrices}. [WORK OUT THE MATHS FOR THE VECTOR TRANSFORMATION] If the rotation of the reference frame is described by three consecutive rotations of angles $\theta$, $\phi$ and $\psi$ about $\k$, $\j'$, and $\i''$, respectively [see some figure], we can write:
@@ -173,7 +173,7 @@ which forms a quaternion that is equivalent to the rotation matrix multiplicatio
 Note that the order of the quaternions is the same as the order of the matrices. This is one of the advantages of choosing this "natural order" convention [cite Shuster].
 
 
-\subsection{Quaternion derivative and integration}
+\section{Quaternion derivative and integration}
 
 Properly defining the derivative and integral of quaternions is necessary for our purpose. We will need a derivative to describe our dynamic system as its orientation changes over time; and we will need to integrate (or \textit{propagate}) those equations to find a numerical solution to the attitude estimation problem.
 
@@ -214,7 +214,7 @@ where the matrix exponential is defined using a Taylor expansion [give reference
 
 A first-order solution is given in [TRAWNY] and uses knowledge of two previous $\gyroVec$ values to estimate the integral.
 
-\subsection{Covariance matrices in different reference frames}
+\section{Covariance matrices in different reference frames}
 In the following, we will be describing our attitude using quaternions or rotation matrices in a Kalman filter with a state-space representation. This means that we will be make estimates of physical quantities, as well as estimates of our estimation error. These errors are represented using covariance matrices. 
 
 Covariance matrices contain information about the cross-correlation of the variables in the state vector. The diagonal elements represent the auto-covariance of a given variable, while the terms off the diagonal indicate the degree of covariance (or correlation) between the different variables. For example, we will have three gyroscopes which will be mounted orthogonally from each other, each measuring the angular velocity about three different axes. In the ideal case, all gyroscopes are independent and the covariance matrix associated to the set of three angular velocities is diagonal, with the variances of each gyroscope on the diagonal.
