@@ -66,9 +66,6 @@ When the two guide star images are centered, this means proper overlap of the fa
 During the $\LOCKED$ mode, we need to consider what happens if we lose the guide star. Since the field of view is relatively small compared to the expected motions of the gondola, the guide star could technically walk outside the range of the guide camera - at which point the attitude estimation relies temporarily on the gyroscopes as we switch back to $\ACQUIRE$ mode and the guide camera increases its field of view (and decreases its speed) until it finds the guide star.
 
 \renewcommand{\arraystretch}{1.5}
-\newlength\mylen
-\settowidth\mylen{\textbullet}
-\addtolength\mylen{-3mm}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
 \def\labelitemi{--}
 \begin{table}[htbp]
@@ -239,10 +236,14 @@ Note that the Cold Delay Line (CDL) is running in closed loop during all the mod
 
 \subsubsection{Gyroscopes}
 
-\paragraph{Sensitivity tests}
 We purchased three SRS-2000 fiber-optic gyroscopes from Optolink. This gyroscope technology uses the Sagnac effect and is the cutting edge in inertial rotational velocity measurements \citep[for a review of the state-of-the-art see, \textit{e.g.}][]{ElBadaoui:2014fr}. We chose these devices for their incredibly low angular random walk, which is a measure of their inherent noise. If we were to trust the gyroscope measurement and integrate its velocity to obtain a position estimate, the estimation error we would make after 1 hour of integration has a standard deviation of about 2 arcseconds.
 
 The devices have a bandwidth of \SI{50}{\hertz}, but can be triggered at up to \SI{2000}{\hertz}. Their extreme stability is contingent upon proper temperature stabilization, which is done with a closed-loop set at their calibration temperature of $\SI{23.5}{\celsius}\pm\SI{0.5}{\celsius}$ using an active built-in Peltier element. This Peltier element transforms electric power into either heating or cooling \citep{Peltier:1834vu}.
+
+In the following, we describe how we measure the various properties of the gyroscopes, and discuss how they compare to the specifications.
+
+\paragraph{Sensitivity tests}
+
 
 However, their sensitivity has complicated some of their testing. As soon as we attach a gyroscope to any structure, it measures its vibrational modes, which makes it hard to make a stable measurement of the gyroscope's drift stability. This includes the vibrations that are inherent to the building in which they are placed.
 
