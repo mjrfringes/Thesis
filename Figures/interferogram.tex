@@ -45,7 +45,7 @@
 %cycle from colormap manual style,
 ]
 % add cosine waves
-\foreach \a in {0.8,0.9,...,1.2}{
+\foreach \a in {0.8,0.85,...,1.2}{
 	\addplot+[mark=none,samples=400,line width=0.5,opacity=0.75] {0.5*cos(200*8/\xsize*\a*x)+0.5};};
 % construct sum of cosine waves
 \xdef\interfero{}
