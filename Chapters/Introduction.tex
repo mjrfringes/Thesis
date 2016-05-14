@@ -118,13 +118,6 @@ The phase difference is expressed in radians and depends on the wavelength of th
 	\caption[Simple interferogram]{An ideal interferogram here is shown as a sum of cosine waves of different frequencies.}
 	\label{fig:interferogram}
     \end{figure}
-\begin{figure}[!ht]
-	\centering
-	\includestandalone[width=\textwidth]{Figures/interferometer}
-	\caption[Michelson interferometer]{A Michelson Stellar interferometer.}
-	\label{fig:interferometer}
-    \end{figure}
-
 
 \subsubsection{Fourier transform spectroscopy}
 
@@ -149,14 +142,21 @@ Since the modulation is a coherent superposition of cosine waves, it contains sp
 
 \subsubsection{Aperture synthesis}
 
+
+\begin{figure}[!ht]
+	\centering
+	\includestandalone[width=\textwidth]{Figures/interferometer}
+	\caption[Michelson Stellar interferometer]{A Michelson Stellar interferometer.}
+	\label{fig:interferometer}
+    \end{figure}
+
+
 An interferogram is produced by coherently combining the light from one single source of light. This can be applied for example for an infinitely far astronomical source: as the light propagates from the source, by the time it reaches our instrument the radius of curvature of its wavefront is extremely large, and the latter can be approximated as being flat. The photons from this source nominally enter each arm of the interferometer with the same phase, when the alignment is perfect. When combined, these photons would create an interferogram.
 
+
+
+
 However, let's suppose that a second source is sufficiently far away from the first source that its wavefront enters the interferometer at an angle. This means the photons from the second source enter one arm slightly later than the other - or that photons need to cross more optical path in one arm than in the other. These photons would also create an interferogram, but the latter will be centered about a different position in \OPD  space than the interferogram created by the photons from the first source. Now let's suppose that the second source is exactly as bright as the first one, and that it is apart from the first by an angle $\theta$ such that $\baseline\sin\theta = \lambda/2$. In this case,  the interferogram created by the photons from the second source has the same amplitude as the first interferogram, but is shifted by half a wavelength in \OPD. As a result, the two interferograms would exactly cancel each other, and we would say that the \textit{spatial degree of coherence} between the two sources is zero. Although the sources are not coherent in the strict sense because they are completely independent sources, the intensity modulation (or interferograms) caused by each source would, in this case, cancel out. If the angular separation was such that $\baseline\sin\theta = \lambda$, then the modulations would add up and the resulting modulation would have twice the amplitude of that with just one single source. We would say that the spatial degree of coherence between the two sources is unity. 
-
-One way to formalize this important property is to consider an interferometer with a given baseline length and angle as a filter of the source's spatial distribution on the sky. For a given baseline length and angle with respect to the sky, the interferometer is only sensitive to a single angular frequency in a single direction on the sky. Various sources observed simultaneously by the interferometer will all contribute to a single measured interferogram (or intensity modulation), which can be characterized in terms of the spatial degree of coherence, also called \textit{complex visibility}, between the sources for a given baseline angle and length. 
-
-The generalization of this property is called the Van Cittert-Zernike theorem: the 2D Fourier transform of the intensity distribution on the sky is its complex visibility function. In other words, by mapping the complex visibility (through measuring interferograms) for all baseline angles and lengths, we can reconstruct the original image through an inverse Fourier transform. The plane of complex visibilities is commonly referred to as the (u,v)-plane [CITE THOMPSON 2008].
-
 
 \begin{figure}[!ht]
 	\centering
@@ -164,6 +164,14 @@ The generalization of this property is called the Van Cittert-Zernike theorem: t
 	\caption[Aperture synthesis]{Relevant planes in the optical train for aperture synthesis.}
 	\label{fig:aperturesynthesis}
     \end{figure}
+
+
+
+One way to formalize this important property is to consider an interferometer with a given baseline length and angle as a filter of the source's spatial distribution on the sky. For a given baseline length and angle with respect to the sky, the interferometer is only sensitive to a single angular frequency in a single direction on the sky. Various sources observed simultaneously by the interferometer will all contribute to a single measured interferogram (or intensity modulation), which can be characterized in terms of the spatial degree of coherence, also called \textit{complex visibility}, between the sources for a given baseline angle and length. 
+
+The generalization of this property is called the Van Cittert-Zernike theorem: the 2D Fourier transform of the intensity distribution on the sky is its complex visibility function. In other words, by mapping the complex visibility (through measuring interferograms) for all baseline angles and lengths, we can reconstruct the original image through an inverse Fourier transform. The plane of complex visibilities is commonly referred to as the (u,v)-plane [CITE THOMPSON 2008].
+
+
 
 
 
@@ -207,9 +215,22 @@ There are four major components to BETTII: the mechanical structure and design; 
 
 [Make table with primary characteristics]
 
-\subsubsection{About the balloon environment}
+\subsubsection{Stratospheric balloon environment}
 
-Thermal, pendulum, pressure, cosmic rays.
+High-altitude balloons have for many years served as a test platforms for future space instruments, such as COBE. These balloon platforms fly between 30 and \SI{40}{\kilo\meter}, above more than 99\% of the atmosphere, which make them particularly well suited for studying the universe at infrared, far-infrared and sub-millimeter wavelengths. Balloon launches occur year-round across all continents, including Antarctica, which allows balloon flights that can last for multiple weeks. 
+
+For a typical launch, the scientific payload is attached on the bottom of a train of about \SI{100}{\meter} that includes a parachute and a ladder. The top of the ladder attach to the bottom of the large helium-filled balloon. 
+
+[Put picture of balloon launch]
+
+At float altitude, the air temperature is between \SI{230}{\kelvin} and \SI{250}{\kelvin}, while the air pressure is down to 0.5\% of the sea level pressure (about 5 mbar). Upper altitude winds are large-scale laminar flows that move the balloon and the payload as one. This can excite pendulum motions about the pivots underneath the balloon and at the top of the payload, which are typically of the order of a few arcminutes and have periods of a few to many tens of seconds [cite FIXSEN]
+
+The payload's temperature and temperature distribution is influenced by the air temperature, the infrared radiation of the Earth, and the sunlight, which can result in complex temperature gradients across the instrument. A better temperature uniformity is expected for night flights, which is what BETTII is expecting.
+
+Balloon experiments can also be affected by cosmic rays which can damage the electronics, lead to data corruption and or failures of the software/control system. However, this becomes more of an issue for long-duration balloon flights around Antarctica, during which the payloads are exposed for many weeks to the cosmic ray environment.
+
+BETTII is expected to launch from Fort Sumner, NM, for its first engineering flight. After a morning launch, we expect to wait until nightfall to achieve proper thermal stabilization and achieve our science goals. We expect the flight to last about \SI{16}{\hour}, although this is highly dependent on the weather.
+
 
 \subsubsection{Mechanical design}
 
@@ -309,6 +330,15 @@ Stack up all of the noise sources; Add table of temperatures
 
 We proceed to an estimation of the background noise contributors. 
 
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{Figures/BETTII_transmission.pdf}
+	\caption[BETTII Transmission curves]{BETTII Transmission curves.}
+	\label{fig:aperturesynthesis}
+    \end{figure}
+
+
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
 \def\labelitemi{--}
@@ -339,7 +369,8 @@ Galactic cirrus emissivity	&	ecirrus	&	1.23E-04	&	Bracco et al. 2011	\\
 \caption[Noise parameters]{Noise parameters}
 \label{tab:noiseparams}
 \end{table}
-
+\printlength\textwidth
+\printinunitsof{in}\prntlen{\textwidth}
 
 \subsubsection{Interferometric visibility budget}
 both in the science and the tracking channel
