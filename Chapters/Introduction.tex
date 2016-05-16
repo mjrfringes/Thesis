@@ -8,11 +8,31 @@
 
 \section{Star formation in clustered environments}
 
-How do stars accrete their material in dense, clustered environments? Multiple theories have been put forth to explain the forces at play in these important regions of stellar birth \citep[e.g.][]{Bonnell:1997vta, McKee:2003gxa}. Pivotal differences in the theories center around what drives the parsec-scale dense cloud to form many stars and how the forming stars acquire their mass. Does dense gas fragment into isolated centers of collapse? Are turbulent motions in the gas driving creation of super-critical cores? Do young stars competitively accrete material from a surrounding common reservoir? Do gravitational interactions between forming young objects play a significant role in setting the final stellar mass function? Better observational understanding of these clusters is necessary to address these questions and to discriminate between the different models, as noted by \cite{Bonnell:2006ee}, \cite{Offner:2011ex} and \cite{Myers:2011fy}.
+\subsection{ISM, description of phases, etc}
 
-\textbf{The primary goal of the proposed science plan is to understand how stars accrete material on the scales of 100's to 1,000's of AUs in forming cluster cores}. Given the typical stellar separations in clusters with fully formed young stellar objects (YSO) and the typical densities of gas in these cores, 1,000's of AUs are the size scales over which forming stars must draw material to become 0.5-10 solar masses. Once the material is inside 100 AU, it is strongly bound to the forming stellar system (which may be one or more stars) and its fate is determined. To give an idea of the possibilities for accreting material, Fig. \ref{fig:SFscenarios} sketches three scenarios for how stars could capture mass in the cluster environment: core collapse, competitive accretion, and collisional merging. In core collapse \citep[Fig.~\ref{scenarios:a},][]{McKee:2003gxa, Myers:2011fy}, the cluster's gas fragments into cores which collapse individually to form single, binary, or small multiple star systems; the available mass is defined by the original fragment. In competitive accretion \citep[Fig.~\ref{scenarios:b},][]{Bonnell:1997vta}, the initial core collapses but contains a small fraction of the star's final mass; additional mass is captured competitively with other forming stars from the surrounding dense core gas. In collisional merging \citep[Fig.~\ref{scenarios:c},][]{Bonnell:2002et}, the initial fragments interact gravitationally and form larger mass cores before and during the formation process. 
+\subsection{Molecular Clouds (into cluster/clumps, cores)}
+\subsubsection{Clusters}
+\subsubsection{Cores}
+Cores are the sites of individual or binary star formation (Williams, Blitz \& McKee 2000) 
+\subsection{Star formation}
+\subsubsection{Standard models}
 
-Are all these processes observed at once in star forming clusters? What conditions favor one versus the other, and why? Are these processes observed at different stages in the cluster's history? These questions need more observational data to be answered. \textbf{We propose to gather information about the gravitational potential within the cluster, the distribution of the turbulence, and the gas densities} \citep{Bonnell:2006ee}. This will advance the problem to the next stage and help answer some of these questions.
+\paragraph{Accretion physics}
+\citep{Myers:2014ct}; includes why accretion stops. Shu accretion for low mass, Bondi accretion at high mass?
+
+\paragraph{Young Stellar Objects classification}
+
+\subsubsection{Mass functions and accretion mechanisms}
+
+\paragraph{The Initial and Core Mass Functions}
+Initial mass function across multiple locations \citep{Myers:2014ct}: The IMF has similar properties of shape, mass scale, and high-mass slope among field stars, open clusters, and young clusters (Kroupa 2002, Chabrier 2005, Bastian et al. 2010).
+
+In the most widely-discussed explanation, an IMF distribution of masses arises as a cluster-forming clump fragments into condensations, or cores, due to self-gravity and turbulence. In such turbulent fragmentation models, the mass distribution of cores (CMF) is a mass-shifted version of the IMF (Padoan \& Nordlund 2002, Hennebelle \& Chabrier 2008, Hennebelle \& Chabrier 2009, Hopkins 2012), matching observational studies of cores in nearby star-forming regions (Motte et al. 1998, Alves et al. 2007, Konyves et al. 2010)
+
+\citep{Myers:2014ct} has all I need here to describe the IMF and CMF
+
+Describe the various theories of SF in clusters. 
+
 
 
 \begin{figure}[ht!]
@@ -41,27 +61,110 @@ Are all these processes observed at once in star forming clusters? What conditio
 \end{figure}
 
 
-\subsection{The physics of star formation}
 
-In here, describe the basics of star formation; include state-of-the art dynamical modeling, radiative transfer modeling, SED fitting, etc.
+\paragraph{Protostellar luminosity function}
 
-\subsubsection{Dust populations}
 
-About how to estimate the mass
+\subsubsection{Outstanding scientific questions}
+Examples: \citep{Hennebelle:2012dk} \citep{Kennicutt:2012ey}
+Ex: WHERE DO THE INEFFICIENCIES COME FROM?
 
-\subsubsection{Geometry and model degeneracies}
+\subsection{Dust as a tracer of star formation}
+Note that most of the mass is not in the dust
 
-\subsubsection{Foreground extinction}
 
-\subsection{Clustered environments}
+\subsubsection{Dust populations and properties}
 
-\subsubsection{Observational challenges}
+The composition, structure, and size distribution of interstellar grains is the result of injection of dust from stellar outflows into the interstellar medium, followed by destruction, growth, coagulation, and photoprocessing of interstellar grains.
 
-Surveys vs pointed observations; show why BETTII is important using IRAS20050's example;
+Talk also about PAHs and VSG to open the door to this topic?
+\subsubsection{Interstellar extinction}
+
+Talk about dust properties in the galaxu: \citep{Collaboration:2014dz} Using
+\begin{equation}
+I_\nu = \tau_\nu B_\nu(T)
+\tau_\nu = \kappa_\nu M_\textrm{dust}
+\kappa_\nu\propto \nu^\beta
+I_\nu = \kappa_0(\nu/\nu_0)^\beta r\mu\m_H N_H B_\nu(T)
+Iν =κ0(ν/ν0)βrμmHNHBν(T)
+\end{equation}
+Also maybe mention papers by Dale etc DIRBE/COBE
+
+\subsubsection{From dust observations to physical quantities}
+Talk about basics (long-wavelength = proxy for mass), and talk about modelling too. Fitting, radiative transfer, etc.
+
+The far-IR luminosity has a number of definitions, and consistency is important in converting them to $M_\star$. A commonly used definition integrates the dust emission over the wavelength range 3–\SI{1100}{\micro\meter} \citep{Dale:2002bo}, and following those researchers, we refer to this as the total- infrared (TIR) luminosity. Note, however, that other definitions based on a narrower wavelength band or even single-band IR measurements are often used in the literature.
+
+\subsubsection{Radiative transfer modeling}
+
+Whitney, Robitaille, Wolfire...
 
 \subsubsection{Observing facilities}
+Lead this into BETTII
 
-Spitzer, Herschel, SOFIA; radio interferometers;
+
+\begin{itemize}
+\item \citep{Kennicutt:2012ey} Maybe start with a description of the ISM
+\item \citep{Terebey:1984hi} Basics of infall; 
+It is well understood how self-gravity can concentrate gas in the presence of magnetic fields, turbulence, rotation, and thermal pressure, leading to protostar formation and accretion ( McKee \& Ostriker 2007; Adams \& Shu 2007; Ballesteros-Paredes et al. 2007)
+\item \citep{Adams:1987gy} Spectral evolution of young stellar objects; describe classes of stellar objects, using models and make sure to include size scales; YSO vs protostar
+\item Need to mention something about star formation efficiency
+\item Need to mention something about outflows and feedback \citep{Maury:2009co}
+\item \citep{Larson:1994cj} Molecular cloud characteristics; maybe a good start for text | Give definition of cloud (gravitationally bound in the Virial sense), in terms of number of candidates and stellar mass density (Lada 2003)
+\item \citep{Myers:2009fv} It is widely accepted that most stars form in concentrations of dense gas (Beichman et al. 1986), and that such young stars are most frequently found in groups and clusters in molecular clouds (Lada \& Lada 2003). It is less clear how the mass of a protostar is related to the mass of the dense core where it forms.
+In one view, a core is essentially a fixed-mass reservoir of gas, which contributes a significant fraction of its initial mass to its protostar. Then core and protostar masses are proportional, and their mass distributions have the same shape (Motte et al. 1998; Alves et al. 2007). Many authors have suggested ways to form a mass distribution of cores which resembles the IMF, particularly from processes of turbulent fragmentation (Hennebelle \& Chabrier 2008 and references therein).
+In another view, a core is the densest part of a more extended distribution of gas, with no physical barrier to accretion (Shu 1977; Myers \& Fuller 1992; Caselli \& Myers 1995; McKee \& Tan 2003). Protostars originate in cores, but their masses do not correlate (Bonnell et al. 1998; Bate \& Bonnell 2005), or their correlation depends on fragmentation and core definition (Swift \& Williams 2008), or on the range of gas dispersal times (Myers 2008, hereafter Paper 1). Alternately, their correlation may be coincidental rather than genetic (Hatchell \& Fuller 2008).
+\item \citep{McKee:2010iw} Protostellar mass function
+\item \citep{Bonnell:1997vta} Accretion in small clusters
+\item \citep{Evans:1999gz} Review of physical conditions of star formation, also a good place to start
+\item \citep{Myers:2011fy} These results suggest that a simple model is needed for the dense parts of clusters, where protostars start accreting in condensations resembling dense cores, where they can also gain mass from the core environment, where their accretion durations are specified, and where protostar mass is not tied to the gravitational collapse of an isolated initial condensation. | This comparison favors the core–clump model over the isolated core model for star formation in embedded clusters. It suggests that initial core structure need not set protostar mass, and that massive stars are clump-fed.
+\item Clusters are laboratories for studying a wide range of astrophysical phenomena; stars of large range of masses which are formed roughly simultaneously (Lada 2003), can understand stellar evolution theories; 
+\item \citep{Lada:2003il} Cluster formation within molecular clouds: Because a cluster is held together by the mutual gravitational attraction of its individual members, its evolution is determined by Newton's laws of motion and gravity; |
+Stars form in dense gas; therefore, it is not surprising that a high fraction of all stars form in highly localized rich clusters because most of a cloud’s dense gas is contained in its localized massive cores.; |
+This would suggest that there is a direct mapping of clump mass to stellar mass and that the substructure of cluster-forming cores reflects the initial conditions of the star-formation process in dense cores. |
+The structure of an embedded cluster is of great interest since it likely possesses the imprint of the physical process responsible for its creation. In particular, structure in the youngest embedded clusters reflects the underlying structure in the dense molecular gas from which they formed. | A fundamental consequence of the theory of stellar structure and evolution is that, once formed, the subsequent life history of a star is essentially predetermined by one parameter, its birth mass
+\item \citep{Bate:2003cv} Evolution of clusters (dynamics, showing simulations and such); same as \citep{Bonnell:2003iw}; realte to potentially having multiple generations of stars within the same cluster; \citep{Allen:2007wqa}
+\item \citep{Mathis:1990jk} Pioneering paper on the interstellar extinction by dust
+\item \citep{Weingartner:2001du} Paper on dust populations
+\item \citep{Li:2001gk} Very small grain population and non-LTE heating
+\item \citep{Compiegne:2010kk} Large surveys, PAHs, VSG, etc
+\item \citep{Bastian:2010ig} Big picture: importance to universal IMF
+\item \citep{Kennicutt:2012ey} The Challenge of Spatially Resolved Star-Formation Rates in Galaxies
+\item \citep{Hennebelle:2012dk} Observational issues: 
+
+\end{itemize}
+
+
+
+How do stars accrete their material in dense, clustered environments? Multiple theories have been put forth to explain the forces at play in these important regions of stellar birth \citep[e.g.][]{Bonnell:1997vta, McKee:2003gxa}. Pivotal differences in the theories center around what drives the parsec-scale dense cloud to form many stars and how the forming stars acquire their mass. Does dense gas fragment into isolated centers of collapse? Are turbulent motions in the gas driving creation of super-critical cores? Do young stars competitively accrete material from a surrounding common reservoir? Do gravitational interactions between forming young objects play a significant role in setting the final stellar mass function? Better observational understanding of these clusters is necessary to address these questions and to discriminate between the different models, as noted by \cite{Bonnell:2006ee}, \cite{Offner:2011ex} and \cite{Myers:2011fy}.
+
+\textbf{The primary goal of the proposed science plan is to understand how stars accrete material on the scales of 100's to 1,000's of AUs in forming cluster cores}. Given the typical stellar separations in clusters with fully formed young stellar objects (YSO) and the typical densities of gas in these cores, 1,000's of AUs are the size scales over which forming stars must draw material to become 0.5-10 solar masses. Once the material is inside 100 AU, it is strongly bound to the forming stellar system (which may be one or more stars) and its fate is determined. To give an idea of the possibilities for accreting material, Fig. \ref{fig:SFscenarios} sketches three scenarios for how stars could capture mass in the cluster environment: core collapse, competitive accretion, and collisional merging. In core collapse \citep[Fig.~\ref{scenarios:a},][]{McKee:2003gxa, Myers:2011fy}, the cluster's gas fragments into cores which collapse individually to form single, binary, or small multiple star systems; the available mass is defined by the original fragment. In competitive accretion \citep[Fig.~\ref{scenarios:b},][]{Bonnell:1997vta}, the initial core collapses but contains a small fraction of the star's final mass; additional mass is captured competitively with other forming stars from the surrounding dense core gas. In collisional merging \citep[Fig.~\ref{scenarios:c},][]{Bonnell:2002et}, the initial fragments interact gravitationally and form larger mass cores before and during the formation process. 
+
+Are all these processes observed at once in star forming clusters? What conditions favor one versus the other, and why? Are these processes observed at different stages in the cluster's history? These questions need more observational data to be answered. \textbf{We propose to gather information about the gravitational potential within the cluster, the distribution of the turbulence, and the gas densities} \citep{Bonnell:2006ee}. This will advance the problem to the next stage and help answer some of these questions.
+
+
+
+%\subsection{The physics of star formation}
+%
+%In here, describe the basics of star formation; include state-of-the art dynamical modeling, radiative transfer modeling, SED fitting, etc.
+%
+%\subsubsection{Dust populations}
+%
+%About how to estimate the mass
+%
+%\subsubsection{Geometry and model degeneracies}
+%
+%\subsubsection{Foreground extinction}
+%
+%\subsection{Clustered environments}
+%
+%\subsubsection{Observational challenges}
+%
+%Surveys vs pointed observations; show why BETTII is important using IRAS20050's example;
+%
+%\subsubsection{Observing facilities}
+%
+%Spitzer, Herschel, SOFIA; radio interferometers;
 
 \section{The Balloon Experimental Twin Telescope for Infrared Interferometry}
 

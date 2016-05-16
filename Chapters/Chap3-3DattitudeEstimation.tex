@@ -175,7 +175,7 @@ with
 \end{equations}
 \subsection{Discrete Kalman filter setup}
 %A truth model is a description of how the true state evolves physically. While the state representation can be given in continuous terms, here we immediately use a discrete approach. We have:
-The Kalman filter with estimate the current attitude quaternion and gyroscope bias value, while minimizing the covariance of the error $\ErrorState$. Let's summarize the relevant physical equations that are used to set up this filter. This is useful if one wants to build a physical model of the dynamic system.
+The Kalman filter will estimate the current attitude quaternion and gyroscope bias value, while minimizing the covariance of the error $\ErrorState$. Let's summarize the relevant physical equations that are used to set up this filter. This is useful if one wants to build a physical model of the dynamic system.
 \begin{enumerate}
 \item \textbf{Velocity estimate}: $\EstGyroVec_{k} = \gyroVec_k^{\textrm{meas}} - \EstBias_{k}$,
 \item \textbf{Attitude propagation}: $\EstAttitude_{k} = \exp\left(\frac{1}{2}\matOmega(\EstGyroVec_{k})\Deltat\right)\EstAttitude_{k-1},$
