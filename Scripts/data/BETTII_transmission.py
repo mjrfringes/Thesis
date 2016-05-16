@@ -18,6 +18,8 @@ mpl.rcParams['font.weight'] = 100
 mpl.rcParams['font.family'] = 'serif'
 mpl.rcParams['font.serif'] = 'Times New Roman'
 
+### make plot of transmission curves
+
 data = np.loadtxt('BETTII_transmission.txt')
 
 print data.shape

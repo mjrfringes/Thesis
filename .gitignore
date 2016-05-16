@@ -22,3 +22,9 @@ main.blg
 main.lof
 
 Chapters/Chapter4.aux
+
+*.blg
+
+*.aux
+
+*.pyc
