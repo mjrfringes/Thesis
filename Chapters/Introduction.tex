@@ -31,11 +31,37 @@ The high density of YSOs within clusters, combined with their typical distances 
 
 A considerable amount of literature exists on star formation and the various physical processes involved in forming stars. In this section, we review some of the most standard views of how stars grow to acquire their final masses.
 
-\paragraph{Accretion physics}
+\paragraph{Gravitational collapse}
 
-Perhaps the most elementary way to model the birth of a star consists of considering an isothermal sphere of self-gravitating gas on the verge of collapse. This is also called a Bonnor-Ebert sphere, and the state of this sphere is said to be \textit{critically stable}. Collapse occurs when gravity overcomes the gas pressure inside the sphere, which triggers the birth of a YSO. Magnetic fields, turbulence, asymmetries and non-isothermal considerations all likely play role in this balance, but dramatically complicate the mathematical treatment of the problem. In order to introduce the basic concepts of star formation, these complex processes are ignored. 
+Virial theorem: the gravitational potential energy is equal to twice the internal thermal energy (applies to stable systems)
+
+Perhaps the most elementary way to model the birth of a star consists of considering an isothermal sphere of self-gravitating gas on the verge of collapse, in hydrostatic equilibrium with its surrounding cloud medium of gas pressure \Pext. This is also called a Bonnor-Ebert sphere \citep{Ebert:1955wf,Bonnor:1956cy}, and the state of this sphere is said to be \textit{critically stable}, with a critical mass defined by $\Mcrit = 1.18\frac{c^4_s}{G^{3/2}}\Pext^{-1/2}$ \citep{Shu:1977ef}, where $c_s = (kT/m)^{1/2}$ is the speed of sound in the cloud. To put this in perspective using physical quantities, we have:
+\begin{equation}
+M_{BE} = 0.66 \left(\frac{T}{\SI{10}{\kelvin}}\right)^2 \left(\frac{\Pext/k_B}{\SI{3e-5}{\raiseto{-3}\centi\meter\kelvin}}\right)^{-1/2}\si{\Msun},
+\end{equation}
+where \Pext was normalized to mean kinetic pressure at the surface of molecular clouds \citep{McKee:2007bd}. The Bonnor-Ebert radius is $R_{BE} = 0.49 c_s/(G\rho_0)^{1/2}$,  which is comparable to the characteristic fragmentation size scale called the Jeans' length. Here $\rho_0$ is the uniform density of the core. 
+
+For a core of mass $M_{BE}$, the thermal pressure exactly compensates the gravitational forces. Collapse occurs for cores with mass $>M_{BE}$ when gravity overcomes the thermal pressure of the gas inside the sphere, which triggers the rapid mass growth of a central embryo towards infinitely high densities. In practice, the process stops when enough density is reached to ignite nuclear fusion and stabilize the embryo, which has just become a young stellar object. Even after the star is born, mass continues to fall into the potential well, emitting radiation and increasing the mass of the central object. Various scenarios exist for this phase of the accretion within individual cores, 
+
+Various models for infall exist, from a quasi-static slow process \citep{Shu:1977ef} to a very rapid and brutal process \citep[e.g.][]{Larson:1967ee}. \cite{McKee:2007bd} suggest that the infall process is most likely slowing down as a function of time, which complicates its observational validation. Most models result in an infalling envelope with density profiles which follow laws from $r^{-1/2}$ to $r^{-2}$, an important observable that can be useful to test these theories.
+
+The impact of rotation need also be taken into account, since as the core contracts, conservation of angular momentum could make the gas reach very high velocities, which would contradict the observations \cite{McKee:2007bd}. To solve this problem, limitations to the models are usually invoked, such as the impact of magnetic fields and turbulence inside the core itself, which are complex to model. The exact structure
 
 
+One typical envelope density profile was popularized by \cite{Ulrich:1976ho}
+
+%Since the accretion rate can be linked to the observed luminosities as gas falls into the gravitational potential well, it is also an important outcome of a given collapse model.
+%For low-mass star formation from cores that are marginally super-critical, the infall phase can be treated in the quasi-static limit \cite{Shu:1977ef} and follows this normalized form \citep[Eq.44,][]{McKee:2007bd}:
+%\begin{equation}
+%\dot{m}_{infall} = \num{1.54e-6} \left(\frac{T}{\SI{10}{\kelvin}}\right)^{3/2}\si{\Msun\per\year}.
+%\end{equation}
+
+More massive stars follow an accretion behavior more similar to Bondi-Hoyle accretion
+Conserving its original angular momentum
+
+[Accretion rates are likely varying as a function of time {McKee:2007bd}, and can complicate the interpretation ]
+
+[Magnetic fields, turbulence, asymmetries and non-isothermal considerations all likely play role in this balance, but dramatically complicate the mathematical treatment of the problem. In order to introduce the basic concepts of star formation, these complex processes are ignored.]
 
 \citep{Myers:2014ct}; includes why accretion stops. Shu accretion for low mass, Bondi accretion at high mass?
 
@@ -88,6 +114,9 @@ Describe the various theories of SF in clusters.
 Examples: \citep{Hennebelle:2012dk} \citep{Kennicutt:2012ey}
 Ex: WHERE DO THE INEFFICIENCIES COME FROM?
 
+Luminosity problem \citep{McKee:2007bd}
+Angular momentum problem and magnetic flux problem  \citep{McKee:2007bd}
+How the mass-to-flux ratio increases so dramatically during star formation is one of the classic problems of star formation (Mestel & Spitzer 1956). 
 \subsection{Dust as a tracer of star formation}
 Note that most of the mass is not in the dust
 
