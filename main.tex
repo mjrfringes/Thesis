@@ -96,10 +96,11 @@ headsepline, % Uncomment to get a line under the header
 \DeclareSIUnit\deg{deg}
 \DeclareSIUnit\arcsec{arcsec}
 \DeclareSIUnit\parsec{pc}
+\DeclareSIUnit\pc{pc}
 \DeclareSIUnit\au{au}
 \DeclareSIUnit\lightyear{ly}
 \DeclareSIUnit\year{yr}
-\DeclareSIUnit\Msun{M_\odot}
+\DeclareSIUnit\Msun{\ensuremath{\textrm{M}_\odot}}
 
 % nice tables
 \usepackage{booktabs}
@@ -349,7 +350,7 @@ $\omega$ & angular frequency & \si{\radian} \\
 \include{Chapters/Introduction}
 %\include{Chapters/DoubleFourier} 
 %\include{Chapters/AttitudeEstimation}
-%\include{Chapters/Implementation} 
+\include{Chapters/Implementation} 
 %\include{Chapters/SOFIA} 
 %\include{Chapters/Conclusion}
 

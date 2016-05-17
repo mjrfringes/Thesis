@@ -5,36 +5,48 @@
 
 %\epigraph{\setstretch{1}\small\itshape Ever tried. Ever failed. No matter. \\ Try again. Fail again. Fail better.}{S. Beckett, \textit{Worstward Ho!}}
 
-
-\section{Testing setups and limitations}
-\subsection{Talk about the way we test in the high bay, etc}
-\subsection{List of test setups: gyro only, gyro+star camera, gyro+star camera+tip/tilts with CCD cameras, gyro+star camera with H1RG;}
-\subsection{Explain the communication/data recording approach}
-\section{Implementation}
-\subsection{Gyroscope mounting}
-\subsubsection{Spectral analysis and noise in flight configuration}
+\section{Key pre-flight procedures}
+\subsection{Inertia measurement}
+While CAD models allowed to us to estimate the moment of inertia of the payload, this is only an approximation. For testing and for launch, the payload will be different than the model we have: we will either miss some components because they are not yet installed, or have additional components such as the ballasts, the crush pads, or the weights that are used to balance the payload.
+\subsection{Sensor alignment and calibration}
+\subsubsection{Gyroscope spectral analysis in flight configuration}
 \subsubsection{Orthogonalization of gyroscope mount}
 
-\input{Figures/KalmanFilter}
+\subsubsection{Alignment of gyroscope mount to star camera}
 
 \subsection{Star camera software}
 \subsubsection{Tuning}
 Discuss about tuning, catalog, filters, etc
 \subsubsection{Calibration}
+
+\section{Test setups and limitations}
+\subsection{Talk about the way we test in the high bay, etc}
+\subsection{List of test setups: gyro only, gyro+star camera, gyro+star camera+tip/tilts with CCD cameras, gyro+star camera with H1RG;}
+\subsection{Explain the communication/data recording approach}
+
+
+\input{Figures/KalmanFilter}
+
 \subsection{Autofocus algorithm and performance}
+
+\section{Estimator implementation}
 \subsection{	Gondola attitude estimator}
 \subsubsection{Testing the Kalman filter software with simulated data}
 \subsubsection{Test results when sitting on the ground}
 \subsection{Telescope attitude estimator}
 Link to cross-elevation
 \subsection{Phase estimator [is that Arnab’s realm?]}
+
+\section{Operating modes}
 \subsection{Track mode}
 \subsection{	Slew mode}
 \subsection{	Acquire mode [this one is contingent on the telescopes working, and is not perfectly representative when only using one single side of the payload]}
-\subsection{	Pointing tests and performance results}
+
+\section{Pointing tests and performance results}
 \subsection{	Gyros+star camera}
 \subsection{	gyro+star camera+tip/tilts with CCD cameras}
 \subsection{	gyro+star camera with H1RG;}
+
 \section{	Using the test results to estimate the flight performance (have to think more about that section)}
 \subsection{	Perturbation rejection estimates}
 \subsection{	Pointing knowledge predictions}
