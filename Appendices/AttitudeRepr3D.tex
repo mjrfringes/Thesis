@@ -236,7 +236,7 @@ More simplifications can also be found. For example, in the limit where $\gyroVe
 \end{equations}
 
 \subsection{Finding the rotation between two vectors}
-
+\label{ap:rotBetweenTwoVec}
 To measure misalignments between reference frames, it is useful to know how to find matrices between two vectors that would be determined using different methods. For example, this can be used when determining the misalignment between the star camera reference frame and the gyroscope reference frame. The raw velocity measured in the orthogonalized gyro reference frame corresponds to one measure of the inertial velocity, while the estimated values using the Kalman filter and the star camera consist of a second measure of the same inertial velocity. In the Kalman filter, this is corrected for by using an additive bias, but this assumes that the two reference frames are already aligned. In reality, there can be a residual misalignment between the gyro reference and the star camera reference frame.
 
 Our approach is to treat the estimated inertial velocity of the gyroscope reference frame as an entirely new measurement of the velocity $\gyroVecSC$ (where the superscript indicates that we are using the information from the star camera to improve our measurement), and solve for the quaternion that transforms it into the raw velocity vector measured by the gyros, $\gyroVecMeas$.

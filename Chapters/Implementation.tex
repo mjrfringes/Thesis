@@ -8,15 +8,73 @@
 \section{Key pre-flight procedures}
 \subsection{Inertia measurement}
 While CAD models allowed to us to estimate the moment of inertia of the payload, this is only an approximation. For testing and for launch, the payload will be different than the model we have: we will either miss some components because they are not yet installed, or have additional components such as the ballasts, the crush pads, or the weights that are used to balance the payload.
+
+We use a simple procedure to estimate the moment of inertia about $\gyroVec{z}_\gyro$ of the payload while hanging from a crane. For this purpose, we command the CCMG to input a torque to the payload by moving the gimbal at a constant velocity. According to Eq.~\ref{eq:CCMGTorque}, $\ccmgtorque =  20.8\times \dot{\theta}\cos\theta$. According to conservation of angular momentum, the rate of change of the total angular momentum about $\vectors{z}_\gyro$ is $\inertia_\vectors{z}\dot{\gyroVec_\vectors{z}} = \ccmgtorque = 20.8\times \dot{\theta}\cos\theta$.
+
+We measure the inertia $\inertia_\vectors{z}$ by averaging measurements of the angular acceleration $\dot{\gyroVec_\vectors{z}}$, divided by the instantaneous input torque, which is numerically more stable than averaging its inverse since the accelerations, expressed in \si{\radian\per\second} are typically very small. A measure of the inertia is then the inverse of this average. By repeating the measurement over multiple accelerations and deceleration cycles, we can also obtain an uncertainty to this estimate.
+
+[PUT HERE A TABLE WITH MEASURED INERTIA AND UNCERTAINTIES]
+
 \subsection{Sensor alignment and calibration}
+While the intrinsic noise of our sensors has been characterized in Section~\ref{subsec:gyros}, it is important to test them while mounted to the payload, align their axes to the other reference frames, and study their spectral energy distribution. Mounting the gyroscopes in a 3-dimensional mount on the truss will inevitably lead to alignment errors and the contribution of new vibration frequencies present in the structure and excited by the moving parts on the payload.
+
+
 \subsubsection{Gyroscope spectral analysis in flight configuration}
+
+While the payload is on the ground, without wheels;
+
+While the payload is hanging, without wheels
+
+While the payload is hanging, with wheels on;
+
 \subsubsection{Orthogonalization of gyroscope mount}
+\label{ap:gyroOrth}
+\subsubsection{Alignment of gyroscope mount to star camera mounts}
 
-\subsubsection{Alignment of gyroscope mount to star camera}
+BETTII will have two flight star cameras for redundancy. It is important to understand the transformation between the gyroscope reference frame and the two star camera reference frames to minimize the propagation errors within the Kalman filter. 
 
-\subsection{Star camera software}
-\subsubsection{Tuning}
+A first transformation matrix can be estimated roughly by assuming that the star camera is in the ($\vectors{x}_\gyro$,$\vectors{z}_\gyro$) plane. The elevation of the star camera, nominally around \SI{45}{\degree}, can be estimated if $\vectors{z}$ is assumed to be aligned with the gravity vector while the payload is sitting on the ground, which is a good approximation. By taking some star camera measurements, solving the fields, and converting these fields to a local azimuth and elevation (using the time at which the frames were taken and the geographical location), the elevation can be estimated, which corresponds to the angle of the line of sight vector of the star camera with respect to the horizontal plane. This gives us a first estimate of our star camera-to-gyroscope reference frame rotation, but is not very precise given our assumptions. This rotation is critical during the update phase of the Kalman filter when combining the star camera measurement with the propagated estimate.
+
+But if this matrix is slightly off, the Kalman filter will attribute the difference between estimated position and measured position as an additive bias error in the gyroscope velocity measurement, which should converge to a steady-state value after a few tens of star camera measurements, depending on the Kalman filter gains. The filter then uses this additive bias to reconstruct an estimated velocity at each time step. Admittedly, this value of the bias also contains the value of the real gyroscope bias - but we anticipate  this bias value to be very small compared to the potential effects of misalignments.
+
+Our procedure involves calculating the quaternion representing the rotation from the steady-state estimated angular velocity vector, and the measured, orthogonalized angular velocity vector. While sitting on the ground, this corresponds to measuring the Earth's angular velocity. This uses the mathematical technique that we derived in Appendix~\ref{ap:rotBetweenTwoVec}. Each star camera measurement shall be further rotated by this quaternion to ensure that it is properly expressed in the gyroscope reference frame. 
+
+Below, we summarize the steps to properly align the gyroscopes to the star camera:
+\begin{enumerate}
+ \item Orthogonalize the gyroscope mount according to Appendix~\ref{ap:gyroOrth}, and find $M_\textrm{orth}$. This now gives a velocity vector in an orthogonal gyro reference frame, $\gyroVec_\gyro$ = $M_\textrm{orth}\gyroVec_\gyro^\textrm{meas}$. 
+ \item While the truss is sitting horizontal on the ground, calculate the elevation of the star camera by converting solutions to the local East-North-Up reference frame, using the sidereal time and the geographical latitude. This gives a matrix $M_\textrm{coarse}$  or a quaternion $\quat{q}_\textrm{coarse}$ representing the transformation from the star camera reference frame to the gyroscope reference frame.
+\item Still while sitting on the ground, use $M_\textrm{coarse}$ or $\quat{q}_\textrm{coarse}$ in the flight Kalman filter to estimate the gyro bias vector. Record the steady-state value of the estimated velocity vector.
+ \item Calculate the transformation between the estimated and measured angular velocity vector, this is a matrix $M_\textrm{fine}$ or a quaternion $\quat{q}_\textrm{fine}$.
+ \item For each star camera reference frame solution, rotate the solution $\quat{q}_\textrm{fine}\quat{q}_\textrm{coarse}$.
+ \item Use this new matrix in the flight Kalman filter to make sure the estimated biases are close to zero. 
+ \end{enumerate} 
+\subsection{Star camera}
+\subsubsection{Software tuning}
+
+\begin{landscape}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1.5\textwidth]{Figures/starcam_images.pdf}
+	\caption[Star camera example WISE]{\textit{Left}: Example of a background-subtracted star camera image with identified $>5\sigma$ sources circled in red. The orientation of the image on the celestial sphere is the one provided by BETTII's embedded star camera solver. This image corresponds to a field in the Scorpius constellation. \textit{Right}: WISE \SI{3.4}{\um} mosaic from the online archive, centered on the same location. This image is composed of 9 individual WISE images that we patched into a mosaic using the \textit{Montage}[CITE] software package.}
+	\label{fig:starcamexample}
+    \end{figure}
+\end{landscape}
+\begin{landscape}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1.5\textwidth]{Figures/starcam_SDSSr_zoom.pdf}
+	\caption[Star camera individual star]{\textit{Left}: Snapshot of a bright star seen within the background-subtracted star camera frame. \textit{Right}: Snapshot taken at the same location from the WISE \SI{3.4}{\um} archive.}
+	\label{fig:starcamzoom}
+    \end{figure}
+\end{landscape}
+
 Discuss about tuning, catalog, filters, etc
+
+Table with the star camera parameters
+
+Show mean deviation of star camera image with optimized parameters;
+show time, statistics, etc.
+
 \subsubsection{Calibration}
 
 \section{Test setups and limitations}
@@ -24,13 +82,12 @@ Discuss about tuning, catalog, filters, etc
 \subsection{List of test setups: gyro only, gyro+star camera, gyro+star camera+tip/tilts with CCD cameras, gyro+star camera with H1RG;}
 \subsection{Explain the communication/data recording approach}
 
-
-\input{Figures/KalmanFilter}
-
 \subsection{Autofocus algorithm and performance}
 
 \section{Estimator implementation}
-\subsection{	Gondola attitude estimator}
+\subsection{Gyro attitude estimator}
+\input{Figures/KalmanFilter}
+
 \subsubsection{Testing the Kalman filter software with simulated data}
 \subsubsection{Test results when sitting on the ground}
 \subsection{Telescope attitude estimator}
@@ -39,15 +96,23 @@ Link to cross-elevation
 
 \section{Operating modes}
 \subsection{Track mode}
-\subsection{	Slew mode}
-\subsection{	Acquire mode [this one is contingent on the telescopes working, and is not perfectly representative when only using one single side of the payload]}
+Gain tuning
+Show wheel angle for long time
+\subsection{Slew mode}
+\subsection{Acquire mode [this one is contingent on the telescopes working, and is not perfectly representative when only using one single side of the payload]}
 
 \section{Pointing tests and performance results}
-\subsection{	Gyros+star camera}
-\subsection{	gyro+star camera+tip/tilts with CCD cameras}
-\subsection{	gyro+star camera with H1RG;}
+\subsection{Gondola pointing stability}
+\subsubsection{In the high bay}
+ show azimuth stability data
+show telescope rolling rms
+\subsubsection{With the door open}
+\subsection{Kalman filter performance}
+Show data with the door open with the star camera acquiring frames
+\subsection{gyro+star camera+tip/tilts with CCD cameras}
+\subsection{gyro+star camera with H1RG;}
 
 \section{	Using the test results to estimate the flight performance (have to think more about that section)}
-\subsection{	Perturbation rejection estimates}
-\subsection{	Pointing knowledge predictions}
-\subsection{	Pointing control predictions}
+\subsection{Perturbation rejection estimates}
+\subsection{Pointing knowledge predictions}
+\subsection{Pointing control predictions}

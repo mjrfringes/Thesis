@@ -96,11 +96,11 @@ with $\gyroVec = \gyroVecMeas - \bias - \nGyros$. These equations represent the 
 %\subsection{Error state representation}
 %The state $\stateVec$ has 7 components, but it is numerically more stable to reduce it to 6 by using the unity constraint within the attitude quaternion. It is also possible to linearize the system using the error representation of the state. In this representation, our model is the difference between the true and estimated state. Since we use a quaternion representation for the attitude, it is convenient to express this difference in a multiplicative form:
 
-The Kalman filter's goal is to minimize the variance of the estimator's error - that is, of the error vector $\stateVec-\EstStateVec$. However, in our case, we have constraints in the system since we force the quaternion to be of unit length: this introduces a singularity in the covariance matrix  of the error vector, and is prone to numerical complications. It is possible to circumvent this problem by using the multiplicative properties of the quaternion used in the small angle approximation. This is called a "multiplicative" Kalman filter, as opposed to a more traditional "additive" filter.
+The Kalman filter's goal is to minimize the variance of the estimator's error - that is, the covariance of the error vector $\stateVec-\EstStateVec$. However, in our case, we have constraints in the system since we force the quaternion to be of unit length: this introduces a singularity in the covariance matrix  of the error vector, and is prone to numerical complications. It is possible to circumvent this problem by using the multiplicative properties of the quaternion used in the small angle approximation. This is called a "multiplicative" Kalman filter, as opposed to a more traditional "additive" filter.
 
-To do this, instead of following the evolution of the state $\EstStateVec$ itself, we will follow the evolution of the error vector $\ErrorState = [\deltaTheta,\deltaBias]^T$, where $\deltaTheta$ corresponds to the 3-dimensional angular error between true and estimate attitude quaternion taken from the difference quaternion $\fromto{\hat{G}}{G}\delta\Attitude = \fromto{I}{G}\Attitude\otimes\fromto{I}{\hat{G}}\EstAttitude^{-1} \approx [1,\frac{1}{2}\deltaTheta]^T$, and $\deltaBias = \bias - \EstBias$. 
+To do this, instead of following the evolution of the state $\EstStateVec$ itself, we will follow the evolution of the error vector $\ErrorState = [\deltaTheta,\deltaBias]^T$, where $\deltaTheta$ corresponds to the 3-dimensional angular error between true and estimated attitude quaternion taken from the difference quaternion $\fromto{\hat{G}}{G}\delta\Attitude = \fromto{I}{G}\Attitude\otimes\fromto{I}{\hat{G}}\EstAttitude^{-1} \approx [1,\frac{1}{2}\deltaTheta]^T$, and $\deltaBias = \bias - \EstBias$. 
 
-The evolution $\EstStateVec$ as a function of time can be obtained by taking the quaternion derivative of the true attitude quaternion $\dotAttitude = \dot{\delta\Attitude} \otimes \EstAttitude + \delta\Attitude \otimes \dotEstAttitude$. With our gyroscope model, we can write:
+The evolution of $\EstStateVec$ as a function of time can be obtained by taking the quaternion derivative of the true attitude quaternion $\dotAttitude = \dot{\delta\Attitude} \otimes \EstAttitude + \delta\Attitude \otimes \dotEstAttitude$. With our gyroscope model, we can write:
 \begin{eqnarrays}
 \gyroVecMeas & = & \gyroVec + \bias + \nGyros,\\
  \EstGyroVec & = & \gyroVecMeas - \EstBias, \\
@@ -150,11 +150,11 @@ It is important here to introduce the expression of the covariance matrix of thi
 
 \subsection{Integration of continuous equations}
 
-Since our system has a fast sampling rate compared to the characteristic times of the system, we consider that $\boldsymbol{F}_c$ is constant over a time step. This helps the integration of the state equation between $t_{k-1}$ and $t_k=t_{k-1}+\Deltat$, which has a discrete state transition matrix $\StateTransitionMat_k$:
+Since our system has a fast sampling rate compared to the characteristic times of the system, we consider that $\Fc$ is constant over a time step. This helps the integration of the state equation between $t_{k-1}$ and $t_k=t_{k-1}+\Deltat$, which has a discrete state transition matrix $\StateTransitionMat_k$:
 \begin{equations}
 \StateTransitionMat_k = \StateTransitionMat(t_k, t_{k-1}) = \exp\left(\Fc\Delta t\right) \equiv \begin{bmatrix} \boldsymbol{\Theta_k} & \boldsymbol{\Psi_k} \\ \bzero_{3\times 3} & \bI_{3\times 3}\end{bmatrix},
 \end{equations}
-with $\boldsymbol{\Theta_k} \sim \bI_{3\times 3} - \Deltat\omegaCross + \frac{\Deltat^2}{2}\omegaCross^2$ and $\boldsymbol{\Psi_k} \sim \bI_{3\times 3}\Deltat +  \frac{\Deltat^2}{2}\omegaCross - \frac{\Deltat^3}{6}\omegaCross^2$, where omitted the $k$ subscript to $\EstStateVec$ for clarity.
+with $\boldsymbol{\Theta_k} \sim \bI_{3\times 3} - \Deltat\omegaCross + \frac{\Deltat^2}{2}\omegaCross^2$ and $\boldsymbol{\Psi_k} \sim \bI_{3\times 3}\Deltat +  \frac{\Deltat^2}{2}\omegaCross - \frac{\Deltat^3}{6}\omegaCross^2$.
 
 These expressions are now what we need to establish a discrete version of the state equations, which are based on this transition matrix $\StateTransitionMat_k$.
 
@@ -179,7 +179,7 @@ The Kalman filter will estimate the current attitude quaternion and gyroscope bi
 \begin{enumerate}
 \item \textbf{Velocity estimate}: $\EstGyroVec_{k} = \gyroVec_k^{\textrm{meas}} - \EstBias_{k}$,
 \item \textbf{Attitude propagation}: $\EstAttitude_{k} = \exp\left(\frac{1}{2}\matOmega(\EstGyroVec_{k})\Deltat\right)\EstAttitude_{k-1},$
-\item \textbf{State error evolution}: $\ErrorState_{k}  = \StateTransitionMat_{k}\ErrorState_{k-1} + \boldsymbol{G}_{k}\vectors{n}_{k}$,
+\item \textbf{Error state evolution}: $\ErrorState_{k}  = \StateTransitionMat_{k}\ErrorState_{k-1} + \Gc_{k}\vectors{n}_{k}$,
 \item \textbf{Error covariance to be minimized}: $\stateCovMat_{k} = \cov{\ErrorState_{k}}$,
 \item \textbf{Error covariance evolution}: $\stateCovMat_{k}  =   \StateTransitionMat_k \stateCovMat_{k-1}\StateTransitionMat^T_k + \noiseCovMat_k$
 \item \textbf{New attitude measurement}: $\Attitude^{\textrm{meas}}_k$, 
@@ -196,7 +196,7 @@ When we do get a new attitude measurement, then in addition to the prediction ph
 
 For our application, update phases are rare since the star camera can take hundreds of loop cycles to produce an attitude solution. Hence, the last measured star camera occurred at step $k-N$. Until we receive a new measurement, we are trusting our gyroscope model and our bias estimate to propagate the attitude correctly.
 
-In this section, we will assume that the attitude measured by the star camera $\Attitude^{\textrm{meas}}_k$ corresponds to the attitude at the current step. In reality, when we receive the star camera, it represents an attitude that was taken some number of steps ago. This is due to the slow processing of the star camera images and the catalog search. Our software cannot solve the star camera position in one single loop iteration. We tackle this issue in section []. 
+In this section, we assume that the attitude measured by the star camera $\Attitude^{\textrm{meas}}_k$ corresponds to the attitude at the current step. In reality, when we receive the star camera, it represents an attitude that was taken some number of steps ago. This is due to the slow processing of the star camera images and the catalog search. Our software cannot solve the star camera position in one single loop iteration. We tackle this issue in section []. 
 
 \subsection{Kalman filter: prediction}
 
@@ -215,14 +215,14 @@ The algorithmic steps for this phase are:
 \item \textbf{Estimate the angular velocity}: $\EstGyroVec_{k|k-N} = \gyroVec_k^{\textrm{meas}} - \EstBias_{k|k-N}$.
 \item \textbf{Predict the attitude}: $\EstAttitude_{k|k-N} = \exp\left(\frac{1}{2}\matOmega(\EstGyroVec_{k|k-N})\Deltat\right)\EstAttitude_{k-1|k-N}.$
 \item \textbf{Compute the state transition matrix}: $\StateTransitionMat_k = \begin{bmatrix} \boldsymbol{\Theta}_k & \boldsymbol{\Psi}_k \\ \bzero_{3\times 3} & \bI_{3\times 3}\end{bmatrix}$ using $\EstGyroVec_{k|k-N}$ in the expressions of $\boldsymbol{\Theta}_k$ and $\boldsymbol{\Psi}_k$.
-\item \textbf{Compute the noise covariance matrix}: $\noiseCovMat_k$. This corresponds to the noise that is added by the new gyro measurement.
+\item \textbf{Compute the added noise covariance matrix}: $\noiseCovMat_k$. This corresponds to the noise that is added by the new gyro measurement.
 \item \textbf{Update the state covariance matrix}: $\stateCovMat_{k|k-N}  =   \StateTransitionMat_k \stateCovMat_{k-1|k-N}\StateTransitionMat^T_k + \noiseCovMat_k$
 \end{enumerate}
 We have now propagated our system from step $k-1$ to step $k$, and we have three new quantities: the bias $\EstBias_{k|k-N}$, the attitude estimate $\EstAttitude_{k|k-N}$, and the state covariance matrix $\stateCovMat_{k|k-N} $. If we do not get any star camera measurement, then at the next step we will just continue propagating with this procedure.
 
 \subsection{Kalman filter: update}
 
-The star camera information provides us with a measurement of the attitude $\Attitude^{\textrm{meas}}_{k}$, which can be used to compare with our predicted attitude. We use the difference between our prediction and the measurement to update the bias and the state covariance matrix. Under certain circumstances, the Kalman filter is the optimal estimator: it converges towards the correct solution with the minimum amount of iterations.
+The star camera information provides us with a measurement of the attitude $\Attitude^{\textrm{meas}}_{k}$, which is compared to our predicted attitude. We use the difference between our prediction and the measurement to update the bias and the state covariance matrix. Under certain circumstances, the Kalman filter is the optimal estimator: it converges towards the correct solution with the minimum amount of iterations.
 
 For the Kalman filter update procedure, we form a measurement vector $\zMeasurement_{k}$ that corresponds to the difference of an attitude measurement at step $k$ and the predicted attitude at step $k$.
 
