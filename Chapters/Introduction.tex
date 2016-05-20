@@ -62,7 +62,7 @@ Once the gas starts its gravitational collapse, nothing stops it until the centr
 
 In practice, it is likely that a single core fragments into multiple centers of collapse, each of them exceeding the local Jeans mass. This would create systems of binaries or small multiples instead of single stars, a scenario that is currently favored [LARSON?].
 
-The impact of rotation need also be taken into account. As the core contracts, the centrifugal force can provide some support slowing down the collapse of the star. However, even starting with very small core rotation veolcities, conservation of angular momentum would make the gas reach very high velocities as it infalls to make the star, which would contradict the observations showing that stars actually have relatively small amounts of angular momentum \cite{McKee:2007bd}. The impact of magnetic fields and turbulence inside the core are often invoked in an attempt to address this problem. Some models of slowly-rotating infalling clouds suggest more complex density profiles for the envelopes \citep[e.g.][]{Ulrich:1976ho,Terebey:1984hi} than simple power laws, but are observationally difficult to constrain.
+The impact of rotation need also be taken into account. As the core contracts, the centrifugal force can provide some support slowing down the collapse. However, even starting with very small core rotation veolcities, conservation of angular momentum would make the gas reach very high velocities as it falls in, which would contradict the observations showing that stars actually have relatively small amounts of angular momentum \cite{McKee:2007bd}. The impact of magnetic fields and turbulence inside the core are often invoked in an attempt to address this problem. Some models of slowly-rotating infalling clouds suggest more complex density profiles for the envelopes \citep[e.g.][]{Ulrich:1976ho,Terebey:1984hi} than simple power laws, but are observationally difficult to constrain.
 
 Once the star is born and the cloud contracts, some of the surrounding material which is bound to the new YSO naturally flattens into a disk as it is accreted onto the star. The object now has three characteristic  components: the star itself; the flattened disk; and a diffuse envelope which constitutes the mass reservoir for future accretion onto the star.
 
@@ -98,11 +98,11 @@ Once the star is born and the cloud contracts, some of the surrounding material 
 
 \paragraph{YSO classification and characteristics}
 
-We have determined that YSOs are composed of a star, a disk, and an envelope. The star is believe to be fairly well understood as a young object in hydrostatic equilibrium on its way to the main sequence. Depending on many parameters, the spatial distribution of gas in the disk and the envelope can be predicted by simple models, but in all likelihood is very complex, inhomogeneous, and asymmetric. Often, the envelope is thought to open up a cavity around the poles of the rotating system, where material can escape the system (through outflows, for example [REFERENCE?]). For clarity, we will discuss here the simple models that can be used to describe the YSOs in the multiple stages of their evolution.
+We have determined that YSOs are composed of a star, a disk, and an envelope. The star is believed to be fairly well understood as a young object in hydrostatic equilibrium on its way to the main sequence. Depending on many parameters, the spatial distribution of gas in the disk and the envelope can be predicted by simple models, but in all likelihood is very complex, inhomogeneous, and asymmetric. Often, the envelope is thought to open up a cavity around the poles of the rotating system, where material can escape the system (through outflows, for example [REFERENCE?]). For clarity, we will discuss here the simple models that can be used to describe the YSOs in the multiple stages of their evolution.
 
 In the most common model of the evolution of stars, the first stage consists of a dense core right after the YSO is born. The disk is almost inexistent, the envelope still is dense and circularly symmetric. This is called Stage 0. As the gas falls onto the star, rotation of the entire system tends to clear out a cavity at both poles of the system. As the system evolves, the cavity opening angle grows, the density of the envelope decreases, and the size of the disk increases. When a YSO is Stage III, the envelope is almost entirely depleted.
 
-The various stages of YSO (from 0 to III) have very distinct observational signatures, although are highly dependent on the viewing angle. In Stage 0, the signature consists almost exclusively of thermal emission from the envelope which is heated by the central object. This is representative of a single blackbody-like peak in the far-IR, which peaks around \SI{100}{\micro\meter}. In Stage I, as the density lowers, light from the central star can scatter off the dust grains in the system and escape the system. This adds emission below \SI{10}{\micro\meter} which is highly dependent of the geometry of the system and the scattering properties of the dust [REFER TO APPROPRIATE DUST SECTION].
+The various stages of YSO (from 0 to III) have very distinct observational signatures, although are highly dependent on the viewing angle. In Stage 0, the signature consists almost exclusively of thermal emission from the envelope which is heated by the central object. This is representative of a single modified blackbody function which peaks around \SI{100}{\micro\meter}. In Stage I, as the density lowers, light from the central star can scatter off the dust grains in the system and escape. This adds emission below \SI{10}{\micro\meter} which is highly dependent of the geometry of the system and the scattering properties of the dust [REFER TO APPROPRIATE DUST SECTION].
 
 
 
@@ -429,7 +429,7 @@ The payload's temperature and temperature distribution is influenced by the air 
 
 Balloon experiments can also be affected by cosmic rays which can damage the electronics, lead to data corruption and or failures of the software/control system. However, this becomes more of an issue for long-duration balloon flights around Antarctica, during which the payloads are exposed for many weeks to the cosmic ray environment.
 
-BETTII is expected to launch from Fort Sumner, NM, for its first engineering flight. After a morning launch, we expect to wait until nightfall to achieve proper thermal stabilization and achieve our science goals. We expect the flight to last about \SI{16}{\hour}, although this is highly dependent on the weather.
+BETTII is expected to launch from Fort Sumner, NM, for its first engineering flight. After a morning launch, we expect to wait until nightfall to achieve proper thermal stabilization and achieve our science goals. We expect the flight to last about \SI{16}{\hour}, although this is highly dependent on the weather and wind patterns.
 
 
 \subsubsection{Mechanical design}
@@ -544,33 +544,25 @@ We proceed to an estimation of the background noise contributors.
 \def\labelitemi{--}
 \begin{table}[htbp]
 \small
-\begin{longtable}{p{5cm}p{1.5cm}p{2.5cm}p{3.5cm}}
+\begin{longtable}{p{3cm}ccp{3cm}p{2cm}p{2cm}}
 \toprule
-Noise source  & Symbol &  Value & Comment \\
+Noise source	&		T (K)		&		Emissivity		&	Reference	&		$N_\textrm{photons}$ Band 1		&		$N_\textrm{photons}$ Band 2		\\
 \midrule
-
-Telescope Temperature	&	Ttel	&	240	&	Temperature of cold mirrors	\\
-Instrument Temperature	&	Tinst	&	4	&	Temperature of the baffle that the detector sees	\\
-Instrument emissivity	&	einst	&	1	&		\\
-Cosmic Microwave temperature	&	Tcmbr	&	2.728	&	Fixsen, et al 1996; emissivity is unity	\\
-CIB temperature	&	Tcib	&	18.5	&	Fixsen, et al 1998	\\
-CIB emissivity at 200 microns	&	ecib	&	1.30E-05	&	Fixsen, et al 1998	\\
-Zodi dust temperature	&	Tzodi	&	245	&	Fixsen, et al 2002	\\
-Zodi emissivity	&	Ezodi	&	3.00E-07	&	Fixsen, et al 2002	\\
-Sun temperature	&	Tsun	&	5.80E+03	&		\\
-Zodi scattering coefficient	&	escat	&	1.00E-13	&	measured by COBE	\\
-Window emissivity	&	ewin	&	0.020	&	Polypropylene in the far-IR	\\
-Window temperature	&	Twin	&	230.00	&	Assumes same as cold mirrors	\\
-Galactic cirrus temperature	&	Tcirrus	&	20.00	&	Bracco et al. 2011	\\
-Galactic cirrus emissivity	&	ecirrus	&	1.23E-04	&	Bracco et al. 2011	\\
-
+Warm optics	&	\num{	240	}	&	\num{	0.1	}	&	Assumes 99\% per mirror	&	\num{	1.38E+11	}	&	\num{	9.97E+10	}	\\
+Window	&	\num{	240	}	&	\num{	0.02	}	&	Lab measurements	&	\num{	2.76E+10	}	&	\num{	1.99E+10	}	\\
+Zodi dust	&	\num{	245	}	&	\num{	3.00E-07	}	&	\cite{Fixsen:2002da}	&	\num{	2.92E+05	}	&	\num{	3.41E+05	}	\\
+Galactic Cirrus	&	\num{	20.00	}	&	\num{	1.23E-04	}	&	\cite{Bracco:2011gw}	&	\num{	1.79E+01	}	&	\num{	7.67E+04	}	\\
+Zodi sunlight scattering	&	\num{	5800	}	&	\num{	1.00E-13	}	&	\cite{Fixsen:2002da}	&	\num{	1.47E+01	}	&	\num{	1.31E+01	}	\\
+CIB	&	\num{	18.5	}	&	\num{	1.30E-05	}	&	\cite{Fixsen:1998br}	&	\num{	2.19E+00	}	&	\num{	9.68E+03	}	\\
+Instrument	&	\num{	4	}	&	\num{	0.7	}	&	Estimate	&	\num{	5.80E-27	}	&	\num{	2.50E-07	}	\\
+CMB	&	\num{	2.728	}	&	\num{	1	}	&	\cite{Fixsen:1996di}	&	\num{	1.02E-45	}	&	\num{	9.35E-17	}	\\
 \bottomrule
 \end{longtable}
-\caption[Noise parameters]{Noise parameters}
+\caption[Noise parameters]{Noise parameters; }
 \label{tab:noiseparams}
 \end{table}
-\printlength\textwidth
-\printinunitsof{in}\prntlen{\textwidth}
+%\printlength\textwidth
+%\printinunitsof{in}\prntlen{\textwidth}
 
 \subsubsection{Interferometric visibility budget}
 both in the science and the tracking channel
