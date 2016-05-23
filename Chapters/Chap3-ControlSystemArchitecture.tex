@@ -297,6 +297,13 @@ The usual frequency-domain analysis tool is the power spectral density (PSD). Th
 It is important to note that in their factory settings, the gyroscopes' noise distribution was not normal at all. It exhibited electronic peaks with many harmonics, at frequencies that were varying as a function of the gyroscope inclination (as it was measuring different components of the Earth's rotation). After talking to the manufacturer, we determined that it was caused by the closed-loop algorithms inside the gyroscope electronics. The problem was known by them, and the remedy was to inject a random phase perturbation in the closed loop. This had the effects to get rid of those frequency peaks, at the cost of increasing the overall noise variance by a factor of 4. The noise levels that are specified by the company are very close to the noise seen when using that random phase modulation. Hence, if one does not care as much at the frequency content of the gyroscope, it is possible that this device could work even much better than it does for us.
 
 
+
+\paragraph{Normality tests}
+
+We ran a few standard normality tests on chunks of the 8-hour data for each gyroscope. While the tests on individual small chunks of data never reject the null hypothesis (that the distribution is normal), the distribution of the total 8 hours does with a very high probability, using both the Anderson-Darling and the Kolmogorov-Smirnov test. It means that it is extremely unlikely that the measured noise over \SI{8}{\hour} is coming from a normal distribution. [SHOW TABLE OF TEST RESULTS?]
+
+Since the data is always consistent with being normally distributed over timescales of tens of minutes, after close inspection of the long-term quartile plots and histograms, we determined that it would be safe to consider the distribution as normal for the purpose of our attitude estimator (see Fig.~\ref{fig:gyroprobdensity}). 
+
 \begin{figure}[!ht]
 
 \begin{subfigure}[b]{0.5\textwidth}
@@ -315,43 +322,13 @@ It is important to note that in their factory settings, the gyroscopes' noise di
 \label{fig:gyroprobdensity}
 \end{figure}
 
-\paragraph{Normality tests}
-
-We ran a few standard normality tests on chunks of the 8-hour data for each gyroscope. While the tests on individual small chunks of data never reject the null hypothesis (that the distribution is normal), the distribution of the total 8 hours does with a very high probability, using both the Anderson-Darling and the Kolmogorov-Smirnov test. It means that it is extremely unlikely that the measured noise over \SI{8}{\hour} is coming from a normal distribution.
-
-Since the data is always consistent with being normally distributed over timescales of tens of minutes, after close inspection of the long-term quartile plots and histograms, we determined that it would be safe to consider the distribution as normal for the purpose of our attitude estimator (see Fig.~\ref{fig:gyroprobdensity}). 
-
 
 
 
 \paragraph{Allan variance}
 
 
-Another common tool to study of the gyroscope's performance is to plot the Allan variance. The Allan variance gives a time-domain analysis of the gyroscope's noise that is complementary to the power spectral density.
-
-The gyroscopes were successfully tested in the environmental chamber, with no noticeable change in performance except a much larger power draw, due to the Peltier element maintaining the fiber temperature.
-
-
-\renewcommand{\arraystretch}{1.5}
-\begin{table}[htbp]
-\small
-\begin{tabular}{p{5.5cm}p{2.5cm}p{2.5cm}p{2.5cm}}
-\toprule
-Measured property & Gyro \#11005 & Gyro \#12003 & Gyro \#12004\\
-\midrule
-Standard deviation (\si{\deg\per\hour}) & 0.237 & 0.199 & 0.217\\
-
-Angular random walk (\si{\deg\raiseto{-0.5}\hour}) & \num{4.31e-4} & \num{3.79e-4} & \num{4.02e-4}\\
-
-Bias instability (\si{\deg\per\hour}) & \num{3.11e-4} & \num{1.8e-3} & \num{3.05e-4} \\
-\bottomrule
-\end{tabular}
-\label{tab:gyroproperties}
-\caption[Gyroscope properties]{Properties of the gyroscopes determined from the Allan variance analysis on an \SI{8}{\hour} sample with a sampling rate at \SI{100}{\hertz}. Note that \SI{1}{\deg\per\hour} =  \SI{1}{\arcsec\per\second}, and the Earth rotates at about \SI{15}{\arcsec\per\second} about the line joining the two poles.}
-\end{table}
-
-
-
+Another common tool to study of the gyroscope's performance is to plot the Allan variance. The Allan variance gives a time-domain analysis of the gyroscope's noise that is complementary to the power spectral density. [TALK ABOUT HOW TO INTERPRET THE ALLAN VARIANCE GRAPHS]
 \begin{figure}[!ht]
 
 	\begin{subfigure}[b]{\textwidth}
@@ -377,6 +354,32 @@ Bias instability (\si{\deg\per\hour}) & \num{3.11e-4} & \num{1.8e-3} & \num{3.05
 \end{figure}
 
 
+\paragraph{Conclusions{}
+The gyroscopes were successfully tested in the environmental chamber, with no noticeable change in performance except a much larger power draw, due to the Peltier element maintaining the fiber temperature.
+
+
+\renewcommand{\arraystretch}{1.5}
+\begin{table}[htbp]
+\small
+\begin{tabular}{p{5.5cm}P{2.5cm}P{2.5cm}P{2.5cm}}
+\toprule
+Measured property & Gyro \#11005 & Gyro \#12003 & Gyro \#12004\\
+\midrule
+Standard deviation (\si{\deg\per\hour}) & 0.237 & 0.199 & 0.217\\
+
+Angular random walk (\si{\deg\raiseto{-0.5}\hour}) & \num{4.31e-4} & \num{3.79e-4} & \num{4.02e-4}\\
+
+Bias instability (\si{\deg\per\hour}) & \num{3.11e-4} & \num{1.8e-3} & \num{3.05e-4} \\
+\bottomrule
+\end{tabular}
+\label{tab:gyroproperties}
+\caption[Gyroscope properties]{Properties of the gyroscopes determined from the Allan variance analysis on an \SI{8}{\hour} sample with a sampling rate at \SI{100}{\hertz}. Note that \SI{1}{\deg\per\hour} =  \SI{1}{\arcsec\per\second}, and the Earth rotates at about \SI{15}{\arcsec\per\second} about the line joining the two poles.}
+\end{table}
+
+
+
+
+
 \subsubsection{Star cameras}
 
 \paragraph{Design}
@@ -388,9 +391,9 @@ Our camera is a USB3.0 Point Grey Grasshopper3. The CCD is a Sony Pregius IMX174
 
 \renewcommand{\arraystretch}{1.5}
 \begin{table}[htbp]
-\label{tab:starcamproperties}
+
 \small
-\begin{tabular}{p{4cm}|p{1cm}|p{8.5cm}}
+\begin{tabular}{p{4cm}|P{1cm}|p{8.5cm}}
 \toprule
 Property & Value & Description \\
 \midrule
@@ -404,11 +407,12 @@ Well depth (electrons) & \num{32513} & Maximum number of electrons a pixel can s
 \bottomrule
 \end{tabular}
 \caption[Star camera properties]{Star camera properties}
+\label{tab:starcamproperties}
 \end{table}
 
 
 
-We have successfully cycled the camera in the environmental chamber all the way until the camera's internal thermometer indicated a temperature of \SI{-80}{\celsius}, and it continued operating fine.
+We have successfully cycled the camera in the environmental chamber all the way until the camera's internal thermometer indicated a temperature of \SI{-80}{\celsius}, and it continued operating nominally.
 
 \paragraph{Focusing strategy}
 Focusing the camera could be required at float due to the change in temperatures that could create a shift of the focal plane. We implemented our own autofocus mechanism, a belt is attached between the lens' focus ring and a stepper motor. When the stepper motor turns, it turns the focus ring. We tested this very simple configuration in our environmental chamber only to realize that the belt was loosing grip when the temperature was too cold. To fix this problem, we added a spring-based belt tensioner which adds a $\approx$~\SI{20}{\newton} of force to the belt.
@@ -419,11 +423,11 @@ At cold temperature and low pressure, we noted that the glass in the lens began 
 
 \subsubsection{Azimuth control (CCMG)}
 
-The CCMG features multiple encoders and motors. First, there is a brushless DC motor that spins each wheel, with a relative 13-bit encoder that monitors where the wheel is in its rotation. Second, there is a Beckhoff AS1050 stepper motor that controls the wheels' shaft angle. On the gimbal, there is a 13-bit  absolute magnetic encoder that measures the angle of the wheels from some reference. 
+The CCMG features multiple encoders and motors. First, there is a brushless DC motor that spins each wheel, with a relative 13-bit encoder that monitors where the wheel is in its rotation. Second, there is a Beckhoff AS1050 stepper motor that controls the wheels' shaft angle. On the gimbal, there is a 13-bit  absolute magnetic encoder that measures the angle of the wheels from some reference. We use the latter to know where the gimbal in positioned at power-up.
 
 The motion controller that we use to monitor the wheel's speed is a brushless-DC Galil motion controller DMC-4020. It reads out the wheel encoders and controls the current to the wheels accordingly. It directly, independently implements the closed-loop system of the wheels, including all of the gains, acceleration/deceleration, and jogging speeds associated with the desired motion.
 
-The motion controller was modified to accept an external clock pulse in order to synchronize the wheels' motion with our master clock signal. It requires a clock pulse at \SI{1.024}{\kilo\hertz}, and deviations from this value will require changing some of the gains - it is our understanding that the controller uses a \SI{1.024}{\kilo\hertz} crystal oscillator to generate it's time basis, as some of the gains and parameters to the controller can directly be entered as, for example, "steps per second". 
+The motion controller was modified to accept an external clock pulse in order to synchronize the wheels' motion with our master clock signal. It requires a clock pulse at \SI{1.024}{\kilo\hertz}, and deviations from this value will require changing some of the gains - it is our understanding that the controller uses a \SI{1.024}{\kilo\hertz} crystal oscillator to generate its time basis, as some of the gains and parameters to the controller can directly be entered as, for example, "steps per second". 
 
 At power-up, the wheels immediately start accelerating to their cruising speed of \num{3000}~rpm. They take about 10 minutes to reach their target. The wheels' frequency is set for the entire duration of the flight.
 
@@ -440,7 +444,7 @@ At \num{3000}~rpm, the CCMG has a total stored momentum $\MCCMG= \SI{20.8}{\newt
 \begin{equation}
 \MCCMGz\units{\si{\newton\meter\second}} = 20.8\sin\theta,
 \end{equation}
-where $\theta\units{\si{\radian}}$ is the angle between the horizontal axis and the rotation axis of the wheels. This makes sense: when the wheels are horizontal, there is no momentum projected on the $\z$ axis because the rotation vectors of the wheels are orthogonal to $\z$. When the rotation axes are along $\z$, we have the maximum momentum along $\z$. 
+where $\theta\units{\si{\radian}}$ is the angle between the horizontal axis and the rotation axis of the wheels. This makes sense: when the wheels are horizontal, there is no momentum projected on the $\z$ axis because the rotation vectors of the wheels are orthogonal to $\z$. When the rotation axes are aligned with $\z$, we have the maximum momentum. 
 
 The torque is the variation of the momentum with time. So we can write:
 \begin{eqnarray}
@@ -465,7 +469,7 @@ The torque is the variation of the momentum with time. So we can write:
     \end{figure}
 
 
-The entire CCMG assembly was tested in a vacuum chamber at cold temperatures, and operates fine. Several heaters are strategically located in the assembly to allow some thermal control for all the electronics in case issues arise.
+The entire CCMG assembly was tested in a vacuum chamber at cold temperatures. Several heaters are strategically located in the assembly to allow some thermal control for all the electronics in case issues arise.
 
 \subsubsection{Momentum dump mechanism}
 \label{subsec:chap3momdumpmotor}
@@ -539,7 +543,7 @@ To avoid future complications, all BETTII actuators and sensors are slaved to on
 \item The CCMG wheel position about its axis is checked and a correction is applied.
 \end{itemize}
 
-The advantage of this strategy can be illustrated as follows. The time it takes for a wheel to complete a revolution is set to be an integer multiple of this heartbeat, $\num{998400}=\num{124800}\times 8$ master clock ticks (about 50 revolutions per second). Hence, every 8 heartbeats, each wheel is supposed to be in the same position, and it will be controlled 8 times during one revolution to make sure it is. This completely locks in their relative velocities, on average. Let's suppose now that in their 8th position, a mechanical defects in the wheel or the bearing triggers a small vibration. This vibration will occur at a frequency which is locked with respect to our science data, such that we will see its effects every 8 data samples. In the case where these clocks are not synchronized and would unpredictably drift with respect to each other, a perturbation that occurs every 8th of a revolution has repercussions not exactly at every 8 data samples. If we think about this in the frequency domain, it means that the power peak caused by the vibration is now broadened, whereas it is very sharp in the synchronized case.
+The advantage of this strategy can be illustrated as follows. The time it takes for a wheel to complete a revolution is set to be an integer multiple of this heartbeat, $\num{998400}=\num{124800}\times 8$ master clock ticks (about 50 revolutions per second). Hence, every 8 heartbeats, each wheel is supposed to be in the same position, and it will be controlled 8 times during one revolution to make sure it is. This completely locks in their relative velocities, on average. Let's suppose now that in their 8th position, a mechanical defect in the wheel or the bearing triggers a small vibration. This vibration will occur at a frequency which is locked with respect to our science data, such that we will see its effects every 8 data samples. In the case where these clocks are not synchronized and would unpredictably drift with respect to each other, a perturbation that occurs every 8th of a revolution has repercussions not exactly at every 8 data samples. If we think about this in the frequency domain, it means that the power peak caused by the vibration is now broadened, whereas it is very sharp in the synchronized case.
 
 In practice, however, implementing this "single clock" approach is not straightforward for a project that has modest resources and relies heavily on commercial electronics. Most commercial motion controllers do not allow for external clock synchronization. We came up with a solution with the engineers at Galil Motion, and found a way to change their controller to accept an external TTL signal that would bypass their internal crystal oscillator at \SI{1.024}{\kilo\hertz}. The controller normally uses the internal oscillator as a definition of its time basis, so the user can send input in physical units (like acceleration or velocity) - a change in the clock frequency from the introduction of an external signal will have non-trivial repercussions.
 

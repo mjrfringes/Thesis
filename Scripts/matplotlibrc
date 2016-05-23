@@ -1,0 +1,12 @@
+xtick.labelsize: 11
+xtick.major.size: 5
+ytick.major.size: 5
+xtick.minor.size: 5
+ytick.minor.size: 5
+ytick.labelsize: 11
+axes.labelsize: 11
+legend.fontsize: 11
+font.size:11
+font.weight: 100
+font.family: serif
+font.serif: Times New Roman

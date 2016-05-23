@@ -41,7 +41,7 @@ The units required for $\sigma_\gyro$ are [\si{\radian\raiseto{-0.5}\second}], s
 
 Note that we can relate the ARW to the measured discrete rate noise uncertainty $\sigma(\nGyros^\textrm{meas})$ with:
 \begin{equations}
-\sigma(\nGyros^\textrm{meas})\units{\si{\deg\per\second}} = \textrm{ARW}\units{\si{\deg\raiseto{-0.5}\hour}}\times 60\sqrt{\textrm{BW}\units{\si{\hertz}}}
+\sigma(\nGyros^\textrm{meas})\units{\si{\deg\per\second}} = \textrm{ARW}\units{\si{\deg\raiseto{-0.5}\hour}}\times 60\sqrt{\textrm{BW}\units{\si{\hertz}}},
 \end{equations}
 where $\textrm{BW}\units{\si{\hertz}}$ is the gyroscope's bandwidth, equal to \SI{50}{\hertz} for our system. We obtain a quantity close to the measured quantity, $\sigma(\nGyros^\textrm{meas})\sim\SI{0.2}{\arcsec\per\second}$.
 

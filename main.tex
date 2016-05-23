@@ -106,7 +106,8 @@ headsepline, % Uncomment to get a line under the header
 % nice tables
 \usepackage{booktabs}
 \usepackage{enumitem}
-
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 
 %\addbibresource{references.bib} % The filename of the bibliography
 \bibliography{references.bib,n2071refs.bib,extrabib.bib}
@@ -364,10 +365,10 @@ $\omega$ & angular frequency & \si{\radian} \\
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 
-%\include{Appendices/AppendixA}
+\include{Appendices/AppendixA}
 %\include{Appendices/AppendixB}
 \include{Appendices/AttitudeRepr3D}
-%\include{Appendices/PIDLoop}
+\include{Appendices/PIDLoop}
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
