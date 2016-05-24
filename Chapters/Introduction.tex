@@ -207,7 +207,7 @@ Observationally, dust plays perhaps the most important role when it comes to stu
 
 Perhaps the first understanding of the composition of dust grains in the ISM was described by \cite{Mathis:1977hp}, where they studied the absorption spectrum of the diffuse ISM, and found that the measurements were appropriately fitted with a dust grain composition of silicates and small graphite particles \citep{Stecher:1965eq}. They were able to fit the observed extinction curve with canonical grain-size distribution, typically $n(a) \propto a^{-3.5}$, where $a$ is the grain size (assuming spherical grains) and $n(a)$ corresponds to the number of grains of sizes $<a$. This assumes low and high cutoffs for the grain sizes, typically \SI{50}{\angstrom} and \SI{0.25}{\micro\meter}, respectively.
 
-This grain-size distribution model was later on enhanced by \cite{Cardelli:1989dp} to account for the difference in interstellar extinctions (hence size distributions) across different galactic lines of sight. These authors were able to successfully parameterize this size distribution using a single parameter, $R_V$, which is the ratio of the total extinction $A(V)$ to selective extinction (or color) $E(B-V)$. Smooth distributions of sizes of graphite and silicate grains between the less dense regions of the ISM, where $R_V = 3.1$, and the dense clusters, where $R_V = 5.3$ \citep{Kim:1994iu}. 
+This grain-size distribution model was later on enhanced by \cite{Cardelli:1989dp} to account for the difference in interstellar extinctions (hence size distributions) across different galactic lines of sight. These authors were able to successfully parameterize this size distribution using a single parameter, $R_V$, which is the ratio of the total extinction $A(V)$ to selective extinction (or color) $E(B-V)$\footnote{Extinction and colors are expressed in magnitudes}. Smooth distributions of sizes of graphite and silicate grains between the less dense regions of the ISM, where $R_V = 3.1$, and the dense clusters, where $R_V = 5.3$ \citep{Kim:1994iu}. 
 
 Observations in the thermal infrared from space telescopes have detected strong absorption lines at \SI{9.7}{\micro\meter} and \SI{18}{\micro\meter} which are attributed to stretching mode of Si-O and bending mode of O-Si-O, confirming the presence of silicates in dust compositions \citep{Weingartner:2001du}. Other emission features at 3.3, 6.2, 7.7, 8.6, and \SI{11.3}{\micro\meter} \citep{Sellgren:1994vz} were attributed to bending and stretching modes of polycyclic aromatic hydrocarbons \citep[PAH, see][]{Gillett:1973bh,Allamandola:1985cf}, which are complex, planar organic molecules.
  
@@ -216,17 +216,29 @@ A consolidated model matching all-sky measurements by instruments on the COBE sp
 
 
 
-A large number of dust models exist (see Section~\ref{subsubsec:radiative})
 
 
 Knowing the dust composition and size distribution of grains is important to properly predict its observational behavior, to relate it to the physical quantities of interest, since the goal of the exercise is to use dust as a tracer of star-forming mechanisms. A given dust model needs to provide several key quantities that can be used in radiative transfer modeling (see Section~\ref{subsubsec:radiative}), such as the albedo, the scattering function, and the opacity.
 
+Talk about icy grains.
 
 
 Talk also about PAHs and VSG to open the door to this topic?
-\subsubsection{Interstellar extinction}
+\subsubsection{Basics of dust extinction}
 
-Talk about dust properties in the galaxu: \citep{Collaboration:2014dz} Using
+Dust grains are responsible for the extinction within molecular clouds, inside of clusters, and also within each YSO; although these various extinctions could originate in different types of grain populations.
+
+At sufficiently long wavelength, dust opacity models can usually be represented by a simple power-law, $\Knu = \kappa_0(\nu/\nu_0)^\beta$, with the index $\beta$ depending on the specifics of the dust model. The opacity $\Knu$ is expressed in \si{\raiseto{2}\centi\meter\per\gram}, and can be interpreted as a extinction cross-section per unit mass. Most dust models assume a 1:100 dust-to-gas ratio, and derive opacities per unit {gas+dust} mass, instead of just grain mass. From a radiative transfer perspective, the observed specific intensity from a thermal source $B_\nu(T)$ in the optically thin regime is $I_\nu = \tau_\nu B_\nu(T)$, with the optical depth $\tau_\nu = \Knu\int{\rho_d\textrm{d}l}$ where $\rho$ is the density and the integral is calculated along the line of sight to the source. Note that the optical depth can also be expressed in terms of the extinction cross-section \Cext  as $\Knu = \Cext(\nu) / m_\dust$, where $m_\dust$ corresponds to the mass of a dust grain.
+
+A measure of the  intensity from a source can thus lead to an approximation of the total mass within a primary beam, for a given dust grain model. For a source with a measured sub-millimeter flux density $S_\nu$, we can obtain \citep{Shirley:2000gh}:
+\begin{equation}
+M = \frac{S_\nu D^2}{B_\nu(T_\dust)\Knu},
+\end{equation}
+where $M$ is the mass of dust and gas and $D$ is the distance to the source. The dust temperature is usually taken to be between 10 to \SI{20}{\kelvin}. 
+
+Dust grains can either scatter or absorb photons, and both of these processes have their own frequency-dependent efficiency. Large grains are usually considered in local thermal equilibrium (LTE), in which case the thermal emission balances out the absorption. However, small grains ($<\SI{50}{\angstrom}$) can be subject to stochastic heating, where single photons can heat up the grains to much higher temperatures for very short amounts ot time. Scattering mechanisms can be much more complicated to represent, as they usually involve a scattering phase function, describing the deflection angle of incident photons (which also depends on wavelength). Most models show that dust grains are preferentially forward-scattering [CITE Draine?]. The scattering properties of the dust model exclusively influence the short-wavelength emission, while the absorption properties influence all wavelengths. 
+
+Talk about dust properties in the galaxy: \citep{Collaboration:2014dz} Using
 \begin{equation}
 I_\nu = \tau_\nu B_\nu(T)
 \tau_\nu = \kappa_\nu M_\textrm{dust}
@@ -234,6 +246,9 @@ I_\nu = \tau_\nu B_\nu(T)
 I_\nu = \kappa_0(\nu/\nu_0)^\beta r\mu m_H N_H B_\nu(T)
 \end{equation}
 Also maybe mention papers by Dale etc DIRBE/COBE
+
+A large number of dust models exist (see Section~\ref{subsubsec:radiative})
+
 
 \subsubsection{From dust observations to physical quantities}
 Talk about basics (long-wavelength = proxy for mass), and talk about modelling too. Fitting, radiative transfer, etc.
