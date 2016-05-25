@@ -211,7 +211,7 @@ This grain-size distribution model was later on enhanced by \cite{Cardelli:1989d
 
 Observations in the thermal infrared from space telescopes have detected strong absorption lines at \SI{9.7}{\micro\meter} and \SI{18}{\micro\meter} which are attributed to stretching mode of Si-O and bending mode of O-Si-O, confirming the presence of silicates in dust compositions \citep{Weingartner:2001du}. Other emission features at 3.3, 6.2, 7.7, 8.6, and \SI{11.3}{\micro\meter} \citep{Sellgren:1994vz} were attributed to bending and stretching modes of polycyclic aromatic hydrocarbons \citep[PAH, see][]{Gillett:1973bh,Allamandola:1985cf}, which are complex, planar organic molecules.
  
-A consolidated model matching all-sky measurements by instruments on the COBE space observatory confirms the composition of amorphous silicates and carbonaceous grains with sizes ranging from large grains (\SI{1}{\micro\meter}) down to tens of atoms \citep{Li:2001gk}, where the larger carbonaceous grains have graphitic properties and the smaller population have PAH-like properties.
+A consolidated model matching all-sky measurements by instruments on the COBE space observatory confirms the composition of amorphous silicates and carbonaceous grains with sizes ranging from large grains ($\approx\SI{1}{\micro\meter}$) down to tens of atoms \citep{Li:2001gk}, where the larger carbonaceous grains have graphitic properties and the smaller population have PAH-like properties.
 
 
 
@@ -228,36 +228,39 @@ Talk also about PAHs and VSG to open the door to this topic?
 
 Dust grains are responsible for the extinction within molecular clouds, inside of clusters, and also within each YSO; although these various extinctions could originate in different types of grain populations.
 
-At sufficiently long wavelength, dust opacity models can usually be represented by a simple power-law, $\Knu = \kappa_0(\nu/\nu_0)^\beta$, with the index $\beta$ depending on the specifics of the dust model. The opacity $\Knu$ is expressed in \si{\raiseto{2}\centi\meter\per\gram}, and can be interpreted as a extinction cross-section per unit mass. Most dust models assume a 1:100 dust-to-gas ratio, and derive opacities per unit {gas+dust} mass, instead of just grain mass. From a radiative transfer perspective, the observed specific intensity from a thermal source $B_\nu(T)$ in the optically thin regime is $I_\nu = \tau_\nu B_\nu(T)$, with the optical depth $\tau_\nu = \Knu\int{\rho_d\textrm{d}l}$ where $\rho$ is the density and the integral is calculated along the line of sight to the source. Note that the optical depth can also be expressed in terms of the extinction cross-section \Cext  as $\Knu = \Cext(\nu) / m_\dust$, where $m_\dust$ corresponds to the mass of a dust grain.
+At sufficiently long wavelength, dust opacity models can usually be represented by a simple power-law, $\Knu = \kappa_0(\nu/\nu_0)^\beta$, with the index $\beta$ depending on the specifics of the dust model. The opacity $\Knu$ is expressed in \si{\raiseto{2}\centi\meter\per\gram}, and can be interpreted as a extinction cross-section per unit mass. Most dust models assume a 1:100 dust-to-gas ratio, and derive opacities per unit {gas+dust} mass, instead of just grain mass. From a radiative transfer perspective, the observed specific intensity from a thermal source $\Bnu(T)$ in the optically thin regime is $I_\nu = \tau_\nu \Bnu(T)$, with the optical depth $\tau_\nu = \Knu\int{\rho_\dustdl}$ where $\rho$ is the density and the integral is calculated along the line of sight to the source. Note that the optical depth can also be expressed in terms of the extinction cross-section \Cext~as $\Knu = \Cext(\nu) / m_\dust$, where $m_\dust$ corresponds to the mass of a dust grain.
 
-A measure of the  intensity from a source can thus lead to an approximation of the total mass within a primary beam, for a given dust grain model. For a source with a measured sub-millimeter flux density $S_\nu$, we can obtain \citep{Shirley:2000gh}:
+A measure of the intensity from a source can thus lead to an approximation of the total mass within a primary beam, for a given dust grain model. For a source with a measured sub-millimeter flux density $S_\nu$, in the optically thin regime we can write $S_\nu = \tau_\nu\Bnu(T)\Omega$, where $\Omega$ is the solid angle of the source, $\Omega = A/d^2$, with $A$ the area of the source and $d$ its distance. We obtain a measure of the mass by writing $M\approx A\int{\rho dl}$, to obtain \citep{Shirley:2000gh}:
 \begin{equation}
-M = \frac{S_\nu D^2}{B_\nu(T_\dust)\Knu},
+M = \frac{S_\nu d^2}{B_\nu(T_\dust)\Knu},
 \end{equation}
-where $M$ is the mass of dust and gas and $D$ is the distance to the source. The dust temperature is usually taken to be between 10 to \SI{20}{\kelvin}. 
+with a dust temperature is usually taken to be between 10 to \SI{20}{\kelvin}. 
+
+With only near- to far-IR wavelengths observations, however, it is more difficult to estimate the dust mass, because the system is usually not in the optically thin regime and very dependent on the local geometry and viewing angle. To use these observations, which are interesting because they naturally are at higher resolution than single-dish submillimeter data, detailed radiative transfer models are usually required (Section~\ref{subsubsec:radiative}).
+
 
 Dust grains can either scatter or absorb photons, and both of these processes have their own frequency-dependent efficiency. Large grains are usually considered in local thermal equilibrium (LTE), in which case the thermal emission balances out the absorption. However, small grains ($<\SI{50}{\angstrom}$) can be subject to stochastic heating, where single photons can heat up the grains to much higher temperatures for very short amounts ot time. Scattering mechanisms can be much more complicated to represent, as they usually involve a scattering phase function, describing the deflection angle of incident photons (which also depends on wavelength). Most models show that dust grains are preferentially forward-scattering [CITE Draine?]. The scattering properties of the dust model exclusively influence the short-wavelength emission, while the absorption properties influence all wavelengths. 
 
 Talk about dust properties in the galaxy: \citep{Collaboration:2014dz} Using
-\begin{equation}
-I_\nu = \tau_\nu B_\nu(T)
-\tau_\nu = \kappa_\nu M_\textrm{dust}
-\kappa_\nu\propto \nu^\beta
-I_\nu = \kappa_0(\nu/\nu_0)^\beta r\mu m_H N_H B_\nu(T)
-\end{equation}
 Also maybe mention papers by Dale etc DIRBE/COBE
 
 A large number of dust models exist (see Section~\ref{subsubsec:radiative})
 
 
-\subsubsection{From dust observations to physical quantities}
-Talk about basics (long-wavelength = proxy for mass), and talk about modelling too. Fitting, radiative transfer, etc.
-
-The far-IR luminosity has a number of definitions, and consistency is important in converting them to $M_\star$. A commonly used definition integrates the dust emission over the wavelength range 3–\SI{1100}{\micro\meter} \citep{Dale:2002bo}, and following those researchers, we refer to this as the total- infrared (TIR) luminosity. Note, however, that other definitions based on a narrower wavelength band or even single-band IR measurements are often used in the literature.
+%\subsubsection{From dust observations to physical quantities}
+%Talk about basics (long-wavelength = proxy for mass), and talk about modelling too. Fitting, radiative transfer, etc.
+%
+%The far-IR luminosity has a number of definitions, and consistency is important in converting them to $M_\star$. A commonly used definition integrates the dust emission over the wavelength range 3–\SI{1100}{\micro\meter} \citep{Dale:2002bo}, and following those researchers, we refer to this as the total- infrared (TIR) luminosity. Note, however, that other definitions based on a narrower wavelength band or even single-band IR measurements are often used in the literature.
 
 \subsubsection{Radiative transfer modeling}
 \label{subsubsec:radiative}
-Whitney, Robitaille, Wolfire...
+
+Several radiative transfer codes exist in the literature, and we have explored a few of them. We opted for a recently-developed package called Hyperion \citep{Robitaille:2011fc}, which is a Python interface to a 3D Monte-Carlo code by \cite{Whitney:2013cw}. The code is versatile, parallelized, can accept different dust models and can generate various types of geometries and density grids.
+
+Hyperion functions in two steps. After choosing a discrete grid to represent a density model and adding energy sources, the temperature structure of the dust is calculated by propagating photon packets and determining the dust LTE temperature in each cell. Multiple iterations of this process are usually required to converge to a decent thermal structure.
+
+Once the dust temperature is known, then the dust becomes a source of thermal radiation. This type of radiation is modeled using ray tracing, which provides a very good \SNR. The light from the central source which was not absorbed, however, needs to be propagated and scattered off the dust grains, using a method called peeling-off \citep{YusefZadeh:1984ff}. For non-isotropic scattering, this process has relatively low \SNR, hence requires a lot of photons packets to function properly. While there are future plans to implement raytracing for scattering \citep{Robitaille:2011fc}, we are currently forced to wait long times for simulating YSOs with massive envelopes because of this problem.
+
 
 \subsubsection{Summary}
 
