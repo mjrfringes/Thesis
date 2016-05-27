@@ -49,6 +49,7 @@
 % pupil plane #2
 \draw[->] (2*\planedist,0,-\axislength)node[below,align=center]{Pupil plane} -- (2*\planedist,0,\axislength)node[above]{$u'$};
 \draw[->] (2*\planedist,\axislength,0) -- (2*\planedist,-\axislength,0)node[above]{$v'$};
+\draw[<->,dotted] (2*\planedist-\axislength/4,0,\axislength/4) -- (2*\planedist+\axislength/4,0,\axislength/4)node[above=0.1cm]{$\OPD$};
 \draw[tdplot_rotated_coords,fill opacity=0.5,fill=gray] (-0.02*\axislength,0.02*\axislength,2*\planedist) circle (0.2*\axislength);
 \draw[tdplot_rotated_coords,fill opacity=0.5,fill=gray] (0.02*\axislength,-0.02*\axislength,2*\planedist) circle (0.2*\axislength);
 
