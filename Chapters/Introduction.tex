@@ -38,7 +38,7 @@ A simple way to derive characteristic quantities related to the formation of sta
 
 First, it is important to determine what are the characteristic timescales of star formation. In the core with a uniform density, the simplest timescale to define is called the free-fall time: this is the time it takes for the total gravitational collapse of a spherically-symmetric clump of uniform density $\rho$ if only the force of gravity is considered\footnote{Note that the scaling coefficient associated with the free-fall time can change among authors; these are merely scaling relations and do not pretend to be exact}, 
 \begin{equation}
-\tff \sim \left(\frac{3\pi}{32 G\rho}\right)^{-1/2}\sim \SI{2.1}{\mega\year}\left(\frac{\rho}{\SI{e-21}{\gram\per\raiseto{3}\centi\meter}}\right)^{-1/2}.
+\tff \sim \left(\frac{3\pi}{32 G\rho}\right)^{-1/2}\sim \SI{0.2}{\mega\year}\left(\frac{\rho}{\SI{e-19}{\gram\per\raiseto{3}\centi\meter}}\right)^{-1/2}.
 \end{equation}
 The free-fall time is usually a lower limit on the collapse timescale, since there will always be some thermal pressure that will resist gravity and slow down the infall of gas into the potential well. 
 
@@ -46,13 +46,13 @@ The other relevant quantity that involves time is the sound speed in the cloud, 
 
 Intuitively, if $\tff<\ts$, the core of size $R$ will start its gravitational collapse, while it will remain stable otherwise. This corresponds to a characteristic sizescale that is called the Jeans length, and corresponds to the characteristic sizescale of gravitational instability within a cloud \citep{McKee:2007bd}:
 \begin{equation}
- \lambdaJ = \cs\times\tff = \SI{0.43}{\pc}\left(\frac{\cs}{\SI{0.2}{\kilo\meter\per\second}}\right)\left(\frac{\rho}{\SI{e-21}{\gram\per\raiseto{3}\centi\meter}}\right)^{-1/2}.
+ \lambdaJ = \cs\times\tff = \SI{0.04}{\pc}\left(\frac{\cs}{\SI{0.2}{\kilo\meter\per\second}}\right)\left(\frac{\rho}{\SI{e-19}{\gram\per\raiseto{3}\centi\meter}}\right)^{-1/2}.
  \end{equation} 
 
 The Jeans mass is the amount of mass within a sphere of diameter \lambdaJ, and corresponds intuitively to the minimum mass a core needs to gather in order to trigger an gravitational collapse:
 \begin{eqnarray}
 \MJ &=& \frac{4\pi}{3}\rho\left(\frac{\lambdaJ}{2}\right)^3 \\
-&=& \SI{0.61}{\Msun} \left(\frac{\cs}{\SI{0.2}{\kilo\meter\per\second}}\right)^3 \left(\frac{\rho}{\SI{e-21}{\gram\per\raiseto{3}\centi\meter}}\right)^{-1/2}
+&=& \SI{0.06}{\Msun} \left(\frac{\cs}{\SI{0.2}{\kilo\meter\per\second}}\right)^3 \left(\frac{\rho}{\SI{e-19}{\gram\per\raiseto{3}\centi\meter}}\right)^{-1/2}
 \end{eqnarray}
 
 Note that this formalism completely ignores the material that surrounds the core while it collapses. In practice, the cloud exerts an external pressure on the core that needs to be taken into account when calculating the critical masses. This more elaborate case of a clump of self-gravitating gas on the verge of collapse that is immersed in a medium of external pressure $\Pext$ is called a Bonnor-Ebert sphere. It can be shown\citep{McKee:2007bd} that the sizescale is similar to the Jeans' length, and the mass scale is a few times smaller than the Jeans' mass, which stays well within the accuracy limits of our simple model.
@@ -61,7 +61,7 @@ Once the gas starts its gravitational collapse, nothing stops it until the centr
 
 In practice, it is likely that a single core fragments into multiple centers of collapse, each of them exceeding the local Jeans mass. This would create systems of binaries or small multiples instead of single stars, a scenario that is currently favored [LARSON?].
 
-In the standard model, the collapse begins at the center of the core and propagates outward at the sound speed, so the density structure of the initial core will change as a function of time. Most models result in an infalling envelope with density profiles which follow laws from $\renv^{-1/2}$ to $\renv^{-2}$, an important observable that can be useful to test these theories. Some models of slowly-rotating infalling clouds suggest more complex density profiles for the envelopes \citep[e.g.][]{Ulrich:1976ho,Terebey:1984hi} than simple power laws, but are observationally difficult to constrain due to the small differences with traditional power-law envelopes and the small scales at which those differences occur (a few 100's of AU).
+In the standard model, the collapse begins at the center of the core and propagates outward at the sound speed, so the density structure of the initial core will change as a function of time. Most models result in an infalling envelope with density profiles which follow laws from $\renv^{-1.5}$ to $\renv^{-2}$, an important observable that can be useful to test these theories. Some models of slowly-rotating infalling clouds suggest more complex density profiles for the envelopes \citep[e.g.][]{Ulrich:1976ho,Terebey:1984hi} than simple power laws, but are observationally difficult to constrain due to the small differences with traditional power-law envelopes and the small scales at which those differences occur (a few 100's of AU).
 
 Through conservation of angular momentum, some of the surrounding material naturally flattens into a centrifugally-supported flaring disk before it is fed to the star, and a cavity opens along the rotation axis of the system. The cavity opening can also be bolstered by mechanisms such as stellar winds and jets [REFERENCE].
 
