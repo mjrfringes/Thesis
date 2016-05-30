@@ -1,0 +1,140 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\usetikzlibrary{positioning,intersections,calc,fadings,decorations.pathreplacing,decorations.markings}
+\usetikzlibrary{shapes,arrows}
+\input{../definitions}
+\begin{document}
+\begin{tikzpicture}[x = 1.2 cm,y=1.2 cm,every node/.style={outer sep=0.2,align=center}]
+\tikzset{>=latex}
+\tikzset{font={\fontsize{10pt}{10}\selectfont}}
+\tikzset{middlearrow/.style={
+        decoration={markings,
+            mark= at position 0.5 with {\arrow{#1}} ,
+        },
+        postaction={decorate}
+    }
+}
+
+\linespread{1}
+
+\pgfmathsetmacro{\length}{0.5}
+\pgfmathsetmacro{\opticslw}{1}
+\pgfmathsetmacro{\raylw}{0.5}
+
+\tikzstyle{optics} = [line width = \opticslw]
+\tikzstyle{rays} = [line width = \raylw,middlearrow={>},dashed]
+\tikzstyle{finalrays} = [line width = \raylw]
+
+
+% start with old-fashioned FTS telescope
+\coordinate (O) at (0,3);
+\coordinate (FTSBS) at (0,0);
+\coordinate (FTSBS2) at (-1,-1);
+\coordinate (FTSFLAT) at (-3,0);
+\coordinate (FTSFLAT2) at (-3,-1);
+\coordinate (FTSDL1) at (0,-3);
+\coordinate (FTSDL2) at (-1,-3);
+
+
+\begin{scope}[rotate = -45,shift = {(FTSBS)}]
+\draw[optics] (0,-\length)-- (0,\length)node[above right]{Beam \\ splitter};
+\end{scope}
+\begin{scope}[rotate = -45,shift = {(FTSFLAT)}]
+\draw[optics] (0,-\length) -- (0,\length);
+\end{scope}
+\begin{scope}[rotate = 45,shift = {(FTSFLAT2)}]
+\draw[optics] (0,-\length) -- (0,\length);
+\end{scope}
+\begin{scope}[rotate = -45,shift = {(FTSBS2)}]
+\draw[optics] (0,-\length) -- (0,\length);
+\end{scope}
+\begin{scope}[rotate = -45,shift = {(FTSDL1)}]
+\draw[optics] (0,-\length) -- (0,\length);
+\end{scope}
+\begin{scope}[rotate = 45,shift = {(FTSDL2)}]
+\draw[optics] (0,-\length) -- (0,\length);
+\end{scope}
+
+\draw[rays] (O)node[right]{Pupil} -- (FTSBS);
+\draw[rays] (FTSBS) -- (FTSFLAT);
+\draw[rays] (FTSFLAT) -- (FTSFLAT2);
+\draw[rays] (FTSFLAT2) -- (FTSBS2);
+\draw[rays] (FTSBS) -- (FTSDL1);
+\draw[rays] (FTSDL1) -- (FTSDL2);
+\draw[rays] (FTSDL2) -- (FTSBS2);
+\draw[finalrays,->] (FTSBS2) -- +(1.5,0)node[right]{Output 1};
+\draw[finalrays,->] (FTSBS2) -- +(0,1.5)node[above]{Output 2};
+
+\draw[<->] (0.5,-2.5) -- (0.5,-3.5)node[right,pos=0.5]{Delay\\ line} ;
+
+
+% Double-Fourier telescope
+\coordinate (O) at (9,3);
+\coordinate (O2) at (5,3);
+\coordinate (FTSBS) at (6.7,0);
+\coordinate (FTSBS2) at (6,-1);
+\coordinate (FTSFLAT) at (4,0);
+\coordinate (FTSFLAT2) at (4,-1);
+\coordinate (FTSFLAT3) at (9,2);
+\coordinate (FTSFLAT4) at (5,2);
+\coordinate (FTSFLAT5) at (7,2);
+\coordinate (FTSFLAT6) at (6.7,2);
+\coordinate (FTSDL1) at (7,-3);
+\coordinate (FTSDL2) at (6,-3);
+
+
+
+\begin{scope}[rotate = -45,shift = {(FTSBS)}]
+\draw[optics] (0,-\length/3)-- (0,\length/3);
+\end{scope}
+\begin{scope}[rotate = -45,shift = {(FTSFLAT)}]
+\draw[optics] (0,-\length) -- (0,\length);
+\end{scope}
+\begin{scope}[rotate = 45,shift = {(FTSFLAT2)}]
+\draw[optics] (0,-\length) -- (0,\length);
+\end{scope}
+\begin{scope}[rotate = -45,shift = {(FTSBS2)}]
+\draw[optics] (0,-\length) -- (0,\length);
+\end{scope}
+\begin{scope}[rotate = -45,shift = {(FTSDL1)}]
+\draw[optics] (0,-\length) -- (0,\length);
+\end{scope}
+\begin{scope}[rotate = 45,shift = {(FTSDL2)}]
+\draw[optics] (0,-\length) -- (0,\length);
+\end{scope}
+\begin{scope}[rotate = -45,shift = {(FTSFLAT3)}]
+\draw[optics] (0,-\length) -- (0,\length);
+\end{scope}
+\begin{scope}[rotate = 45,shift = {(FTSFLAT4)}]
+\draw[optics] (0,-\length) -- (0,\length);
+\end{scope}
+\begin{scope}[rotate = -45,shift = {(FTSFLAT5)}]
+\draw[optics] (0,-\length/3) -- (0,\length/3);
+\end{scope}
+\begin{scope}[rotate = 45,shift = {(FTSFLAT6)}]
+\draw[optics] (0,-\length/3) -- (0,\length/3);
+\end{scope}
+
+\draw[rays] (O)node[right]{Pupil right} -- (FTSFLAT3);
+\draw[rays] (FTSFLAT3) -- (FTSFLAT5);
+\draw[rays] (FTSFLAT5) -- (FTSDL1);
+\draw[rays] (FTSFLAT4) -- (FTSFLAT6);
+\draw[rays] (FTSFLAT6) -- (FTSBS);
+\draw[rays] (FTSBS) -- (FTSFLAT);
+\draw[rays] (O2)node[right]{Pupil left} -- (FTSFLAT4);
+\draw[rays] (FTSFLAT) -- (FTSFLAT2);
+\draw[rays] (FTSFLAT2) -- (FTSBS2);
+\draw[rays] (FTSDL1) -- (FTSDL2);
+\draw[rays] (FTSDL2) -- (FTSBS2);
+\draw[finalrays,->] (FTSBS2) -- +(1.5,0)node[right]{Output \\1};
+\draw[finalrays,->] (FTSBS2) -- +(0,1.5)node[above]{Output \\2};
+
+\draw[<->] (7.5,-2.5) -- (7.5,-3.5)node[right,pos=0.5]{Delay\\ line} ;
+
+
+\end{tikzpicture}
+
+
+\end{document}

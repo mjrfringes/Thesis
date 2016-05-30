@@ -149,7 +149,7 @@ $e^{i\Phir(\s, x)}$, where $\Phir(\s, x)$ is the ``phase noise"; this term depen
 the optics support, or pointing errors. In the rest of this paper, we will mostly talk about this ``OPD noise", which is the physical source of the noise, whereas phase noise represents its effects on the interferogram.
 The total complex visibility sampled at a single $\s$ by the system is $\Vb(\s)\Vi(\s) e^{i\Phir(\s, x)}$, and it is normalized such that, for an ideal instrument observing a point source, this quantity is equal to 1 at ZPD.
 
-Using Eq. \ref{eq:basicinterferogram} for the monochromatic source, the polychromatic interferogram is the integral over $\s$ of this dimensionless response at each wavenumber. The total amount of power coming into the 2-aperture interferometer within a small wavenumber range $d\s$ is $2\A \B(\s) c d\s$ where $2\A$ is the total aperture area in m$^2$, $\B(\s)$ is the spectral flux density in W$\cdot$m$^{-2}\cdot$Hz$^{-1}$ and $c$ is the speed of light in cm$\cdot$s$^{-1}$. 
+Using Eq. \ref{eq:basicinterferogram} for the monochromatic source, the polychromatic interferogram is the integral over $\s$ of this dimensionless response at each wavenumber. The total amount of power coming into the 2-aperture interferometer within a small wavenumber range $d\s$ is $2\Area \Bspec(\s) c d\s$ where $2\Area$ is the total aperture area in m$^2$, $\Bspec(\s)$ is the spectral flux density in W$\cdot$m$^{-2}\cdot$Hz$^{-1}$ and $c$ is the speed of light in cm$\cdot$s$^{-1}$. 
 %LGM: The wavenumber $\s$ has units of cm$^{-1}$ to follow the convention in the FTS literature.
 %LGM: added this to the  definition of wavenumbers after Eq 1  
 Filters and optics in an instrument cause a wavenumber-dependent transmission profile $\Tbp(\s)$. The quantum efficiency of the detector can depend on wavenumber, $\etaD(\s)$. For multi-pixel detectors the interferogram is measured by matched filtering a point-spread function on a pixel array, which has some efficiency $\etamf$.% Optical elements such as filters and beam splitters/combiners can cause $\s$-dependent phase shifts. 
@@ -165,29 +165,29 @@ Filters and optics in an instrument cause a wavenumber-dependent transmission pr
 The actual power measured by the instrument can be represented as:
 %I_\pm(x) = \real\left(\A \int_0^{+\infty} T_{\inst} \B \left(1\pm i\; \Vb e^{i\Phir(\s, x)} e^{-2i\pi \s x}\right)cd\s \right),
 \begin{equation}
-I_\pm(x) = \A c\int_0^{+\infty} \etamf\etaD\Tbp \B \times
+I_\pm(x) = \Area c\int_0^{+\infty} \etamf\etaD\Tbp \Bspec \times
  \quad  \real \left[\left(1\pm i \Vi\Vb e^{i\Phir} e^{-2i\pi \s x}\right) \right]d\s,
 \end{equation}
 where the factor of 2 for the two apertures is dropped because it is implicit in Eq. \ref{eq:basicinterferogram}. All quantities within the integral can be functions of wavenumber, and all the instrumental phase and interferometric loss terms are in $\Vi$ and $e^{i\Phir}$.
 
 Instead of considering each separate output, we use $\I = \I_+ - \I_-$ as our interferogram expression, which cancels out the constant term. We also introduce an interferometric instrument transmission function, which can be complex, which represents the normalized amplitude and phase of the interferogram for a point source of uniform spectrum and no phase noise:
 \begin{equation}
-T_{\inst}(\s) \equiv \A c\etamf\etaD\Tbp \Vi = |T_{\inst}(\s)|e^{i\Phi_{\inst}(\s)},
+T_{\inst}(\s) \equiv \Area c\etamf\etaD\Tbp \Vi = |T_{\inst}(\s)|e^{i\Phi_{\inst}(\s)},
 \end{equation}
 
  We can then write the modulated signal as:
 %I(x) = \real\left( 2 \A\int_{0}^{+\infty} i |T_{\inst}| \B \Vb e^{i\Phir(\s, x) + i\Phi_{\inst}(\s)} e^{-2i\pi \s x}cd\s \right).
 \begin{equation}
-I(x) = \real\left( 2\int_{0}^{+\infty} i |T_{\inst}| \B \Vb e^{i\Phir + i\Phi_{\inst}} e^{-2i\pi \s x}d\s \right),
+I(x) = \real\left( 2\int_{0}^{+\infty} i |T_{\inst}| \Bspec \Vb e^{i\Phir + i\Phi_{\inst}} e^{-2i\pi \s x}d\s \right),
 \label{eq:modsignal}
 \end{equation}
-where $\B$ is real and $\Vb$ can be complex.
+where $\Bspec$ is real and $\Vb$ can be complex.
 
 Eq.~\ref{eq:modsignal} can be turned into a Fourier transform by mirroring all quantities to negative wavenumbers. This
 convention is explained in detail in \citet{Davis:2001tr} for FTS instruments; the odd symmetry of the interferogram for a system with one beam combiner
 and the complex instrumental transfer function means that the incident spectrum on the detectors
 must be mirrored to -$\s$ as the negative of the complex conjugate of +$\s$: 
-$\S_e(\s) \equiv [T_{\inst} \B \Vb]_e(\s) = {1 \over 2}\left[T_{\inst}(\s) \B(\s) \Vb(\s) - T^*_{\inst}(-\s) \B(-\s) \Vb^*(-\s)\right]$. 
+$\S_e(\s) \equiv [T_{\inst} \Bspec \Vb]_e(\s) = {1 \over 2}\left[T_{\inst}(\s) \Bspec(\s) \Vb(\s) - T^*_{\inst}(-\s) \Bspec(-\s) \Vb^*(-\s)\right]$. 
 We use the subscript $e$ to denote the reflected function, and will apply this convention in the rest of this paper; this reflection ensures that the integrals keep the same value when are expressed from $-\infty$ to $+\infty$, and does not affect the $\SNR$ estimates: although the signal appears to be divided by a factor of two, so is the noise, as it is spread between positive and negative frequencies.
 The interferogram expression is then:
 %\begin{equation}

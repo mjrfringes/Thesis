@@ -1,0 +1,95 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\usetikzlibrary{positioning,intersections,calc,fadings,decorations.pathreplacing,decorations.markings}
+\usetikzlibrary{shapes,arrows}
+\input{../definitions}
+\begin{document}
+\begin{tikzpicture}[x = 1 cm,y=1 cm,every node/.style={outer sep=0.2,align=center}]
+\tikzset{>=latex}
+\tikzset{font={\fontsize{10pt}{10}\selectfont}}
+\tikzset{middlearrow/.style={
+        decoration={markings,
+            mark= at position 0.5 with {\arrow{#1}} ,
+        },
+        postaction={decorate}
+    }
+}
+
+\linespread{1}
+
+\pgfmathsetmacro{\length}{3}
+\pgfmathsetmacro{\opticslw}{1}
+\pgfmathsetmacro{\raylw}{0.5}
+\pgfmathsetmacro{\mirrorsize}{2}
+\pgfmathsetmacro{\offset}{0.1}
+\pgfmathsetmacro{\xsize}{\length}
+
+\tikzstyle{optics} = [line width = \opticslw]
+\tikzstyle{rays} = [line width = \raylw]
+
+
+% draw light
+\coordinate (O) at (0,0);
+\draw[rays,middlearrow={>}] (0,\length) node[outer sep=0.2,above]{Source} -- (0,0);
+\begin{scope}[rotate = -45]
+\draw[optics] (0,-\mirrorsize/2) -- (0,\mirrorsize/2)node[above,align=center]{Beam \\ splitter};
+\end{scope}
+
+\draw[optics] (-\mirrorsize/2,-\length) node[above=0.2,align=center]{Reference\\ mirror} -- (\mirrorsize/2,-\length);
+\draw[optics] (-\length,-\mirrorsize/2) -- (-\length,+\mirrorsize/2);
+\draw[rays,middlearrow={>}] (0,0) -- (-\length,0);
+\draw[rays,middlearrow={>}]   (-\length,\offset) -- (\offset,\offset);
+\draw[dashed,<->] (-\length-0.5,-\mirrorsize/2-0.1) -- (-\length+0.5,-\mirrorsize/2-0.1) node[below=0.2,align=center,pos=0.5]{Movable \\ mirror} ;
+\draw[rays,middlearrow={>}] (0,0) -- (0,-\length);
+\draw[rays,middlearrow={>}] (\offset,-\length) -- (\offset,\offset);
+
+\draw[rays,middlearrow={>}] (\offset,\offset) -- (\length,\offset)node[below,pos=0.5] {Image};
+
+\pgfplotsset{every axis/.append style={line width=1pt}}
+
+\begin{axis}[
+%colormap name=hot,
+%cycle list={[of colormap]},
+  at = {(3cm,-1.5cm)},
+  height=6cm,
+  width=10cm,
+  axis lines=middle,
+%grid=major,
+  clip=false,
+  ymin=-0.1,
+  ymax = 1.1,
+  xmax = 5,
+  xmin = -5,
+  xlabel = {OPD},
+  ylabel = {Intensity modulation},
+  xticklabels=\empty,
+  yticklabels=\empty,
+  legend pos=north west,
+  ticks=none,
+  every axis x label/.style={at={(current axis.right of origin)},anchor=north east,below left=0.2cm},
+  every axis y label/.style={at={(current axis.north)},above=0.1cm},
+]
+\xdef\interfero{}
+\foreach \m in {0.8,0.9,...,1.2} {
+	\xdef\interfero{\interfero+0.5*cos(1000/\xsize*\m*x)/(1.3-0.8)*0.1}
+}
+%\xdef\interferos{}
+%\foreach \m in {0.8,0.9,...,1.2} {
+%	\xdef\interferos{\interferos+0.5*cos(1000/\xsize*\m*(x-0.6))/(1.3-0.8)*0.1}
+%}
+% plot sum
+\addplot[black,mark=none,samples=400,line width=1.5] {0.5*\interfero+0.5};
+
+\end{axis}
+
+
+
+
+
+
+\end{tikzpicture}
+
+
+\end{document}
