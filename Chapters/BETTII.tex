@@ -417,18 +417,28 @@ Differential tip/tilt	& 	\sigtt	& 	\ang{;;	1.5	}	& 	$2J_1(\pi D\sigtt/\lambda)/(
 
 \subsection{Science channel estimated sensitivity}
 
-Now that we know the noise per pixel and the efficiency of the interferometric beam combination, we can determine the \SNR for a single source of known flux. For this, we use the formalism by \citet{Mighell:2005fwa} who derive the proper equation for a matched filter representing a point-spread function (PSF) discretized on a noisy detector array. The efficiency of the matched filter is the inverse of the square root of the effective background area of the PSF, $\beta = 4\pi \mathcal{S}^2$, where $\mathcal{S}$ is the standard deviation of the PSF in pixels, $\mathcal{S} = \frac{0.42\lambda/D}{\theta_\textrm{pix}}$. We obtain $\beta\approx 0.55$ and $0.39$ for band 1 and 2 respectively.
+Now that we know the noise per pixel and the efficiency of the interferometric beam combination, we can determine the \SNR for a single source of known flux. For this, we use the formalism by \citet{Mighell:2005fwa} who derive the proper equation for a matched filter representing a point-spread function (PSF) discretized on a noisy detector array. The efficiency $\etamf$ of the matched filter is the inverse of the square root of the effective background area of the PSF, $\beta = 4\pi \mathcal{S}^2$, where $\mathcal{S}$ is the standard deviation of the PSF in pixels, $\mathcal{S} = \frac{0.42\lambda/D}{\theta_\textrm{pix}}$. We obtain $\etamf \approx 0.55$ and $0.39$ for band 1 and 2 respectively.
 
 This matched filter efficiency is due to the uneven spread of the light from a PSF onto multiple pixels, and corresponds to the error in fitting the detector to the PSF assuming an even noise floor among all pixels. Pixels with more photons will have more \SNR, hence should be weighted more when attempting to extract the flux from the PSF. In this sense, using a matched filter is a best-case scenario. Another approach would consist of simply dividing the PSF area by the area of one single pixel, which is a worst-case alternative that would lead to efficiencies of 0.13 and 0.07 in band 1 and band 2 respectively. In what follows, we are using the optimistic approach and assume we can recover the flux from the PSF using matched filtering. 
 
 We define the Minimum Detectable Line Flux (\MDLF) as the flux per pixel which corresponds to a $\SNR = 1$:
 \begin{align}
-\MDLF = \frac{\NEP}{(f_\textrm{arm1->detN}+ f_\textrm{arm2->detN})\Area\sqrt{2\Nscan\Tint}},
+\MDLF = \frac{\NEP}{(f_\textrm{arm1->detN}+ f_\textrm{arm2->detN})\Area\sqrt{2\Tint}},
 \end{align}
-where \Nscan correspond to the number of scans considered, and $\Tint = \SI{2.5}{\milli\second}$ corresponds to the integration time per pixel (or detector frame). 
+where $\Tint = \SI{2.5}{\milli\second}$ corresponds to the integration time per pixel (or detector frame). The \MDLF is expressed in \si{\watt\per\raiseto{2}\meter}.
+
+The Minimum Detectable Flux Density (\MDFD) is the \MDLF divided by the bandwidth. This is expressed in \si{\watt\per\raiseto{2}\meter\per\hertz} and can be converted to \si{\jansky}.
+
+The faintest detectable interferometric point source with $\SNR = 1$ is then given by $\Smin= \MDFD/\Vi/\etamf$, where the \MDFD is increased due to the interferometric visibility losses and the spreading of the photons onto multiple pixels of the detector. \Smin represents the smallest flux density that leads to an $\SNR = 1$ within a single scan.
+
+Co-adding consecutive scans will improve the \SNR considerably, but it will also introduces errors and inefficiencies. We quickly realized the impact of systematic errors in co-adding scans, so a significant amount of effort went into understanding the behavior of the various error contributions, and analyzing mitigation strategies. The result of this investigation was published in \citet{Rizzo:2015gf}, and is shown here in Chap.~\ref{phasenoisepaper}. In that chapter, we discuss the meaning and importance of the phase noise or \OPD noise, and quantify the impact on the sensitivity. The \OPD noise arises when residual uncertainties in the knowledge and control of the \OPD result in errors while co-aligning and co-adding consecutive interferograms. For the rest of this discussion, we will assume that the \OPD noise amounts to \SI{5}{\micro\meter} r.m.s over 200 consecutive scans.
+
+Using the formulas derived in Chap.~\ref{phasenoisepaper}, we can now correctly determine the \SNR in the co-added interferograms. However, co-added interferograms are not the only goal of BETTII. Although interferograms allow for the distinction between multiple, nearby point sources, most of the scientific information is retrieved by analyzing the spectrum of each source in the field by taking the Fourier transform of the interferogram. Hence, we want to characterize the spectral sensitivity of the instrument, and establish this metric as the default observing metric for our science.
+
+A summary of the results is presented in Table [REF].
 
 \subsection{Tracking channel estimated sensitivity}
-make sure to add the formulas that we use
+A similar sensitivity analysis is done for the tracking channel. This is simplified somewhat since the tracking channels consists only of two cameras, and does not involve beam combination. The levels of background noise are less obvious to estimate. We primarily use the findings of \citet{Matsumoto:1994io}, which measured \SI{2}{\micro\meter} emission line strengths from balloon altitude. This emission is thought to arise from a thin layer of OH radicals at $\sim\SI{100}{\kilo\meter}$ altitude, and is sometimes referred to as \textit{airglow}. Using the measurements by these authors, who span multiple balloon flights in the 60s and 70s, we obtain an average radiance in the NIR bands of $\Rnir~\approx~\SI{1e-4}{\watt\per\raiseto{2}\meter\per\steradian}$. According to our estimates, this is two orders of magnitudes lower than the brightest astronomical noise source in the NIR, which is the zodi scattering.
 
 Balloon altitudes provide significantly better atmosphere transmission in the NIR wavelength region, compared to ground observatories. Fig. \ref{fig:trans} illustrates this difference using a modelling software called MODTRAN. The transmission from an altitude of 4~km shows transmission windows (J, H, K bands) that would limit the design of a ground-based interferometer. At float, the bands are not limited by the atmospheric transmission and thus we can use larger bands than the traditional J, H and K in order to optimize our photon signal.
 
@@ -440,11 +450,46 @@ Balloon altitudes provide significantly better atmosphere transmission in the NI
 \end{center}
 \end{figure}
 
+Due to the prioritization of the science channels, the NIR tracking channel is less advanced at the time of writing. Hence, we use estimates for the transmission and reflection efficiencies of the various components along the optical train. We estimate the efficiency of the major components: the mirrors (95\% reflective), the cryostat window (90\% transmissive), and the NIR/FIR dichroic (90\% transmissive), which transmits the NIR light. There is an additional filter just in front of the detector, which limits the bands from 1 to \SI{2.5}{\micro\meter}. The detectors are not responsive for longer wavelengths. The total amount of efficiency for this channel is expected to be on the order of $\epsilon = 20\%$. Using this, a \SI{1}{\jansky} source will correspond to a number of photons \Nph within a PSF at the detector:
+\begin{align}
+\Nph = \frac{\num{1e-26}}{h}\Area\times\FBW\times\epsilon\Tint \approx \num{8100},
+\end{align}
+where $\FBW \approx 0.67$ corresponds to the fractional bandwidth, and $h$ is the Planck constant. 
+
+The detector is expected to have a read noise of $\sigRON = 18$~electrons r.m.s in up-the-ramp sampling, according the manufacturer specifications. Its frame rate changes throughout the acquire mode (REF appropriate CHAP), but the fastest mode will have a frame rate of $\sim\SI{50}{\hertz}$. Since the detector does not read destructively, saturation is an issue and needs to be addressed carefully - having to reset the pedestals to avoid saturation can complicate the software and might require a lot of tuning. Our calculations take into account a \SI{20}{\milli\second} integration time, a quantum efficiency of 70\%, and a \SI{0.6}{\arcsec\per\pixel} plate scale, which provides an effective background area $\beta = 0.43$ for a diffraction-limited PSF of diameter \ang{;;1.5} at \SI{1.5}{\micro\meter}. We consider that most of the photons will be spread on $1/\beta\approx~2.35$~pixels, so we expect about $\Nel\approx\num{3440}$~electrons per pixel from a \SI{1}{\jansky} source. A much more rigorous analysis is required once the efficiencies are measured.
+
+For convenience, we express the \SNR of a source using its flux $S$ in electrons\si{\per\second}:
+\begin{align}
+\SNR = \frac{S}{\sqrt{S + \beta(B + \sigRON^2)}},
+\end{align}
+where $B$ is the number of electrons per pixel from the background. In our case, we calculate $B\approx 2.4$~electrons, which is negligible compared to the read noise, so we will ignore this term in the future.
+
+The required flux density for a given \SNR is then found by solving the previous equation for $S$:
+\begin{align}
+S\units{\si{\jansky}} = \frac{\SNR^2 + \sqrt{\SNR^4 + 4\SNR^2\beta\sigRON^2}}{2\Nel}.
+\end{align}
+
+For a $\SNR=10$, this corresponds to $\sim\SI{0.13}{\jansky}$, or $\sim$~9.66~H~magnitude. 
 
 \section{Targets}
 
+The science targets we seek have fluxes that are above the spectral sensitivities from table [], with a bright NIR guide star nearby. In addition, to correctly know the \OPD, we need sets of bright calibrator targets which provide high-\SNR fringes in one single scan of the delay line.
+
+The science targets need to be available during our launch window, and preferably cover a large range of projected angles (so we can study the source at multiple angles to retrieve more of the spatial distribution). For this reason, we favor circumpolar sources, since they are the ones which change orientation at the fastest pace.
+
 
 \subsection{Calibrators}
+
+Calibrators ideally need to be point sources $\gg\SI{100}\Smin$~\si{\jansky} in our FIR bands, and it is not straightforward to identify which astronomical sources exist that would provide this kind of flux density. The planets of the solar system and their moons are usually bright enough, but they are often resolved by our instrument, which dramatically reduce their interferometric contrast. For example, we estimate the Uranus is $>\SI{1000}{\jansky}$, but because it is so resolved, the actual fringe contrast if very small, hence drastically reducing the \SNR. Nearby, bright A stars such as Alpha Boo are most likely point sources, but are usually not as bright as we would want, especially not in Band 2 since they are essentially thermal sources with temperatures of thousands of Kelvin. It is possible to use actual science sources as calibrators, but of course it is unknown whether or not they actually are extended (this is the purpose of a mission like BETTII!). 
+
+We find that bright asteroids such as Ceres, Pallas and Vesta are the best candidates for bright calibrators. Because of their temperature and size, they should provide many hundreds of \si{\jansky} in both our bands, while not being resolved. In addition, because of their albedo, they also reflect the sunlight so they would also be suitable for the tracking channels. Their only disadvantage is that they are not inertial targets - this complicates the pointing control system as their expected position moves across the sky, which requires the payload to have accurate timing capabilities to know where the object is at a given time.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=\textwidth]{Figures/Visibilities.pdf}
+	\caption[Visibilities of calibrators]{Visibilities of calibrators.}
+	\label{fig:Visibilities}
+    \end{figure}
 
 
 \subsection{Science targets}
