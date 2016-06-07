@@ -2,6 +2,25 @@
 
 \label{chap:SOFIA}
 
+<<<<<<< Updated upstream
+=======
+\section{Overall plan for thesis}
+
+\begin{enumerate}
+\item Description of the sample and the goals
+\item Description of the data we used: 2MASS, Spitzer, Herschel; SOFIA
+\item Instrument characterization
+\item Explain the data reduction process; include comparison with Megeath for Spitzer photometry; justify aperture correction with "total cluster" measurements
+\item Data products: maps, SEDs; spectral index distribution, Lbol, Tbol
+\item SED fitting method \& grid description (e.g. color-color diagram?)
+\item Focus on IRAS20050 and NGC2071 + Ophiuchus? SED fitting; our method, our results; analysis of the results similar to furlan?
+\item 
+\end{enumerate}
+
+\section{Introduction}
+Most stars in the Galaxy form in cluster environments of sizes 2-4 pc, often containing more than 100 young stellar objects (YSOs), with typical separations of $<$0.05~pc between stars near their centers \citep{Porras:2003kxa, Allen:2007wqa, Gutermuth:2009gca}.
+Previous studies have been effective in elucidating the young stellar content and distribution in clouds on large scales (parsec down to 0.05~pc) \citep{Evans-ARAA2012}, but young cluster cores, born in dense portions of molecular clouds, are more difficult to observe. They are obscured at optical through near-IR wavelengths. At mid-IR through far-IR wavelengths, the material surrounding YSOs and involved in the stellar birth process emits due to heating by the young stars, but the resolution to date has not been sufficient to isolate individual stars in the cores of most nearby young clusters.
+>>>>>>> Stashed changes
 
 %\begin{enumerate}
 %\item Description of the sample and the goals
@@ -40,7 +59,7 @@ Our strategy was successful and we were awarded time during the first and second
 \section{Observations}
 \label{subsec:SOFIAObservations}
 
-The FORCAST camera has two separate $256\times256$ pixel infrared arrays that cover the wavelength range from 5.5-\SI{37}{\um} in multiple bands with $\ang{;;0.768}\times\ang{;;0.768}$ pixels. The two arrays can observe simultaneously through a dichroic beam splitter that divides the wavelength range shortward and longward of \SI{26}{\um}. Alternatively, the long wavelength array can be used by itself as the dichroic is removed from the light path, gaining a sensitivity of $\sim 2.5$. We observe the 11.1 and \SI{37.1}{\micron} together (hereafter "mode 1") and the 19.7 and \SI{31.5}{\um} together (hereafter "mode 2") . We set the 1$\sigma$ sensitivity threshold to that of a moderately rising SED for a \SI{1.5}{\Lsun} source, which is scaled appropriately for the distance to the cluster. This is an attempt at probing the same luminosities at all distances and obtain a consistent sample of YSOs. 
+The FORCAST camera has two separate $256\times 256$ pixel infrared arrays that cover the wavelength range from 5.5-\SI{37}{\um} in multiple bands with $\ang{;;0.768}\times\ang{;;0.768}$ pixels. The two arrays can observe simultaneously through a dichroic beam splitter that divides the wavelength range shortward and longward of \SI{26}{\um}. Alternatively, the long wavelength array can be used by itself as the dichroic is removed from the light path, gaining a sensitivity of $\sim 2.5$. We observe the 11.1 and \SI{37.1}{\um} together (hereafter "mode 1") and the 19.7 and \SI{31.5}{\um} together (hereafter "mode 2") . We set the 1$\sigma$ sensitivity threshold to that of a moderately rising SED for a \SI{1.5}{\Lsun} source, which is scaled appropriately for the distance to the cluster. This is an attempt at probing the same luminosities at all distances and obtain a consistent sample of YSOs. 
 
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
@@ -235,9 +254,56 @@ Image of clustered sources: IRAS20050, NGC2071, S140
 Maps; SEDs; spectral index distribution; Lbol, Tbol
 
 \section{SED fitting}
-Present the grid and its statistics; justify the low number of parameters;
 
-\section{Application to IRAS20050, NGC2071 and Ophiuchus}
+\subsection{A small grid of models}
+
+SED fitting is prone to many degeneracies: usually many geometrical and physical parameters are used to construct detailed radiative transfer models, but only a handful of measurement points are available to fit, leading to a dramatically under-constrained problem. As our starting point of our investigation of the SED of these sources, we used the \textit{sedfitter} tool from \citep{Robitaille:2006cb}. These authors computed a large grid of tens of thousands of SED models using a radiative transfer code by \citep{Whitney:2003ke}, by varying 14 geometrical and physical parameters in the dust density grid such as the size of the disk, the accretion rates, the radius and mass of the envelope, etc. The models are then evaluated in the bands corresponding to our data, and a $\Chi^2$ metric is evaluated for each model. By exploring the distribution of $\Chi^2$, we noticed, as expected, the very large covariance between the parameters which is indicative of many local minimas in the grid. Hence, inferring geometrical and physical parameters from such a grid can be misleading.
+
+We used a more modern version of the same core radiative transfer code, called Hyperion, to develop our own capability of simulating SEDs and understand the sensitivity of each parameter on the SED shape of our Class 0 and I sources. Based on our investigation, the degeneracy between viewing angle and multiple geometrical parameters is considerable. In particular, the sensitivity of the disk properties is minimal, as most of the SED properties are determined almost entirely by the envelope. In addition, parameters of the central source such as the mass, radius and temperature are irrelevant, as they are all combined into one single term, which is the central luminosity. Similarly, the luminosity created when simulating a disk accreting onto the central object can not be distinguished from a more luminous central object and a non-accreting disk. Finally, we find that there is very little difference between Ulrich envelope models and standard power-law envelopes (see for example Fig.~14 from \citet{Whitney:2013cw}), except that the latter can more directly be related to physical parameters such as the mass. 
+
+From these findings, we created a simplified grid of models by significantly reducing the number of parameters. The resulting choices are presented in table []. Note that unlike most authors, who use multiple kinds of dust models for different regions of the SED (which add complexity and number of parameters), we simply use the same dust model for both the envelope and the disk: OH5. 
+
+\section{Application to IRAS20050+2720, NGC2071 and Ophiuchus}
+
+\subsection{IRAS20050+2720}
+
+IRAS~20050+2720 is part of an active site of intermediate-mass star formation in the Cygnus Rift located at 700~pc \citep{Wilking:1989el}, with the particularity that it doesn't seem to contain any massive stars \citep{Gunther:2012dq}. The main cluster core is associated with water and methanol masers \citep{Palla:1991up,Fontani:2010cf} and multipolar molecular outflows observed at millimeter wavelengths \citep{Bachiller:1995cy,Anglada:1998uu,Beltran:2008gu}, suggesting that the region might have experienced a recent episode of star formation in the past 0.1 Myr which contrasts with the average age of the cluster of 1 Myr \citep{Chen:1997tb,Gutermuth:2005hx}. \cite{Gutermuth:2009gca} have identified $>170$ YSOs surrounding the core and measured their continuum fluxes up to \SI{8}{\micro\meter} with IRAC. While measurements at longer wavelengths were able to provide estimates of the total mass of the cluster \citep[e.g. using IRAS,][\SI{388}{\Lsun}]{Molinari:1996td}, the measurements are confused in the densest region and it has not been possible to properly associate the far-IR emission with its short wavelength counterpart because of the small separation between IRAC-detected protostars. The IRAS point source was classified as a luminous class 0 protostar \citep{Bachiller:1996ja}, and its emission associated with the bright millimeter source MMS1 to the northwest of the core \citep{Chini:2001fa}. \cite{Beltran:2008gu} show strong evidence that this region has multiple generations of stars, and suggest that a group of low-mass stars first completed its main accretion phase, before setting the stage for the birth of new intermediate-mass stars at the core of this cluster.
+
+We have observed two fields within the cluster (see Fig.~\ref{fig:IRAS20050_RGB}), including the brightest core at $20^h 07^m 06.70^s +\ang{27;28;54.5}$. Multiple sources in the core can be distinguished in the IRAC maps, but the core appears extended in \Spitzer MIPS at \SI{24}{\micro\meter}, and is identified as a single source with WISE. No good high resolution far-infrared continuum data longward of \SI{24}{\micro\meter} was available for this source.
+
+%Cite also: \citep{Kumar:2006jo} if we want to talk about multiple generations of star formation.
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/RGB.png}
+\label{fig:RGB}
+\caption{
+%\textit{Left:} The two white squares correspond to the FORCAST fields that we observed in around the core of IRAS~20050+2720. The background RGB image is a composition of \textit{Spitzer} IRAC 8~$\um$ (red), \textit{Spitzer} IRAC 5.7 $\um$ (green) , and IRAC 3.6~$\um$ (blue). The dashed red square at the center of the image correspond to the core of the cluster, displayed in greater detail in  the picture to the right. \textit{Right:} This RGB picture shows the IRAC 1, 3, and 4 bands of the core at the center of Fig.~\ref{fig:IRAS20050_RGB}. The white contours represent the contours of the FORCAST 37~$\um$ maps, and the red circles show the FORCAST-identified point sources. An infrared nebulosity can be seen to the East of the core with physical projected size of about 0.015~pc, surrounding a cavity with slightly smaller size. The nebulosity and its cavity can be seen all the way up to 37~$\um$. The far-IR emission is mapped well onto the IRAC sources, except for SOF4, for which almost no emission can be seen at shorter wavelengths. SOF4 matches the location of the bright millimeter source MMS1 \citep{Chini:2001fa}.}
+}
+\end{center}
+\end{figure*}
+
+
+\subsection{NGC 2071}
+The NGC~2071 star-forming region is one of several active areas of star formation in the northern part of L1630 giant molecular cloud which is located at a distance of 390 pc \citep{A-T1982}. 
+NGC~2071 itself is a reflection nebula.
+The NGC~2071 infrared cluster, located about 4' north of the reflection nebula, is a region of intermediate mass star formation \citep{Strom1976, Persson1981, Butner1990}. Maps of the cloud in CO and its isotopomers \citep{Buckle2010} show a large scale clump with $\sim$1,000 M$_\odot$ associated with the cluster. Dust continuum emission at $\lambda$=0.85 and 1.3 mm peaks on center of the cluster extending ~1' in diameter containing ~30 M$_\odot$ of gas and dust \citep{Johnstone2001,Mitchell2001,Launhardt1996}. Emission from CS in the J=2-1 through J=7-6 indicate that the gas in this region is centrally condensed with a density of ~10$^6$ cm$^{-3}$ \citep{Zhou1990}. 
+
+There are a number of near infrared surveys of the young cluster \citep[e.g.,][]{Strom1976,Lada1991,Megeath2012,Spezzi2015}. \cite{Spezzi2015} identify 52 YSOs associated with the NGC~2071 cluster, with the majority Class II sources. \cite{Flaherty2008} estimate an age of $\sim$2 Myr for the cluster, consistent with the large fraction of Class II sources (\cite{Evans2009}. The brightest far infrared emission from the cluster is associated with the IRS1 region \citep{Harvey1979,Butner1990}, which has an estimated total luminosity of 520~L$_\odot$. The immediate region of IRS 1 is, in fact, home to a number of YSOs that are infrared, X-ray, and radio sources \citep{Skinner2009,C-G2012,Kempen2012}. The radio \citep{C-G2012} and H$_2$ emission line imaging indicate that IRS~1, IRS~2, IRS~3, and, perhaps, VLA~1 are YSOs with outflows. The larger scale molecular outflow associated with this region is well studied in a number of molecules \citep{Bally1982,Chernin1993,Stoji2008}.
+\begin{figure*}
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/NGC2071_saturated_mosaic.png}
+\label{fig:n2071saturated}
+\caption{%NGC 2071 IRS~1 Region: The left panel show the Spitzer IRAC 3.1~$\um$ image. The right panel is the Herschel 70~$\um$ image. The green plus marks indicate the positions of IRS~1, IRS~2, IRS~3, and VLA~1. The inner red circle show the extend of the saturated region in the Spitzer MIPS 24~$\um$ image and the outer red circle encompasses the region strong affected by imaging artifacts. The gray circle on the lower right of the right panel is the resolution the 70~$\um$ image.
+NGC2071 seen with IRAC, MIPS and Herschel.}
+\end{center}
+\end{figure*}
+
+Figure \ref{fig:n2071overview} shows the Spitzer 3.1~$\mu$m image of the IRS~1 region on the left \citep[image from Spitzer Archive:][]{Megeath2012} and the Herschel 70~$\mu$m image on the right (image from Herschel Archive: Gould Belt Project, P.I. Andr\'e). The plus marks in both panels indicate the position of the brighter YSOs: IRS~1, IRS~2, IRS~3, IRS~4, and VLA~1. The inner red circle with a diameter of 26" indicates the extend of the saturated region in the Spitzer MIPS 24~$\mu$m image; the outer red circle, diameter 60", encompasses the region with strong imaging artifacts in the MIPS 24~$\mu$m image.
+The right panel shows Herschel 70~$\mu$m image which does not resolve the emission from IRS~1, IRS~2, IRS~3, and VLA~1. The centroid of the 24~$\mu$m and 70~$\mu$m emission is between IRS~1 and VLA~1 indicating that several of the sources are contributing to the total observed emission. Interferometric observations show that the millimeter wavelength dust emission is dominated by envelopes associated with IRS~1 and IRS~3, with estimated masses of 8.2 and 12.3~M$_\odot$ material, respectively \citep{Kempen2012}. The millimeter emission also reveals the presence of disks with radii $\le$100~AU associated with IRS~1 and IRS~3 \citep{Kempen2012}.
+
+The luminosities and masses of the individual source, IRS~1, IRS~2, IRS~3, and VLA~1, are not known. The Spectral Energy Distributions (SEDs) shortward of 10~$\mu$m support their identification as embedded YSOS \citep{Skinner2009}. \cite{Skinner2009} gives a clear discussion of the possibilities for IRS~1 and concludes that it is likely a mid-to late B~star. \cite{Kempen2012} find luminosities of 10, 3.4, and $\le$27~L$_\odot$ for IRS~1, 2, and 3, respectively, and stellar masses of $\le$1~M$_\odot$ for each, based on SED fitting. These masses and luminosities are not consistent with estimate of the total luminosity of the region of 520~L$_\odot$ \citep{Butner1990}. The far infrared images from Herschel reveal that IRS~1 alone does not totally dominate, as seen in Figure N; IRS~1, VLA~1, and IRS~3 likely make substantial contributions to the emission with lesser emission from IRS~2 and IRS~4.
+
 
 %\section{Introduction}
 %Most stars in the Galaxy form in cluster environments of sizes 2-4 pc, often containing more than 100 young stellar objects (YSOs), with typical separations of $<$0.05~pc between stars near their centers \citep{Porras:2003kxa, Allen:2007wqa, Gutermuth:2009gca}.
