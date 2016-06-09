@@ -3,20 +3,6 @@ import numpy as np
 import matplotlib as mpl
 #import seaborn
 
-mpl.rcParams['xtick.labelsize'] = 11
-mpl.rcParams['xtick.major.size'] = 5
-mpl.rcParams['ytick.major.size'] = 5
-mpl.rcParams['xtick.minor.size'] = 5
-mpl.rcParams['ytick.minor.size'] = 5
-mpl.rcParams['ytick.labelsize'] = 11
-mpl.rcParams['axes.labelsize'] = 11
-mpl.rcParams['legend.fontsize'] = 10
-mpl.rcParams['font.size'] = 11
-mpl.rcParams['font.weight'] = 100
-#mpl.rcParams['lines.linewidth'] = 2
-mpl.rcParams['font.family'] = 'serif'
-mpl.rcParams['font.serif'] = 'Times New Roman'
-
 folder = '/Users/mrizzo/Downloads/hochunk3d_20140131/models/parfiles/'
 icy_grains = ['kmh_ice090.par','kmh_ice095.par','r400_ice095_extrap.par','barb.r550.ice095summary','dust_ice_icsgra3_full.txt_d2g.txt','OH5.par']
 standard = ['kmh.par','www003.par','ww04.par','draine_opac_new.dat']

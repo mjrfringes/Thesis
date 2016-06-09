@@ -21,11 +21,23 @@ While the intrinsic noise of our sensors has been characterized in Section~\ref{
 
 \subsubsection{Gyroscope spectral analysis in flight configuration}
 
-While the payload is on the ground, without wheels;
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/multiPSD400.png}
+\label{fig:multiPSD400}
+\caption[Gyro PSD with payload on the ground]{Gyro PSD with payload on the ground}
+\end{center}
+\end{figure}
 
-While the payload is hanging, without wheels
+\begin{figure}[!h]
+\begin{center}
+\includegraphics{Figures/multiPSD_no_loglog_zoom_400.png}
+\label{fig:multiPSD400_no_loglog_zoom_400}
+\caption[Gyro PSD with payload on the ground - Main peaks]{Gyro PSD with payload on the ground - main peaks.}
+\end{center}
+\end{figure}
 
-While the payload is hanging, with wheels on;
+
 
 \subsubsection{Orthogonalization of gyroscope mount}
 \label{ap:gyroOrth}
@@ -49,7 +61,28 @@ Below, we summarize the steps to properly align the gyroscopes to the star camer
  \item Use this new matrix in the flight Kalman filter to make sure the estimated biases are close to zero. 
  \end{enumerate} 
 \subsection{Star camera}
-\subsubsection{Software tuning}
+
+\subsubsection{Tuning tests}
+
+\renewcommand{\arraystretch}{1.5}
+\setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
+\def\labelitemi{--}
+\begin{table}[!h]
+\scriptsize
+\begin{longtable}{l|P{1.5cm}P{1cm}P{1.5cm}P{1.5cm}P{1.5cm}P{1.5cm}P{1.5cm}P{1.5cm}}													
+\toprule																							
+{} 	&	  Exposure time (ms)	&	  Number of images in run 	&	  Fitted exposure time (ms)			&	  Number of matching stars 			&	  Fit ra \& dec error (arcsec) 			&	Fit roll error (arcsec)			&	  Processing time (s)			&	  Solution success rate (\%)	\\
+\midrule																											
+Exp1 	&	250	&	118	&	260	$\pm$	92	&	9.12	$\pm$	1.67	&	1.46	$\pm$	0.43	&	114	$\pm$	40	&	1.48	$\pm$	0.77	&	98	\\
+Exp2 	&	125	&	36	&	113	$\pm$	13	&	9.75	$\pm$	1.95	&	1.46	$\pm$	0.39	&	118	$\pm$	32	&	1.05	$\pm$	0.26	&	100	\\
+Exp3 	&	62	&	49	&	70	$\pm$	53	&	8.43	$\pm$	1.55	&	1.72	$\pm$	0.64	&	155	$\pm$	66	&	1.01	$\pm$	0.21	&	96	\\
+Exp4 	&	62	&	132	&	66	$\pm$	23	&	7.32	$\pm$	1.34	&	1.75	$\pm$	0.65	&	151	$\pm$	55	&	1.22	$\pm$	0.59	&	76	\\
+Exp5 	&	31	&	35	&	44	$\pm$	53	&	6.54	$\pm$	0.84	&	2.33	$\pm$	0.79	&	180	$\pm$	65	&	1.19	$\pm$	0.48	&	37	\\
+\bottomrule
+\end{longtable}																							
+\caption[Star camera tests]{Star camera exposure time tests.}
+\label{tab:starCameraTests}
+\end{table}																							
 
 \begin{landscape}
 \begin{figure}[!ht]
@@ -75,7 +108,7 @@ Table with the star camera parameters
 Show mean deviation of star camera image with optimized parameters;
 show time, statistics, etc.
 
-\subsubsection{Calibration}
+\subsubsection{Final parameters}
 
 \section{Test setups and limitations}
 \subsection{Talk about the way we test in the high bay, etc}
@@ -104,6 +137,43 @@ Show wheel angle for long time
 \section{Pointing tests and performance results}
 \subsection{Gondola pointing stability}
 \subsubsection{In the high bay}
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics{Figures/integral_lifted_gyroZ.png}
+\label{fig:intgralgyroZ400}
+\caption[Integrated gyro time series while hanging]{Integrated gyro time series while hanging and no motor on.}
+\end{center}
+\end{figure}
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/simplePlot_crossEl.png}
+\label{fig:crossEl400}
+\caption[Cross-elevation with control loop on]{Cross-elevation with control loop on (gyroscopes only).}
+\end{center}
+\end{figure}
+
+
+
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics{Figures/lifted_400.png}
+\label{fig:multiPSD400_lifted}
+\caption[Gyro PSD with payload lifted]{Gyro PSD with payload lifted.}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics{Figures/multiPSD100.png}
+\label{fig:multiPSD100_controlled}
+\caption[Gyro PSD with payload lifted, under azimuth control]{Gyro PSD with payload under azimuth control.}
+\end{center}
+\end{figure}
+
+
  show azimuth stability data
 show telescope rolling rms
 \subsubsection{With the door open}
