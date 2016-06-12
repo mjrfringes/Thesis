@@ -10,3 +10,5 @@ font.size:11
 font.weight: 100
 font.family: serif
 font.serif: Times New Roman
+
+backend      : Qt4Agg

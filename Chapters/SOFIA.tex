@@ -27,9 +27,15 @@ Previous studies have been effective in elucidating the young stellar content an
 
 \Spitzer has tremendously helped our understanding of star formation, by providing sensitive observations in continuum bands from [] to \SI{160}{\micro\meter}. In particular, the MIPS \SI{24}{\micro\meter} channel provided a robust way to determine the spectral index of YSOs, hence leading to dramatic improvement of understanding of the YSO population in clusters \citep[e.g.,][]{Gutermuth:2009gca,Gutermuth:2011he}.
 
-However, the most dense regions of clusters still present a challenge for the MIPS instrument, as the YSOs are too bring and/or in too close proximity, which leads to saturation and confusion, as exhibited in Fig.~\ref{}. 
+However, the most dense regions of clusters still present a challenge for the MIPS instrument, as the YSOs are too bring and/or in too close proximity, which leads to saturation and confusion, as exhibited in Fig.~\ref{fig:NGC20171_saturated}. 
 
-[Show saturation image].
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/NGC2071_saturated_mosaic.png}
+\label{fig:NGC20171_saturated}
+\caption[Saturation and confusion]{Saturation and confusion in NGC2071.}
+\end{center}
+\end{figure}
 
 BETTII will tackle the confusion problem at wavelengths from 30 to \SI{100}{\micro\meter}, and will be complementary to \Herschel observations of star-forming regions. SOFIA, however, can already start studying these dense regions with its FORCAST instrument, providing 2-\ang{;;3.5} resolution between 10 and \SI{37}{\micro\meter}. 
 
@@ -227,13 +233,45 @@ S171 	&	0.04	&	0.03	&	0.03	&	0.07	&	0.04	&	0.03	&	0.07	&	0.05	&	0.12	&	0.16	&	0.
 \end{table}
 
 
-
+\subsection{Other photometry}
+\renewcommand{\arraystretch}{1.5}
+\setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
+\def\labelitemi{--}
+\begin{table}[!h]
+\scriptsize
+\begin{longtable}{l|P{1cm}P{1cm}P{1cm}P{1cm}}
+\toprule																			
+SOFIA name	&	i1	&	i2	&	i3	&	i4	\\
+\midrule									
+NGC2071.1	&	0.04	&	0.06	&	0.02	&	-0.03	\\
+NGC2071.3	&	-0.07	&	-0.10	&	-0.06	&	-0.09	\\
+NGC2071.4	&	0.04	&	-0.12	&	-0.01	&	-0.10	\\
+NGC2071.5	&	-0.05	&	-0.06	&	-0.11	&	-0.11	\\
+\midrule									
+IRAS20050.1	&	-0.08	&	-0.06	&	-0.07	&	0.08	\\
+IRAS20050.3	&	0.19	&	0.10	&	0.05	&	0.10	\\
+IRAS20050.6	&	-0.07	&	-0.06	&	-0.12	&	-0.05	\\
+IRAS20050.7	&	-0.15	&	-0.07	&	-0.02	&	-0.07	\\
+\bottomrule					
+	\end{longtable} 
+\caption[Spitzer photometry comparison]{Fractional difference between our own aperture photometry on \Spitzer archival images and published \Spitzer photometry from \citet{Megeath:2012cn} for NGC2071, and \citet{Gutermuth:2009gca} for IRAS20050+2720. }
+\label{tab:SpitzerPhotometry}
+\end{table}
 
 \section{Data products}
 
 \subsection{Maps}
 
 Explain map-making algorithm
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/RGBmosaic.png}
+\label{fig:variety_sources}
+\caption[RGB images of select sample of sources]{Selected sample of sources}
+\end{center}
+\end{figure}
+
 
 Image of extended sources: CepA, NGC7129, NGC2264, NGC1333
 
@@ -245,13 +283,13 @@ Maps; SEDs; spectral index distribution; Lbol, Tbol
 
 \subsection{A small grid of models}
 
-SED fitting is prone to many degeneracies: usually many geometrical and physical parameters are used to construct detailed radiative transfer models, but only a handful of measurement points are available to fit, leading to a dramatically under-constrained problem. As our starting point of our investigation of the SED of these sources, we used the \textit{sedfitter} tool from \citep{Robitaille:2006cb}. These authors computed a large grid of tens of thousands of SED models using a radiative transfer code by \citep{Whitney:2003ke}, by varying 14 geometrical and physical parameters in the dust density grid such as the size of the disk, the accretion rates, the radius and mass of the envelope, etc. The models are then evaluated in the bands corresponding to our data, and a $\Chi^2$ metric is evaluated for each model. By exploring the distribution of $\Chi^2$, we noticed, as expected, the very large covariance between the parameters which is indicative of many local minimas in the grid. Hence, inferring geometrical and physical parameters from such a grid can be misleading.
+SED fitting is prone to many degeneracies: usually many geometrical and physical parameters are used to construct detailed radiative transfer models, but only a handful of measurement points are available to fit, leading to a dramatically under-constrained problem. As our starting point of our investigation of the SEDs of these sources, we used the \textit{sedfitter} tool from \citep{Robitaille:2006cb}. These authors computed a large grid of tens of thousands of SED models using a radiative transfer code by \citep{Whitney:2003ke}, by varying 14 geometrical and physical parameters in the dust density grid such as the size of the disk, the accretion rates, the radius and mass of the envelope, etc. The models are then evaluated in the bands corresponding to our data, and a $\chi^2$ metric is evaluated for each model. By exploring the distribution of $\chi^2$, we noticed, as expected, the very large correlations between the parameters which is indicative of many local minimas in the grid. Hence, inferring geometrical and physical parameters from such a grid can be misleading.
 
-We used a more modern version of the same core radiative transfer code, called Hyperion, to develop our own capability of simulating SEDs and understand the sensitivity of each parameter on the SED shape of our Class 0 and I sources. Based on our investigation, the degeneracy between viewing angle and multiple geometrical parameters is considerable. In particular, the sensitivity of the disk properties is minimal, as most of the SED properties are determined almost entirely by the envelope. In addition, parameters of the central source such as the mass, radius and temperature are irrelevant, as they are all combined into one single term, which is the central luminosity. Similarly, the luminosity created when simulating a disk accreting onto the central object can not be distinguished from a more luminous central object and a non-accreting disk. Finally, we find that there is very little difference between Ulrich envelope models and standard power-law envelopes (see for example Fig.~14 from \citet{Whitney:2013cw}), except that the latter can more directly be related to physical parameters such as the mass. 
+We used a more modern version of the same core radiative transfer code, called Hyperion, to develop our own capability of simulating SEDs and understand the sensitivity of these parameters on the SED shape of our Class 0 and I sources. Based on our investigation, the degeneracy between viewing angle and multiple geometrical parameters is considerable. In particular, the sensitivity of the disk properties is minimal, as most of the SED properties are determined almost entirely by the envelope. In addition, parameters of the central source such as the mass, radius and temperature are irrelevant, as they are all combined into one single term, which is the central luminosity. Similarly, the luminosity created when simulating a disk accreting onto the central object can not be distinguished from a more luminous central object and a non-accreting disk. Finally, we find that there is very little difference between Ulrich envelope models and standard power-law envelopes (see for example Fig.~14 from \citet{Whitney:2013cw}), except that the latter can more directly be related to physical parameters such as the mass. 
 
 From these findings, we created a simplified grid of models by significantly reducing the number of parameters. The resulting choices are presented in table []. Note that unlike most authors, who use multiple kinds of dust models for different regions of the SED (which add complexity and number of parameters), we simply use the same dust model for both the envelope and the disk: OH5. 
 
-\section{Application to IRAS20050+2720, NGC2071 and Ophiuchus}
+\section{Application to four clusters}
 
 \subsection{IRAS20050+2720}
 
@@ -263,9 +301,9 @@ We have observed two fields within the cluster (see Fig.~\ref{fig:IRAS20050_RGB}
 
 \begin{figure*}
 \begin{center}
-\includegraphics[width=\textwidth]{Figures/RGB.png}
-\label{fig:RGB}
-\caption{
+\includegraphics[width=\textwidth]{Figures/NGC2071_IRAS20050_RGB.png}
+\label{fig:NGC2071_IRAS20050_RGB}
+\caption[NGC2071 and IRAS20050+2720]{IRAC 3-color images of NGC2071 and IRAS20050+2720. 
 %\textit{Left:} The two white squares correspond to the FORCAST fields that we observed in around the core of IRAS~20050+2720. The background RGB image is a composition of \textit{Spitzer} IRAC 8~$\um$ (red), \textit{Spitzer} IRAC 5.7 $\um$ (green) , and IRAC 3.6~$\um$ (blue). The dashed red square at the center of the image correspond to the core of the cluster, displayed in greater detail in  the picture to the right. \textit{Right:} This RGB picture shows the IRAC 1, 3, and 4 bands of the core at the center of Fig.~\ref{fig:IRAS20050_RGB}. The white contours represent the contours of the FORCAST 37~$\um$ maps, and the red circles show the FORCAST-identified point sources. An infrared nebulosity can be seen to the East of the core with physical projected size of about 0.015~pc, surrounding a cavity with slightly smaller size. The nebulosity and its cavity can be seen all the way up to 37~$\um$. The far-IR emission is mapped well onto the IRAC sources, except for SOF4, for which almost no emission can be seen at shorter wavelengths. SOF4 matches the location of the bright millimeter source MMS1 \citep{Chini:2001fa}.}
 }
 \end{center}
