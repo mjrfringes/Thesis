@@ -276,6 +276,8 @@ Table~\ref{tab:instrumentParameters} represents the key instrument parameters th
 \def\labelitemi{--}
 \begin{table}[!h]
 \small
+\caption[Instrument parameters]{Instrument design parameters for BETTII.}
+\label{tab:instrumentParameters}
 \begin{longtable}{P{6cm}|c|c|P{1.5cm}}
 \toprule											
 Parameter	&	\multicolumn{2}{c|}{          		 Value		} 			&	Units	\\
@@ -302,13 +304,12 @@ Field of view	&		2.00		&		2.96		&	\si{\arcmin}	\\
 Number of samples per fringe	&		4		&		8.2		&		\\
 \bottomrule											
 \end{longtable}
-\caption[Instrument parameters]{Instrument design parameters for BETTII.}
-\label{tab:instrumentParameters}
 \end{table}
 
 \subsection{Far-IR background noise estimation}
 
-We proceed to an estimation of the known far-IR background noise contributions from sources in thermal equilibrium. We assume that each source of noise emits like a Planck function \Bnu with a certain emissivity $\epsilon$. In Table~\ref{tab:noiseparams}, we list the number of photons generated per second for the amount of sky seen by a single pixel. The thermal emission is weighted by the normalized transmission function, which was measured in the laboratory (Fig~\ref{fig:BETTIITransmission}). By far the strongest contributors from our system are the warm optics and the cryostat's polypropylene window. 
+We proceed to an estimation of the known far-IR background noise contributions from sources in thermal equilibrium. We assume that each source of noise emits like a Planck function \Bnu with a certain emissivity $\epsilon$. In Table~\ref{tab:noiseparams}, we list the number of photons generated per second for the amount of sky seen by a single pixel. The thermal emission is weighted by the normalized transmission function, which was measured in the laboratory (Fig~\ref{fig:BETTIITransmission}). By far the strongest contributors from our system are the warm optics and the cryostat's polypropylene window.
+ 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=\textwidth]{Figures/BETTII_transmission.pdf}

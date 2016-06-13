@@ -50,7 +50,7 @@ The bias instability units are [\si{\radian\raiseto{-3/2}\second}]. The manufact
 \begin{equations}
 \sigma_\bias\units{\si{\radian\raiseto{-3/2}\second}} = \SI{0.005}{\deg\per\hour}\times \sqrt{\textrm{BW}\units{\si{\hertz}}}  \sim \SI{1.8e-7}{\radian\raiseto{-3/2}\second}.
 \end{equations}
-This represents how much what we are trying to estimate is expected to vary. The drift is extremely slow for our gyroscopes, so in practice we will be dominated by the changes in the alignment of the system for all relevant timescales before the gyroscope bias becomes a problem.
+This represents how much what we are trying to estimate is expected to vary. The drift is extremely slow for our gyroscopes, so in practice we will be dominated by the changes in the alignment of the system for all relevant timescales before the gyroscope bias becomes a problem. [EDIT THIS]
 
 \subsubsection{Star camera model}
 
@@ -143,7 +143,7 @@ and:
 Using this error representation allows us to fully describe the state error covariance matrix that will be minimized during the Kalman filter steps. 
 
 %\renewcommand*{\arraystretch}{0.75}
-It is important here to introduce the expression of the covariance matrix of this continuous representation. Writing the noise vector $\vectors{n} = \begin{bmatrix} \nGyros \\ \nBias \end{bmatrix}$, the covariance matrix is the expected value of the product of two noise vectors taken at different times [cite TRAWNY]:
+It is important here to introduce the expression of the covariance matrix of this continuous representation. Writing the noise vector $\vectors{n} = \begin{bmatrix} \nGyros \\ \nBias \end{bmatrix}$, the covariance matrix is the expected value of the product of two noise vectors taken at different times \citep{Trawny:2005va}:
 \begin{equations}
 \noiseCovMat_c = E[\vectors{n}(t+\tau)\vectors{n}^T(t)] = 
 \begin{bmatrix} \sigma_{c,\gyro}^2\bI_{3\times 3} & \bzero_{3\times 3}\\ \bzero_{3\times 3} & \sigma_{c,b}^2\bI_{3\times 3}\end{bmatrix}

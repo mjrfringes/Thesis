@@ -83,7 +83,6 @@ headsepline, % Uncomment to get a line under the header
 \usepackage{graphicx}
 \usepackage{multirow}
 \usepackage{pdflscape} % for landscape pages!
-
 % number paragraphs
 \setcounter{secnumdepth}{5}
 \usepackage{titlesec}
@@ -358,13 +357,13 @@ $\omega$ & angular frequency & \si{\radian} \\
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
 % loads up the file with all the definitions
-%\include{Chapters/Introduction}
+\include{Chapters/Introduction}
 \include{Chapters/SOFIA} 
-%\include{Chapters/BETTII} 
-%\include{Chapters/DoubleFourier} 
-%\include{Chapters/AttitudeEstimation}
-%\include{Chapters/Implementation} 
-%\include{Chapters/Conclusion}
+\include{Chapters/BETTII} 
+\include{Chapters/DoubleFourier} 
+\include{Chapters/AttitudeEstimation}
+\include{Chapters/Implementation} 
+\include{Chapters/Conclusion}
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES
@@ -378,7 +377,7 @@ $\omega$ & angular frequency & \si{\radian} \\
 %\include{Appendices/AppendixA}
 %\include{Appendices/AppendixB}
 \include{Appendices/AttitudeRepr3D}
-%\include{Appendices/PIDLoop}
+\include{Appendices/PIDLoop}
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY

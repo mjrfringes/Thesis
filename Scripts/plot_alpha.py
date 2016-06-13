@@ -86,16 +86,24 @@ df = isolated.to_pandas()
 descrAlpha= df[['alpha','alpha2']].describe()
 descrAlpha.to_csv('data/descrAlpha.csv')
 
-# print df[['F37','e_F37']]
-# plt.figure()
-# hist,bin_edges = np.histogram(alpha1,bins=np.arange(0,0.5,0.05))
-# w = bin_edges[1] - bin_edges[0]
-# plt.bar(bin_edges[:-1],hist,width=w,color=blue)
-# 
-# plt.figure()
-# hist,bin_edges = np.histogram(alpha2,bins=np.arange(0,0.5,0.05))
-# w = bin_edges[1] - bin_edges[0]
-# plt.bar(bin_edges[:-1],hist,width=w,color=red)
+print df[['F37','e_F37']]
 
+fig,(ax,ax2) = plt.subplots(1,2,figsize=figsize,facecolor=facecolor)
+hist,bin_edges = np.histogram(alpha1,bins=np.arange(0,0.5,0.05))
+w = bin_edges[1] - bin_edges[0]
+ax.bar(bin_edges[:-1],hist,width=w,color=blue)
+ax.set_xlabel('Spectral index')
+ax.set_ylabel('Number of objects')
+ax.grid(True)
+ax.set_xticks([0.0,0.1,0.2,0.3,0.4])
 
+hist,bin_edges = np.histogram(alpha2,bins=np.arange(0,0.5,0.05))
+ax2.bar(bin_edges[:-1],hist,width=w,color=blue)
+ax2.set_xlabel('Spectral index')
+ax2.set_ylabel('Number of objects')
+ax2.grid(True)
+ax2.set_xticks([0.0,0.1,0.2,0.3,0.4])
+
+fig.tight_layout()
+fig.savefig('../Figures/SpectralIndex.pdf')
 plt.show()

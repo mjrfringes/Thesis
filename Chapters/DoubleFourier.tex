@@ -634,7 +634,7 @@ of correcting and monitoring the OPD outside of the cryostat using the near-IR c
 For the OPD loop on BETTII, the angles of the tip/tilt mirrors which are used to maintain overlap of the beams act as an estimator of the baseline orientation, and hence as an indirect estimator of the OPD. The attitude estimates computed from these angles are fed to the external delay line so that the OPD at the entrance of the cryostat stays as constant as possible. Because the pendulation modes have periods of a few to tens
 of seconds and should be well-behaved, we expect to be able to trust the control signals and estimate the attitude of the baseline vector to $\sim 0.12$" rms, which corresponds to a fifth of a detector pixel in the near-IR tracking array. A 0.12" attitude error indirectly corresponds to a delay uncertainty of 5~$\um$, or 12\% of a wavelength at 40 microns. This is a critical consideration when co-adding consecutive interferograms. With this amount of OPD noise, we expect, on average, a $\sim 25\%$ degradation in $\SNR$ for all sources in the short band, simply from the effects of phase noise in reducing the coherent signal (see Eq. \ref{eq:noisephth}).
 
-Even with a stable OPD estimator, the absolute ZPD of the instrument must be measured during flight and tracked over long timescales as the instrument and the truss cool down to ambient temperatures ($\sim$240~K). This can be accomplished by observing a bright point source with known position periodically during a flight and identifying the center of the interferogram response (see Appendix C).
+Even with a stable OPD estimator, the absolute ZPD of the instrument must be measured during flight and tracked over long timescales as the instrument and the truss cool down to ambient temperatures ($\sim$240~K). This can be accomplished by observing a bright point source with known position periodically during a flight and identifying the center of the interferogram response (see Appendix []).
 
 \subsection{Derived sensitivity and faintest detectable targets}
 
@@ -910,25 +910,27 @@ Faintest pt. source & 14 Jy  & 7 Jy & $\SNR_k = 5$\\
 
 \begin{figure}[ht!]
 \begin{center}
-\includegraphics{Figures/f1.eps}
+\includegraphics[width=\textwidth]{Figures/f1.eps}
 \caption[WideField]{Concept of wide-field double-Fourier interferometry. Light from the instrument is focused after combination to an image of the sky on the detector array (represented as the grid). Each column of the detector has a distinct ZPD so the interferometric responses (right side) of two sources on different columns are centered around different delay positions. The gray stripe represents the central column on the detector array and its corresponding ZPD on the interferograms.}
 %The instrument is represented by the double-headed arrow to the left. This encompasses the light collectors, the telescopes, the tip/tilt correction stages, the pupil re-imagers, and the beam combiner. After the beam combiner, the beam is focussed onto the detector array shown in this picture. Changing the OPD modulates the intensity of the Airy disks of each source in the field, and we get interferograms, as shown to the right. In this sketch we suppose that the baseline is aligned with the rows on the detector. Hence, each column of pixels always has the same instrumental OPD. In the general case, pixels along a line perpendicular to the baseline have the same OPD. Further, each source at an angle $\theta$ from the central column has an external OPD equal to $|\baseline |\sin\theta$. When the instrumental OPD approaches the opposite of this value, fringes can be seen for the source.}
 \label{fig:widefield}
 \end{center}
 \end{figure}
 
+\begin{landscape}
 \begin{figure}[ht!]
 \begin{center}
-\includegraphics{Figures/f2.eps}
+\includegraphics[width=1.5\textwidth]{Figures/f2.eps}
 \caption[optics]{Optical train diagram of a typical far-IR, double-Fourier instrument. The K-mirror rotates the beam to align the fields of view of the two sides. Inside the cryostat, a set of optics re-image the pupil, implement a controlled instrumental delay between them with the Cold Delay Line, and relay them towards the central beam combiner. After the combiner, the beams are imaged onto the detectors. To see the BETTII-specific implementation of this design, see \cite{2014PASP..126..660R}.}
 \label{fig:optics}
 \end{center}
 \end{figure}
+\end{landscape}
 
 %\begin{comment}
 \begin{figure}[ht!]
 \begin{center}
-\includegraphics{Figures/f3.eps}
+\includegraphics[width=\textwdith]{Figures/f3.eps}
 \caption[interfero]{Effects of phase and intensity noise on the recovered spectrum (single realization of the noise). Left column: normalized interferograms, intensity as function of OPD. Right column: normalized DFT of interferograms. Solid: input spectrum multiplied by anti-symmetric transmission function; Solid circles: Imaginary part of DFT from interferogram; Dotted: Real part of DFT. First row: ideal measured signal, no noise; used for normalization of all other plots. Second row: results with a realization of phase noise of 10\% at each point of the interferogram. Third row: results with a realization of intensity noise and $\SNR_\mI=10$.}
 \label{fig:interfero}
 \end{center}
@@ -975,7 +977,7 @@ Faintest pt. source & 14 Jy  & 7 Jy & $\SNR_k = 5$\\
 %\end{figure}
 \begin{figure}[ht!]
 \begin{center}
-\includegraphics{Figures/f4.eps}
+\includegraphics[width=\textwidth]{Figures/f4.eps}
 \caption[BETTII Spectral SNR]{%Effects of phase noise and background noise on the spectral $\SNR$. This simulation is computed for BETTII's band 1 parameters and noise estimates, for R=10. We show the results in both the normal science observing mode and the enhanced sensitivity mode. Both simulations are for 200 averaged scans, or 10 minutes on a source. It is important to note that one source can be observed at multiple times during the course of one flight, hence increasing the spectral $\SNR$.
 BETTII's spectral sensitivity. Solid: Normal observing mode, band 1; Dashed: Enhanced sensitivity mode, band 1; Dotted: normal observing mode, band 2; Dot-dashed: Enhanced sensitivity mode, band 2. This plot includes the technique of fringe tracking in the science channel for sufficiently bright sources (see Appendix C). As the source flux rises, the effects of the phase noise become larger and the SNR should reach an asymptotical value. However, with fringe tracking, the phase noise itself becomes smaller since one can see fringes in one single or a few consecutive scans, so the co-adding becomes easier. Thanks to the fringe-tracking, there is no regime where the phase noise is expected to be dominant on BETTII, provided that the control system performs according to expectations.}
 \label{fig:SpectralSNR}

@@ -3,13 +3,13 @@
 \chapter[Implementation and on-sky testing]{\setstretch{1}Implementation and on-sky testing} % Main chapter title
 \label{chap:implementation}
 
-%\epigraph{\setstretch{1}\small\itshape Ever tried. Ever failed. No matter. \\ Try again. Fail again. Fail better.}{S. Beckett, \textit{Worstward Ho!}}
+\epigraph{\setstretch{1}\small\itshape Ever tried. Ever failed. No matter. \\ Try again. Fail again. Fail better.}{S. Beckett, \textit{Worstward Ho!}}
 
 \section{Key pre-flight procedures}
 \subsection{Inertia measurement}
 While CAD models allowed to us to estimate the moment of inertia of the payload, this is only an approximation. For testing and for launch, the payload will be different than the model we have: we will either miss some components because they are not yet installed, or have additional components such as the ballasts, the crush pads, or the weights that are used to balance the payload.
 
-We use a simple procedure to estimate the moment of inertia about $\vectors{z}_\gyro$ of the payload while hanging from a crane. For this purpose, we command the CCMG to input a torque to the payload by moving the gimbal at a constant velocity. According to Eq.~\ref{eq:CCMGTorque}, $\ccmgtorque =  20.8\times \dot{\theta}\cos\theta$. According to conservation of angular momentum, the rate of change of the total angular momentum about $\vectors{z}_\gyro$ is $\inertia_\vectors{z}\dot{\gyroVec}_\vectors{z} = \ccmgtorque = 20.8\times \dot{\theta}\cos\theta$.
+We use a simple procedure to estimate the moment of inertia about $\vectors{z}_\gyro$ of the payload while hanging from a crane. For this purpose, we command the CCMG to input a torque to the payload by moving the gimbal at a constant velocity. According to Eq.~\ref{eq:CCMGTorque}, $\ccmgtorque =  20.8\times \dot{\theta}\cos\theta$. According to conservation of angular momentum, the rate of change of the total angular momentum about $\vectors{z}_\gyro$ is $(\inertia\dot{\gyroVec})_\vectors{z} = \ccmgtorque = 20.8\times \dot{\theta}\cos\theta$.
 
 We measure the inertia $\inertia_\vectors{z}$ by averaging measurements of the angular acceleration $\dot{\gyroVec}_\vectors{z}$, divided by the instantaneous input torque, which is numerically more stable than averaging its inverse since the accelerations, expressed in \si{\radian\per\second} are typically very small. A measure of the inertia is then the inverse of this average. By repeating the measurement over multiple accelerations and deceleration cycles, we can also obtain an uncertainty to this estimate.
 
@@ -25,6 +25,7 @@ While the intrinsic noise of our sensors has been characterized in Section~\ref{
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/multiPSD400.png}
 \label{fig:multiPSD400}
+\vspace{-0.5cm}
 \caption[Gyro PSD with payload on the ground]{Gyro PSD with payload on the ground}
 \end{center}
 \end{figure}
@@ -33,6 +34,7 @@ While the intrinsic noise of our sensors has been characterized in Section~\ref{
 \begin{center}
 \includegraphics{Figures/multiPSD_no_loglog_zoom_400.png}
 \label{fig:multiPSD400_no_loglog_zoom_400}
+\vspace{-0.5cm}
 \caption[Gyro PSD with payload on the ground - Main peaks]{Gyro PSD with payload on the ground - main peaks.}
 \end{center}
 \end{figure}
@@ -69,6 +71,9 @@ Below, we summarize the steps to properly align the gyroscopes to the star camer
 \def\labelitemi{--}
 \begin{table}[!h]
 \scriptsize
+\caption[Star camera tests]{Star camera exposure time tests.}
+\label{tab:starCameraTests}
+\vspace{-0.5cm}
 \begin{longtable}{l|P{1.5cm}P{1cm}P{1.5cm}P{1.5cm}P{1.5cm}P{1.5cm}P{1.5cm}P{1.5cm}}													
 \toprule																							
 {} 	&	  Exposure time (ms)	&	  Number of images in run 	&	  Fitted exposure time (ms)			&	  Number of matching stars 			&	  Fit ra \& dec error (arcsec) 			&	Fit roll error (arcsec)			&	  Processing time (s)			&	  Solution success rate (\%)	\\
@@ -80,8 +85,6 @@ Exp4 	&	62	&	132	&	66	$\pm$	23	&	7.32	$\pm$	1.34	&	1.75	$\pm$	0.65	&	151	$\pm$	5
 Exp5 	&	31	&	35	&	44	$\pm$	53	&	6.54	$\pm$	0.84	&	2.33	$\pm$	0.79	&	180	$\pm$	65	&	1.19	$\pm$	0.48	&	37	\\
 \bottomrule
 \end{longtable}																							
-\caption[Star camera tests]{Star camera exposure time tests.}
-\label{tab:starCameraTests}
 \end{table}																							
 
 \begin{landscape}
@@ -142,6 +145,7 @@ Show wheel angle for long time
 \begin{center}
 \includegraphics{Figures/integral_lifted_gyroZ.png}
 \label{fig:intgralgyroZ400}
+\vspace{-0.5cm}
 \caption[Integrated gyro time series while hanging]{Integrated gyro time series while hanging and no motor on.}
 \end{center}
 \end{figure}
@@ -149,6 +153,7 @@ Show wheel angle for long time
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/simplePlot_crossEl.png}
 \label{fig:crossEl400}
+\vspace{-0.5cm}
 \caption[Cross-elevation with control loop on]{Cross-elevation with control loop on (gyroscopes only).}
 \end{center}
 \end{figure}
@@ -160,6 +165,7 @@ Show wheel angle for long time
 \begin{center}
 \includegraphics{Figures/lifted_400.png}
 \label{fig:multiPSD400_lifted}
+\vspace{-0.5cm}
 \caption[Gyro PSD with payload lifted]{Gyro PSD with payload lifted.}
 \end{center}
 \end{figure}
@@ -169,6 +175,7 @@ Show wheel angle for long time
 \begin{center}
 \includegraphics{Figures/multiPSD100.png}
 \label{fig:multiPSD100_controlled}
+\vspace{-0.5cm}
 \caption[Gyro PSD with payload lifted, under azimuth control]{Gyro PSD with payload under azimuth control.}
 \end{center}
 \end{figure}

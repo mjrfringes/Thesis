@@ -39,7 +39,7 @@ The three levels of control that we need are:
 
 At its fundamental level, the problem is to implement a system that satisfies these requirements, starting with only the target's location in right ascension (RA) and declination (DEC). Ideally, the system needs to be able to achieve these goals autonomously. All of the operating modes follow from this.
 
-All of the pointing will be done in the reference frame of the gondola, which is tied solidly to the reference frame of the gondola (nominally they are the same) and the star cameras (nominally off by \SI{-45}{\degree} about the $\vectors{y}$~axis. In the following sections, we describe how the inertial attitude of the gondola is determined. Once it is known, a target's RA and DEC can be converted to a desired local azimuth $\Az$ and elevation $\El$ in the spherical coordinates attached to the gondola reference frame (see Fig.~\ref{fig:AzEl}). It is important to note that when we mention "azimuth", we are not referencing to any cardinal directions, as it can be done for other applications. For us, an azimuth is one of the two spherical angles that describe the position of our target in the current gondola reference frame. Note that the elevation angle is defined as being zero in the ($\vectors{x}_\gyro$,$\vectors{y}_\gyro$)-plane.
+All of the pointing will be done in the reference frame of the gondola, which is tied solidly to the reference frame of the gyroscopes (nominally they are the same) and the star cameras (nominally off by \SI{-45}{\degree} about the $\vectors{y}$~axis). In the following sections, we describe how the inertial attitude of the gondola is determined. Once it is known, a target's RA and DEC can be converted to a desired local azimuth $\Az$ and elevation $\El$ in the spherical coordinates attached to the gondola reference frame (see Fig.~\ref{fig:AzEl}). It is important to note that when we mention "azimuth", we are not referencing to any cardinal directions, as it can be done for other applications. For us, an azimuth is one of the two spherical angles that describe the position of our target in the current gondola reference frame. Note that the elevation angle is defined as being zero in the ($\vectors{x}_\gyro$,$\vectors{y}_\gyro$)-plane.
 
 \begin{figure}[!ht]
 	\centering
@@ -51,9 +51,9 @@ All of the pointing will be done in the reference frame of the gondola, which is
 
 Once the turbulence from the ascent have died out, the control system determines where the gondola is currently pointing using the star cameras. For the software to process the star camera image, the payload has to be still to avoid blurring of the stars on the CCD. Hence, the first order of business is to slow down the payload's inertial velocity, which is measured by the gyroscopes. This is also called $\BRAKE$ mode.
 
-The first time the system receives a star camera frame and identifies its inertial position, this triggers the estimator algorithm that constantly combines gyroscope and star camera information. From this point on, we have a reasonable estimate of where the gyroscope reference frame is pointed in the inertial frame at all times. 
+The first time the system receives a star camera frame and identifies its inertial position, this triggers the estimator algorithm that constantly combines gyroscope and star camera information. From this point on, we have a reasonable estimate of where the gyroscope reference frame is pointed with respect to the inertial frame. 
 
-When a new target in RA and DEC is set by the flight computer, the system will enter the $\SLEW$ mode. This creates a profile of desired azimuth position and velocity as a function of time. The software actuates the reaction wheels to turn the payload about its $\vectors{z}$ axis. At the same time, it commands the rotation stages that control the telescopes' elevation, to go to the desired elevation. The control in elevation and control in azimuth are entirely decoupled.
+When a new target in RA and DEC is set by the flight computer, the system will enter the $\SLEW$ mode. This creates a profile of desired azimuth position and velocity as a function of time. The software commands the reaction wheels to turn the payload about its $\vectors{z}$ axis. At the same time, it commands the rotation stages that control the telescopes' elevation, to go to the desired elevation. The control in elevation and control in azimuth are entirely decoupled.
 
 When we complete the deceleration phase as we get close to our target, we switch to $\TRACK$ mode. This mode is attempting at maintaining control of the telescope within $\pm$~\ang{;;15} of our target.
 
@@ -390,9 +390,12 @@ Our star camera design features an old-generation Nikon Nikkor \SI{300}{\mm} f/2
 Our camera is a USB3.0 Point Grey Grasshopper3. The CCD is a Sony Pregius IMX174 CMOS sensor with 1920$\times$1200 pixels at \SI{5.86}{\um} pitch. This provides a field of view of \SI{2.14}{\degree}$\times$\SI{1.34}{\degree} and a pixel scale of \ang{;;4.02}/pixel. It features a very convenient software suite which works with all the Point Grey camera products, and leaves room for future potential upgrades of the camera. The detector characteristics are summarized in Table~\ref{tab:starcamproperties}.
 
 \renewcommand{\arraystretch}{1.5}
+\vspace{-0.5cm}
 \begin{table}[htbp]
 
 \small
+\caption[Star camera properties]{Star camera properties}
+\label{tab:starcamproperties}
 \begin{tabular}{p{4cm}|P{1cm}|p{8.5cm}}
 \toprule
 Property & Value & Description \\
@@ -406,8 +409,6 @@ Absolute sensitivity threshold (photons) & 9.77 & Minimum number of photons requ
 Well depth (electrons) & \num{32513} & Maximum number of electrons a pixel can store\\
 \bottomrule
 \end{tabular}
-\caption[Star camera properties]{Star camera properties}
-\label{tab:starcamproperties}
 \end{table}
 
 \begin{figure}[!ht]
@@ -569,6 +570,9 @@ BETTII will have two on-board computers (see also diagram [REF]):
 \renewcommand{\arraystretch}{1.5}
 \begin{table}[htbp]
 \small
+\caption[BETTII embedded computers]{}
+\label{tab:computers}
+\vspace{-0.5cm}
 \begin{tabular}{c|p{12.5cm}}
 \toprule
 Name  & Description \& tasks  \\
@@ -597,8 +601,6 @@ $\bullet$ Automatically applies observing plan if no commands from the ground: s
 \\
 \bottomrule
 \end{tabular}
-\caption[BETTII embedded computers]{}
-\label{tab:computers}
 \end{table}
 
 [MAKE DIAGRAM WITH ALL COMPUTERS]
