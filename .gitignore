@@ -11,8 +11,6 @@ Appendices/AttitudeRepr3D.aux
 
 *.gz
 
-*.pdf
-
 main.toc
 
 main-blx.bib
@@ -32,6 +30,8 @@ Chapters/Chapter4.aux
 *.aux
 
 Appendices/AttitudeRepr3D.aux
+
+*.aux
 
 *.aux
 
