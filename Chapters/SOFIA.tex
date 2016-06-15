@@ -81,13 +81,13 @@ However, for the most nearby clusters, the corresponding observing time was so s
 
 Various observing techniques are available to the FORCAST user to deal with background subtraction. The most robust techniques are very costly in terms of overhead for the observatory, so we decided to be audacious and requested the cheapest observing mode: the Chop-Nod-Chop mode (CNC), combined with 9 ditherings for each field, which dramatically helps when co-adding images together. Most of our data was processed by the SOFIA automated pipeline that provided calibrated Level 2 images, except for the data from the first few flights, for which we received the help of one of FORCAST's Principal Investigator, Dr. Joe Adams, who processed the raw data through his own instrument pipeline.
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=\textwidth]{Figures/SOFIA_bands.pdf}
-\label{fig:SOFIAbands}
-\caption[SOFIA bands]{SOFIA FORCAST bands.}
-\end{center}
-\end{figure}
+%\begin{figure}[!h]
+%\begin{center}
+%\includegraphics[width=\textwidth]{Figures/SOFIA_bands.pdf}
+%\label{fig:SOFIAbands}
+%\caption[SOFIA bands]{SOFIA FORCAST bands.}
+%\end{center}
+%\end{figure}
 
 The data were acquired over 10 SOFIA flights spanning multiple years, with the last batch dating from February 2015. The actual observing times for each band and cluster is shown in Table~\ref{tab:times}. In that table, we have estimated the time for the \SI{37}{\um} band using a composite formula that levels the observing time from mode 3 to that of mode 1, considering their respective sensitivities. We obtained about \SI{10}{\hour} of on-sky data, and 10 out of our 12 original target clusters were observed.
 
@@ -214,7 +214,33 @@ For extended sources, an elliptical aperture is determined manually from the \SI
 
 The photometry from sources that were observed in different flights is then combined to increase the signal-to-noise ratio. This combination takes into account the sensitivity of each source by appropriately weighing each image.
 
-The source sensitivity calculated this is added to the systematic uncertainty of the instrument, for which we follow the recommendation from \citep{Herter:2012hv} to adopt a 20\%, $3\sigma$ uncertainty. 
+The source sensitivity calculated is added to the systematic uncertainty of the instrument, for which we follow the recommendation from \citep{Herter:2012hv} to adopt a 7\%, $1\sigma$ uncertainty. 
+
+To validate our flux extraction method, we compare our results with data from \citet{Harvey:2012kw} who observed one of the sources in our sample, S140. Their photometry (shown in their Table 1.) of IRS 1, 2 and 3 (respectively corresponding to our targets S140.5, S140.4, and S140.3) is compared to our photometry in Table~\ref{tab:SOFIAPhotometryHarvey}.
+
+\renewcommand{\arraystretch}{1.5}
+\setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
+\def\labelitemi{--}
+\begin{table}[!h]
+\scriptsize
+\caption{SOFIA photometry comparison} \label{tab:SOFIAPhotometryHarvey}
+\vspace{-0.5cm}
+\begin{longtable}{l|P{1cm}P{1cm}P{1cm}P{1cm}P{1cm}P{1cm}P{1cm}}
+\toprule															
+SOFIA name	&	F11	&	F11L	&	F19	&	F31	&	F31L	&	F37	&	F37L	\\
+\midrule															
+S140.3	&	9.79	&	9.7	&	101.70	&	449.60	&	401.00	&	639.17	&	669.00	\\
+S140.4	&	3.62	&	4	&	91.09	&	357.63	&	368.00	&	367.35	&	485.00	\\
+S140.5	&	110.02	&	110	&	812.84	&	1857.33	&	1585.00	&	2000.94	&	2176.00	\\
+\midrule															
+Sum of point sources in cluster	&	123.43	&	123.7	&	1005.63	&	2664.57	&	2354	&	3007.47	&	3330	\\
+Total cluster emission	&	135.26	&	145	&	1195.20	&	4450.31	&	3780.00	&	5910.26	&	6730.00	\\
+Error (\%)	&	9.59	&	17.22	&	18.85	&	67.02	&	60.58	&	96.52	&	102.10	\\
+\bottomrule					
+	\end{longtable} 
+\caption*{Comparison of SOFIA four-band photometry from \citet{Harvey:2012kw} on S140 (columns with 'L'). The authors' "total emission" actually represents the total emission in the entire field of view, whereas out measurement corresponds to a manually-selected source region encompassing only the dense core. The total emission in the entire field of view is less representative, as it could include contribution from other sources as well as areas of negative flux from the chopping and nodding steps. In this cluster, there is a large amount of emission which is not due to the three identified sources.}
+
+\end{table}
 
 \subsection{Image sensitivity}
 In order to determine the absolute sensitivity in the image, we use two methods. First, we manually determine a region in each cluster that visually appears devoid of flux. We calculate the sensitivity as if this background region was a source, by patching apertures in an annulus around this background location and calculating the standard deviation of the obtained fluxes. We call this sensitivity measurement $\sigman$. The main downside of this method is that it requires a manual operation to select the appropriate background field, and hence could have more variation depending on which field we select. Second, we use a routine that iteratively isolates the pixel values above $2\sigma$ of the image, in order to remove the contamination from our actual sources. The standard deviation of the resulting image is then calculated, and is multiplied by the square root of the number of pixels in an aperture of 4 pixel radius. This corresponds to a floor sensitivity $\sigstd$. We present our results in Table~\ref{tab:SOFIASensitivity}, where we also compare this sensitivity with the expected sensitivity $\sigth$ obtained using the online calculator with the actual exposure time of our images. We note that usually, the theoretical values are more in agreement with our first method. 
@@ -250,6 +276,11 @@ S171 	&	0.04	&	0.03	&	0.03	&	0.07	&	0.04	&	0.03	&	0.07	&	0.05	&	0.12	&	0.16	&	0.
 
 
 \subsection{Other photometry}
+
+While SOFIA provides mid-IR photometry, we looked in the literature for published fluxes on our targets in order to reconstruct more complete SEDs. In addition to our four SOFIA bands, our table includes data from 2MASS, \Spitzer, Herschel, BOLOCAM and the SMA. The data from these sources is published in online catalogs, which we programmatically cross-reference with the positions of our targets. The closest target that corresponds to a Vizier location query is selected to be the correct catalog match. For the 2MASS and \Spitzer data, the location of the target needs to be less than \ang{;;2} away from our coordinates. [ENUMERATE THE SELECTION MECHANISMS]. In addition to automated online catalog searches, we also add values for sources in NGC2071 from \citet{vanKempen:2012fb}.
+
+For our two most clustered cases in the cores of NGC2071 and IRAS20050+2720, the published catalogs do not have available fluxes. We assume that the sources are so clustered that they the source extraction software from these authors does not register them as point sources, due to confusion or saturation effects. Hence we adapt our own photometry routines for these clustered environments and obtain the fluxes directly from the calibrated Level 3 images themselves, which are all available on the archive. In Table~\ref{tab:SpitzerPhotometry}, we compare our photometry results with published fluxes from \citet{Megeath:2012cn} and \citet{Gutermuth:2009gca} for isolated sources elsewhere in these same fields of view. We use the \Spitzer handbook quantities for aperture photometry [cite values]. We find that our results are within 10\% of these other authors' results, although it is possible that we are systematically overestimating the fluxes. 
+
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
 \def\labelitemi{--}
@@ -272,7 +303,7 @@ IRAS20050.6	&	-0.07	&	-0.06	&	-0.12	&	-0.05	\\
 IRAS20050.7	&	-0.15	&	-0.07	&	-0.02	&	-0.07	\\
 \bottomrule					
 	\end{longtable} 
-\caption*{Fractional difference between our own aperture photometry on \Spitzer archival images and published \Spitzer photometry from \citet{Megeath:2012cn} for NGC2071, and \citet{Gutermuth:2009gca} for IRAS20050+2720. }
+\caption*{Fractional difference between our own aperture photometry on \Spitzer archival images and published \Spitzer photometry from \citet{Megeath:2012cn} for NGC2071, and \citet{Gutermuth:2009gca} for IRAS20050+2720. When values are negative, it means that their photometry is lower than ours.}
 \label{tab:SpitzerPhotometry}
 \end{table}
 
@@ -291,30 +322,7 @@ Explain map-making algorithm
 \end{center}
 \end{figure}
 
-\renewcommand{\arraystretch}{1.5}
-\setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
-\def\labelitemi{--}
-\begin{table}[!h]
-\scriptsize
-\caption{SOFIA photometry comparison} \label{tab:SOFIAPhotometryHarvey}
-\vspace{-0.5cm}
-\begin{longtable}{l|P{1cm}P{1cm}P{1cm}P{1cm}P{1cm}P{1cm}P{1cm}}
-\toprule																			
 
-SOFIA name	&	F11	&	F11L	&	F19	&	F31	&	F31L	&	F37	&	F37L	\\
-\midrule															
-S140.3	&	9.79	&	9.7	&	101.70	&	449.60	&	401.00	&	639.17	&	669.00	\\
-S140.4	&	3.62	&	4	&	91.09	&	357.63	&	368.00	&	367.35	&	485.00	\\
-S140.5	&	110.02	&	110	&	812.84	&	1857.33	&	1585.00	&	2000.94	&	2176.00	\\
-\midrule															
-Sum of point sources in cluster	&	123.43	&	123.7	&	1005.63	&	2664.57	&	2354	&	3007.47	&	3330	\\
-Total cluster emission	&	135.26	&	145	&	1195.20	&	4450.31	&	3780.00	&	5910.26	&	6730.00	\\
-Error (\%)	&	9.59	&	17.22	&	18.85	&	67.02	&	60.58	&	96.52	&	102.10	\\
-\bottomrule					
-	\end{longtable} 
-\caption*{Comparison of SOFIA four-band photometry from \citet{Harvey:2012kw} on S140. The author's "total emission" actually represents the total emission in the entire field of view, whereas out measurement corresponds to a manually-selected source region encompassing only the dense core. Note that in this cluster, there is a large amount of emission which is not due to the three identified sources.}
-
-\end{table}
 
 Image of extended sources: CepA, NGC7129, NGC2264, NGC1333
 
