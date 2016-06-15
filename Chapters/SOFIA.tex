@@ -36,7 +36,7 @@ However, the most dense regions of clusters still present a challenge for the MI
 
 BETTII will tackle the confusion problem at wavelengths from 30 to \SI{100}{\micro\meter}, and will be complementary to \Herschel observations of star-forming regions. SOFIA, however, can already start studying these dense regions with its FORCAST instrument, providing 2-\ang{;;3.5} resolution between 10 and \SI{37}{\micro\meter}. 
 
-We responded to SOFIA FORCAST's first science call with a proposal for a survey of nearby star-forming cluster cores. The clusters were selected from a list of dense young clusters within 1 kpc of the Sun based on \citet{Porras:2003kxa} and \citet{Gutermuth:2009gca}. From this list we selected clusters that were: (1) north of -25 degrees declination so that they could be done from a northern hemisphere flight; (2) included membership of $>$50 YSOs; and (3) included bright 8-\SI{24}{\micron} sources within the dense cores based on \Spitzer and/or WISE data. 
+We responded to SOFIA FORCAST's first science call with a proposal for a survey of nearby star-forming cluster cores. The clusters were selected from a list of dense young clusters within 1 kpc of the Sun based on \citet{Porras:2003kxa} and \citet{Gutermuth:2009gca}. From this list we selected clusters that were: (1) north of -25 degrees declination so that they could be done from a northern hemisphere flight; (2) included membership of $>$50 YSOs; and (3) included bright 8-\SI{24}{\micro\meter} sources within the dense cores based on \Spitzer and/or WISE data. 
 
 In order to sample the most range of the SED, we proposed to observe in 4 of FORCAST's science continuum bands: 11.1, 19.7, 31.5 and \SI{37.1}{\micron}. This wavelength coverage would be very complementary to archival data from \Spitzer and WISE. Our focus on bright regions spread all across the sky is convenient for SOFIA, and our project would be observed as a gap-filler during the primary science flight legs.
 
@@ -277,9 +277,9 @@ S171 	&	0.04	&	0.03	&	0.03	&	0.07	&	0.04	&	0.03	&	0.07	&	0.05	&	0.12	&	0.16	&	0.
 
 \subsection{Other photometry}
 
-While SOFIA provides mid-IR photometry, we looked in the literature for published fluxes on our targets in order to reconstruct more complete SEDs. In addition to our four SOFIA bands, our table includes data from 2MASS, \Spitzer, Herschel, BOLOCAM and the SMA. The data from these sources is published in online catalogs, which we programmatically cross-reference with the positions of our targets. The closest target that corresponds to a Vizier location query is selected to be the correct catalog match. For the 2MASS and \Spitzer data, the location of the target needs to be less than \ang{;;2} away from our coordinates. [ENUMERATE THE SELECTION MECHANISMS]. In addition to automated online catalog searches, we also add values for sources in NGC2071 from \citet{vanKempen:2012fb}.
+While SOFIA provides mid-IR photometry, we looked in the literature for published fluxes on our targets in order to reconstruct more complete SEDs. In addition to our four SOFIA bands, our table includes data from 2MASS, \Spitzer, and other instruments. Photometry from these sources is published in online catalogs, which we programmatically cross-reference with the positions of our targets. The closest target that corresponds to a Vizier location query is selected to be the correct catalog match. For the 2MASS data, the location of the target needs to be less than \ang{;;2} away from our coordinates for point sources, and \ang{;;5} for extended sources. For the \Spitzer data, the matching radius is \ang{;;3} for point sources and \ang{;;10} for extended sources. In addition to automated online catalog searches, we also add values for sources in NGC2071 from \citet{vanKempen:2012fb}.
 
-For our two most clustered cases in the cores of NGC2071 and IRAS20050+2720, the published catalogs do not have available fluxes. We assume that the sources are so clustered that they the source extraction software from these authors does not register them as point sources, due to confusion or saturation effects. Hence we adapt our own photometry routines for these clustered environments and obtain the fluxes directly from the calibrated Level 3 images themselves, which are all available on the archive. In Table~\ref{tab:SpitzerPhotometry}, we compare our photometry results with published fluxes from \citet{Megeath:2012cn} and \citet{Gutermuth:2009gca} for isolated sources elsewhere in these same fields of view. We use the \Spitzer handbook quantities for aperture photometry [cite values]. We find that our results are within 10\% of these other authors' results, although it is possible that we are systematically overestimating the fluxes. 
+For our two most clustered cases in the cores of NGC2071 and IRAS20050+2720, the published catalogs do not have all available fluxes. We assume that the sources are so clustered that they the source extraction software from these authors do not register them as point sources, due to confusion or saturation effects. Hence we adapt our own photometry routines for these clustered environments and obtain the fluxes directly from the calibrated Level 3 images themselves, which are all available on the archive. In Table~\ref{tab:SpitzerPhotometry}, we compare our photometry results with published fluxes from \citet{Megeath:2012cn} and \citet{Gutermuth:2009gca} for isolated sources elsewhere in these same fields of view. We use the \Spitzer handbook recommendations for aperture photometry on \Spitzer archival images (\ang{;;2.4} aperture with and an annulus that extends from 12 to \ang{;;20}). We find that our results are within 10\% of these other authors' results, although it is possible that we are systematically overestimating the fluxes. 
 
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
@@ -307,11 +307,17 @@ IRAS20050.7	&	-0.15	&	-0.07	&	-0.02	&	-0.07	\\
 \label{tab:SpitzerPhotometry}
 \end{table}
 
+In some cases, we also found archival Herschel images, although no published photometry was available for most our sources. We then apply our same aperture photometry routines for those calibrated Herschel images, using aperture and background subtraction parameters from \citep{Shimizu:2016if} for the PACS and SPIRE. Because of the very large beams of Herschel compared to FORCAST, the SPIRE bands are considered upper limit fluxes for sources that are further than \SI{300}{\pc}.
+
 \section{Data products}
 
 \subsection{Maps}
 
-Explain map-making algorithm
+The SOFIA FORCAST archival images consist of $\sim~200$ individual images, each representing a field at a given wavelength. Some fields are revisited multiple times when the entire observation could not happen in a single flight leg. These individual fields are processed and mosaiced together to form one single map for each wavelength and each cluster. 
+
+Before mosaicing the fields, we proceed to a 2D background subtraction. This method divides the images into sections of $50\times 50$ pixels, estimates the median in each cell, and fits a 2D function to these median values. This function is then used to construct a smooth background, which is then completely removed from the image. Each background-subtracted image is then calibrated (using the calibration factor that is supplied by the FORCAST pipeline), and weighed by its exposure time before it is co-added into a mosaic in the WCS coordinate frame. Note that although these maps are useful to take a quick glance at the flux distribution and spot artifacts, the actual photometry described in the previous sections uses each individual raw field, without background subtraction. If a source is present in multiple fields, the photometry from each of these fields is combined to provide a better flux estimate.
+
+In Fig.~\ref{fig:variety_sources} we present a variety of maps from our cluster sample. Each map is a three-color image (red: \SI{37}{\micron}, green: \SI{31}{\micron} and blue: \SI{19}{\micron}), and the scale and stretch of each color is adjusted to balance each color. 
 
 \begin{figure}[!h]
 \begin{center}
@@ -323,13 +329,10 @@ Explain map-making algorithm
 \end{figure}
 
 
+\subsection{Source types}
+The point sources in our sample are almost exclusively class 0 and I protostars, using the traditional spectral index determination (which uses wavelengths from \SI{2}{\micron} to \SI{24}{\micron}. They all have a spectral index from 0 to 0.2, which indicates the rising SED of an embedded object. However, for a large fraction of our sample, \Spitzer \SI{24}{\um} is unavailable, which makes the spectral index rely only on the 2-\SI{8}{\um} flux to determine the stage of the object. 
 
-Image of extended sources: CepA, NGC7129, NGC2264, NGC1333
-
-Image of clustered sources: IRAS20050, NGC2071, S140
-
-
-
+We suggest using SOFIA's bands for a more robust estimate of the spectral index. Using wavelengths from 2 to \SI{37}{\um} gives more leverage and avoids misidentification. The difference in the distributions is show in Fig.~\ref{fig:SpectralIndex}.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/SpectralIndex.pdf}
@@ -356,6 +359,9 @@ From these findings, we created a simplified grid of models by significantly red
 \def\labelitemi{--}
 \begin{table}[!h]
 \scriptsize
+\caption[SED model grid]{SED model grid.}
+\label{tab:SEDModelGrid}
+\vspace{-0.5cm}
 \begin{longtable}{lP{5cm}P{3cm}P{2cm}}
 \toprule																			
 Parameter	&	Description	&	Values	&	Units	\\
@@ -403,11 +409,32 @@ $i$	&	Inclination angle	&	0 to 90 in 20 constant increments of cos(i)	&	degrees	
 $s$	&	Scaling	&	0.7, 0.85, 1, 1.5, 1.3	&		\\
 \bottomrule					
 	\end{longtable} 
-\caption[SED model grid]{SED model grid.}
-\label{tab:SEDModelGrid}
 \end{table}
 
-[Add radiative transfer table details.]
+The parameters in this grid correspond to those used by the Hyperion software. We constructed a wrapper program that can run the Hyperion software for the parameters in this grid. Because of time and resource limitations, a moderate number of photons was chosen. The details of our modeling parameters, which will be familiar to the Hyperion user, are described in Table~\ref{tab:HyperionParams}.
+
+\renewcommand{\arraystretch}{1.5}
+\setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
+\def\labelitemi{--}
+\begin{table}[!h]
+\scriptsize
+\caption[Hyperion simulation parameters]{Hyperion simulation parameters.}
+\label{tab:HyperionParams}
+\vspace{-0.5cm}
+\begin{longtable}{lP{4cm}}
+\toprule																			
+Number of photons (initial)	&	\num{2e5}	\\
+Number of photons (imaging)	&	\num{2e5}	\\
+Number of photons (raytracing sources)	&	\num{1e6}	\\
+Number of photons (raytracing dust)	&	\num{1e6}	\\
+Lucy max iterations	&	6	\\
+Max photon interactions	&	\num{1e5}	\\
+Geometrical grid parameters (radial, theta and azimuthal)	&	400, 199, 2	\\
+MRW	&	TRUE	\\
+\bottomrule					
+	\end{longtable} 
+\end{table}
+
 \section{Application to four clusters}
 
 \subsection{IRAS20050+2720}

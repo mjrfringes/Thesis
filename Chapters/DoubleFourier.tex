@@ -7,15 +7,15 @@
 %----------------------------------------------------------------------------------------
 
 \section{Introduction}
-Observations at mid- to far-infrared wavelengths from the Earth's surface are extremely 
-limited by the large atmospheric opacity in this region of the spectrum. Space-based telescopes 
-like IRAS \cite[12-100 $\um$;][]{1984ApJ...278L...1N}, ISO \cite[2.5-240 $\um$;][]{1996A&A...315L..27K}, \textit{Spitzer} \cite[3.6-160 $\um$;][]{2004ApJS..154....1W}, AKARI  \cite[1.7-180 $\um$;][]{2007PASJ...59S.369M}, WISE \cite[3.4-22 $\um$;][]{2010AJ....140.1868W} and \textit{Herschel} \cite[55-672 $\um$;][]{2010A&A...518L...1P} have demonstrated the scientific value of observations at 
-these wavelengths; but the spatial resolution of space-based observatories is limited by the cost 
-and complexity of building and flying progressively larger aperture telescopes. 
-Interferometry is a common solution to this problem on the ground, and is a viable path forward to obtain much
-higher resolution than what single apertures can provide. 
-In particular, spatio-spectral interferometry \citep{Mariotti:1988vea} is a way to achieve 
-high angular and spectral resolutions at far-IR wavelengths from above the atmosphere, without the cost and limitations of large single apertures. 
+%Observations at mid- to far-infrared wavelengths from the Earth's surface are extremely 
+%limited by the large atmospheric opacity in this region of the spectrum. Space-based telescopes 
+%like IRAS \cite[12-100 $\um$;][]{1984ApJ...278L...1N}, ISO \cite[2.5-240 $\um$;][]{1996A&A...315L..27K}, \textit{Spitzer} \cite[3.6-160 $\um$;][]{2004ApJS..154....1W}, AKARI  \cite[1.7-180 $\um$;][]{2007PASJ...59S.369M}, WISE \cite[3.4-22 $\um$;][]{2010AJ....140.1868W} and \textit{Herschel} \cite[55-672 $\um$;][]{2010A&A...518L...1P} have demonstrated the scientific value of observations at 
+%these wavelengths; but the spatial resolution of space-based observatories is limited by the cost 
+%and complexity of building and flying progressively larger aperture telescopes. 
+%Interferometry is a common solution to this problem on the ground, and is a viable path forward to obtain much
+%higher resolution than what single apertures can provide. 
+%In particular, spatio-spectral interferometry \citep{Mariotti:1988vea} is a way to achieve 
+%high angular and spectral resolutions at far-IR wavelengths from above the atmosphere, without the cost and limitations of large single apertures. 
 
 Several space-based interferometer concepts, the Far Infrared Interferometer \citep[FIRI;][]{2009ExA....23..245H}, the Space Infrared Interferometer Telescope
 \citep[SPIRIT;][]{Leisawitz:2007if}, and the Submillimeter Probe of the Evolution of Cosmic Structure \citep[SPECS;][]{Harwit:2006hl}, have been proposed and use spatio-spectral interferometry to achieve the much needed angular resolution to 
@@ -85,9 +85,9 @@ By sweeping the OPD, the double-Fourier instrument measures interferograms which
 
 \subsection{The case study: BETTII}
 
-The BETTII project \citep{2014PASP..126..660R}, is a motivation for this paper and a near-term application of spatio-spectral interferometry. BETTII consists of two 50~cm siderostats on a fixed 8~m baseline, with a far-IR beam-combining instrument at the center. It will observe the far-IR universe in two 
+The BETTII project \citep{Rinehart:2014gk}, is a motivation for this paper and a near-term application of spatio-spectral interferometry. BETTII consists of two 50~cm siderostats on a fixed 8~m baseline, with a far-IR beam-combining instrument at the center. It will observe the far-IR universe in two 
 wavelength bands, 30-50~$\um$ and 60-90~$\um$. The instrument is currently under construction at NASA Goddard Space Flight Center and is scheduled to launch in the Fall of 2016 on a stratospheric balloon from Fort Sumner, New Mexico, to an altitude of 35~km in order to be above most of the atmosphere. For its first flight, BETTII will focus on the study of dense star formation in nearby clusters. While a complete image reconstruction is not possible due to the static baseline length, BETTII will help resolve point source objects that are 0.5-1" apart in the short and long band, respectively, more than ten times the spatial resolution of \textit{Spitzer} at 24~$\um$ and six times the resolution of SOFIA at 37~$\um$.  Combined with a modest spectral resolution of $\R=10 - 50$, BETTII will measure the spectral energy distributions (SEDs) of clustered young stars to determine their evolutionary stage, locate the origin of the far-IR emission, and improve our understanding of how stars accrete their mass in these very dense regions of stellar birth \cite[e.g. see][and references therein]{2014prpl.conf..149T}. For resolved sources, the fixed baseline will not completely lift degeneracies between the spectral and spatial information; however detailed source modeling can put constraints on the distribution of the far-IR emission
-\citep[e.g][]{2013ApJS..207...30W}.
+\citep[e.g][]{Whitney:2013cw}.
 %LGM: modified last sentence and added recent reference for modeling.
 
 In this paper, we study how various types of noise propagate to the derived spectrum in an
@@ -124,7 +124,7 @@ where $\s \equiv {1 \over \lambda}$ is the wavenumber of the light in $\cm1$ as 
 %The "\textit{i}" in the second term of Equation 1 arises because the beam splitter puts a $\pi/2$ phase shift in the reflected beam.  The expression is the real part only because the measured interferogram is real valued. 
 The derivation of this expression is given in Appendix~\ref{ap:interfero}.
 
-The normalized complex spatial visibility $\Vb$ has a magnitude of 1 for all baselines for which the source is completely unresolved. For extended sources, the spatial visibility depends on the source geometry, intensity distribution, and the instrument baseline vector as described in Chapter~2 of \cite{2000plbs.conf.....L} 
+The normalized complex spatial visibility $\Vb$ has a magnitude of 1 for all baselines for which the source is completely unresolved. For extended sources, the spatial visibility depends on the source geometry, intensity distribution, and the instrument baseline vector as described in Chapter~2 of \citep{Lawson:2000vf} 
 and Chapter~3 of \cite{Thompson:2008ww}.  
 For a normalized source brightness distribution $\hat{\F}$, the spatial visibility with respect to a phase reference position on the sky can be written as:
 \begin{equation}
@@ -469,7 +469,7 @@ The numerator of Eq.~\ref{eq:noisephth} shows that any amount of OPD noise will 
 
 Eq.~\ref{eq:noisephth} is the general case of a single interferogram with OPD and intensity noise. In practice, we would co-add $M$ interferograms in one ``track" to build up $\SNR$, but this puts stringent requirements on the performance of the control system and OPD estimator, because consecutive interferograms need to stay aligned with each other to within a small fraction of the carrier wavelength, to avoid causing OPD noise. The design and performance of the OPD estimator is highly implementation-specific, but most balloon and space designs will likely include an estimator that either directly measures the OPD, or indirectly infers it from the measurement of another quantity. 
 
-A direct OPD measurement can be achieved for example with a fringe-tracking instrument, while an indirect OPD estimate can be an attitude measurement, which can be related to the OPD by simple geometry by using some assumptions. The latter scheme only works if the OPD errors are only influenced by pointing uncertainties over the timescale of a track, and that all other OPD contributors are modeled and corrected with comparatively high fidelity. The spectral $\SNR$ over $M$ scans can be determined from Eq.~\ref{eq:noisephth} by multiplying the whole equation by a factor of $\sqrt{M}$. The OPD noise term causing the phase noise variance $\varPhir$ then corresponds to the variance of the OPD uncertainties for each point of a scan, plus the variance of the OPD estimation error in determining the position of the center of each scan, which is necessary to properly co-align them (Appendix C).
+A direct OPD measurement can be achieved for example with a fringe-tracking instrument, while an indirect OPD estimate can be an attitude measurement, which can be related to the OPD by simple geometry by using some assumptions. The latter scheme only works if the OPD errors are only influenced by pointing uncertainties over the timescale of a track, and that all other OPD contributors are modeled and corrected with comparatively high fidelity. The spectral $\SNR$ over $M$ scans can be determined from Eq.~\ref{eq:noisephth} by multiplying the whole equation by a factor of $\sqrt{M}$. The OPD noise term causing the phase noise variance $\varPhir$ then corresponds to the variance of the OPD uncertainties for each point of a scan, plus the variance of the OPD estimation error in determining the position of the center of each scan, which is necessary to properly co-align them (Appendix [REF]).
 
 
 
@@ -600,12 +600,12 @@ This equation indicates that the variance of the spectral index estimate decreas
 
 \section{Spectral sensitivity analysis for BETTII}
 \label{sec:implications}
-This section applies elements of the above discussion to BETTII. A general discussion on the details of BETTII can be found in \cite{2014PASP..126..660R}.
+This section applies elements of the above discussion to BETTII. A general discussion on the details of BETTII can be found in \citep{Rinehart:2014gk}.
 On BETTII, two mirrors collect light with an altitude-azimuth pointing system. The truss that holds the two mirrors moves in azimuth and determines the baseline vector, while the mirrors themselves move only in elevation. While BETTII does not physically rotate about the line of sight to cover different baseline angles, the payload always stays horizontal and the projection of its baseline vector changes as a source moves across the sky, hence covering different angles in the ($u, v$)-plane. The absolute OPD and ZPD of the instrument cannot be
 measured, maintained, or known with perfect accuracy, especially during the flight itself, due to attitude estimation errors leading to our inability to perfectly estimate the orientation of the baseline vector in real time. In fact, a significant component of the mission's
 design and implementation involves the selection and coordination of the suite of instruments which provide attitude measurements to construct the OPD estimator.
 
-A second relevant aspect of BETTII is that the detectors are cryogenic bolometers \cite[see][for similar architectures]{2014ApJ...790...77S} with 1/f noise which
+A second relevant aspect of BETTII is that the detectors are cryogenic bolometers \cite[see][for similar architectures]{Staguhn:2014kl} with 1/f noise which
 sets an optimal read-out time for the detectors of around 2.5 milliseconds (timescale 1). With BETTII's designed field coverage
 of 2 arcminutes, full field scans consist of 1024 points and take 3 seconds to complete (timescale 2). Due to thermal emission from the atmosphere,
 warm mirrors, and cryostat windows, BETTII will be in the background noise limited case for all science targets.
@@ -621,7 +621,7 @@ dynamic range of the devices. The total NEPs of the short and long bands are exp
 
 Balloon instruments are subject to low frequency ($<~0.5$~Hz) pendulum modes and other oscillations introduced by the system's geometry and mass distribution, which make pointing a challenge. However, it is expected that the balloon environment is free of perturbations at any higher frequency (other than the instrument specific perturbations). Hence, sensors with high electrical bandwidth can robustly estimate the pendulum modes to gain accurate knowledge of the attitude, which can be used as our indirect OPD estimator since it is geometrically related to the phase on sufficiently short timescales.
 
-The BETTII control system is organized with three different levels of control loops \citep{2014SPIE.9143E..3HR}: the coarse pointing loop, the fine pointing loop, and the OPD loop. The coarse pointing loop uses gyroscopes and star cameras to keep the baseline oriented within 10-15" of an appropriate near-IR guide star. A dichroic splits the near-IR (1-2$~\um$) from the far-IR (30-90$~\um$) inside the cryostat before the scanning delay line. The guide star is imaged through each of the two arms on two separate readout windows of a near-IR detector array that shares most of the optical path with the science channels. The fine control loop uses fast-steering tip-tilt mirrors, located at the pupils of each arm, to control the guide star image on each window and maintain good overlap of the beams at the science detectors. This loop reads the near-IR detector and generates a tip/tilt correction at 100~Hz. We expect to achieve beam overlap to within better than 1.5" at all times when a guide star is available. The spatial resolution of an individual BETTII beam
+The BETTII control system is organized with three different levels of control loops \citep{Rizzo:2014jq}: the coarse pointing loop, the fine pointing loop, and the OPD loop. The coarse pointing loop uses gyroscopes and star cameras to keep the baseline oriented within 10-15" of an appropriate near-IR guide star. A dichroic splits the near-IR (1-2$~\um$) from the far-IR (30-90$~\um$) inside the cryostat before the scanning delay line. The guide star is imaged through each of the two arms on two separate readout windows of a near-IR detector array that shares most of the optical path with the science channels. The fine control loop uses fast-steering tip-tilt mirrors, located at the pupils of each arm, to control the guide star image on each window and maintain good overlap of the beams at the science detectors. This loop reads the near-IR detector and generates a tip/tilt correction at 100~Hz. We expect to achieve beam overlap to within better than 1.5" at all times when a guide star is available. The spatial resolution of an individual BETTII beam
 is 17" in the short wavelength band so this is a little better than 1/10th of a resolution element. The interferometric visibility loss
 for this overlap error is anticipated to be less than 0.5\%.
 
@@ -634,7 +634,7 @@ of correcting and monitoring the OPD outside of the cryostat using the near-IR c
 For the OPD loop on BETTII, the angles of the tip/tilt mirrors which are used to maintain overlap of the beams act as an estimator of the baseline orientation, and hence as an indirect estimator of the OPD. The attitude estimates computed from these angles are fed to the external delay line so that the OPD at the entrance of the cryostat stays as constant as possible. Because the pendulation modes have periods of a few to tens
 of seconds and should be well-behaved, we expect to be able to trust the control signals and estimate the attitude of the baseline vector to $\sim 0.12$" rms, which corresponds to a fifth of a detector pixel in the near-IR tracking array. A 0.12" attitude error indirectly corresponds to a delay uncertainty of 5~$\um$, or 12\% of a wavelength at 40 microns. This is a critical consideration when co-adding consecutive interferograms. With this amount of OPD noise, we expect, on average, a $\sim 25\%$ degradation in $\SNR$ for all sources in the short band, simply from the effects of phase noise in reducing the coherent signal (see Eq. \ref{eq:noisephth}).
 
-Even with a stable OPD estimator, the absolute ZPD of the instrument must be measured during flight and tracked over long timescales as the instrument and the truss cool down to ambient temperatures ($\sim$240~K). This can be accomplished by observing a bright point source with known position periodically during a flight and identifying the center of the interferogram response (see Appendix []).
+Even with a stable OPD estimator, the absolute ZPD of the instrument must be measured during flight and tracked over long timescales as the instrument and the truss cool down to ambient temperatures ($\sim$240~K). This can be accomplished by observing a bright point source with known position periodically during a flight and identifying the center of the interferogram response (see Appendix~\ref{apsec:fringeTracking}).
 
 \subsection{Derived sensitivity and faintest detectable targets}
 

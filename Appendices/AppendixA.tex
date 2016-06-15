@@ -104,6 +104,7 @@ We can write $\langle \Ikxn\Iksxn\rangle = \langle \S^2\dsig^2 e^{-2i\pi (n-n') 
 This quantity is independent of $k'$, so the noise is white. The negative frequencies contribute the same amount, doubling the noise variance. However, we are only considering the imaginary part of the spectrum, so only half the noise variance is important in our calculation of our $\SNR$. The last expression thus represents the variance of the noise that is useful for our $\SNR$ calculations.
 
 \section{Fringe tracking in the science channels}
+\label{apsec:fringeTracking}
 
 For sufficiently bright sources, it is possible to self-calibrate the OPD between subsets of the $M$ interferograms in a track, to prevent the drift of an indirect OPD estimator. The idea is to bin consecutive interferograms in subsets in order to build up enough $\SNR$ to clearly see a fringe and be able to estimate its position with sufficient accuracy. Then, the different subsets within a track can be offset and co-added with better accuracy (smaller OPD noise) than if we were co-adding the $M$ interferogram individually with only the instrument OPD estimator noise. The best scenario would be when the fringe has a high $\SNR$ in each single interferogram - which will be the case of calibrators for BETTII.
 

@@ -33,18 +33,18 @@ Throughout this chapter, we will first discuss the basics of double-Fourier inte
 
 \section{Basics of interferometry}
 
-Since the end of the 19th century with Michelson [reference], scientists have learned how to use the wave properties of light to learn about new astrophysical phenomena. It did not take long for what first started as a laboratory experiment by Michelson and Morley [cite] to be applied to astronomy, with the Michelson Stellar Interferometer experiment. 
+Since the end of the 19th century, scientists have learned how to use the wave properties of light to learn about new astrophysical phenomena. It did not take long for what first started as a laboratory experiment by \citet{Michelson:1887wc} to be applied to astronomy, with the Michelson Stellar Interferometer experiment. 
 
 The principle of interferometry is simple. Because light behaves like a wave, two beams of light coming from the same source can be combined \textit{coherently}, provided that their amplitudes and phases are controlled. The intensity of the combined signal is a function of a) the brightness of the light beam, but also b) the relative phase and wavefront of each beam, which can create a modulation of that brightness.
 
-Michelson and Morley created what became the standard Michelson interferometer (Fig.~\ref{fig:michelson}). It uses one single source of light and a beam splitter that creates two coherent light beams from that one source. The two light beams go through two separate \textit{arms} before being recombined. While adjusting the length of one arm with respect to the other, we modulate the phase difference between the two arms, leaving everything else the same. This creates a modulation called an \textit{interferogram}, which describes the measured intensity variation as a function of the phase difference between the two arms.
+\citet{Michelson:1887wc} created what became the standard Michelson interferometer (Fig.~\ref{fig:michelson}). It uses one single source of light and a beam splitter that creates two coherent light beams from that one source. The two light beams go through two separate \textit{arms} before being recombined. While adjusting the length of one arm with respect to the other, we modulate the phase difference between the two arms, leaving everything else the same. This creates a modulation called an \textit{interferogram}, which describes the measured intensity variation as a function of the phase difference between the two arms.
 
 The phase difference is expressed in radians and depends on the wavelength of the light that is used. In this work, we will usually refer to this difference in terms of an actually physical distance instead: the optical path difference (\OPD). This has the advantage of being wavelength-independent and relate more easily to opto-mechanical considerations.
 
 \begin{figure}[!ht]
 	\centering
 	\includestandalone[width=\textwidth]{Figures/michelson}
-	\caption[Michelson interferometer]{A Michelson interferometer.}
+	\caption[Michelson interferometer]{\textit{Left}: Schematics of a Michelson interferometer. \textit{Right}: Intensity modulation resulting from the mirror linear motion. The center of the modulation, called "ZPD" for zero path difference, is the precise location of the mirror where the distance is equal in each arm.}
 	\label{fig:michelson}
     \end{figure}
 
@@ -77,23 +77,18 @@ and the interferogram can be represented by a carrier frequency modulated by an 
 
 Since the modulation is a coherent superposition of cosine waves, it contains spectral information. A cosine transform of the interferogram will decompose the contribution of each individual wavelength, hence reproducing the spectrum of the polychromatic source. This realization has led to many scientific discoveries in astronomy, chemistry and other fields over the last 100 years.
 
-[Add picture of Mach-Zehnder testbed from second year project]
-
 \subsection{Aperture synthesis}
 
 
 \begin{figure}[!h]
 	\centering
 	\includestandalone[width=\textwidth]{Figures/interferometer}
-	\caption[Michelson Stellar interferometer]{A Michelson Stellar interferometer.}
+	\caption[Michelson Stellar interferometer]{Schematics of a Michelson Stellar interferometer. Two sources are shown at the top of the picture. The red source is off-axis by an angle $\theta$. Since it is infinitely far away, its wavefront is essentially planar as it reaches us. The two siderostats sample the identical wavefront at different points, but because of the incidence angle, the light in the left arm travels slightly more path than the light in the right arm. As a result, the interferogram from that source will be shifted, since the position of ZPD is now offset by this extra distance the light has to cross. On the other hand, light from the blue source, which is perfectly on axis, produces an interferogram which has a ZPD at the nominal position. Those two intensity modulations co-add in the detector plane, and the sum is shown in black. By observing these summed interferograms over multiple baseline angles and distances, one can reconstruct entirely the spatio-spectral scene.}
 	\label{fig:interferometer}
     \end{figure}
 
 
 An interferogram is produced by coherently combining photons from one single source of light. This can be applied for example for an infinitely far astronomical source: as the light propagates from the source, by the time it reaches our instrument the radius of curvature of its wavefront is extremely large, and the latter can be approximated as being flat. The photons from this source nominally enter each arm of the interferometer with the same phase, when the alignment is perfect. When combined, these photons would interfere and create an interferogram.
-
-
-
 
 However, let's suppose that a second source is sufficiently far away from the first source that its wavefront enters the interferometer at an angle. This means the photons from the second source enter one arm slightly later than the other - or that photons need to cross more optical path in one arm than in the other. These photons would also create an interferogram, but the latter will be centered about a different position in \OPD  space than the interferogram created by the photons from the first source. Now let's suppose that the second source is exactly as bright as the first one, and that it is apart from the first by an angle $\theta$ such that $\baseline\sin\theta = \lambda/2$. In this case,  the interferogram created by the photons from the second source has the same amplitude as the first interferogram, but is shifted by half a wavelength in \OPD. As a result, the two interferograms would exactly cancel each other, and we would say that the \textit{spatial degree of coherence} between the two sources is zero. Although the sources are not coherent in the strict sense because they are completely independent sources, the intensity modulation (or interferograms) caused by each source would, in this case, cancel out. If the angular separation was such that $\baseline\sin\theta = \lambda$, then the modulations would add up and the resulting modulation would have twice the amplitude of that with just one single source. We would say that the spatial degree of coherence between the two sources is unity. 
 
@@ -108,7 +103,7 @@ However, let's suppose that a second source is sufficiently far away from the fi
 
 One way to formalize this important property is to consider an interferometer with a given baseline length and angle as a filter of the source's spatial distribution on the sky. For a given baseline length and angle with respect to the sky, the interferometer is only sensitive to a single angular frequency in a single direction on the sky. Various sources observed simultaneously by the interferometer will all contribute to a single measured interferogram (or intensity modulation), which can be characterized in terms of the spatial degree of coherence, also called \textit{complex visibility}, between the sources for a given baseline angle and length. 
 
-The generalization of this property is called the Van Cittert-Zernike theorem: the 2D Fourier transform of the intensity distribution on the sky is its complex visibility function. In other words, by mapping the complex visibility (through measuring interferograms) for all baseline angles and lengths, we can reconstruct the original image through an inverse Fourier transform. The plane of complex visibilities is commonly referred to as the (u,v)-plane [CITE THOMPSON 2008].
+The generalization of this property is called the Van Cittert-Zernike theorem \citep{Zernike:1938kq}: the 2D Fourier transform of the intensity distribution on the sky is its complex visibility function. In other words, by mapping the complex visibility (through measuring interferograms) for all baseline angles and lengths, we can reconstruct the original image through an inverse Fourier transform. The plane of complex visibilities is commonly referred to as the (u,v)-plane \citep{Thompson:2008ww}.
 
 Interferometry and aperture synthesis is used commonly at radio wavelengths, where coherent detectors can obtain the direct phase of the incoming light by mixing the signal with a local oscillator. Both the amplitude and the phase of the signal can be recorded for each antenna, and can be combined with all the other antennas at a later time.
 
@@ -128,6 +123,8 @@ By scanning the \OPD, we obtain a modulation of each pixel on the detector, whic
 
 Pupil-plane combination allows for an interferometric response of the entire field of view. The price we pay is that the \OPD scans need to be longer in order to cover enough spectral range for each pixel in the field of view. For a single-pixel detector, the \OPD scan would only need to cover enough stroke to obtain the desired spectral resolution over that one single pixel.
 
+
+
 \begin{figure}[!ht]
 	\centering
 	\includestandalone[width=\textwidth]{Figures/FTSvsDoubleFourier}
@@ -135,7 +132,7 @@ Pupil-plane combination allows for an interferometric response of the entire fie
 	\label{fig:FTSvsDoubleFourier}
     \end{figure}
 
-
+A detailed derivation of the equations of Double-Fourier interferometry is presented in this work, in appendix~\ref{ap:interfero} and Chapter~\ref{chap:phasenoisepaper}.
 
 \section{BETTII Instrument design}
 
@@ -232,7 +229,7 @@ The cryostat was design by our team. Items were sent out for manufacturing to di
 
 The fridge is a ($^3$He+$^4$He) sorption refridgerator from Chase Research that cools down the main optical bench to \SI{4}{\kelvin}. It also has an intermediate cold finger at \SI{1}{\kelvin} and a final stage that brings down the detector temperature to \SI{300}{\milli\kelvin}. 
 
-At the heart of the instrument are four $9\times 9$ close-packed linear arrays of multiplexed superconducting transition edge sensors (TES) bolometers [REF Benford et al. 2008] incorporating the Backshort Under Grid (BUG) architecture [REF Allen et al. 2006]. These arrays are scaled versions of similar arrays already built for ground-based instruments (e.g., GISMO: REF Staguhn et al. 2006, 2014). Detectors are read out using advanced linear SQUID multiplexer and amplifiers. A $4\times 22$ multiplexed readout is used for each array; the extra seven channels are used for calibration signals (unilluminated pixels, “dark SQUID” channels, and an “always on” channel), allowing monitoring of all potential noise contributors [REF de Korte et al. 2003].  
+At the heart of the instrument are four $9\times 9$ close-packed linear arrays of multiplexed superconducting transition edge sensors (TES) bolometers \citep{Benford:2008wk} incorporating the Backshort Under Grid (BUG) architecture \citep{Allen:2006jn}. These arrays are scaled versions of similar arrays already built for ground-based instruments \citep[e.g., GISMO,][]{Staguhn:2014jg}. Detectors are read out using advanced linear SQUID multiplexer and amplifiers. A $4\times 22$ multiplexed readout is used for each array; the extra seven channels are used for calibration signals (unilluminated pixels, “dark SQUID” channels, and an “always on” channel), allowing monitoring of all potential noise contributors \citep{deKorte:2003km}.  
 
 The optics inside the cryostat include two sections: a near-infrared fine guidance sensor, and the far-infrared channels which lead to the science detector. The incoming light beam is split right after entering the cryostat with a NIR/FIR dichroic beam splitter. This custom-made filter reflects off the far-IR and transmits the near-IR, and its recipe was suggested by P. Ade at Cardiff University. At the bottom of the cryostat, in the \SI{77}{\kelvin} volume, the fine guidance sensor is composed of N optics and one H1RG detector [REFERENCE]. 
 
@@ -277,6 +274,7 @@ Table~\ref{tab:instrumentParameters} represents the key instrument parameters th
 \begin{table}[!h]
 \small
 \caption[Instrument parameters]{Instrument design parameters for BETTII.}
+\vspace{-0.5cm}
 \label{tab:instrumentParameters}
 \begin{longtable}{P{6cm}|c|c|P{1.5cm}}
 \toprule											
@@ -322,6 +320,9 @@ We proceed to an estimation of the known far-IR background noise contributions f
 \def\labelitemi{--}
 \begin{table}[!h]
 \small
+\caption{Thermal noise contributors}
+\label{tab:noiseparams}
+\vspace{-0.5cm}
 \begin{longtable}{P{2.5cm}ccP{2cm}P{2cm}p{3cm}}
 \toprule
 Noise source	&		T (K)		&		Emissivity		&		Photons~\si{\per\second} Band 1		&		Photons~\si{\per\second} Band 2		&	Reference	 \\
@@ -336,8 +337,8 @@ Instrument	&	\num{	4	}	&	\num{	0.7	}	&	\num{	5.80E-27	}	&	\num{	2.50E-07	}	&	Est
 CMB	&	\num{	2.728	}	&	\num{	1	}	&	\num{	1.02E-45	}	&	\num{	9.35E-17	}	&	\cite{Fixsen:1996di}	\\
 \bottomrule
 \end{longtable}
-\caption[Thermal noise contributors]{Thermal noise contributors, excluding the atmosphere. The calculator was designed to be scalable to designing a space mission, which is why we kept track of terms which are negligible compared to the main contributors. In space, the warm optics and window contributions would be significantly reduced and more comparable to the other terms.}
-\label{tab:noiseparams}
+\caption*[Thermal noise contributors]{Thermal noise contributors, excluding the atmosphere. The calculator was designed to be scalable to designing a space mission, which is why we kept track of terms which are negligible compared to the main contributors. In space, the warm optics and window contributions would be significantly reduced and more comparable to the other terms.}
+
 \end{table}
 
 In addition to the noise of our own system, we need to take into account the noise generated by the atmosphere, which results in a more complex calculation. For best accuracy, we use quantities from \cite{Harries:1980cva}, who measured the actual sky radiance in a large range of wavelengths from balloon altitudes. We obtain a radiance of \SI{0.16}{\watt\per\raiseto{2}\meter\per\steradian} and \SI{0.07}{\watt\per\raiseto{2}\meter\per\steradian} for band 1 and 2 respectively. This corresponds to \num{2.6e10}~photons~\si{\per\second} and \num{5.2e10}~photons~\si{\per\second}, respectively. 
