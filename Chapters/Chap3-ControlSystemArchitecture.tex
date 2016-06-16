@@ -7,13 +7,13 @@ In this section, we see more directly how this applies to BETTII, and how the sy
 \subsection{Overall strategy}
 
 \subsubsection{Requirements}
-The strategy that we developed aims at satisfying the requirements established in the previous section, under the cost, time and personnel constraints that we were subject to. It fundamentally relies on the fact that \textit{knowledge} is more important than \textit{control}. While several research groups [CITE WASPS] are attempting to provide sub-arcsecond balloon gondola control, we are not going to. This strategy uses the fundamental advantage that the interferometer has over traditional pointed observatories: the decoupling of the phase with the pointing. This feature of interferometers refers to the possibility of obtaining electromagnetic interference even when the telescopes are slightly mispointed from the target. 
+The strategy that we developed aims at satisfying the requirements established in the previous section, under the cost, time and personnel constraints that we were subject to. It fundamentally relies on the fact that \textit{knowledge} is more important than \textit{control}. While several research groups (such as the WASPS team at Wallops Flight Facility) are attempting to provide sub-arcsecond balloon gondola control, we are not going to. Our strategy uses the fundamental advantage that the interferometer has over traditional pointed observatories: the decoupling of the phase with the pointing. This feature of interferometers refers to the possibility of obtaining electromagnetic interference even when the telescopes are slightly mispointed from the target. 
 
 There three levels of requirements for our instrument to produce interferograms. First, both arms need to be pointed at the target, so that an image of the target seen through each arm is formed at the detector. For our purpose this will largely be set by the limitation of the field of view of the instrument, which is about 2 arcminutes. When a target is not exactly on-axis with the telescope, it can still fall on the detector if tip/tilt correction happens downstream. The tip/tilt correction will create aberrations, but these are relatively well behaved at our wavelengths. Hence, this requirement can be expressed as an overall pointing requirement of the instrument to some amount that can be corrected in tip/tilt in each individual arms. We set this to $\pm\ang{;;15}$. This also roughly corresponds to one single pixel on the short band detector, and half a primary beam's FWHM.
 
-Once the instrument is pointed to the desired target to within $\pm\ang{;;15}$, there needs to be a fine guiding system in each arm that allows for the remaining correction. This level of control needs to overlap the beams to a small fraction of a pixel to get maximum overlap and minimum visibility losses. We set this requirement to \ang{;;1.5} r.m.s., which corresponds to a tenth of a pixel's size. The fine guidance system needs to operate over a range of at least $\pm\ang{;;15}$ to pick up where the previous level of requirements stops. It also needs to happen with high bandwidth to ensure that only minimum motion is occurring at timescales comparable to a data acquisition timescale. This system is described in section [].
+Once the instrument is pointed to the desired target to within $\pm\ang{;;15}$, there needs to be a fine guiding system in each arm that allows for the remaining correction. This level of control needs to overlap the beams to a small fraction of a pixel to get maximum overlap and minimum visibility losses. We set this requirement to \ang{;;1.5} r.m.s., which corresponds to a tenth of a pixel's size. The fine guidance system needs to operate over a range of at least $\pm\ang{;;15}$ to pick up where the previous level of requirements stops. It also needs to happen with high bandwidth to ensure that only minimum motion is occurring at timescales comparable to a data acquisition timescale. This system is described in Section~\ref{subsec:FGS}.
 
-Finally, an angular mispointing of the baseline vector with respect to the target can be might still exist, even if both beams are overlapped properly. This introduces an unwanted optical delay that can push the fringe packets outside our nominal OPD scanning range. Control of this optical delay is critical for interferometry, as it is required to properly reconstruct the OPD axis of the interferograms that are the elementary data blocks of the instrument. This can be achieved using a delay line . This is commonly done for all interferometers on the ground [CITE], and we will implement a device like this on BETTII as well [section]. For this to work, we need to be able to monitor the changes in OPD accurately, which is equivalent, on short timescales, to accurately estimate the attitude of the payload.
+Finally, an angular mispointing of the baseline vector with respect to the target might still exist, even if both beams are overlapped properly. This introduces an unwanted optical delay that can push the fringe packets outside our nominal OPD scanning range. Control of this optical delay is critical for interferometry, as it is required to properly reconstruct the OPD axis of the interferograms that are the elementary data blocks of the instrument. This can be achieved using a delay line. This is commonly done for all interferometers on the ground \citep[e.g.][]{Blind:2011ji}, and we will implement a device like this on BETTII as well which is described in Section~\ref{subsec:delayLines}. For this to work, we need to be able to monitor the changes in OPD accurately, which is equivalent, on short timescales, to accurately estimate the attitude of the payload.
 
 
 %\begin{figure}[!ht]
@@ -24,11 +24,71 @@ Finally, an angular mispointing of the baseline vector with respect to the targe
 %    \end{figure}
 %
 
-A good estimate of the attitude of our payload can lead to an accurate angular difference between our baseline vector and our target. This angular difference can be converted to an OPD using simple geometric arguments, and can then be fed to the delay line for correction. With an 8~m baseline length, an mispointing of \ang{;;1} along the baseline direction corresponds to an OPD of about \SI{40}{\um}, or one full wavelength of BETTII's short-wavelength band. In order to produce quality interferograms, we will need to know the OPD to a fraction of this [SEE previous section]. 
+A good estimate of the attitude of our payload can lead to an accurate angular difference between our baseline vector and our target. This angular difference can be converted to an OPD using simple geometric arguments, and can then be fed to the delay line for correction. With an 8~m baseline length, an mispointing of \ang{;;1} along the baseline direction corresponds to an OPD of about \SI{40}{\um}, or one full wavelength of BETTII's short-wavelength band. In order to produce quality interferograms, we will need to know the OPD to a fraction of this (Chapter~\ref{phasenoisepaper}). 
+
+\subsubsection{BETTII Coordinate systems}
+
+Before going into the details of the controls architecture, it is important to set key nomenclature and properly define our reference frames. On BETTII, multiple coordinate systems that are involved in the control system. The main systems are described in Fig.~\ref{fig:CoordinateSystem}. These coordinate systems need to be aligned before flight for the control system to operate well. 
+
+The truss reference frame (in orange and with no subscript for the rest of this document) is tied to the gyroscope reference frame (also in orange, with subscript 'g'), and we will consider that these two reference frames are aligned with each other. The $\vectors{z}$ axis of the payload points up, while the $\vectors{x}$ axis points 'forward'. The arrow formed by the truss members of the center section hence points towards the right, or in the $-\vectors{y}$ direction. 
+
+The star cameras (in purple and with subscript 'sc') are nominally aligned with the gyroscope reference frame, except for a rotation about $\vectors{y}_\gyro$ of \SI{-45}{\degree}.
+
+The main optical axis of the payload joins the centers of the two siderostats, and is coaligned with the centers of the two telescope assemblies (not shown on Fig.~\ref{fig:CoordinateSystem}). Each siderostat has its own reference frame (in green and subscript 'LS' or 'RS', for left siderostat or right siderostat, respectively) which is tied to its shape, and which is used during alignment procedures. Most importantly for the control system, the reference frame that matters is that of the optical beam reflecting off the siderostat. This is called the telescope reference frame (in black and with subscript 'tel'). With this notation, $\vectors{x}_\tel$ is our instrument's line of sight vector. Note that there are actually two 'telescope' reference frames (one for each side), although for most of the consideration in the work presented here, we will only consider one global telescope reference frame. 
+
+Not shown in Fig.~\ref{fig:CoordinateSystem}) are the reference frames of the fine guidance actuators which we will discuss in Section~\ref{subsec:FGS}, as well as many other coordinate systems used for optical alignment. 
+
+\begin{figure}[!ht]
+	\centering
+	\includestandalone{Figures/BETTII_coordinate_system}
+	\caption[BETTII coordinate systems]{See text for details.}
+	\label{fig:CoordinateSystem}
+    \end{figure}
+
+    
+%     \begin{figure}[!ht]
+% 	\centering
+% 	\includestandalone{Figures/starCameraRefFrame}
+% 	\caption{Star camera angles. The star camera reference frame as well as the telescope reference frame are represented here with the celestial sphere local RA and DEC axes in the background. There is a known matrix that transforms the star camera reference frame, where inertial attitude is measured, to the telescope reference frame, where error vectors are computed. The error vector is determined on the plane of the sky and has two projections on the telescope reference frame. The $\Delta\El=\Delta$El component corresponds to the elevation error and is corrected by the siderostat angle. The $\Delta\xEl=\Delta$xEl component corresponds to the cross-elevation error, and is corrected by the CCMG gimbal angle. Note that as the siderostat elevation is adjusted to reduce the elevation error, the transformation matrix between the star camera and telescope reference frames is adjusted as well.}
+% 	\label{fig:starcamRefFrame}
+%     \end{figure}
+
+In addition to the payload's own coordinate systems, it is important to properly understand the various astronomical coordinate systems that play a role in the pointing system. This is represented on Fig.~\ref{fig:celestialSphere}. In this complicated cartoon, the celestial sphere is shown as the outermost circle. For our purposes, a location in the sky is represented by a pair of spherical coordinates on this unit sphere, the right ascension (RA) and declination (DEC). The vernal equinox is shown as our zero for RA and DEC, and corresponds to one of the two nodes at the intersection of the celestial equator and the ecliptic plane. In yellow, a sample guide star is shown, with its RA and DEC coordinates. 
+
+Our payload is arbitrarily placed on the inside sphere which represents the Earth. The gondola/gyroscope coordinate system is shown, as well as the local horizon, which corresponds to the tangent plane at our location. The boresight vector of the star camera, $\vectors{x}_\starcam$ is also shown. To properly define the relevant pointing angles, however, we need to consider that the observer is always located at the center of this sphere, so we translated the gyroscope reference frame to the center of the celestial sphere. Here, for clarity, we increased the size of the star camera boresight vector, to show its intersection with the celestial sphere. The star camera field of view is represented as a rectangle, and the rest of the star camera axes are drawn as well. The star camera measured the celestial coordinates of its boresight vector, RA$_\starcam$ and DEC$_\starcam$, as well as the Roll angle of its field of view with respect to the local meridian. 
+
+
+\begin{figure}[!ht]
+	\centering
+	\includestandalone{Figures/CelestialSphereRAandDEC2}
+	\caption[The celestial sphere]{See text for details.}
+	\label{fig:celestialSphere}
+    \end{figure}
 
 
 
-\subsubsection{Control loop design and operating modes}
+
+The telescope reference frame is omitted from Fig.~\ref{fig:celestialSphere} for clarity. Once the star camera determines its orientation, the orientation of the gyroscope reference frame, gondola and telescope can be calculated. The error signal which is relevant to the control system is the measure of the distance (in terms of local spherical coordinates: elevation $\Delta\El$ and cross-Elevation $\Delta\crossEl$) between our current telescope reference frame boresight coordinates and the chosen target position on the sky (see Fig.~\ref{fig:starcamRefFrame}). The goal of the control system is to minimize this vector. Nominally, the error in elevation is corrected by moving the siderostats about the optical axis. The cross-elevation error is corrected by moving the entire payload in azimuth. 
+
+\begin{figure}[!ht]
+	\centering
+	\includestandalone{Figures/starCameraRefFrame}
+	\caption[The star camera reference frame]{See text for details.}
+	\label{fig:starcamRefFrame}
+    \end{figure}
+
+A more detailed illustration of the high-level pointing strategy is offered in Fig.~\ref{fig:AzEl}. In this picture, we now show the point of view of the payload with its local horizon plane. The same yellow star is shown for reference to the previous figure. In this particular configuration, the payload determines its orientation with the star camera, and calculates a correction in local azimuth and desired local elevation, $\Az$ and $\El$. Note that the azimuth does not refer to any particular cardinal direction. For the us, the azimuth angle is simply the angle between our $\vectors{x}_\gyro$ vector and its desired position when the telescope points at the target, which we consider to be 0. 
+
+\begin{figure}[!h]
+	\centering
+	\includestandalone{Figures/AzEl}
+	\caption[Azimuth and elevation of a target]{}
+	\label{fig:AzEl}
+    \end{figure}
+
+
+
+\subsubsection{Control architecture and operating modes}
 
 The three levels of control that we need are:
 \begin{enumerate}
@@ -41,12 +101,6 @@ At its fundamental level, the problem is to implement a system that satisfies th
 
 All of the pointing will be done in the reference frame of the gondola, which is tied solidly to the reference frame of the gyroscopes (nominally they are the same) and the star cameras (nominally off by \SI{-45}{\degree} about the $\vectors{y}$~axis). In the following sections, we describe how the inertial attitude of the gondola is determined. Once it is known, a target's RA and DEC can be converted to a desired local azimuth $\Az$ and elevation $\El$ in the spherical coordinates attached to the gondola reference frame (see Fig.~\ref{fig:AzEl}). It is important to note that when we mention "azimuth", we are not referencing to any cardinal directions, as it can be done for other applications. For us, an azimuth is one of the two spherical angles that describe the position of our target in the current gondola reference frame. Note that the elevation angle is defined as being zero in the ($\vectors{x}_\gyro$,$\vectors{y}_\gyro$)-plane.
 
-\begin{figure}[!ht]
-	\centering
-	\includestandalone{Figures/AzEl}
-	\caption[Azimuth and elevation of a target]{}
-	\label{fig:AzEl}
-    \end{figure}
 
 
 Once the turbulence from the ascent have died out, the control system determines where the gondola is currently pointing using the star cameras. For the software to process the star camera image, the payload has to be still to avoid blurring of the stars on the CCD. Hence, the first order of business is to slow down the payload's inertial velocity, which is measured by the gyroscopes. This is also called $\BRAKE$ mode.
@@ -57,13 +111,19 @@ When a new target in RA and DEC is set by the flight computer, the system will e
 
 When we complete the deceleration phase as we get close to our target, we switch to $\TRACK$ mode. This mode is attempting at maintaining control of the telescope within $\pm$~\ang{;;15} of our target.
 
-Finally, for each of the two arms, we need to acquire a guide star onto our guide camera [section]. This requires a fast imaging capability and a fast-steering tip/tilt correction mechanism to freeze the motion of the sky on the guide camera. This is $\ACQUIRE$ mode. Two images of the sky are made on the detector, one from each arm; the guide star is located in each image, and the tip/tilt mechanisms are actuated to center this star onto a location of the detector that corresponds to maximum overlap at the science detectors. One the star is centered onto that location, the window size of the camera decreases, and the acquisition speed increases. Ultimately, we will get two patches of 35$\times$35 pixels at $\approx$~\SI{50}{\hertz}. When this acquisition speed is reached we consider ourselves in $\LOCKED$ mode.
+Finally, for each of the two arms, we need to acquire a guide star onto our guide camera (Section~\ref{subsec:FGS}). This requires a fast imaging capability and a fast-steering tip/tilt correction mechanism to freeze the motion of the sky on the guide camera. This is $\ACQUIRE$ mode. Two images of the sky are made on the detector, one from each arm; the guide star is located in each image, and the tip/tilt mechanisms are actuated to center this star onto a location of the detector that corresponds to maximum overlap at the science detectors. One the star is centered onto that location, the window size of the camera decreases, and the acquisition speed increases. Ultimately, we will get two patches of 35$\times$35 pixels at $\approx$~\SI{50}{\hertz}. When this acquisition speed is reached we consider ourselves in $\LOCKED$ mode.
 
 In both $\ACQUIRE$ and $\LOCKED$ mode, the position of the two tip/tilt platforms contains information on the overall mispointing of the optical train: when the actuators are both off in the same direction with respect to their nominal position, it means that the entire truss is off the guide star by this amount. When available, this information is used by the estimator along with the gyroscope and star camera information to compute the best possible attitude estimate. Since the tip/tilt is tied to the actual optics train, its information is heavily weighted compared to the other sensors. 
 
-When the two guide star images are centered, this means proper overlap of the far-infrared beams at the science detectors. Hence, we are in a position to spot interferometric signal, which will translate to a modulation of the intensity of the coherently combined image as a function of OPD. The OPD is constantly modulated with the Cold Delay Line [section], independently of the mode in which we are. However, residual mispointings can create large unwanted OPD perturbations. Hence, during $\TRACK$ and $\ACQUIRE$ mode, the Warm Delay Line mechanism is activated. Its goal is to use the estimated change in baseline position to predict the resulting OPD variations - and correct them directly in OPD space. 
+When the two guide star images are centered, this means proper overlap of the far-infrared beams at the science detectors. Hence, we are in a position to spot interferometric signal, which will translate to a modulation of the intensity of the coherently combined image as a function of OPD. The OPD is constantly modulated with the Cold Delay Line (Section~\ref{subsec:delayLines}), independently of the mode in which we are. However, residual mispointings can create large unwanted OPD perturbations. Hence, during $\TRACK$ and $\ACQUIRE$ mode, the Warm Delay Line mechanism is activated. Its goal is to use the estimated change in baseline position to predict the resulting OPD variations - and correct them directly in OPD space. 
 
 During the $\LOCKED$ mode, we need to consider what happens if we lose the guide star. Since the field of view is relatively small compared to the expected motions of the gondola, the guide star could technically walk outside the range of the guide camera - at which point the attitude estimation relies temporarily on the gyroscopes as we switch back to $\ACQUIRE$ mode and the guide camera increases its field of view (and decreases its speed) until it finds the guide star.
+
+
+
+Note that the Cold Delay Line (CDL) is running in closed loop during all the modes. Since the environment inside the cryostat is not changing from test to flight, there is no reason to ever turn the loop off or keep different sets of gains for different operating modes. The CDL is its own closed system.
+
+The various operating modes will assign different gains for different subsystems, and all modes are summarized in Table~\ref{tab:modes}. Each actuator has its own PID control loop (see Appendix~\ref{ap:PID} for more details about a description of PID control loops).
 
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
@@ -188,51 +248,16 @@ $\LOCKED$ & The intensity of the target in the science detector is measured, and
 \end{minipage} \\
 \bottomrule
 \end{longtable}
-\caption[Operating modes]{BETTII operating modes. Each operating mode has a set of PID gains for each individual loop.}
+\caption[Operating modes]{BETTII operating modes.}
 \label{tab:modes}
 \end{table}
 
-Note that the Cold Delay Line (CDL) is running in closed loop during all the modes. Since the environment inside the cryostat is not changing from test to flight, there is no reason to ever turn the loop off or keep different sets of gains for different operating modes. The CDL is its own closed system.
 
-
-
-\subsubsection{BETTII Coordinate systems}
-
-
-\begin{figure}[!ht]
-	\centering
-	\includestandalone{Figures/BETTII_coordinate_system}
-	\caption[BETTII coordinate systems]{}
-	\label{fig:CoordinateSystem}
-    \end{figure}
-
-    
-%     \begin{figure}[!ht]
-% 	\centering
-% 	\includestandalone{Figures/starCameraRefFrame}
-% 	\caption{Star camera angles. The star camera reference frame as well as the telescope reference frame are represented here with the celestial sphere local RA and DEC axes in the background. There is a known matrix that transforms the star camera reference frame, where inertial attitude is measured, to the telescope reference frame, where error vectors are computed. The error vector is determined on the plane of the sky and has two projections on the telescope reference frame. The $\Delta\El=\Delta$El component corresponds to the elevation error and is corrected by the siderostat angle. The $\Delta\xEl=\Delta$xEl component corresponds to the cross-elevation error, and is corrected by the CCMG gimbal angle. Note that as the siderostat elevation is adjusted to reduce the elevation error, the transformation matrix between the star camera and telescope reference frames is adjusted as well.}
-% 	\label{fig:starcamRefFrame}
-%     \end{figure}
-
-
-\begin{figure}[!ht]
-	\centering
-	\includestandalone{Figures/CelestialSphereRAandDEC2}
-	\caption[The celestial sphere]{}
-	\label{fig:celestialSphere}
-    \end{figure}
-
-\begin{figure}[!ht]
-	\centering
-	\includestandalone{Figures/starCameraRefFrame}
-	\caption[The star camera reference frame]{}
-	\label{fig:starcamRefFrame}
-    \end{figure}
 
 
 \subsection{Subsystems}
 
-
+Multiple actuator and sensing subsystems are mentioned in the previous section. They are summarized in Table [], and each discussed in more detail in this section.
 
 \subsubsection{Gyroscopes}
 \label{subsec:gyros}
@@ -261,7 +286,7 @@ The properties that we are looking for are typical instantaneous angular random 
 \begin{figure}[!ht]
 		\centering
 		\includegraphics[width=0.98\textwidth]{Figures/snapshot_11005.png} 
-		\caption[\SI{1000}{\second} of gyroscope data]{Snapshot of \SI{1000}{\second} of gyroscope data, taken from our \SI{8}{\hour} data sample.}
+		\caption[\SI{100}{\second} of gyroscope data]{Snapshot of \SI{100}{\second} of gyroscope data, taken from our \SI{8}{\hour} data sample.}
 		\label{fig:snapshot11005}
 \end{figure}
 
@@ -391,8 +416,7 @@ Our camera is a USB3.0 Point Grey Grasshopper3. The CCD is a Sony Pregius IMX174
 
 \renewcommand{\arraystretch}{1.5}
 \vspace{-0.5cm}
-\begin{table}[htbp]
-
+\begin{table}[h]
 \small
 \caption[Star camera properties]{Star camera properties}
 \label{tab:starcamproperties}
@@ -411,7 +435,7 @@ Well depth (electrons) & \num{32513} & Maximum number of electrons a pixel can s
 \end{tabular}
 \end{table}
 
-\begin{figure}[!ht]
+\begin{figure}[!h]
 		\centering
 		\includegraphics[width=\textwidth]{Figures/QEPtGrey.pdf} 
 		\caption[Quantum efficiency of star camera CCD]{Quantum efficiency of star camera CCD.}
@@ -438,7 +462,7 @@ The motion controller was modified to accept an external clock pulse in order to
 
 At power-up, the wheels immediately start accelerating to their cruising speed of \num{3000}~rpm. They take about 10 minutes to reach their target. The wheels' frequency is set for the entire duration of the flight.
 
-The gimbal is controlled with another Galil Motion controller, a 2-axis stepper driver DMC-4020, which can also be synchronized with an external clock. Only one axis is used for the CCMG, while the second axis is used by the momentum dump motor (see section~\ref{subsec:chap3momdumpmotor}). The controller operates in micro-stepping mode and has a very smooth response, in contrast to previous controllers we tested which create a lot of vibrations. The controller is set always to use 64 micro-steps per step, and the motor is a [REFERENCE] with 200 steps per revolution. The motor is outfitted with a Beckhoff AG1000 planetary gearhead with a 3.7:1 reduction ratio. The gearbox itself has a ratio of 25, which creates a total gear ratio of 92.5. Hence, a \SI{360}{\degree} revolution of the stepper corresponds to $360/92.5=3.9^\circ$ motion of the shaft. A motion of \SI{1}{\degree} of the shaft correspond to \num{3889} motion controller steps. A motion of \SI{90}{\degree} of the shaft correspond to \num{296000} motion controller steps. Finally, the same \SI{90}{\degree} motion will translate to a \num{2048} step change in the gimbal magnetic encoder.
+The gimbal is controlled with another Galil Motion controller, a 2-axis stepper driver DMC-4020, which can also be synchronized with an external clock. Only one axis is used for the CCMG, while the second axis is used by the momentum dump motor (see section~\ref{subsec:chap3momdumpmotor}). The controller operates in micro-stepping mode and has a very smooth response, in contrast to previous controllers we tested which create a lot of vibrations. The controller is set always to use 64 micro-steps per step, and the motor is a [REFERENCE] with 200 steps per revolution. The motor is outfitted with a Beckhoff AG1000 planetary gearhead with a 3.7:1 reduction ratio. The gearbox itself has a ratio of 25, which creates a total gear ratio of 92.5. Hence, a \SI{360}{\degree} revolution of the stepper corresponds to $360/92.5=3.9^\circ$ motion of the shaft. %A motion of \SI{1}{\degree} of the shaft correspond to \num{3889} motion controller steps. A motion of \SI{90}{\degree} of the shaft correspond to \num{296000} motion controller steps. Finally, the same \SI{90}{\degree} motion will translate to a \num{2048} step change in the gimbal magnetic encoder.
 
 In practice, all of the control is done using the regular stepper motor encoder. The magnetic encoder is used for limit-checking and to feed back to the momentum dump mechanism. With this in mind, we can now relate the control signal (stepper motor micro-steps per second) to the physical torque that the wheels provide. 
 \begin{eqnarray}
@@ -467,14 +491,6 @@ The torque is the variation of the momentum with time. So we can write:
 	\caption{}
 	\label{fig:CCMGnocase}
     \end{figure}
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\textwidth]{Figures/CCMG-case.png}
-	\caption{}
-	\label{fig:CCMGcase}
-    \end{figure}
-
 
 The entire CCMG assembly was tested in a vacuum chamber at cold temperatures. Several heaters are strategically located in the assembly to allow some thermal control for all the electronics in case issues arise.
 
@@ -521,6 +537,7 @@ These are industrial-grade brushless DC rotators. They are controlled by a three
 An old version of these rotation stages was tested in our environmental chamber, but not under load. These devices are rated to operate nominally down to \SI{-40}{\celsius}, but because of their self-heating, we do not expect that they will reach that temperature. During our cold tests of the device, we noted that the friction seemed to change, which required a re-adjustment of the PID coefficients inside the Galil controller. 
 
 \subsubsection{Delay lines}
+\label{subsec:delayLines}
 \subsubsection{Tip/tilt}
 
 Our tip/tilt mechanisms are Physik Instrumente S330 piezo-electric actuators that move a flat platform in tip and tilt. We attach a mirror to that platform, and put that mirror close to a pupil of the optical system, to correct for angular errors without creating beam walk. After long discussions with the company's engineers, we ordered a custom strain gauge sensor especially tune and tested to resist low temperatures: this sensor tells the angle of the platform, which is important for our control system [see section]. Similar devices have been successfully used on sounding rocket before to provide milli-arcsecond angular control \citep{Mendillo:2012fh}. 
@@ -533,7 +550,7 @@ The platform can be controlled in open-loop mode, where there is a simple gain b
  
  
 \subsubsection{Fine guidance sensor}
-
+\label{subsec:FGS}
 The fine guidance sensor is a HAWAII-1RG detector with 1024$\times$1024 pixels that is sensitive to infrared wavelengths between \SI{1}{\um} and \SI{2.5}{\um}. The device will be operated at a cryogenic temperature of \SI{77}{\kelvin}, at which the expected read noise is 18~electrons r.m.s.
 
 \subsubsection{Clocks and timing}
@@ -618,7 +635,10 @@ A diagram showing the flow of the control software is shown in Fig.~\ref{fig:Con
 	\caption[Software diagram]{Software layout}
 	\label{fig:SoftwareFlow}
     \end{figure}
+    
+    Talk about star camera being late.
 
+\subsection{Architecture summary}
 
 \begin{figure}[!ht]
 	\centering
@@ -626,4 +646,7 @@ A diagram showing the flow of the control software is shown in Fig.~\ref{fig:Con
 	\caption[Control System Design]{Control system architecture}
 	\label{fig:ControlSystem}
     \end{figure}
+
+To summarize our entire strategy, we show the control diagram in Fig.~\ref{fig:ControlSystem}. In addition, 
+
 

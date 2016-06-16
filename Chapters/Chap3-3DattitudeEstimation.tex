@@ -193,11 +193,11 @@ At each step, we will attempt to produce our best estimate of the state $\EstSta
 
 In the prediction phase, we use our best estimates from the previous step, along with the velocity measurements and the expected propagation relationships to predict what the estimates should be at the current step. If we don't get a new attitude measurement at that step, then these new estimates are the best we can do.
 
-When we do get a new attitude measurement, then in addition to the prediction phase, we also do an update phase. We compare the best estimate from the prediction phase to our new measurement, and use the difference to compute a correction to our state. This uses the weights of the various noise contributors in the system, as we discuss in section []. This phase most importantly estimates the bias of the gyroscopes, to allow robust propagation of the state from one step to the next.
+When we do get a new attitude measurement, then in addition to the prediction phase, we also do an update phase. We compare the best estimate from the prediction phase to our new measurement, and use the difference to compute a correction to our state. This uses the weights of the various noise contributors in the system, as we discuss in Section~\ref{subsec:EKFUpdate}. This phase most importantly estimates the bias of the gyroscopes, to allow robust propagation of the state from one step to the next.
 
 For our application, update phases are rare since the star camera can take hundreds of loop cycles to produce an attitude solution. Hence, the last measured star camera occurred at step $k-N$. Until we receive a new measurement, we are trusting our gyroscope model and our bias estimate to propagate the attitude correctly.
 
-In this section, we assume that the attitude measured by the star camera $\Attitude^{\textrm{meas}}_k$ corresponds to the attitude at the current step. In reality, when we receive the star camera, it represents an attitude that was taken some number of steps ago. This is due to the slow processing of the star camera images and the catalog search. Our software cannot solve the star camera position in one single loop iteration. We tackle this issue in section []. 
+In this section, we assume that the attitude measured by the star camera $\Attitude^{\textrm{meas}}_k$ corresponds to the attitude at the current step. In reality, when we receive the star camera, it represents an attitude that was taken some number of steps ago. This is due to the slow processing of the star camera images and the catalog search. Our software cannot solve the star camera position in one single loop iteration. We tackle this issue in Section~\ref{subsec:delayed}. 
 
 \subsection{Kalman filter: prediction}
 
@@ -222,6 +222,7 @@ The algorithmic steps for this phase are:
 We have now propagated our system from step $k-1$ to step $k$, and we have three new quantities: the bias $\EstBias_{k|k-N}$, the attitude estimate $\EstAttitude_{k|k-N}$, and the state covariance matrix $\stateCovMat_{k|k-N} $. If we do not get any star camera measurement, then at the next step we will just continue propagating with this procedure.
 
 \subsection{Kalman filter: update}
+\label{subsec:EKFUpdate}
 
 The star camera information provides us with a measurement of the attitude $\Attitude^{\textrm{meas}}_{k}$, which is compared to our predicted attitude. We use the difference between our prediction and the measurement to update the bias and the state covariance matrix. Under certain circumstances, the Kalman filter is the optimal estimator: it converges towards the correct solution with the minimum amount of iterations.
 
@@ -240,9 +241,15 @@ For the Kalman filter update procedure, we form a measurement vector $\zMeasurem
 \end{enumerate}
 
 \subsection{Delayed star camera solution}
+\label{subsec:delayed}
 
 In general, the star camera takes much longer than one single loop cycle to produce an attitude estimate. Between the time we trigger the star camera frame and the time we receive the attitude measurement, we need to keep track of the propagation matrices that will allow to express both the attitude and its covariance matrix in the current reference frame, where the measurement can be combined with the a priori estimate from the Kalman filter.
 
 While no new star camera measurement is available, the attitude transition is expressed by $\EstAttitude_{k} = \exp\left(\frac{1}{2}\matOmega(\EstGyroVec_{k})\Deltat\right)\EstAttitude_{k-1},$ and the new covariance is $\stateCovMat'_{k}  =  \StateTransitionMat_k \stateCovMat_{k-1}\StateTransitionMat^T_k + \noiseCovMat_k$, where we assume that $\noiseCovMat_k$ is a constant. We can consider that the gyroscope bias does not change significantly during the time between two star camera measurement (typically on the order of a few seconds). With this we can create a recursive relationship and $\Attitude_{k} = \left[\boldsymbol\Pi_{i=k-N}^k\exp\left(\frac{1}{2}\matOmega(\EstGyroVec_{i})\Deltat\right)\right]\Attitude^{\textrm{meas}}_{k-N}$ where $k-N$ again represents the index at which the star camera image was taken. Similarly, we have: $\stateCovMat_{k} = \A_k\stateCovMat_{k-N}\A_k^T + \B_k$ where $\A_k$ and $\B_k$ are defined recursively as $\A_k = \StateTransitionMat_{k}\A_{k-1}$ with $\A_0 = \bI_{6\times 6}$, and $\B_k = \noiseCovMat_k + \StateTransitionMat_{k}\B_{k-1}\StateTransitionMat_{k}^T$ with $\B_0 = \boldsymbol{0}_{6\times 6}$. $\A_k$ can also be written  $\A_k = \StateTransitionMat_{k}\StateTransitionMat_{k-1}\cdots\StateTransitionMat_{k-N} = \left[\boldsymbol\Pi_{i=k-N}^k\StateTransitionMat_{i}\right]$.
 
 Hence, once we trigger the star camera, we need to start keeping track of the matrices $\A_k$, $\B_k$, and $\C_k = \boldsymbol\Pi_{i=k-N}^k\exp\left(\frac{1}{2}\matOmega(\EstGyroVec_{i})\Deltat\right)$, appropriately reset them when a new star camera trigger has occurred, and propagate them until the estimator receives the star camera value.
+
+\subsection{Enhancing the Kalman filter models}
+
+
+\subsection{Conclusions on sensor fusion}

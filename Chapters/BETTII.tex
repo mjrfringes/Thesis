@@ -311,6 +311,7 @@ We proceed to an estimation of the known far-IR background noise contributions f
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=\textwidth]{Figures/BETTII_transmission.pdf}
+	\vspace{-0.5cm}
 	\caption[BETTII Transmission curves]{BETTII total transmission curves from all cold filters, excluding the beam combiner, cryostat window, and NIR/FIR dichroic.}
 	\label{fig:BETTIITransmission}
     \end{figure}
@@ -337,7 +338,7 @@ Instrument	&	\num{	4	}	&	\num{	0.7	}	&	\num{	5.80E-27	}	&	\num{	2.50E-07	}	&	Est
 CMB	&	\num{	2.728	}	&	\num{	1	}	&	\num{	1.02E-45	}	&	\num{	9.35E-17	}	&	\cite{Fixsen:1996di}	\\
 \bottomrule
 \end{longtable}
-\caption*[Thermal noise contributors]{Thermal noise contributors, excluding the atmosphere. The calculator was designed to be scalable to designing a space mission, which is why we kept track of terms which are negligible compared to the main contributors. In space, the warm optics and window contributions would be significantly reduced and more comparable to the other terms.}
+\caption*{Thermal noise contributors, excluding the atmosphere. The calculator was designed to be scalable to designing a space mission, which is why we kept track of terms which are negligible compared to the main contributors. In space, the warm optics and window contributions would be significantly reduced and more comparable to the other terms.}
 
 \end{table}
 
@@ -349,13 +350,15 @@ To know how much power is actually reaching the detectors, we need a measurement
 f_\textrm{arm{1,2}->det{1,2}}(\lambda) &= \tau_\textrm{combiner}\Tbp(\lambda)\tau_\textrm{window}\tau_\textrm{dichroic}r^{N_\textrm{mirrors}} \\
 & \approx 0.38\times \Tbp,
 \end{align}
-where we have used lab measurements to estimate $\tau_\textrm{window}~\approx~0.98$, $\tau_\textrm{dichroic}~\approx~0.95$, $\tau_\textrm{combiner}~\approx~0.5$ and $r~\approx~0.99 $ is the far-IR reflection of each warm mirror. There are $N_\textrm{mirrors} = 9$ within the warm optics train on the left side, and 8 on the right side. Until we obtain precise measurement of the throughput of each element as a function of wavelength, we consider that this extra factor is wavelength-independent and represents an average over the band. This is valid since most of these materials do not have steep dependence at such a long wavelength. For a 50\% mean bandpass transmission, this amounts to about to $\sim 15\%$ efficiency for the light coming from one arm falling onto one detector. 
+where we have used lab measurements to estimate $\tau_\textrm{window}~\approx~0.98$, $\tau_\textrm{dichroic}~\approx~0.95$, $\tau_\textrm{combiner}~\approx~0.5$ and $r~\approx~0.99 $ is the far-IR reflection of each warm mirror. There are $N_\textrm{mirrors} = 9$ within the warm optics train on the left side, and 8 on the right side. Until we obtain precise measurement of the throughput of each element as a function of wavelength, we consider that this extra factor is wavelength-independent and represents an average over the band. This is valid since most of these materials do not have steep dependence at such a long wavelength. For a 50\% mean bandpass transmission, this amounts to about $\sim 15\%$ efficiency for the light coming from one arm falling onto one detector. 
 
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
 \def\labelitemi{--}
 \begin{table}[!h]
 \small
+\caption[Power and NEP contributors]{Estimated power and NEP contributors for a single detector pixel.}
+\vspace{-0.5cm}
 \begin{longtable}{P{3cm}|P{2cm}|P{2cm}|P{2cm}|P{2cm}}
 \toprule																	
 Noise source	 &		\multicolumn{2}{c|}{Power reaching the detector (pW)}	 &		\multicolumn{2}{c}{		NEP (\SI{e-16}{\watt\per\raiseto{0.5}\hertz})}	\\
@@ -369,7 +372,7 @@ Detectors	 &		-		&		-		 &	\num{	3	}	&	\num{	3	}	\\
 Total	&		230		&		99		&		15		&		10		\\
 \bottomrule																	
 \end{longtable}
-\caption[Power and NEP contributors]{Estimated power and NEP contributors for a single detector pixel. Note that these are slightly different than the ones cites in \citet{Rinehart:2014gk} and \citet{Rizzo:2015gf} since we now have more precise measurements of the transmission as a function of wavelength.}
+\caption*{These values are slightly different than the ones cites in \citet{Rinehart:2014gk} and \citet{Rizzo:2015gf} since we now have more precise measurements of the transmission as a function of wavelength.}
 \label{tab:powerNEP}
 \end{table}
 

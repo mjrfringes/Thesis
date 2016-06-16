@@ -16,9 +16,9 @@
 \node[block,below=2.5cm of gyro loop.west,name=apply command,anchor=west]{BOOP FPGA\\ Apply \\commands};
 \node[block,below=1.5cm of apply command.south,name=star camera,anchor=west,fill=\starcamcolor]{FORD\\ Star camera \\solution};
 
-\draw[thick,double] (-0.3,-8) -- (-0.3,2)node[above=1em,align=center]{\SI{100}{\hertz} Control \\ clock tick};
-\draw[thick,double] (9.7,-8) -- (9.7,2)node[above=1em,align=center]{\SI{100}{\hertz} Control \\ clock tick};
-\draw[thick,double] (19.7,-8) -- (19.7,2)node[above=1em,align=center]{\SI{100}{\hertz} Control \\ clock tick};
+\draw[thick,double] (-0.3,-8) -- (-0.3,2)node[above=1em,align=center,outer sep=0.1]{\SI{100}{\hertz} Control \\ clock tick};
+\draw[thick,double] (9.7,-8) -- (9.7,2)node[above=1em,align=center,outer sep=0.1]{\SI{100}{\hertz} Control \\ clock tick};
+\draw[thick,double] (19.7,-8) -- (19.7,2)node[above=1em,align=center,outer sep=0.1]{\SI{100}{\hertz} Control \\ clock tick};
 
 \node[block,name=gyro loop2,anchor=west,xshift=10cm] at (O){BOOP FPGA\\ Trigger sensors\\ Read gyros};
 \node[block,right of=gyro loop2,name=estimator loop2,node distance=5cm, minimum width=4cm]{BOOP RT\\ Mode manager \& \\Estimator};
