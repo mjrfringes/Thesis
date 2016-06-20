@@ -581,8 +581,6 @@ Another possible explanation for this emission is that the gas and dust ejected 
 
 The 5 sources in the densest part of the cluster are all highly extincted based on the slopes of the emission in the 2MASS bands and the depth of the \SI{10}{\um} silicate absorption feature (Fig.~\ref{fig:IRAS20050_SEDs}. IRAS20050.1 has a flat spectrum out to \SI{37}{\um}, unlike the four other sources which are rising. IRAS20050.4 is the most steeply rising source, and is barely detected in the IRAC bands, suggesting that it is the most embedded source, which is corroborated by the fact that it is coincident with the strongest millimeter source in the region. 
 
-[Talk about the mass distribution, luminosities, etc].
-
 
 \begin{figure}
 \begin{center}
@@ -594,14 +592,16 @@ The 5 sources in the densest part of the cluster are all highly extincted based 
 \end{figure}
 
 
-In testing the various scenarios of star formation, it is useful to obtain a measure of how much mass is available for the YSOs to grow after their original collapse. For this, clustered regions such as this one are an ideal laboratory since the YSOs usually appear to share an envelope. However, appropriately measuring the flux from each individual source is challenging, since the sources are so close together. With an aperture of \ang{;;2.4} (3 pixel radius), we managed to put non-overlapping apertures for all the 5 sources. Since the aperture correction was derived considering a "total flux" aperture to be $\sim$12 pixel radius, we are accounting for the same flux multiple times, even if the apertures are not overlapping. If we estimate the \SI{37}{\um} flux from the eastern extended emission to be totalling $\sim\SI{5}{\Jy}$, we obtain a surplus of about 22\%
+In testing the various scenarios of star formation, it is useful to obtain a measure of how much mass is available for the YSOs to grow after their original collapse. For this, clustered regions such as this one are an ideal laboratory since the YSOs usually appear to share an envelope. In this cluster, the typical separation between the sources are \ang{;;6}-\ang{;;8}, which correspond to projected distances of \num{3000}-\SI{5600}{\au}. This strongly indicates that the envelopes of individual YSOs are interacting with each other.
 
 
-However, the apertures for IRAS20050.3 and IRAS20050.5 are touching, which means that we measure the same amount of flux twice. We anticipate that this effect is on the order of $\sim$\SI{3-4}{\Jy} at \SI{37}{\um}, based on photometry in other apertures adjacent to IRAS20050.3 to the north-east of the source. This amounts to the flux estimated from IRAS20050.5, which would then be significantly smaller, at $\sim\SI{2}{\Jy}$ and reducing the sum of point sources to \SI{53}{\Jy}. The presence of short wavelength counterparts to IRAS20050.5 pushes to keep identifying this source as its own source. Even taking into account this error, it appeared that we cannot reconcile our individual source photometry with the total photometry of the cluster, since at least $\sim\SI{6}{\Jy}$ must come from the extended eastern emission at \SI{37}{\um}. Since can be explained a few different ways.
+However, appropriately measuring the flux from each individual source in these clustered regions is challenging, since the sources are so close together. With an aperture of \ang{;;2.4} (3 pixel radius), we managed to put non-overlapping apertures for all the 5 sources in IRAS~20050+2720. but since the aperture correction was derived considering a "total flux" aperture to be $\sim$12 pixel radius, we are accounting for the same flux multiple times, even if the apertures are not overlapping. If we estimate the \SI{37}{\um} flux from the eastern extended emission to be totalling $\sim\SI{5}{\Jy}$, we obtain about 22\% of excess \SI{37}{\um} flux when comparing the sum of the point sources and the total emission from the cluster (see Table~\ref{tab:IRAS20050sum}). At \SI{31}{\um}, the flux excess is only about 10\%. At \SI{19}{\um} and below, the extended emission is within the noise uncertainty of the map. 
 
-One possibility is that the individual sources are not actually point sources, but have more extended shapes that would contaminate one another when doing aperture photometry (which means that we measure the same flux multiple times). Given the typical separation between the sources of \ang{;;6-8} or projected distances of \SI{3000-5600}{\au}, this is possible. The outflow activity inside this cluster could also facilitate heating from the individual stars to extended our to larger distances within the envelopes, explaining the strong \SI{37}{\um} diffuse emission which appears to surround the YSOs. This scenario favors the competitive accretion model where protostars are competing from the same reservoir of mass.
+This excess flux can only partially be explained by the tails of the PSF extending well below the aperture size (see Fig.~\ref{fig:average_EE}), with 10-15\% of the total energy still existing in the annulus outward of 8~pixels (\ang{;;6}) from the aperture center. However, the contribution of a source to any given other source is only a fraction of this since it would only correspond to the amount of flux within a 3-pixel aperture. We conclude that the PSF shape is not responsible for the observed excess flux at both wavelengths.
 
-One other possibility is that outflow-powered heating is happening inside the cluster and around the YSOs, creating more diffuse emission
+One possible explanation would be that diffuse thermal emission occurs across the entire region. This could be caused by heating internal to the cluster (powered by the outflow, for example, like the eastern extended emission) or by a population of stochastically heated very small grains, which are not in LTE. The high outflow activity in this region could carve out multiple cavities which facilitate heating from the individual stars to extended our to larger distances within the envelopes and the shared mass reservoir. At \SI{37}{\um}, the level of diffuse emission required to account for the excess flux is about \SI{0.05}{\Jy\per\pixel}, which is the same as the average diffuse emission in the eastern region. Such an explanation would also help account for the high amount of external extinction that is needed to fit most of the SEDs in this region.
+
+This tends to favor a scenario where protostars are fragmenting from a cloud and continue accreting material within that original envelope. The envelopes of neighboring YSOs interact, and possibly can exchange material as some YSOs become more massive (competitive accretion). 
 
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
@@ -670,14 +670,15 @@ The luminosities and masses of the individual source, IRS~1, IRS~2, IRS~3, and V
 \begin{longtable}{lP{2cm}P{2cm}P{2cm}P{2cm}}
 \toprule																			
 SOFIA name	&	F11	&	F19	&	F31	&	F37	\\
+	&	Jy	&	Jy	&	Jy	&	Jy	\\
 \midrule									
-NGC2071.1	&	9.04	&	63.52	&	146.31	&	208.14	\\
-NGC2071.2	&	0.29	&	9.17	&	46.28	&	72.48	\\
-NGC2071.3	&	0.26	&	2.65	&	17.52	&	32.52	\\
+NGC2071.1	&	10.07	&	72.041	&	167.93	&	234.93	\\
+NGC2071.2	&	0.38	&	11.207	&	56.70	&	89.55	\\
+NGC2071.3	&	0.19	&	3.027	&	19.97	&	37.56	\\
 \midrule									
-Sum of point sources in cluster	&	9.60	&	75.35	&	210.11	&	313.15	\\
-Total cluster emission	&	11.33	&	94.04	&	277.78	&	357.19	\\
-Ratio	&	1.18	&	1.25	&	1.32	&	1.14	\\
+Sum of point sources in cluster	&	10.65	&	86.28	&	244.61	&	362.03	\\
+Total cluster emission	&	13.523	&	94.16	&	280.14	&	362.99	\\
+Ratio	&	1.27	&	1.09	&	1.15	&	1.00	\\
 \bottomrule					
 	\end{longtable} 
 \end{table}

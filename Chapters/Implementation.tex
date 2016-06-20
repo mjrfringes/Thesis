@@ -21,6 +21,8 @@ While the intrinsic noise of our sensors has been characterized in Section~\ref{
 
 \subsubsection{Gyroscope spectral analysis in flight configuration}
 
+The gyroscopes were characterized in quiet laboratory environment that was designed for precision optical interferometry, with special foundations to prevent vibrations being transmitted through the ground. This allowed us to measure the gyroscopes down to their noise levels. However, as soon as we attach the gyroscopes to any structure, the gyroscopes measure their vibration modes. 
+
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/multiPSD400.png}
@@ -29,6 +31,13 @@ While the intrinsic noise of our sensors has been characterized in Section~\ref{
 \caption[Gyro PSD with payload on the ground]{Gyro PSD with payload on the ground}
 \end{center}
 \end{figure}
+
+
+This is the case for the gyroscope mount. We estimate that, once in the box and attached onto the truss, the gyroscope has $\sim$20 times its natural noise levels. Looking at the power spectral density of the velocity time series (Fig.~\ref{fig:multiPSD400}), almost all of the noise power is contained in three large and sharp peaks, which coincide with the expected carbon fiber structure first resonant modes. These modes are precisely located at 24.49, 25.23 and \SI{26.7}{\hertz} with the mass configuration at which the data was taken, which omits the large siderostat mirrors on each end (Fig.~\ref{fig:multiPSD400_no_loglog_zoom_400}).
+
+The positive conclusion is that the truss has its first resonant frequencies precisely where they were designed to be from CAD modeling, and they are above \SI{20}{\hertz}, which is out of the bandwidth of the attitude control. This noise can then be drastically attenuated either by notch filters (if the frequencies do not shift) or by low-pass filters with a break frequency at a few Hertz. For example at \SI{2.5}{\hertz}, a single-pole low-pass Butterworth filter would attentuate these peaks by \SI{20}{\decibel}, or an attenuation factor of 100. 
+
+Examining the PSD in Fig~\ref{fig:multiPSD400}, we also notice some broad peaks at 3, 5.5, and \SI{2}{\hertz} for the x, y, and z axes respectively. These are attributed to motions of the truss within the gondola about the vibration isolators that were installed to decouple the two mechanical structures. 
 
 \begin{figure}[!h]
 \begin{center}
@@ -43,25 +52,52 @@ While the intrinsic noise of our sensors has been characterized in Section~\ref{
 
 \subsubsection{Orthogonalization of gyroscope mount}
 \label{ap:gyroOrth}
+
+An orthogonalization procedure was established to determine the correction matrix to apply to the gyroscope velocity vector to make sure measurement were independent from one another. The procedure involves spinning the 3-axis gyroscope mount on one of the rotation stages that we use for flight (which are used for elevation control). 
+
+The system to solve is:
+\begin{equation}
+\gyroVec^\textrm{meas} = \begin{bmatrix} M_x & m_{xy} & m_{xz} \\   m_{yx} & M_y &m_{yz} \\  m_{zx} & m_{zy} & M_z \end{bmatrix} \gyroVec^\textrm{true} = M \gyroVec^\textrm{true} 
+\end{equation}
+
+The 9 matrix elements can be found by commanding the 3-axis mount to rotate at a known velocity about each axes. Hence, by knowing the vector $\gyroVec^\textrm{true}$ (one component is the commanded velocity and the two others are zero) and measuring the velocities on the three axes, we can determine the matrix element for the column corresponding to the current spin axis. 
+
+The gyroscopes are so sensitive that they measure the rotation of the Earth accurately. This corresponds to a bias in the commanded velocity. To mitigate this issue, we spin the 3-axis mount in two opposite directions. The perceived difference in the velocities corresponds to the Earth velocity about that axis. 
+
+Because of cabling constraints, we are only able to spin the 3-axis mount for small angles. This method works very well when the gyroscope can spin freely and do \SI{360}{\degree} rotations, since a lot of the systematics of the setup will cancel out after multiple revolutions. 
+
+The matrix we obtain suggests typical alignment errors on the order of 0.1-0.3\%, which correspond to angular errors of a few degrees. While the measurements appear to be repeatable, we noticed that the sum of the squares of the velocities was typically 2\% off from its expected value, which we know since it corresponds to the square of the Earth's rotation velocity. Further, this error varies with different orientation of the gyroscope mount. The typical errors that are seen are consistent with a residual misalignment of a few tenths of degrees between the gyroscopes.
+
+This could lead to multiple interpretations. First, it is possible (even likely) that the mount deforms under its own gravity in different ways depending on its orientation. Unfortunately, it is not simple to proceed to this orthogonalization method with the mount in its flight orientation, and would require some ground support equipment (GSE) not available at the moment. 
+
+A second possible interpretation is that the gyroscope internal scale factor is changing. We noted that the temperature of the gyroscopes was increase by about \SI{5}{\degreeCelsius} when they are inside the mount on the thermal isolators. This can potentially change their scale factor (which effectively multiplies the measure velocity) as a result of the fiber optics' length changing slightly. 
+
+The path forward towards orthogonalization of the mount is to use a ROMER metrology arm to measure the relative position of the mount faces to within a few arcminutes. This would allow us to find the components of the matrix $M$ for the mount on the payload in its final flight configuration. It will also allow us to precisely align the mount to the other important reference frames, such as the star camera reference frame and the telescope reference frame.
+
+The scale factor on the $\vectors{z}$ gyroscope can also be precisely determined if the payload if aligned horizontally with precision. Because of the size of the payload, a good lever arm provides an accurate measure of its horizontal position. The gyroscope on the $\vectors{z}$ axis can thus be aligned with the gravity vector precisely, at which point the expected angular velocity is known, and the scale factor correction can be determined.
+
+
 \subsubsection{Alignment of gyroscope mount to star camera mounts}
 
-BETTII will have two flight star cameras for redundancy. It is important to understand the transformation between the gyroscope reference frame and the two star camera reference frames to minimize the propagation errors within the Kalman filter. 
+Once the gyroscope is orthogonalized, it remains to be properly referenced to the star camera mount. In fact, because those two key elements of the control system are thermally separated, it is possible that they drift between one another. 
 
-A first transformation matrix can be estimated roughly by assuming that the star camera is in the ($\vectors{x}_\gyro$,$\vectors{z}_\gyro$) plane. The elevation of the star camera, nominally around \SI{45}{\degree}, can be estimated if $\vectors{z}$ is assumed to be aligned with the gravity vector while the payload is sitting on the ground, which is a good approximation. By taking some star camera measurements, solving the fields, and converting these fields to a local azimuth and elevation (using the time at which the frames were taken and the geographical location), the elevation can be estimated, which corresponds to the angle of the line of sight vector of the star camera with respect to the horizontal plane. This gives us a first estimate of our star camera-to-gyroscope reference frame rotation, but is not very precise given our assumptions. This rotation is critical during the update phase of the Kalman filter when combining the star camera measurement with the propagated estimate.
+For this purpose, we developed a variant to the traditional Kalman filter described in \ref{sec:KalmanFilter}, which instead of estimating the bias, it estimates the rotation matrix between the gyroscope mount and the star camera, as explained in \ref{subsec:enhancedKalman}. 
 
-But if this matrix is slightly off, the Kalman filter will attribute the difference between estimated position and measured position as an additive bias error in the gyroscope velocity measurement, which should converge to a steady-state value after a few tens of star camera measurements, depending on the Kalman filter gains. The filter then uses this additive bias to reconstruct an estimated velocity at each time step. Admittedly, this value of the bias also contains the value of the real gyroscope bias - but we anticipate  this bias value to be very small compared to the potential effects of misalignments.
+Running this filter can be done seamlessly, since the number of unknowns is the same as the flight model which estimates bias drifts. 
 
-Our procedure involves calculating the quaternion representing the rotation from the steady-state estimated angular velocity vector, and the measured, orthogonalized angular velocity vector. While sitting on the ground, this corresponds to measuring the Earth's angular velocity. This uses the mathematical technique that we derived in Appendix~\ref{ap:rotBetweenTwoVec}. Each star camera measurement shall be further rotated by this quaternion to ensure that it is properly expressed in the gyroscope reference frame. 
+The problem of using only bias drifts needs some explanation. In the traditional Kalman filter, gyroscope models using only a bias to account for the measurement errors. The bias, which combines linearly with the measured velocity, is adjusted to correct the errors and minimize the covariance of the error.
 
-Below, we summarize the steps to properly align the gyroscopes to the star camera:
-\begin{enumerate}
- \item Orthogonalize the gyroscope mount according to Appendix~\ref{ap:gyroOrth}, and find $M_\textrm{orth}$. This now gives a velocity vector in an orthogonal gyro reference frame, $\gyroVec_\gyro$ = $M_\textrm{orth}\gyroVec_\gyro^\textrm{meas}$. 
- \item While the truss is sitting horizontal on the ground, calculate the elevation of the star camera by converting solutions to the local East-North-Up reference frame, using the sidereal time and the geographical latitude. This gives a matrix $M_\textrm{coarse}$  or a quaternion $\quat{q}_\textrm{coarse}$ representing the transformation from the star camera reference frame to the gyroscope reference frame.
-\item Still while sitting on the ground, use $M_\textrm{coarse}$ or $\quat{q}_\textrm{coarse}$ in the flight Kalman filter to estimate the gyro bias vector. Record the steady-state value of the estimated velocity vector.
- \item Calculate the transformation between the estimated and measured angular velocity vector, this is a matrix $M_\textrm{fine}$ or a quaternion $\quat{q}_\textrm{fine}$.
- \item For each star camera reference frame solution, rotate the solution $\quat{q}_\textrm{fine}\quat{q}_\textrm{coarse}$.
- \item Use this new matrix in the flight Kalman filter to make sure the estimated biases are close to zero. 
- \end{enumerate} 
+However, this supposes that the gyroscopes are perfectly orthogonal, with unity scale factor, and the transformation between the measurement sensor (the star camera) reference frame and the gyro reference frame is known perfectly. An error in either of these two components will translate to multiplicative errors on the velocities, which will have a large effect when the velocity dramatically changes (for example, after a slew) and will not be accounted for by a simple bias model. Fig [] illustrates this effect with on-sky data. Eventually, the bias would adjust to be in agreement with the star camera measurements - but it can a while, and during this time, the velocity that we think we are moving at is incorrect. To put this in perspective, a 1\% error on the gyroscope velocity in one axis for a \SI{10}{\degree} slew at \ang{;;400}\si{\per\second} corresponds to a position error of 6 arcminutes, a considerable amount given our pointing requirements.
+
+If this error persists during flight, the poor man's solution is as follows. Instead of tracking the Kalman filter through slew, we slew blindly and reset the estimator after the slew. We reset our starting position with the first solution from the star camera. Since we will be off our target, we will slew again to the desired target, which will be much closer. Each time this needs to be repeated, we minimize the effects of the bias errors.
+
+For our scientific purpose, a 1\% error in the gyroscope scale factor of angular velocity alignment is not a deal breaker, since their main purpose is to maintain sufficient stability to lock onto a guide star with the fine guiding sensor. The fine guiding sensor is by definition in the correct reference frame, since it observes through the optical train. 
+
+
+
+
+
+
 \subsection{Star camera}
 
 \subsubsection{Tuning tests}

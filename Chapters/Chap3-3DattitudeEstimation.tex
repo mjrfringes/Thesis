@@ -250,6 +250,6 @@ While no new star camera measurement is available, the attitude transition is ex
 Hence, once we trigger the star camera, we need to start keeping track of the matrices $\A_k$, $\B_k$, and $\C_k = \boldsymbol\Pi_{i=k-N}^k\exp\left(\frac{1}{2}\matOmega(\EstGyroVec_{i})\Deltat\right)$, appropriately reset them when a new star camera trigger has occurred, and propagate them until the estimator receives the star camera value.
 
 \subsection{Enhancing the Kalman filter models}
-
+\label{subsec:enhancedKalman}
 
 \subsection{Conclusions on sensor fusion}
