@@ -10,9 +10,13 @@ from astropy.coordinates import SkyCoord
 clean_table = pickle.load(open('data/clean_table.data','r'))
 
 isolated = clean_table.group_by('Property').groups[2]
+
+
 #clean_table['SOFIA_name','Property','F11','F19','F31','F37'].more()
 alpha1 = isolated['alpha']
 alpha2 = isolated['alpha2']
+
+
 
 clean_table['R19'] = clean_table['R50_19']/clean_table['R50_cal_19']
 clean_table['R31'] = clean_table['R50_31']/clean_table['R50_cal_31']
@@ -35,7 +39,12 @@ fieldlist = ['SOFIA_name','RA','DEC','R19','R31','R37',
 'F11','e_F11','F19','e_F19','F31','e_F31','F37','e_F37',
 'H70','e_H70','H250','e_H250','H350','e_H350','H500','e_H500'
 ]
-print IRASdf[fieldlist]
+IRASfieldlist = ['SOFIA_name','RA','DEC','R19','R31','R37',
+'j','e_j','h','e_h','ks','e_ks',
+'i1','e_i1','i2','e_i2','i3','e_i3','i4','e_i4',
+'F11','e_F11','F19','e_F19','F31','e_F31','F37','e_F37']
+print "IRAS20050"
+print IRASdf[IRASfieldlist]
 
 
 NGC2071df = df[['F11','F19','F31','F37']].loc[['NGC2071.1','NGC2071.2','NGC2071.3','NGC2071.7']]
