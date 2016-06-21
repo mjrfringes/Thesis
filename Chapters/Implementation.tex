@@ -177,7 +177,6 @@ Hence, we design an algorithm as follows:
 
 This very simple algorithm proved to be very robust in all situations. The variance metric was the simplest to implement, as opposed to more complicated sharpness metrics used in modern photography. We inspected the results by eye and they were always satisfactory. The small backlash usually present when the stepper motor changes direction to go to the best position is not noticeable in the results.
 
-
 \subsection{Gyro attitude estimator}
 
 We present here the results of the on-board Kalman filter estimator which was described in Chapter~\ref{chap:controls}. The data gathered through the many test runs is archived on the ground computer. We developed a framework in Python to process this data and align all quantities properly to BETTII's heartbeat. 
@@ -267,8 +266,19 @@ The tuning of the WDL and CDL is discussed elsewhere (cite ARNAB's SPIE paper).
 
 \section{Pointing tests and performance results}
 
-\subsection{Operations}
+\subsection{Control system in practice}
 
+In practice, there are only a few key knobs that are required to pilot BETTII to its inertial attitude. The most sensitive knobs are the PID gains for the azimuth loop and the momentum dump loop, as they drastically change the response of the payload. 
+
+However, the Kalman filter also imposes more knobs, which have a more abstract role in the attitude estimation phase of the code. For our 6-state Kalman filter estimator, 9 knobs are nominally available. These knobs act as three sets of ($\vectors{x}, \vectors{y}, \vectors{z}$) weights to increase or decrease the relative importance of the measurements and process noise. The three sets control: the weight of the gyroscope measurements; the weight of the bias rate of change; and the weight of the star camera solution. These weights multiply the variance of the various contributors, and will influence the way the estimator treats each incoming piece of information. The software uses by default the theoretical values for the relative weights, computed in Section~\ref{sec:SensorModels} of the previous chapter, but allows the user to tweak those knobs. 
+
+For example, increasing the weight of the bias indicates to the estimator that the bias is expected to vary more, allowing for faster convergence of the bias to its final solution. On the contrary, a very small weight to the bias indicates that the bias is almost not expected to change, so the impact of a new star camera measurement will be much decreased. 
+
+The star camera automatically uses weights that are directly measured by the solving software. When a catalog pattern match is found, a least-square estimate of the best position naturally leads to errors in RA, DEC, and ROLL. as shown in Table.~\ref{tab:starCameraTests}, the error in ROLL is considerably larger than the error in RA and DEC, so the ROLL component of the star camera solution should not be trusted as much as the other two components. 
+
+One indirect impact of these weights is how much change is going to be induced each time a new measurement comes in. Fig.~\ref{fig:AttitudeEstimateZoom} shows distinct jumps in the gyroscope estimated position, which are caused by the fact that the camera is trusted perhaps too much. These jumps are getting smaller as the solution converges, but could still be a controls problem in the future. Hence, the star camera gains should be large when the star camera first attempts to determine the bias steady-state values, but should be increased when tracking to avoid trusting new measurements too much and causing jumps in the control system.
+
+For flight, we plan to reduce these 9 Kalman filter knobs to only three (one per system, as opposed to one per axis for each system), hence simplifying the commanding from the ground.
 
 \subsection{Gondola pointing stability with high bay doors closed}
 
@@ -297,7 +307,7 @@ The PSD plots in Fig.~\ref{fig:multiPSD400_lifted} show that most of the motion 
 \end{figure}
 
 
-Once lifted, the gyro PSD about $\vectors{z}$ is quite different (see Fig.~\ref{fig:multiPSD100_controlled}). We are indeed able to cancel out most of the drift by about 6 orders of magnitude in power at \SI{0.01}{\hertz}. The resulting time series showing the cross-elevation angle is shown in Fig.~\ref{fig:simplePlot_crossEl}. The 1$\sigma$ r.m.s noise of this run is about \ang{;;1}.
+Once lifted, the gyro PSD about $\vectors{z}$ is quite different (see Fig.~\ref{fig:multiPSD100_controlled}). We are indeed able to cancel out most of the drift by about 6 orders of magnitude in power at \SI{0.01}{\hertz}. The resulting time series showing the cross-elevation angle is shown in Fig.~\ref{fig:simplePlot_crossEl}. The 1$\sigma$ r.m.s noise of this \SI{700}{\second} run is $\le\ang{;;1}$. This reflects a 1000:1 rejection ratio when the control loop is on.
 
 \begin{figure}[!h]
 \begin{center}
@@ -317,12 +327,12 @@ Once lifted, the gyro PSD about $\vectors{z}$ is quite different (see Fig.~\ref{
 \end{center}
 \end{figure}
 
+Note that this behavior also implies the momentum dump loop working well. While we do not have the data to show due a mistake in the archiving software, the CCMG gimbal angle was staying for all this time within a few degrees of zero, and has being working consistently well for multiple months before this writing. This has allowed us to always maintain the gimbal in the middle of the range, and ensured long-term stability.
 
-
- show azimuth stability data
-show telescope rolling rms
 \subsection{On-sky pointing control}
 
+
+On-sky, lifted pointing test is the penultimate test that we can run from the ground. 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics{Figures/simple2DPlot_crossEl_elevation.png}
