@@ -89,6 +89,7 @@ A more detailed illustration of the high-level pointing strategy is offered in F
 
 
 \subsubsection{Control architecture and operating modes}
+\label{subsec:ControlArchitecture}
 
 The three levels of control that we need are:
 \begin{enumerate}
@@ -257,7 +258,7 @@ $\LOCKED$ & The intensity of the target in the science detector is measured, and
 
 \subsection{Subsystems}
 
-Multiple actuator and sensing subsystems are mentioned in the previous section. They are summarized in Table [], and each discussed in more detail in this section.
+Multiple actuator and sensing subsystems are mentioned in the previous section. They are summarized in Table~\ref{tab:modes}, and each discussed in more detail in this section.
 
 \subsubsection{Gyroscopes}
 \label{subsec:gyros}
@@ -562,7 +563,7 @@ Synchronization of the sensors and actuators are of prime importance for our pay
 To avoid future complications, all BETTII actuators and sensors are slaved to one single \SI{50}{\mega\hertz} master clock, or an integer divider of that master clock. The cascade of the various clock dividers meets at the common value of \num{124800}, which corresponds to \SI{2496000}{\nano\second}. This is BETTII's heartbeat. Hence, \num{124800} master clock ticks correspond to the elementary cycle of all critical processes:
 \begin{itemize}
 \item The CDL moves of one single step
-\item The H1RG reads one single frame
+\item The fine guidance sensor reads one single frame
 \item The science detector reads one single frame
 \item The CCMG wheel position about its axis is checked and a correction is applied.
 \end{itemize}
@@ -589,23 +590,22 @@ BETTII will have two on-board computers (see also diagram [REF]):
 \small
 \caption[BETTII embedded computers]{}
 \label{tab:computers}
-\vspace{-0.5cm}
 \begin{tabular}{c|p{12.5cm}}
 \toprule
 Name  & Description \& tasks  \\
 \midrule\boopFPGA & 
 $\bullet$ Generate \SI{50}{\mega\hertz} master clock \newline
 $\bullet$ Generate all other system clocks derived from master clock\newline
-$\bullet$ Trigger gyroscopes, star cameras\newline
+$\bullet$ Trigger all sensors \newline
 $\bullet$ Read sensors: gyroscopes, galil controllers, \ford at \heartbeat \newline
 $\bullet$ Send actuator commands at \heartbeat \newline
 $\bullet$ Implement hardware protection (limit, overdrive, etc) \newline
 \\
 \hline
 \boopRT & 
-$\bullet$ Collects all sensors from \boopFPGA and estimate gondola's attitude and velocity \newline
+$\bullet$ Collects all sensors from \boopFPGA and estimate the inertial attitude and velocity \newline
 $\bullet$ Create proper commands to all actuators and sends them to \boopFPGA  \newline
-$\bullet$ Manages operating modes [REF SECTION] \newline
+$\bullet$ Manages operating modes (see Section~\ref{subsec:ControlArchitecture} \newline
 $\bullet$ Manages FIFOs and communication channels with \ford  \newline
 \\
 \hline

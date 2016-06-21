@@ -131,51 +131,150 @@ Exp5 	&	31	&	35	&	44	$\pm$	53	&	6.54	$\pm$	0.84	&	2.33	$\pm$	0.79	&	180	$\pm$	65
 	\label{fig:starcamexample}
     \end{figure}
 \end{landscape}
-\begin{landscape}
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=1.5\textwidth]{Figures/starcam_SDSSr_zoom.pdf}
-	\caption[Star camera individual star]{\textit{Left}: Snapshot of a bright star seen within the background-subtracted star camera frame. \textit{Right}: Snapshot taken at the same location from the WISE \SI{3.4}{\um} archive.}
-	\label{fig:starcamzoom}
-    \end{figure}
-\end{landscape}
+%\begin{landscape}
+%\begin{figure}[!ht]
+%	\centering
+%	\includegraphics[width=1.5\textwidth]{Figures/starcam_SDSSr_zoom.pdf}
+%	\caption[Star camera individual star]{\textit{Left}: Snapshot of a bright star seen within the background-subtracted star camera frame. \textit{Right}: Snapshot taken at the same location from the WISE \SI{3.4}{\um} archive.}
+%	\label{fig:starcamzoom}
+%    \end{figure}
+%\end{landscape}
 
-Discuss about tuning, catalog, filters, etc
+\subsection{Live star camera diagnostic software}
 
-Table with the star camera parameters
+During our test operations, a lot of information is available and  it can sometimes be challenging to understand the full system status and diagnose the issues. To help mitigate this, we created a suite of small Python routines which help quickly diagnose the star camera behavior. For example, one software displays the latest image from the star camera, and overlays the blobs that the star finder software finds. At a glance, this can tell us if blobs are finding visible stars in the image, or if the star camera appears our of focus, or if there is a cloud cover. During flight, however, we will not have access to all this information because of the slow bandwidth. Hence, the software also cuts the star camera image (a $1920\times 1200$ array of 16-bit integers) into a smaller mosaic composed only of the regions around the blobs the software identified. Further, the type of all blobs is reduced to 8 bits. This constructs a much more modestly-sized piece of information that can be sent down for diagnostics.
 
-Show mean deviation of star camera image with optimized parameters;
-show time, statistics, etc.
+Other metrics are useful to understand the star camera's behavior. For example, the star finder and catalog matching software solves for the best fit of exposure time, by comparing the known brightness of the stars and the measured number of digital counts on the detector. We find that this is accurate to $\sim 10-20\%$ in a vast majority of the cases, and values that are wildly off this estimate usually indicate either a false positive or some other sort of issue associated with the solving. This is used in two ways: first, it offers a quick sanity check that the solving happens correctly and robustly; and second, it can offer one additional protect against false position information, which we can use in the Kalman estimator when we decide to incorporate a star camera solution or not.
 
-\subsubsection{Final parameters}
-
-\section{Test setups and limitations}
-\subsection{Talk about the way we test in the high bay, etc}
-\subsection{List of test setups: gyro only, gyro+star camera, gyro+star camera+tip/tilts with CCD cameras, gyro+star camera with H1RG;}
-\subsection{Explain the communication/data recording approach}
-
-\subsection{Autofocus algorithm and performance}
 
 \section{Estimator implementation}
+
+\subsection{Test setup and limitations}
+
+The testing is done indoors in the Building 20 Highbay at NASA GSFC. The payload is sufficiently close to the rolling doors that one arm can see a small patch of sky while hanging from the indoor crane.
+
+The payload is entirely run with 7 Marine Deep Cycle batteries, which provide all the required power for $\ge$\SI{8}{\hour} of continuous operations. BETTII is entirely wireless and uses a Wi-Fi router on board to provide high-bandwidth communication through a TCP/IP connection, which is useful for testing and displaying large quantities of information.
+
+The mechanical, electrical, and communication setup is different than it will be in flight in several ways. First, the crane is about three times less high than the balloon train will be, which results in higher pendulum frequencies. Second, the payload can only see one arm at a time through the high bay doors, making it difficult to test the entire control system with the fine guidance sensor loop. Third, when the rolling doors are open, gusts of winds can move the payload as it is hanging, resulting in considerably larger pendulum motions than expected in flight. And finally, in flight, the communication bandwidth is expected to be 1~MB/s down and $\sim$1~B/s up. The astonishingly low uplink rate forces a minimalistic approach where most commands are only one or two bytes long. 
+
+The star camera is also not put in its final, flight mounting position. The reason for this is that if the payload is lifted enough to clear most non-movable obstacles in the high bay, the angle at which the star camera can look and still see a patch of sky has to be less than $\sim \SI{30}{\degree}$. In previous months, star camera testing was done with the star camera positioned at the very end of one of BETTII's arms to increase the amount of sky coverage available. While discussions are underway to modify the high bay structure and open up portions of the wall, it is not reasonable to expect any actual changes for any of our relevant timescales for BETTII.
+
+
+\subsection{Autofocus implementation}
+
+Since the payload is close to the high bay door, changes in temperature occur and slightly change the focus of the star camera. These changes are expected to be more dramatic at float. For this reason, we implemented a very simple, yet very robust autofocus mechanism that we tested both on the ground and while hanging.
+
+The algorithm relies on the fact that the focus ring of the lens has a hard stop. The stepper motor that controls the focus ring through a belt cannot pass this stop, and when it tries, the belt always slips. In addition, we also know that the focus position for the ring will always be very close to this hard stop, which is a little past infinity focus for the lens. 
+
+Hence, we design an algorithm as follows:
+\begin{enumerate}
+\item Drive the stepper a large number of steps to guarantee hitting the hard stop.
+\item Take a picture and move one step backward (away from the stop).
+\item Calculate the variance of all the pixels in the image (which is a measure of sharpness).
+\item Repeat a sufficient amount of times to guarantee passing through focus.
+\item When done, go back to the position which maximized the variance.
+\end{enumerate}
+
+This very simple algorithm proved to be very robust in all situations. The variance metric was the simplest to implement, as opposed to more complicated sharpness metrics used in modern photography. We inspected the results by eye and they were always satisfactory. The small backlash usually present when the stepper motor changes direction to go to the best position is not noticeable in the results.
+
+
 \subsection{Gyro attitude estimator}
-\input{Figures/KalmanFilter}
 
-\subsubsection{Testing the Kalman filter software with simulated data}
-\subsubsection{Test results when sitting on the ground}
+We present here the results of the on-board Kalman filter estimator which was described in Chapter~\ref{chap:controls}. The data gathered through the many test runs is archived on the ground computer. We developed a framework in Python to process this data and align all quantities properly to BETTII's heartbeat. 
+
+For this section, the results shown correspond to data gathered when the payload was sitting on the ground. This served as the simplest possible test to ensure the Kalman filter could appropriately correct for the errors given by the star camera. 
+
+In Fig.~\ref{fig:GyroAttitudeEstimate}, we show the standard attitude plot. The red line indicates the inertial RA and DEC of the gondola or gyro reference frame estimated by the Kalman filter, while the blue dots indicates the measured inertial attitude of the same reference frame. In this plot, time goes from left to right (increasing RA). For each star camera data point, a line is drawn to show which estimator data point it corresponds to. This is necessary since the star camera solution is delayed with respect to the estimation. While the estimation starts as soon as the flight computer boots up, the first star camera solution resets it and sets a new starting point for the estimate.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics{Figures/attitude_estimate.png}
+\label{fig:GyroAttitudeEstimate}
+\caption[Attitude estimation while on the ground]{Attitude estimation while on the ground (see text for description).}
+\end{center}
+\end{figure}
+
+In order to understand this plot in more details, we show two zoomed-in plots in Fig.~\ref{fig:AttitudeEstimateZoom}. The plot in (\subref{subfig:attitudeEstimateZoom1}) shows the beginning of the estimation process. At first, the star camera solutions appear systematically off from the estimates obtained from simply propagating the gyroscopes. Each time this happens, the Kalman filter adapts the bias to attempt minimizing this difference. After about $\sim 20$ solutions, it appears that the filter has converged to a mean deviation around zero. In (\subref{subfig:attitudeEstimateZoom2}), we show a zoomed-in snapshot towards the end of the run, where for some amount of time, no star camera solution was found - but given the slow drift of the gyroscopes, it is not too much of a problem and the solution found after some time is still very close to the estimate.
+
+\begin{figure}[!h]
+\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.98\textwidth]{Figures/attitude_estimate_zoom1.png} 
+		\caption{}
+		\label{subfig:attitudeEstimateZoom1}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.98\textwidth]{Figures/attitude_estimate_zoom2.png} 
+		\caption{}
+		\label{subfig:attitudeEstimateZoom2}
+\end{subfigure}
+\label{fig:AttitudeEstimateZoom}
+\caption[Zoom on attitude estimate plot]{Zoom on attitude estimate plot (see text for description).}
+\end{figure}
+
+For each star camera solution, the software estimates a correction to apply to the bias that modifies the perceived gyro velocity. The results of this bias estimation for this particular run are shown in Fig.~\ref{fig:BiasEstimate}. Note that since the star camera is inherently less sensitive in roll (about X), the X bias estimate is more noisy and takes longer to converge. 
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=0.7\textwidth]{Figures/bias_estimate.png}
+\label{fig:BiasEstimate}
+\caption[Bias estimation while on the ground]{Bias estimation while on the ground.}
+\end{center}
+\end{figure}
+
+Finally, we can display the error between the estimated and measured attitude in a single scatter plot (Fig.~\ref{fig:MeasuredVsEstimated}). The contours show a 2D Kernel density estimation on the dataset, indicative of how peaked the probability distribution is. For this particular run and including the Kalman filter learning process at the beginning, we obtain an overall standard deviation of \ang{;;2.3}. Note that the peak of the distribution is not exactly located at (0, 0), which indicates an error in the alignment of the star camera solution with the corresponding estimator loop number. This is a known mistake from the processing software that was corrected since then.
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=0.7\textwidth]{Figures/measured_vs_estimated.pdf}
+\label{fig:MeasuredVsEstimated}
+\caption[Error between measured position and estimated position]{Error between measured position and estimated position.}
+\end{center}
+\end{figure}
+
+
+
+
+%\subsubsection{Testing the Kalman filter software with simulated data}
+%\subsubsection{Test results when sitting on the ground}
 \subsection{Telescope attitude estimator}
-Link to cross-elevation
-\subsection{Phase estimator [is that Arnab’s realm?]}
 
-\section{Operating modes}
-\subsection{Track mode}
-Gain tuning
-Show wheel angle for long time
-\subsection{Slew mode}
-\subsection{Acquire mode [this one is contingent on the telescopes working, and is not perfectly representative when only using one single side of the payload]}
+While knowing how the gyroscope gondola is oriented is critical to properly command the actuators (which are in that reference frame), the real error perceived by the instrument and the optics is the error in the telescope reference frame. The figure we used in the previous chapter is put here again for convenience and to set the context of the relevant reference frames (Fig.~\ref{fig:starcamRefFrame2}). What is not shown on this picture is the fact that the telescope reference frame itself is rotated about $\vectors{y}_\tel$ by some elevation angle with respect to the gyro reference frame. 
+
+\begin{figure}[!ht]
+	\centering
+	\includestandalone{Figures/starCameraRefFrame}
+	\caption[The star camera reference frame]{See text for details.}
+	\label{fig:starcamRefFrame2}
+  \end{figure}
+
+The error vector is estimated in the local telescope reference frame by knowing the inertial attitude of the telescope, which is related to the inertial attitude of the star camera and the gyro reference frame. The target's coordinates can then be determined in the telescope reference frame, since we know the target's inertial coordinates. The two spherical angles that we obtain are $\Delta\crossEl$ and $\Delta\El$, which are the cross-elevation and the elevation angles, respectively. 
+
+
+\subsection{Phase estimator}
+
+The phase estimator is perhaps the most constraining aspect of this mission. Indeed, in order to properly reconstruct interferograms, the phase uncertainty needs to be extremely small, which leads to a desired attitude uncertainty the order of $\sim$\ang{;;0.1} for periods of minutes. This quantity is exclusively in cross-elevation, as elevation errors do not contribute any pathlength error. 
+
+The various components that create delay are summarized here. By far the largest delay errors will be introduced by attitude pointing errors, which correspond to the errors in cross-elevation. These errors are corrected by the Warm Delay Line to some uncertainty. In addition to those errors, the Cold Delay Line is also adding some errors. Finally, there can remain errors introduced by thermal variations of the structure.
+
+The zero-point adjustment of the delay can be done using fringe tracking in the science channels using a bright calibrator star (see Appendix~\ref{apsec:fringeTracking}). This will allow to correct for errors that are large on longer timescales. Assuming that this scheme works (it can only be tested in flight), then the only errors that are present on short timescales are the errors from the two delay lines and the attitude motion. 
+
+Without an absolute zero-point correction on shorter timescales, the phase estimator relies exclusively on our attitude estimator, which will consist of the bulk of the error. The phase or OPD estimate is then $\OPD = \crossEl\units{\si{\radian}}\times \SI{8}{\meter} $, which is then fed to the WDL for correction. For scaling, a \ang{;;1} attitude error corresponds to \SI{40}{\um} error of OPD. 
+
+The tuning of the WDL and CDL is discussed elsewhere (cite ARNAB's SPIE paper).
+
+
 
 \section{Pointing tests and performance results}
-\subsection{Gondola pointing stability}
-\subsubsection{In the high bay}
+
+\subsection{Operations}
+
+
+\subsection{Gondola pointing stability with high bay doors closed}
+
+The most common test that we do routinely is to test the pointing stability indoors, without using the star camera. This corresponds to a pure controls test, since the star camera is not functional and we do not have knowledge of the real RA and DEC of the payload. 
+
+When the payload is lifted and hangs uncontrolled, the motion about $\vectors{z}$ is shown in Fig.~\ref{fig:intgralgyroZ400}, and the power spectrum of the velocities is shown in Fig.~\ref{fig:multiPSD400_lifted}. The motion can be mostly characterized by an oscillation with a $\sim\SI{100}{\second}$ period, which likely is caused by the restoring torque from the crane's geometry. The excitation is likely caused by the A/C of the high bay room, as well as small motions of the high bay structure itself.
 
 \begin{figure}[!ht]
 \begin{center}
@@ -185,17 +284,8 @@ Show wheel angle for long time
 \caption[Integrated gyro time series while hanging]{Integrated gyro time series while hanging and no motor on.}
 \end{center}
 \end{figure}
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=\textwidth]{Figures/simplePlot_crossEl.png}
-\label{fig:crossEl400}
-\vspace{-0.5cm}
-\caption[Cross-elevation with control loop on]{Cross-elevation with control loop on (gyroscopes only).}
-\end{center}
-\end{figure}
 
-
-
+The PSD plots in Fig.~\ref{fig:multiPSD400_lifted} show that most of the motion occurs in $\vectors{z}$ at about \SI{0.01}{\hertz}. This motion is 3 orders of magnitude higher than any other contributor about $\vectors{z}$. We can also notice a peak at \SI{0.7}{\hertz} that is visible in all axes, which we believe is an uncontrolled pitch motion of the payload about its long axis. This can be caused for example by a pivot mode about the gondola attachment pin. Since we see the signature of this peak in all axes, this is further indication of the non-orthogonality of the gyroscope mount. The peak at \SI{0.5}{\hertz} is thought to be caused by a pivot mode about the same point but about the $\vectors{x}$ axis. The ratio of the two peak frequency roughly corresponds to the expected ratio of the moment of inertia about $\vectors{y}$ and $\vectors{x}$. The peak at \SI{0.15}{\hertz} seen in both $\vectors{x}$ and $\vectors{y}$ is attributed to the pendulum mode about the crane attachment on the rook. This is consistent with a pendulum frequency $\frac{1}{2\pi}\sqrt\frac{g}{L}$ for $L\sim\SI{20}{\meter}$. In flight, we expect that last mode to be at even lower frequency, by at least a factor of $\sqrt{5}$, as the balloon train is expected to be at least 5 times longer.
 
 \begin{figure}[!h]
 \begin{center}
@@ -207,6 +297,8 @@ Show wheel angle for long time
 \end{figure}
 
 
+Once lifted, the gyro PSD about $\vectors{z}$ is quite different (see Fig.~\ref{fig:multiPSD100_controlled}). We are indeed able to cancel out most of the drift by about 6 orders of magnitude in power at \SI{0.01}{\hertz}. The resulting time series showing the cross-elevation angle is shown in Fig.~\ref{fig:simplePlot_crossEl}. The 1$\sigma$ r.m.s noise of this run is about \ang{;;1}.
+
 \begin{figure}[!h]
 \begin{center}
 \includegraphics{Figures/multiPSD100.png}
@@ -216,16 +308,44 @@ Show wheel angle for long time
 \end{center}
 \end{figure}
 
+\begin{figure}[!h]
+\begin{center}
+\includegraphics{Figures/simplePlot_crossEl.png}
+\label{fig:simplePlot_crossEl}
+\vspace{-0.5cm}
+\caption[Cross-elevation error indoors]{Cross-elevation error indoors.}
+\end{center}
+\end{figure}
+
+
 
  show azimuth stability data
 show telescope rolling rms
-\subsubsection{With the door open}
-\subsection{Kalman filter performance}
-Show data with the door open with the star camera acquiring frames
-\subsection{gyro+star camera+tip/tilts with CCD cameras}
-\subsection{gyro+star camera with H1RG;}
+\subsection{On-sky pointing control}
 
-\section{	Using the test results to estimate the flight performance (have to think more about that section)}
+\begin{figure}[!h]
+\begin{center}
+\includegraphics{Figures/simple2DPlot_crossEl_elevation.png}
+\label{fig:simple2DPlot_crossEl_elevation}
+\vspace{-0.5cm}
+\caption[Elevation and cross-elevation error]{Elevation and cross-elevation error  for a test on the sky.}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics{Figures/crossEl_outside.png}
+\label{fig:crossEl_outside}
+\vspace{-0.5cm}
+\caption[Cross-elevation error]{Cross-elevation error for a test on the sky.}
+\end{center}
+\end{figure}
+
+
+
+\subsection{What's left: Fine guiding sensor loop implementation}
+
+\section{	Using the test results to estimate the flight performance}
 \subsection{Perturbation rejection estimates}
 \subsection{Pointing knowledge predictions}
 \subsection{Pointing control predictions}
