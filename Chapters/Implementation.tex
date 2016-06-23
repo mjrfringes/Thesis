@@ -23,14 +23,38 @@ While the intrinsic noise of our sensors has been characterized in Section~\ref{
 
 The gyroscopes were characterized in quiet laboratory environment that was designed for precision optical interferometry, with special foundations to prevent vibrations being transmitted through the ground. This allowed us to measure the gyroscopes down to their noise levels. However, as soon as we attach the gyroscopes to any structure, the gyroscopes measure their vibration modes. 
 
+%\begin{figure}[!h]
+%\begin{center}
+%\includegraphics[width=\textwidth]{Figures/multiPSD400.png}
+%\label{fig:multiPSD400}
+%\vspace{-0.5cm}
+%\caption[Gyro PSD with payload on the ground]{Gyro PSD with payload on the ground}
+%\end{center}
+%\end{figure}
+
+
+\begin{landscape}
+\vspace{-1cm}
 \begin{figure}[!h]
-\begin{center}
+\begin{subfigure}[b]{0.7\textwidth}
+		\centering
 \includegraphics[width=\textwidth]{Figures/multiPSD400.png}
 \label{fig:multiPSD400}
 \vspace{-0.5cm}
-\caption[Gyro PSD with payload on the ground]{Gyro PSD with payload on the ground}
-\end{center}
+	\caption{}
+	\end{subfigure}
+\begin{subfigure}[b]{0.7\textwidth}
+		\centering
+\includegraphics[width=\textwidth]{Figures/multiPSD_no_loglog_zoom_400.png}
+\label{fig:multiPSD400_no_loglog_zoom_400}
+\vspace{-0.5cm}
+\caption{}
+	\end{subfigure}
+	\vspace{-0.5cm}
+\caption[Gyroscope noise]{Gyroscope noise}
 \end{figure}
+\end{landscape}
+
 
 
 This is the case for the gyroscope mount. We estimate that, once in the box and attached onto the truss, the gyroscope has $\sim$20 times its natural noise levels. Looking at the power spectral density of the velocity time series (Fig.~\ref{fig:multiPSD400}), almost all of the noise power is contained in three large and sharp peaks, which coincide with the expected carbon fiber structure first resonant modes. These modes are precisely located at 24.49, 25.23 and \SI{26.7}{\hertz} with the mass configuration at which the data was taken, which omits the large siderostat mirrors on each end (Fig.~\ref{fig:multiPSD400_no_loglog_zoom_400}).
@@ -39,14 +63,14 @@ The positive conclusion is that the truss has its first resonant frequencies pre
 
 Examining the PSD in Fig~\ref{fig:multiPSD400}, we also notice some broad peaks at 3, 5.5, and \SI{2}{\hertz} for the x, y, and z axes respectively. These are attributed to motions of the truss within the gondola about the vibration isolators that were installed to decouple the two mechanical structures. 
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics{Figures/multiPSD_no_loglog_zoom_400.png}
-\label{fig:multiPSD400_no_loglog_zoom_400}
-\vspace{-0.5cm}
-\caption[Gyro PSD with payload on the ground - Main peaks]{Gyro PSD with payload on the ground - main peaks.}
-\end{center}
-\end{figure}
+%\begin{figure}[!h]
+%\begin{center}
+%\includegraphics{Figures/multiPSD_no_loglog_zoom_400.png}
+%\label{fig:multiPSD400_no_loglog_zoom_400}
+%\vspace{-0.5cm}
+%\caption[Gyro PSD with payload on the ground - Main peaks]{Gyro PSD with payload on the ground - main peaks.}
+%\end{center}
+%\end{figure}
 
 
 
@@ -140,7 +164,7 @@ Exp5 	&	31	&	35	&	44	$\pm$	53	&	6.54	$\pm$	0.84	&	2.33	$\pm$	0.79	&	180	$\pm$	65
 %    \end{figure}
 %\end{landscape}
 
-\subsection{Live star camera diagnostic software}
+\subsubsection{Live star camera diagnostic software}
 
 During our test operations, a lot of information is available and  it can sometimes be challenging to understand the full system status and diagnose the issues. To help mitigate this, we created a suite of small Python routines which help quickly diagnose the star camera behavior. For example, one software displays the latest image from the star camera, and overlays the blobs that the star finder software finds. At a glance, this can tell us if blobs are finding visible stars in the image, or if the star camera appears our of focus, or if there is a cloud cover. During flight, however, we will not have access to all this information because of the slow bandwidth. Hence, the software also cuts the star camera image (a $1920\times 1200$ array of 16-bit integers) into a smaller mosaic composed only of the regions around the blobs the software identified. Further, the type of all blobs is reduced to 8 bits. This constructs a much more modestly-sized piece of information that can be sent down for diagnostics.
 
@@ -297,26 +321,47 @@ When the payload is lifted and hangs uncontrolled, the motion about $\vectors{z}
 
 The PSD plots in Fig.~\ref{fig:multiPSD400_lifted} show that most of the motion occurs in $\vectors{z}$ at about \SI{0.01}{\hertz}. This motion is 3 orders of magnitude higher than any other contributor about $\vectors{z}$. We can also notice a peak at \SI{0.7}{\hertz} that is visible in all axes, which we believe is an uncontrolled pitch motion of the payload about its long axis. This can be caused for example by a pivot mode about the gondola attachment pin. Since we see the signature of this peak in all axes, this is further indication of the non-orthogonality of the gyroscope mount. The peak at \SI{0.5}{\hertz} is thought to be caused by a pivot mode about the same point but about the $\vectors{x}$ axis. The ratio of the two peak frequency roughly corresponds to the expected ratio of the moment of inertia about $\vectors{y}$ and $\vectors{x}$. The peak at \SI{0.15}{\hertz} seen in both $\vectors{x}$ and $\vectors{y}$ is attributed to the pendulum mode about the crane attachment on the rook. This is consistent with a pendulum frequency $\frac{1}{2\pi}\sqrt\frac{g}{L}$ for $L\sim\SI{20}{\meter}$. In flight, we expect that last mode to be at even lower frequency, by at least a factor of $\sqrt{5}$, as the balloon train is expected to be at least 5 times longer.
 
+%\begin{figure}[!h]
+%\begin{center}
+%\includegraphics{Figures/lifted_400.png}
+%\label{fig:multiPSD400_lifted}
+%\vspace{-0.5cm}
+%\caption[Gyro PSD with payload lifted]{Gyro PSD with payload lifted.}
+%\end{center}
+%\end{figure}
+
+\begin{landscape}
 \begin{figure}[!h]
-\begin{center}
-\includegraphics{Figures/lifted_400.png}
-\label{fig:multiPSD400_lifted}
-\vspace{-0.5cm}
-\caption[Gyro PSD with payload lifted]{Gyro PSD with payload lifted.}
-\end{center}
+\begin{subfigure}[b]{0.7\textwidth}
+		\centering
+		\includegraphics[width=0.98\textwidth]{Figures/lifted_400.png}
+	\label{fig:multiPSD400_lifted}
+	\vspace{-0.5cm}
+	\caption{}
+	\end{subfigure}
+\begin{subfigure}[b]{0.7\textwidth}
+		\centering
+	\includegraphics[width=0.98\textwidth]{Figures/multiPSD100.png}
+	\caption{}
+	\label{fig:multiPSD100_controlled}
+	\end{subfigure}
+\label{fig:multiPSD}
+\caption[Noise while hanging]{Noise while hanging}
 \end{figure}
+\end{landscape}
+
 
 
 Once lifted, the gyro PSD about $\vectors{z}$ is quite different (see Fig.~\ref{fig:multiPSD100_controlled}). We are indeed able to cancel out most of the drift by about 6 orders of magnitude in power at \SI{0.01}{\hertz}. The resulting time series showing the cross-elevation angle is shown in Fig.~\ref{fig:simplePlot_crossEl}. The 1$\sigma$ r.m.s noise of this \SI{700}{\second} run is $\le\ang{;;1}$. This reflects a 1000:1 rejection ratio when the control loop is on.
 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics{Figures/multiPSD100.png}
-\label{fig:multiPSD100_controlled}
-\vspace{-0.5cm}
-\caption[Gyro PSD with payload lifted, under azimuth control]{Gyro PSD with payload under azimuth control.}
-\end{center}
-\end{figure}
+%\begin{figure}[!h]
+%\begin{center}
+%\includegraphics{Figures/multiPSD100.png}
+%\label{fig:multiPSD100_controlled}
+%\vspace{-0.5cm}
+%\caption[Gyro PSD with payload lifted, under azimuth control]{Gyro PSD with payload under azimuth control.}
+%\end{center}
+%\end{figure}
 
 \begin{figure}[!h]
 \begin{center}
@@ -332,30 +377,87 @@ Note that this behavior also implies the momentum dump loop working well. While 
 \subsection{On-sky pointing control}
 
 
-On-sky, lifted pointing test is the penultimate test that we can run from the ground. 
-\begin{figure}[!h]
-\begin{center}
-\includegraphics{Figures/simple2DPlot_crossEl_elevation.png}
-\label{fig:simple2DPlot_crossEl_elevation}
-\vspace{-0.5cm}
-\caption[Elevation and cross-elevation error]{Elevation and cross-elevation error  for a test on the sky.}
-\end{center}
-\end{figure}
+On-sky, lifted pointing test is the ultimate test that we can run from the ground without having the optics in place. We show two sets of data; the first one (configuration 1) was taken with the star camera positioned at $\sim\SI{43}{\degree}$ elevation at the very end of the BETTII boom (pointing in the $(\vectors{y}, \vectors{z})$ plane). This gave access to a large patch of sky, as the boom could be almost sticking out through the high bay door. The second set (configuration 2) features the star camera installed at a temporary $\sim\SI{23}{\degree}$ angle from horizontal in the $(\vectors{x}, \vectors{z})$ plane. This configuration is more similar to the final flight configuration where it will be at a nominal \SI{45}{\degree} from horizontal in that same plane. Putting it at an elevation of $\sim\SI{23}{\degree}$ angle allows coverage of a reasonable patch of sky, although it remains very constraining.
 
+\begin{landscape}
+\begin{figure}[!h]
+\begin{subfigure}[b]{0.7\textwidth}
+		\centering
+		\includegraphics[width=0.98\textwidth]{Figures/Slew_with_starcam_1.png} 
+		\caption{}
+		\label{subfig:SlewWithStarcam1}
+\end{subfigure}
+\begin{subfigure}[b]{0.7\textwidth}
+		\centering
+		\includegraphics[width=0.98\textwidth]{Figures/Slew_with_starcam_2.png} 
+		\caption{}
+		\label{subfig:SlewWithStarcam2}
+\end{subfigure}
+\label{fig:SlewWithStarcam}
+\caption[Slew and point on the sky]{Slew and point on the sky. (\subref{subfig:SlewWithStarcam1}): Two consecutive slews with the camera in configuration~1 totalling $\sim\SI{25}{\degree}$ in azimuth. The time flows from left to right on this graph. (\subref{subfig:SlewWithStarcam2}): Point, slew and point with the camera in configuration~2. The low rate of star camera solutions towards the end of the run is due to increased cloud coverage and increased surrounding light in the very early morning.}
+\end{figure}
+\end{landscape}
+
+In Fig.~\ref{fig:SlewWithStarcam} we show two typical pointing runs during a night in June~2016. That night marked the transition to configuration 2 and a reorganization of the high bay to accommodate rotating the payload so that it faces the door, and so that the telescopes can see out of the door.
+
+For the first run that night, shown on Fig.~\ref{fig:SlewWithStarcam}\subref{subfig:SlewWithStarcam1}, we tested the new gyroscope mount, new algorithms, and new flight procedures. The run shows two consecutive slews (the swathes with little to no star camera solutions) spanning a total of about \SI{25}{\degree} in RA. Note that the scales are different in RA and DEC for display convenience. There are two noticeable features to this figure. The first is that some star camera solutions appear to be false positive, a result from non-optimal star camera parameters which involved too few stars required to confirm a match. This can be easily fixed by increasing this parameter.
+
+The second, and more concerning problem is the apparent drift of the star camera solution after the first slew. This is what made us realize that correcting for biases only was not capturing the entire behavior of the gyroscope-star camera system pair. We interpret the resulting large error at the end of the first slew as a misalignment between the star camera orientation and the 3D gyroscope mount, and have developed flight software to properly estimate this out (see Chapter~\ref{chap:controls}, Section~\ref{subsec:enhancedKalman}).
+
+If this is a problem during flight, we anticipate resetting the estimator's position each time we finish slewing, to restart the Kalman filter using the original biases.
+
+The second run of the night, which was also our first run in configuration 2, does not exhibit this behavior, partly due to a better alignment between the gyros and the star camera, and also because the slew is half as long as the first slew in the other picture. 
+
+For this second run, we show the pointing stability in cross-elevation in Fig.~\ref{fig:crossEl_outside}. This picture is to be compared with the test done indoors, showed in Fig.~\ref{fig:simplePlot_crossEl}. Here the peak-to-peak errors are increased by a factor of $\sim 5$, but the r.m.s deviation is still $\le\ang{;;5}$. This satisfies the $\pm\ang{;;15}$ requirement for more than 95\% of the points, which is very encouraging.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics{Figures/crossEl_outside.png}
 \label{fig:crossEl_outside}
 \vspace{-0.5cm}
-\caption[Cross-elevation error]{Cross-elevation error for a test on the sky.}
+\caption[Cross-elevation error]{Cross-elevation error for a test on the sky (see text for description).}
+\end{center}
+\end{figure}
+
+Another view at the pointing stability is proposed in Fig.~\ref{fig:simple2DPlot_crossEl_elevation}, which presents the data as a 2D plot of the error in both elevation and cross-elevation, augmented by a 2D Kernel density contour plot to better show where the density peak lies. Note that contours are separated linearly, so that data is 10 times more likely to be inside the brightest contour than outside the black outer contour. The values of the contours are not meaningful, since they refer to lines of same probability density, which doesn't easily relate to a percentile value. 
+
+The striking asymmetry of this plot reveals that the elevation control is, for now, much more accurate than the cross-elevation loop, which is to be expected due to the much lower inertia of the rotators (at the time of this run, the mirrors were not installed on the rotators). We expect degradation of the elevation accuracy once the siderostats are mounted on the rotators, even after tuning the PID gains.
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics{Figures/simple2DPlot_crossEl_elevation.png}
+\label{fig:simple2DPlot_crossEl_elevation}
+\vspace{-0.5cm}
+\caption[Elevation and cross-elevation error]{Elevation and cross-elevation error for a test on the sky.}
 \end{center}
 \end{figure}
 
 
 
+
 \subsection{What's left: Fine guiding sensor loop implementation}
 
-\section{	Using the test results to estimate the flight performance}
-\subsection{Perturbation rejection estimates}
-\subsection{Pointing knowledge predictions}
-\subsection{Pointing control predictions}
+The last on-sky pointing tests have consistently shown:
+\begin{enumerate}
+\item our ability to always know where we are pointed using a robust star camera solution
+\item our ability to slew large amounts while maintaining the wheels close to their zero position (which indicates a successful momentum dumping loop)
+\item our ability to keep the rotator vector pointed to an inertial target to within the specificied $\pm\ang{;;15}$ more a large fraction of the time
+\item our ability to have small attitude errors which can be fed to the line for further correction
+\end{enumerate}
+
+However, despite this relative success, one key item has yet to be implemented before flight: the fine guiding loop, which brings both beams to overlap better than $\ang{;;1.5}$. In order to be implemented, the optics, cryostat, and tip/tilt mechanisms all have to be integrated into the payload in order to make it function.
+
+However, we have started planning for this upcoming integration by designing a C++ software to handle the task at hands. In this section we present the notional architecture for this last piece of software, but warn the reader that many unknowns will remain until the optics are installed in the truss. In particular, our main concern lies in the transition mode that we called "ACQUIRE", which might require a lot of tuning. 
+
+The role of the fine guiding loop is to use the fine guiding sensor (FGS, an H1RG detector with two window readouts, one for each arm) to determine the centroid of a known source within the field of view. The location of this source on each of the readout windows of the detector (each window shows what is seen by each arm) will then be compared to known pixel locations that ensure overlap between the two science beams. The errors signals are then $\Delta x_L$, $\Delta y_L$, $\Delta x_R$, $\Delta y_R$, where the subscripts designate the left and right arm, respectively. These error signals are rotated to the proper reference frame and fed to the tip/tilt mechanisms, which zeroes them out very quickly thanks to their very large actuation bandwidth and very small inertia. 
+
+Since the errors are zeroed out almost instantaneously, these errors signals cannot be used to determine the attitude of the entire payload. However, the angular deviation of each tip/tilt stage from their nominal position has information about the overall pointing error of the truss. To illustrate this feature, let's suppose that both windows are perfectly aligned and the detector axes (X,Y) match the elevation and cross-elevation, respectively. In this case, if both tip/tilt stage need to correct for a positive elevation error, it means that the entire truss is mispointed in elevation. Similarly, if the cross-elevation correction happens in the same direction, it means that a movement of the truss in cross-elevation will correct it and bring the tip/tilt stages to their nominal position.
+
+We can generalize this statement by saying that the common-mode deviations from the nominal position of the tip/tilt stages represent an estimator for the attitude difference between the payload and the guide star. This information is processed, rotated in the correct reference frame, an injected into the Kalman filter estimator in replacement of a star camera measurement. The weight (or variance) of this new measurement is considerably smaller than the star camera, since it is the most trusted attitude measurement that we can have. 
+
+At full speed and sampling only \ang{;;15}$\times$\ang{;;15} windows, the fine guiding loop can provide these absolute position estimates at \SI{50}{\hertz}. 
+
+There are many challenges with this system. The first is to robustly, autonomously identify the chosen guide star within the field of view. For this, we design a blob-finding software which examines the images received from the fine guiding sensor and identifies the brightest $N$ blobs in the image. The targets are carefully chosen so that the guide stars are the brightest sources in the image, which enhances the chances of finding the correct star. 
+
+ACQUIRE mode involves progressively reducing the size of the FOV in the fine guiding sensor, starting with a $\ang{;5;}\times\ang{;5;}$ FOV at \SI{2}{\second} per frame, down to \ang{;;15}$\times$\ang{;;15} at \SI{50}{\hertz}. 
+
+\section{	Conclusion and status of implementation}

@@ -172,9 +172,7 @@ BETTII is expected to launch from Fort Sumner, NM, for its first engineering fli
 
 BETTII has two main structures. The first is a carbon fiber and steel truss that is used as our optical bench. This was the first item that was designed in the project. The elements of this structure are built by bonding \SI{7.5}{\centi\meter} carbon tubes to custom-made steel nosecones. The steel nosecones are lightweight and strong, and have a threaded hole on the axis: they attach to multi-faceted steel nodes like tinker toys. There are three lengths of tubes on the truss. At the interface between the nosecone and the nodes, spherical washers or polypropylene washers are used, depending on the location on the payload. The difference of material compensates for differential thermal contraction on the beams that form the long side of triangles.
 
-The structure is about \SI{9}{\meter} long. It is designed to be lightweight, strong, and have a first resonant mode above \SI{20}{\hertz} to ensure fast damping of residual mechanical oscillations. This property was measured and the predicted resonance was found to be within \SI{1}{\hertz} of its expected frequency, at \SI{25}{\hertz}.
-
-%The strength of each bonded tube assembly was also tested. Each assembly was individually subject to a \SI{10000}{\newton} pull test. Out of all the assemblies [FIND NUMBER], only 2 failed close to \SI{10000}{\newton}, at the level of the epoxy bond. 
+The structure is about \SI{9}{\meter} long. It is designed to be lightweight, strong, and have a first resonant mode above \SI{20}{\hertz} to ensure fast damping of residual mechanical oscillations. We measured the first resonance peaks to be within \SI{1}{\hertz} of their expected frequency, at \SI{25}{\hertz} (see Chapter~\ref{chap:implementation}).
 
 The entire balloon payload needs to be robust to handle 10~g vertical force and 5~g force at \SI{45}{\deg}. With an expected total mass of \SI{1000}{\kilo\gram}, we need yield strength sufficient to hold \SI{100000}{\newton} of force. 
 
@@ -203,11 +201,22 @@ In order to perform double-Fourier interferometry, an asymmetry needs to be intr
 
 On both the KMA and the WDL, on of the mirrors is actuated in tip and tilt, and provide the fine control required to properly overlap the two beams [discussed in section...]
 
-[Show picture of the optics train]
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=\textwidth]{Figures/Assemblies.png} 
+		\caption[Small optical assemblies]{K-Mirror Assembly, Warm Delay Line, and Cold Delay Line.}
+		\label{fig:SmallAssemblies}
+\end{figure}
 
 The beams of light enter the cryostat through a thin polypropylene window. We tested different window thicknesses and selected the \SI{15}{\micro\meter} thickness as our baseline design. Test pieces with this window have been shown to comfortably resist about 1.5 times the atmospheric pressure, even after 50 cycles of pressurization. The number is a little smaller when the pressurization occurs very rapidly and do leave time to the window to deform elastically. A number of tests were done on identical batches of windows to ensure the repeatability of our test method. 
 
 
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=\textwidth]{Figures/OpticsLayout.png} 
+		\caption[Optics layout]{Optics layout for BETTII.}
+		\label{fig:OpticsLayout}
+\end{figure}
 
 
 \subsubsection{Optics manufacturing}
@@ -218,7 +227,16 @@ The company Nu-Tek, in Aberdeen, MD manufactured all of our small optics out of 
 
 However, very few manufacturers in the United States were able to diamond-turn the siderostats and the primary mirror assembly, while ensuring the level of surface figure we needed. The diamond-turning process uses a slowly moving diamond blade that is controlled in 3 axes to carve out the required shape. This process requires extreme temperature stability, which is often not available in traditional machine shops. 
 
-The Department of Advanced Manufacturing at North Carolina State University was able to manufacture our mirrors by meeting all of our requirements. The results are published in [REF to JATIS paper]. Each telescope assembly has a stacked RMS surface figure error of [], while the siderostats have []. The siderostats are more complicated because they did not exactly fit in their diamond-turning spindle. We decided to proceed with a two-step diamond turning, where they turned two sections of the ellipse consecutively. This does not guarantee that the two areas will be at the same height since they have to unmount the mirror off the spindle. However, our models show that even if different sections of the mirrors are at different heights, the beam combination can still be successful, as the parts of the pupil that are shifted in one arm are also shifted in the other. 
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=\textwidth]{Figures/TelescopeAssemblies.jpg} 
+		\caption[Telescope assemblies]{Telescope assemblies in the optics lab.}
+		\label{fig:TelescopeAssemblies}
+\end{figure}
+
+
+
+The Department of Advanced Manufacturing at North Carolina State University was able to manufacture our mirrors by meeting all of our requirements. The results are published in [REF to JATIS paper]. Each telescope assembly has a stacked r.m.s surface figure error of [], while the siderostats have []. The siderostats are more complicated because they did not exactly fit in their diamond-turning spindle. We decided to proceed with a two-step diamond turning, where they turned two sections of the ellipse consecutively. This does not guarantee that the two areas will be at the same height since they have to unmount the mirror off the spindle. However, our models show that even if different sections of the mirrors are at different heights, the beam combination can still be successful, as the parts of the pupil that are shifted in one arm are also shifted in the other. 
 
 
 
@@ -227,9 +245,28 @@ The Department of Advanced Manufacturing at North Carolina State University was 
 
 The cryostat was design by our team. Items were sent out for manufacturing to different companies and assembled in house. The cryostat is passive and does not require any mechanical cryo-cooler. It is designed to operate for a duration of \SI{40}{\hour}, which should give us enough margin considering the typical lengths of balloon flights from the U.S. of about \SI{16}{\hour}. 
 
+
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=\textwidth]{Figures/Cryostat.jpg} 
+		\caption[Cryostat top plate]{Cryostat top plate.}
+		\label{fig:CryostatTopPlate}
+\end{figure}
+
+
 The fridge is a ($^3$He+$^4$He) sorption refridgerator from Chase Research that cools down the main optical bench to \SI{4}{\kelvin}. It also has an intermediate cold finger at \SI{1}{\kelvin} and a final stage that brings down the detector temperature to \SI{300}{\milli\kelvin}. 
 
 At the heart of the instrument are four $9\times 9$ close-packed linear arrays of multiplexed superconducting transition edge sensors (TES) bolometers \citep{Benford:2008wk} incorporating the Backshort Under Grid (BUG) architecture \citep{Allen:2006jn}. These arrays are scaled versions of similar arrays already built for ground-based instruments \citep[e.g., GISMO,][]{Staguhn:2014jg}. Detectors are read out using advanced linear SQUID multiplexer and amplifiers. A $4\times 22$ multiplexed readout is used for each array; the extra seven channels are used for calibration signals (unilluminated pixels, “dark SQUID” channels, and an “always on” channel), allowing monitoring of all potential noise contributors \citep{deKorte:2003km}.  
+
+
+
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=\textwidth]{Figures/DetectorTesting.jpg} 
+		\caption[Detector testing]{Detector testing in a test dewar.}
+		\label{fig:DetectorTesting}
+\end{figure}
+
 
 The optics inside the cryostat include two sections: a near-infrared fine guidance sensor, and the far-infrared channels which lead to the science detector. The incoming light beam is split right after entering the cryostat with a NIR/FIR dichroic beam splitter. This custom-made filter reflects off the far-IR and transmits the near-IR, and its recipe was suggested by P. Ade at Cardiff University. At the bottom of the cryostat, in the \SI{77}{\kelvin} volume, the fine guidance sensor is composed of N optics and one H1RG detector [REFERENCE]. 
 

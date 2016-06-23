@@ -413,7 +413,7 @@ We have designed, built and tested a custom star camera setup that provides high
 
 Our star camera design features an old-generation Nikon Nikkor \SI{300}{\mm} f/2.8 telefocal lens with manual focus and extended hood. These lenses were manufactured between 1977 and 1982 and can be found today online through websites like e-Bay. The lens provides low chromatic aberration, a magnification of \SI{688}{\arcsecond\per\mm}, a wide field of view ($\approx$~\SI{10}{\degree}) and a collecting area of \SI{90}{\mm\squared} which is is larger than most star tracking assemblies. This old lens does not feature a built-in autofocus or any of the image stabilization actuators commonly found in modern lens assemblies: these could have become a liability in the severe balloon environment. 
 
-Our camera is a USB3.0 Point Grey Grasshopper3. The CCD is a Sony Pregius IMX174 CMOS sensor with 1920$\times$1200 pixels at \SI{5.86}{\um} pitch. This provides a field of view of \SI{2.14}{\degree}$\times$\SI{1.34}{\degree} and a pixel scale of \ang{;;4.02}/pixel. It features a very convenient software suite which works with all the Point Grey camera products, and leaves room for future potential upgrades of the camera. The detector characteristics are summarized in Table~\ref{tab:starcamproperties}.
+Our camera is a USB3.0 Point Grey Grasshopper3. The sensor is a Sony Pregius IMX174 CMOS sensor with 1920$\times$1200 pixels at \SI{5.86}{\um} pitch. This provides a field of view of \SI{2.14}{\degree}$\times$\SI{1.34}{\degree} and a pixel scale of \ang{;;4.02}/pixel. It features a very convenient software suite which works with all the Point Grey camera products, and leaves room for future potential upgrades of the camera. The detector characteristics are summarized in Table~\ref{tab:starcamproperties}.
 
 \renewcommand{\arraystretch}{1.5}
 \vspace{-0.5cm}
@@ -502,6 +502,13 @@ The momentum management strategy consists of using the balloon as a large moment
 
 For this purpose, BETTII uses a design which has successfully flown on previous balloon payload (Fig.~\ref{fig:rotator}), with several improvements over its predecessors. It consists of a steel an titanium setup which will make the junction between to the bottom of the balloon train (at the very bottom of the ladder) and the very top of the gondola. The critical material is an alloy of steel that has been heat treated and is particularly strong. The setup consists essentially of a pivot and a pin made with this allow, connected together with grade 8 bolts. The top of the pin is attached to the pivot, and has a lip at the bottom on which two circular bearings are stacked: the bottom one uses ceramic balls (for their excellent friction properties and long lifetime), and the top one uses steel balls (for their excellent strength). Between the two bearings, there is a metal holder that extends all the way down below the pin. On top of the steel bearing, a titanium case sits, which attaches to the entire gondola. 
 
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=\textwidth]{Figures/MomDump.jpg} 
+		\caption[Momentum dump mechanism and pin]{Momentum dump mechanism.}
+		\label{fig:MomDump}
+\end{figure}
+
 The momentum dump mechanism is a simple rotary stepper motor. Its housing attaches to the steel case of the assembly - while its shaft attaches to the metal holder between the two bearings. With an assembly like this, when a vertical upward force is exerted, the gondola's weight pushes on the bearings, which then push onto the pin's lip. When the stepper motor starts spinning, it spins only the top part of the bottom bearing, and the bottom part of the top bearing: the friction force that this exerts allows to slowly dump momentum into the pin, hence into the balloon train. 
 
 This configuration seems dangerous since the entire weight of the payload rests on the two bearings and the pin's bottom lip, which can be hazardous during descent when the parachutes open and the payload can experience up to a 10~g vertical load. Hence, this piece of the assembly needs to be thoroughly tested and certified before launch. 
@@ -555,8 +562,6 @@ The platform can be controlled in open-loop mode, where there is a simple gain b
 The fine guidance sensor is a HAWAII-1RG detector with 1024$\times$1024 pixels that is sensitive to infrared wavelengths between \SI{1}{\um} and \SI{2.5}{\um}. The device will be operated at a cryogenic temperature of \SI{77}{\kelvin}, at which the expected read noise is 18~electrons r.m.s.
 
 \subsubsection{Clocks and timing}
-Clocks and timings \\
-Computers
 
 Synchronization of the sensors and actuators are of prime importance for our payload. As an interferometer, we are extremely sensitive to vibrations which could be injected in our system by the motors. While everything was designed to maintain a very good symmetry, slight differences in the inertias or mass distribution of the reaction wheels, for example, could create a beat frequency that would be noticeable in our science data. The existence of multiple clocks, each with their own slight temperature-dependent drift, can dramatically complicate the proper retrieval of the data.
 
@@ -588,7 +593,7 @@ BETTII will have two on-board computers (see also diagram [REF]):
 \renewcommand{\arraystretch}{1.5}
 \begin{table}[htbp]
 \small
-\caption[BETTII embedded computers]{}
+\caption[BETTII embedded computers]{BETTII on-board computers.}
 \label{tab:computers}
 \begin{tabular}{c|p{12.5cm}}
 \toprule
