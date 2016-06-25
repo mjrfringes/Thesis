@@ -25,23 +25,41 @@ clean_table['R37'] = clean_table['R50_37']/clean_table['R50_cal_37']
 df = clean_table.to_pandas()
 df.index = df['SOFIA_name']
 c = SkyCoord(df['RA'],df['DEC'],frame=FK5,unit=u.deg)
-df['Coordinates'] = c.to_string('hmsdms',precision=3)
+df['Coordinates'] = c.to_string('hmsdms',precision=1)
 print df['Coordinates']
 
-df['env_mass'] += 0.01
-df = df.loc[df['Cluster'].isin(['IRAS20050'])]
+df1 = df.loc[df['Cluster'].isin(['IRAS20050'])]
 
 columns = ['ks','i1','i2','i3','i4','F11','F19','m1','F31','F37']
 e_columns = ["e_"+col for col in columns]
 cols = list(itertools.chain.from_iterable(zip(columns,e_columns)))
 print cols
-df[cols+['Coordinates']].to_csv('Data/IRAS20050.csv')
+df1[cols+['Coordinates']].to_csv('Data/IRAS20050.csv')
 
 
 
 # load only isolated sources
 isolated = clean_table.group_by('Property').groups[2]
 
+alpha1 = isolated['alpha']
+alpha2 = isolated['alpha2']
+
+fig,(ax,ax2) = plt.subplots(1,2,figsize=figsize,facecolor=facecolor)
+hist,bin_edges = np.histogram(alpha1,bins=30)
+w = bin_edges[1] - bin_edges[0]
+ax.bar(bin_edges[:-1],hist,width=w,color=blue)
+ax.set_xlabel(r'Spectral index $\alpha_{2.2-37}$')
+ax.set_ylabel('Number of objects')
+ax.grid(True)
+
+hist,bin_edges = np.histogram(alpha2,bins=30)
+ax2.bar(bin_edges[:-1],hist,width=w,color=blue)
+ax2.set_xlabel(r'Spectral index $\alpha_{2.2-24}$')
+ax2.set_ylabel('Number of objects')
+ax2.grid(True)
+
+fig.tight_layout()
+fig.savefig('../Figures/SpectralIndex_cardini.pdf',dpi=300)
 
 
 
@@ -51,11 +69,13 @@ isolated = clean_table.group_by('Property').groups[2]
 isolated.add_column(Column(np.zeros(len(isolated)),name="e_alpha"))
 isolated.add_column(Column(np.zeros(len(isolated)),name="e_alpha2"))
 
-columnlist_alpha =['ks','i1','i2','i3','i4','F11','F19','m1','F31','F37']
+columnlist_alpha =['ks','i1','i2','i3','i4','F11','F19','F31','F37']
 errorbars_alpha = ["e_"+col for col in columnlist_alpha]
 wllist = Table(names=columnlist_alpha)
-wllist.add_row([2.2,3.6,4.5,5.8,8.,11.1,19.7,24,31.5,37.1])
-
+wllist.add_row([2.2,3.6,4.5,5.8,8.,11.1,19.7,31.5,37.1])
+df['e_alpha']= 0.0
+df['e_alpha2']= 0.0
+df['alpha2']= 0.0
 for i in range(len(isolated)):
 	vals = np.array([isolated[wl][i] for wl in columnlist_alpha if isolated.mask[wl][i]==False])
 	errs = np.array([isolated[wl][i] for wl in columnlist_alpha if isolated.mask[wl][i]==False])
@@ -67,7 +87,10 @@ for i in range(len(isolated)):
 	wav = np.log10(wav)
 	fit,cov = np.polyfit(wav,vals,1,w=errs,cov=True)
 	isolated['alpha'][i] = fit[0]
+	df.loc[isolated['SOFIA_name'][i],'alpha'] = fit[0]
 	isolated['e_alpha'][i] = np.sqrt(cov[0,0])
+	df.loc[isolated['SOFIA_name'][i],'e_alpha'] = np.sqrt(cov[0,0])
+	
 
 columnlist_alpha =['ks','i1','i2','i3','i4','m1']
 errorbars_alpha = ["e_"+col for col in columnlist_alpha]
@@ -75,33 +98,40 @@ wllist = Table(names=columnlist_alpha)
 wllist.add_row([2.2,3.6,4.5,5.8,8.,24])
 
 for i in range(len(isolated)):
-	vals = np.array([isolated[wl][i] for wl in columnlist_alpha if isolated.mask[wl][i]==False])
-	errs = np.array([isolated[wl][i] for wl in columnlist_alpha if isolated.mask[wl][i]==False])
-	wav = np.array([wllist[wl][0] for wl in columnlist_alpha if isolated.mask[wl][i]==False])
-	vals *= 1e-17*const.c.value/wav
-	errs *= 1e-17*const.c.value/wav
-	vals = np.log10(vals)
-	errs = np.log10(errs)
-	wav = np.log10(wav)
-	if len(vals)>2:
-		fit,cov = np.polyfit(wav,vals,1,w=errs,cov=True)
-		isolated['alpha2'][i] = fit[0]
-		isolated['e_alpha2'][i] = np.sqrt(cov[0,0])
-
-
-	
+	if isolated.mask['i4'][i]==False:
+		vals = np.array([isolated[wl][i] for wl in columnlist_alpha if isolated.mask[wl][i]==False])
+		errs = np.array([isolated[wl][i] for wl in columnlist_alpha if isolated.mask[wl][i]==False])
+		wav = np.array([wllist[wl][0] for wl in columnlist_alpha if isolated.mask[wl][i]==False])
+		vals *= 1e-17*const.c.value/wav
+		errs *= 1e-17*const.c.value/wav
+		vals = np.log10(vals)
+		errs = np.log10(errs)
+		wav = np.log10(wav)
+		if len(vals)>2:
+			fit,cov = np.polyfit(wav,vals,1,w=errs,cov=True)
+			isolated['alpha2'][i] = fit[0]
+			isolated['e_alpha2'][i] = np.sqrt(cov[0,0])
+			df.loc[isolated['SOFIA_name'][i],'alpha2'] = fit[0]
+			df.loc[isolated['SOFIA_name'][i],'e_alpha2'] = np.sqrt(cov[0,0])
+	else:
+		isolated['alpha2'][i] = -100
+		isolated['e_alpha2'][i] = 100
+		isolated.mask['alpha2'][i] = True
+		isolated.mask['e_alpha2'][i] = True
+		
 alpha1 = isolated['alpha']
 alpha2 = isolated['alpha2']
 
 fig,(ax,ax2) = plt.subplots(1,2,figsize=figsize,facecolor=facecolor)
-hist,bin_edges = np.histogram(alpha1,bins=np.arange(-1,3,0.15))
+hist,bin_edges = np.histogram(alpha1.compressed(),bins=np.arange(-1,4.5,0.15))  #np.arange(-1,3,0.15)
 w = bin_edges[1] - bin_edges[0]
 ax.bar(bin_edges[:-1],hist,width=w,color=blue)
 ax.set_xlabel(r'Spectral index $\alpha_{2.2-37}$')
 ax.set_ylabel('Number of objects')
 ax.grid(True)
 
-hist,bin_edges = np.histogram(alpha2,bins=np.arange(-1,3,0.15))
+hist,bin_edges = np.histogram(alpha2.compressed(),bins=np.arange(-1,4.5,0.15))
+w = bin_edges[1] - bin_edges[0]
 ax2.bar(bin_edges[:-1],hist,width=w,color=blue)
 ax2.set_xlabel(r'Spectral index $\alpha_{2.2-24}$')
 ax2.set_ylabel('Number of objects')
@@ -110,6 +140,18 @@ ax2.grid(True)
 fig.tight_layout()
 fig.savefig('../Figures/SpectralIndex.pdf',dpi=300)
 #plt.show()
+
+
+### main photometry table
+dftot = df.loc[df['Cluster'].isin(['NGC1333','Oph'])]
+dftot
+columns = ['j','h','ks','i1','i2','i3','i4','F11','F19','m1','F31','F37','m2','H70','H160','H250','H350','H500','S850','F1100','S1300','alpha']
+e_columns = ["e_"+col for col in columns]
+flag_columns = ["flag_"+col for col in columns]
+cols = list(itertools.chain.from_iterable(zip(columns,e_columns)))
+print cols
+dftot[['Coordinates','R37','Lbol','Tbol']+cols].to_csv('Data/alldata.csv',na_rep='--')
+print dftot[['Coordinates','R37','Lbol','Tbol']+cols].to_latex(longtable=True,na_rep='--')
 
 
 # plot alpha histogram
@@ -132,16 +174,20 @@ fig.savefig('../Figures/SpectralIndex.pdf',dpi=300)
 df = isolated.to_pandas()
 df.index = df['SOFIA_name']
 c = SkyCoord(df['RA'],df['DEC'],frame=FK5,unit=u.deg)
-df['Coordinates'] = c.to_string('hmsdms',precision=0)
-df['env_mass'] += 0.01
+df['Coordinates'] = c.to_string('hmsdms',precision=1)
 
-df = df.loc[df['Cluster'].isin(['Oph','NGC1333','NGC2071'])]
+df = df.loc[df['Cluster'].isin(['Oph','NGC1333'])]
 print df.columns
 
 ### plot tables
 
-columns = ['Coordinates','R37','alpha','R','env_mass','env_mass_std','sLsun','sLsun_std','inc','ext','s']
+columns = ['Coordinates','R37','alpha','R','env_mass','env_mass_std','sLsun','sLsun_std','Lbol','inc','ext','s']
 df[columns].to_csv('Data/Oph_NGC1333_NGC2071.csv')
+
+df = isolated.to_pandas()
+df.index = df['SOFIA_name']
+c = SkyCoord(df['RA'],df['DEC'],frame=FK5,unit=u.deg)
+df['Coordinates'] = c.to_string('hmsdms',precision=1)
 
 
 # plot R histogram
@@ -270,6 +316,20 @@ results=model.fit()
 print(results.summary())
 
 fig.savefig('../Figures/LbolVsLest.pdf')
+
+
+fig,ax = plt.subplots(figsize=figsize,facecolor=facecolor)
+sns.regplot(np.log10(df['env_mass']),-np.log10(df['Lbol'])+np.log10(df['sLsun']),color=red)
+#vals = np.arange(min(np.log10(df['Lbol'])),2*max(np.log10(df['Lbol'])))
+#ax.plot(vals,vals,'--',color=grey)
+ax.set_xlim([np.log10(df['env_mass']).min()*0.95,np.log10(df['env_mass']).max()*1.05])
+fig.tight_layout()
+ax.set_ylabel(r'$\log\ L_\mathrm{tot}-\log\ L_\mathrm{bol}$')
+ax.set_xlabel(r'$\log\ M_\mathrm{env}$ ($M_\odot$)')
+
+fig.savefig('../Figures/LbolMinusLestVSMass.pdf')
+
+
 
 # plot SOFIA color vs fitted lum
 # fig,ax = plt.subplots(figsize=figsize,facecolor=facecolor)

@@ -283,7 +283,7 @@ In order to determine the absolute sensitivity in the image, we use two methods.
 
 While SOFIA provides mid-IR photometry, we looked in the literature for published fluxes on our targets in order to reconstruct more complete SEDs. In addition to our four SOFIA bands, our table includes data from 2MASS, \Spitzer, and other instruments. Photometry from these sources is published in online catalogs, which we programmatically cross-reference with the positions of our targets. The closest target that corresponds to a Vizier location query is selected to be the correct catalog match. For the 2MASS data, the location of the target needs to be less than \ang{;;2} away from our coordinates for point sources, and \ang{;;5} for extended sources. For the \Spitzer data, the matching radius is \ang{;;3} for point sources and \ang{;;10} for extended sources. In addition to automated online catalog searches, we also add values for sources in NGC2071 from \citet{vanKempen:2012fb}.
 
-For our two most clustered cases in the cores of NGC2071 and IRAS20050+2720, the published catalogs do not have all available fluxes. We assume that the sources are so clustered that they the source extraction software from these authors do not register them as point sources, due to confusion or saturation effects. Hence we adapt our own photometry routines for these clustered environments and obtain the fluxes directly from the calibrated Level 3 images themselves, which are all available on the archive. In Table~\ref{tab:SpitzerPhotometry}, we compare our photometry results with published fluxes from \citet{Megeath:2012cn} and \citet{Gutermuth:2009gca} for isolated sources elsewhere in these same fields of view. We use the \Spitzer handbook recommendations for aperture photometry on \Spitzer archival images (\ang{;;2.4} aperture with and an annulus that extends from 12 to \ang{;;20}). We find that our results are within 10\% of these other authors' results, although it is possible that we are systematically overestimating the fluxes. 
+For our two most clustered cases in the cores of NGC2071 and IRAS20050+2720, the published catalogs do not have all available fluxes. We assume that the sources are so clustered that they the source extraction software from these authors do not register them as point sources, due to confusion or saturation effects. Hence we adapt our own photometry routines for these clustered environments and obtain the fluxes directly from the calibrated Level 3 images themselves, which are all available on the archive. In Table~\ref{tab:SpitzerPhotometry}, we compare our photometry results with published fluxes from \citet{Megeath:2012cn} and \citet{Gutermuth:2009gca} for isolated sources elsewhere in these same fields of view. We use the \Spitzer handbook recommendations for aperture photometry on \Spitzer archival images (\ang{;;2.4} aperture with and an annulus that extends from 12 to \ang{;;20}). We find that our results are within 10\% of these other authors' results, which can reflect a simple difference in exact aperture centroiding position. 
 
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
@@ -297,22 +297,21 @@ For our two most clustered cases in the cores of NGC2071 and IRAS20050+2720, the
 SOFIA name	&	i1	&	i2	&	i3	&	i4	\\
 	&	Jy	&	Jy	&	Jy	&	Jy	\\
 \midrule									
-NGC2071.1	&	0.04	&	0.06	&	0.02	&	-0.03	\\
-NGC2071.3	&	-0.07	&	-0.10	&	-0.06	&	-0.09	\\
-NGC2071.4	&	0.04	&	-0.12	&	-0.01	&	-0.10	\\
-NGC2071.5	&	-0.05	&	-0.06	&	-0.11	&	-0.11	\\
+NGC2071.1	&	0.060	&	0.056	&	0.004	&	-0.021	\\
+NGC2071.3	&	0.018	&	-0.010	&	-0.004	&	-0.047	\\
+NGC2071.4	&	0.090	&	-0.054	&	0.036	&	-0.066	\\
+NGC2071.5	&	-0.130	&	-0.109	&	-0.144	&	-0.139	\\
 \midrule									
-IRAS20050.1	&	-0.08	&	-0.06	&	-0.07	&	0.08	\\
-IRAS20050.3	&	0.19	&	0.10	&	0.05	&	0.10	\\
-IRAS20050.6	&	-0.07	&	-0.06	&	-0.12	&	-0.05	\\
-IRAS20050.7	&	-0.15	&	-0.07	&	-0.02	&	-0.07	\\
+IRAS20050.1	&	0.020	&	0.039	&	0.017	&	0.131	\\
+IRAS20050.3	&	0.181	&	0.122	&	0.082	&	0.121	\\
+IRAS20050.6	&	-0.044	&	-0.046	&	-0.092	&	-0.056	\\
 \bottomrule					
 	\end{longtable} 
 \caption*{Fractional difference between our own aperture photometry on \Spitzer archival images and published \Spitzer photometry from \citet{Megeath:2012cn} for NGC2071, and \citet{Gutermuth:2009gca} for IRAS20050+2720. When values are negative, it means that their photometry is lower than ours.}
 \label{tab:SpitzerPhotometry}
 \end{table}
 
-In some cases, we also found archival Herschel images, although no published photometry was available for most our sources. We then apply our same aperture photometry routines for those calibrated Herschel images, using aperture and background subtraction parameters from \citep{Shimizu:2016if} for the PACS and SPIRE. Because of the very large beams of Herschel compared to FORCAST, the SPIRE bands are considered upper limit fluxes for sources that are further than \SI{300}{\pc}.
+In some cases, we also found archival Herschel images, although no published photometry was available for most our sources. We then apply our same aperture photometry routines for those calibrated Herschel images, using aperture and background subtraction parameters from \citep{Shimizu:2016if} for the PACS and SPIRE. We find also very good agreement between our photometry results for the PACS~\SI{70}{\um} band and the published \Spitzer MIPS~\SI{70}{\um} for some of these sources. %Because of the very large beams of Herschel compared to FORCAST, the SPIRE bands are considered upper limit fluxes for sources that are further than \SI{300}{\pc}.
 
 \section{Data products}
 
@@ -333,13 +332,79 @@ In Fig.~\ref{fig:variety_sources} we present a variety of maps from our cluster 
 \end{figure}
 
 \subsection{Photometry and SEDs}
-We also produce enhanced SEDs for all of our sources, where we combine archival data with our new SOFIA photometry. The SED plots are complemented with snapshots of the source seen with IRAC and SOFIA. In addition, a snapshot of the corresponding FORCAST \SI{37}{\um} calibrator is shown, which allows to quickly determine the degree of spatial extension of the sources.
+%We also produce enhanced SEDs for all of our sources, where we combine archival data with our new SOFIA photometry. The SED plots are complemented with snapshots of the source seen with IRAC and SOFIA. In addition, a snapshot of the corresponding FORCAST \SI{37}{\um} calibrator is shown, which allows to quickly determine the degree of spatial extension of the sources.
 
-[SHOW NICE SED here]
 
-[SHOW table of fluxes here]
+\begin{figure}
+\begin{center}
+\hspace*{-1.5in}
+\includegraphics[width=1.4\textwidth]{Figures/NGC1333_SEDs.png}
+\label{fig:NGC1333_SEDs}
+\caption[NGC1333 SEDs]{SEDs of the point sources in NGC1333.}
+\end{center}
+\end{figure}
 
-\subsection{Source classification and fitted physical parameters}
+
+\begin{figure}
+\begin{center}
+\hspace*{-1.5in}
+\includegraphics[width=1.4\textwidth]{Figures/Oph_SEDs.png}
+\label{fig:Oph_SEDs}
+\caption[Ophiuchus SEDs]{SEDs of the point sources in the Ophiuchus cluster.}
+\end{center}
+\end{figure}
+
+
+\begin{landscape}
+\begin{table}[!h]
+\tiny
+\caption[NGC1333 photometry]{Extract of NGC1333 photometry.}
+\label{tab:OphiuchusNGC1333}
+\vspace{-0.5cm}
+\begin{longtable}{llrrrrrrrrrrrrr}
+ \toprule																														
+SOFIA name	&	Coordinates		&	R37	&	Lbol	&	Tbol	&	j	&	e\_j	&	h	&	e\_h	&	ks	&	e\_ks	&	i1	&	e\_i1	&	i2	&	e\_i2	\\
+\midrule																														
+NGC1333.1	&	03h29m07.7s	+31d21m57.0s	&	0.746	&	8.385	&	22.401	&	0.0012	&	0.0001	&	0.0031	&	0.0003	&	0.0450	&	0.004	&	0.696	&	0.070	&	1.800	&	0.180	\\
+NGC1333.2	&	03h29m10.3s	+31d21m55.5s	&	2.232	&	27.832	&	24.356	&	0.2853	&	0.0285	&	0.6539	&	0.0654	&	0.9010	&	0.090	&	0.637	&	0.064	&	0.446	&	0.045	\\
+NGC1333.3	&	03h29m01.5s	+31d20m20.5s	&	0.904	&	8.104	&	20.630	&	0.0008	&	0.0001	&	0.0029	&	0.0003	&	0.0296	&	0.003	&	0.544	&	0.054	&	1.090	&	0.109	\\
+NGC1333.4	&	03h29m11.1s	+31d18m30.8s	&	1.103	&	3.056	&	4.204	&	0.0007	&	0.0007	&	0.0009	&	0.0009	&	0.0015	&	0.002	&	0.001	&	0.000	&	0.004	&	0.000	\\
+NGC1333.5	&	03h29m10.6s	+31d18m19.6s	&	1.623	&	2.786	&	4.424	&	0.0007	&	0.0007	&	0.0009	&	0.0009	&	0.0015	&	0.002	&	0.002	&	0.000	&	0.007	&	0.001	\\
+NGC1333.6	&	03h29m13.0s	+31d18m13.8s	&	0.951	&	1.155	&	17.248	&	0.0007	&	0.0007	&	0.0009	&	0.0009	&	0.0015	&	0.000	&	0.046	&	0.005	&	0.180	&	0.018	\\
+\midrule																														
+	&			&	i3	&	e\_i3	&	i4	&	e\_i4	&	F11	&	e\_F11	&	F19	&	e\_F19	&	m1	&	e\_m1	&	F31	&	e\_F31	&	F37	\\
+\midrule																														
+NGC1333.1	&	03h29m07.7s	+31d21m57.0s	&	3.060	&	0.306	&	2.550	&	0.255	&	0.225	&	0.169	&	1.502	&	0.208	&	--	&	0.260	&	6.886	&	0.640	&	10.994	\\
+NGC1333.2	&	03h29m10.3s	+31d21m55.5s	&	0.448	&	0.080	&	0.913	&	0.128	&	8.414	&	0.596	&	36.517	&	2.562	&	--	&	--	&	106.490	&	7.457	&	135.723	\\
+NGC1333.3	&	03h29m01.5s	+31d20m20.5s	&	1.690	&	0.211	&	3.060	&	0.306	&	1.681	&	0.131	&	6.902	&	0.493	&	--	&	0.069	&	9.256	&	0.656	&	9.406	\\
+NGC1333.4	&	03h29m11.1s	+31d18m30.8s	&	0.005	&	0.001	&	0.004	&	0.000	&	0.097	&	0.060	&	0.076	&	0.115	&	0.607	&	0.061	&	1.785	&	0.209	&	3.040	\\
+NGC1333.5	&	03h29m10.6s	+31d18m19.6s	&	0.010	&	0.001	&	0.011	&	0.001	&	0.114	&	0.093	&	0.150	&	0.119	&	0.771	&	0.077	&	1.946	&	0.234	&	2.166	\\
+NGC1333.6	&	03h29m13.0s	+31d18m13.8s	&	0.274	&	0.027	&	0.320	&	0.032	&	0.160	&	0.035	&	0.570	&	0.093	&	0.735	&	0.074	&	1.446	&	0.180	&	1.806	\\
+\midrule																														
+	&			&	e\_F37	&	m2	&	e\_m2	&	H70	&	e\_H70	&	H160	&	e\_H160	&	H70	&	e\_H70	&	H160	&	e\_H160	&	H250	&	e\_H250	\\
+\midrule																														
+NGC1333.1	&	03h29m07.7s	+31d21m57.0s	&	0.948	&	49.300	&	4.930	&	52.724	&	5.272	&	66.529	&	35.197	&	52.724	&	5.272	&	66.529	&	35.197	&	71.541	&	14.258	\\
+NGC1333.2	&	03h29m10.3s	+31d21m55.5s	&	9.507	&	--	&	--	&	70.039	&	7.004	&	77.574	&	20.036	&	70.039	&	7.004	&	77.574	&	20.036	&	87.661	&	15.014	\\
+NGC1333.3	&	03h29m01.5s	+31d20m20.5s	&	0.695	&	23.400	&	2.340	&	20.218	&	2.022	&	78.316	&	7.832	&	20.218	&	2.022	&	78.316	&	7.832	&	101.472	&	18.943	\\
+NGC1333.4	&	03h29m11.1s	+31d18m30.8s	&	0.341	&	--	&	--	&	16.609	&	1.661	&	53.689	&	5.369	&	16.609	&	1.661	&	53.689	&	5.369	&	57.215	&	6.293	\\
+NGC1333.5	&	03h29m10.6s	+31d18m19.6s	&	0.377	&	20.600	&	2.060	&	14.627	&	1.463	&	49.868	&	4.987	&	14.627	&	1.463	&	49.868	&	4.987	&	52.536	&	6.166	\\
+NGC1333.6	&	03h29m13.0s	+31d18m13.8s	&	0.345	&	4.290	&	0.429	&	1.527	&	3.883	&	4.702	&	13.332	&	1.527	&	3.883	&	4.702	&	13.332	&	29.105	&	6.272	\\
+\midrule																														
+	&			&	H350	&	e\_H350	&	H500	&	e\_H500	&	S850	&	e\_S850	&	F1100	&	e\_F1100	&	S1300	&	e\_S1300	&	$\alpha$	&	e\_$\alpha$	&		\\
+\midrule																														
+NGC1333.1	&	03h29m07.7s	+31d21m57.0s	&	45.559	&	17.857	&	24.264	&	16.301	&	--	&	--	&	1.300	&	0.130	&	--	&	--	&	0.280	&	0.564	&		\\
+NGC1333.2	&	03h29m10.3s	+31d21m55.5s	&	51.506	&	16.114	&	24.742	&	13.062	&	--	&	--	&	--	&	--	&	--	&	--	&	1.243	&	0.000	&		\\
+NGC1333.3	&	03h29m01.5s	+31d20m20.5s	&	70.907	&	17.371	&	40.867	&	11.474	&	--	&	--	&	1.500	&	0.150	&	--	&	--	&	0.714	&	0.385	&		\\
+NGC1333.4	&	03h29m11.1s	+31d18m30.8s	&	38.449	&	6.033	&	18.594	&	4.666	&	--	&	--	&	2.000	&	0.200	&	--	&	--	&	1.864	&	0.458	&		\\
+NGC1333.5	&	03h29m10.6s	+31d18m19.6s	&	36.232	&	6.189	&	18.007	&	4.878	&	--	&	--	&	2.000	&	0.200	&	--	&	--	&	1.705	&	0.273	&		\\
+NGC1333.6	&	03h29m13.0s	+31d18m13.8s	&	34.781	&	8.007	&	21.255	&	6.628	&	--	&	--	&	0.630	&	0.063	&	--	&	--	&	1.001	&	0.501	&		\\
+\bottomrule																														
+\end{longtable}																																	
+\caption*{\textbf{Note:} The complete version of this table is made available electronically}																																				
+\end{table}																														\end{landscape}
+
+
+\subsection{Fitted physical parameters and sample statistics}
 
 The point sources in our sample are almost exclusively class 0 and I protostars, using the traditional spectral index determination (which uses wavelengths from \SI{2}{\micron} to \SI{24}{\micron}. They all have a spectral index from 0 to 0.2, which indicates the rising SED of an embedded object. However, for a large fraction of our sample, \Spitzer \SI{24}{\um} is unavailable, which makes the spectral index rely only on the 2-\SI{8}{\um} flux to determine the stage of the object. 
 
@@ -353,10 +418,8 @@ We suggest using SOFIA's bands for a more robust estimate of the spectral index.
 \end{center}
 \end{figure}
 
-\subsection{Sample statistics}
 
-
-
+																							
 \section{SED fitting}
 
 \subsection{A custom grid of models}
@@ -484,6 +547,93 @@ show that inclinations decrease with mass; could be an artifact
 
 Show SED mosaics.
 
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/MassLumHist.pdf}
+\label{fig:MassLumHist}
+\vspace{-1cm}
+\caption[Fitted envelope mass and luminosity distribution]{Fitted envelope mass and luminosity distribution.}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/LbolVsLest.pdf}
+\label{fig:LbolVsLest}
+\vspace{-1cm}
+\caption[Estimated luminosity vs bolometric luminosity]{Estimated luminosity vs bolometric luminosity. The best fit line is shown in red, along with 95\% confidence intervals. The grey dashed line represents $\Ltot = \Lbol$. The excess modeled luminosity for smaller luminosities is caused by the external extinction, which absorbs a large fraction of the luminosity emitted by the central object but does not re-radiate it at longer wavelengths - this is one of the limitations of this exercise.}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/LbolMinusLestVSMass.pdf}
+\label{fig:LbolMinusLestVSMass}
+\vspace{-1cm}
+\caption[Luminosity excess as a function of envelope mass]{Luminosity excess as a function of envelope mass.}
+\end{center}
+\end{figure}
+
+\begin{table}[!h]
+\scriptsize
+\caption[Fitted parameters]{Fitted parameters for the three clusters where long-wavelength photometry is available.}
+\label{tab:FittedParameters}
+\vspace{-0.5cm}
+\hspace*{-1.5cm}
+
+\begin{center}
+\begin{longtable}{lcccccccccc}
+
+\toprule																									
+SOFIA Name	&	Coordinates	&	R37	&	$\alpha$	&	R	&	\Menv			&	\Ltot			&	$\Lbol$	&	Inc.	&	Ext.	&	$s$	\\
+	&	J2000	&		&		&		&	\si{\Msun}			&	\si{\Lsun}			&	\si{\Lsun}	&	\si{\degree}	&		&		\\
+\midrule																									
+NGC1333.1	&	03h29m08s +31d21m57s	&	0.75	&	0.28	&	3.40	&	0.59	$\pm$	0.3796	&	5.6	$\pm$	3.12	&	8.38	&	0.0	&	12	&	0.85	\\
+NGC1333.10	&	03h28m57s +31d14m15s	&	0.80	&	1.84	&	1.12	&	0.39	$\pm$	0.2364	&	5.6	$\pm$	1.69	&	4.82	&	18.7	&	14	&	0.70	\\
+NGC1333.11	&	03h28m37s +31d13m30s	&	1.02	&	1.65	&	0.99	&	0.39	$\pm$	0.1571	&	7.7	$\pm$	1.37	&	7.47	&	18.7	&	12	&	0.70	\\
+NGC1333.3	&	03h29m02s +31d20m21s	&	0.90	&	0.71	&	3.29	&	1.96	$\pm$	0.8200	&	3.5	$\pm$	0.80	&	8.10	&	0.0	&	14	&	0.70	\\
+NGC1333.4	&	03h29m11s +31d18m31s	&	1.10	&	1.91	&	0.83	&	2.93	$\pm$	0.5045	&	2.8	$\pm$	0.42	&	3.06	&	18.7	&	14	&	1.00	\\
+NGC1333.5	&	03h29m11s +31d18m20s	&	1.62	&	1.75	&	1.05	&	1.96	$\pm$	0.3884	&	2.9	$\pm$	1.00	&	2.79	&	18.7	&	9	&	1.30	\\
+NGC1333.6	&	03h29m13s +31d18m14s	&	0.95	&	0.95	&	2.28	&	0.59	$\pm$	0.1589	&	4.3	$\pm$	1.72	&	1.16	&	18.7	&	14	&	1.00	\\
+NGC1333.7	&	03h28m43s +31d17m35s	&	1.19	&	1.05	&	1.88	&	0.01	$\pm$	0.0014	&	9.6	$\pm$	2.16	&	1.36	&	50.8	&	0	&	0.70	\\
+NGC1333.8	&	03h29m04s +31d16m04s	&	0.77	&	1.14	&	1.03	&	2.93	$\pm$	1.1268	&	14.3	$\pm$	2.24	&	35.11	&0	&	12	&	1.30	\\
+NGC1333.9	&	03h28m56s +31d14m37s	&	0.80	&	2.82	&	2.63	&	2.93	$\pm$	0.5367	&	19.5	$\pm$	3.67	&	24.28	&	18.7	&	14	&	1.30	\\
+Oph.1	&	16h27m10s -24d19m13s	&	0.92	&	0.27	&	0.62	&	0.017	$\pm$	0.0022	&	9.6	$\pm$	1.80	&	3.63	&	65.1	&	4	&	0.70	\\
+Oph.10	&	16h27m18s -24d28m55s	&	1.26	&	0.45	&	1.89	&	0.014	$\pm$	0.0028	&	1.9	$\pm$	0.38	&	0.55	&	61.7	&	14	&	1.15	\\
+Oph.13	&	16h27m30s -24d27m43s	&	--	&	-0.39	&	3.46	&	0.014	$\pm$	0.0023	&	6.5	$\pm$	1.63	&	1.49	&	65.1	&	14	&	1.30	\\
+Oph.14	&	16h27m28s -24d27m21s	&	1.89	&	-0.16	&	2.35	&	0.086	$\pm$	0.0405	&	2.9	$\pm$	0.78	&	0.95	&	18.7	&	14	&	1.30	\\
+Oph.15	&	16h27m29s -24d39m17s	&	1.25	&	0.01	&	1.09	&	0.014	$\pm$	0.0018	&	2.8	$\pm$	0.59	&	0.55	&	54.6	&	12	&	0.70	\\
+Oph.16	&	16h26m24s -24d24m48s	&	1.80	&	-0.74	&	1.49	&	0.011	$\pm$	0.0008	&	17.7	$\pm$	4.70	&	1.66	&	74.7	&	9	&	0.70	\\
+Oph.17	&	16h26m24s -24d24m39s	&	0.96	&	-0.11	&	1.00	&	0.011	$\pm$	0.0017	&	4.3	$\pm$	0.88	&	0.63	&	77.8	&	14	&	0.70	\\
+Oph.18	&	16h26m17s -24d23m45s	&	1.18	&	0.57	&	1.15	&	0.02	$\pm$	0.0040	&	1.3	$\pm$	0.21	&	0.22	&	65.1	&	14	&	0.70	\\
+Oph.19	&	16h26m30s -24d23m00s	&	2.51	&	0.53	&	1.15	&	0.014	$\pm$	0.0020	&	3.5	$\pm$	0.74	&	1.10	&	58.2	&	13	&	0.70	\\
+Oph.2	&	16h26m44s -24d34m48s	&	0.93	&	0.83	&	2.08	&	0.014	$\pm$	0.0015	&	5.0	$\pm$	0.97	&	1.19	&	77.8	&	14	&	1.00	\\
+Oph.3	&	16h27m09s -24d37m18s	&	0.99	&	0.57	&	1.54	&	0.017	$\pm$	0.0022	&	59.5	$\pm$	11.99	&	13.39	&	37.9	&	10	&	0.70	\\
+Oph.5	&	16h27m07s -24d38m15s	&	1.31	&	0.35	&	1.74	&	0.014	$\pm$	0.0021	&	2.9	$\pm$	0.66	&	0.53	&	68.4	&	14	&	1.30	\\
+Oph.6	&	16h27m16s -24d38m46s	&	1.29	&	2.39	&	0.83	&	0.014	$\pm$	0.0031	&	9.6	$\pm$	3.41	&	0.73	&	90.0	&	12	&	0.70	\\
+Oph.7	&	16h27m28s -24d39m34s	&	0.97	&	1.35	&	1.57	&	0.032	$\pm$	0.0043	&	26.6	$\pm$	4.90	&	6.47	&	74.7	&	14	&	0.70	\\
+Oph.8	&	16h27m37s -24d30m35s	&	1.02	&	0.55	&	1.06	&	0.017	$\pm$	0.0023	&	26.6	$\pm$	5.15	&	5.00	&	80.9	&	14	&	0.70	\\
+Oph.9	&	16h27m22s -24d29m54s	&	--	&	0.49	&	2.08	&	0.011	$\pm$	0.0005	&	11.8	$\pm$	2.71	&	0.99	&	80.9	&	14	&	0.70	\\
+\bottomrule																																															
+\end{longtable}																																	
+%\caption*{\textbf{Note:} The complete version of this table is made available electronically}			
+\end{center}																						
+\end{table}	
+						
+
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/massVSalpha.pdf}
+\label{fig:massVSalpha}
+\vspace{-1cm}
+\caption[Mass versus spectral index]{Mass versus spectral index.}
+\end{center}
+\end{figure}
+
+
+
 \subsection{Estimating parameter uncertainty}
 show uncertainties and discuss how they are determined
 show cross-correlation/cloud diagrams for a few targets
@@ -500,6 +650,30 @@ External heating; over-simple geometry; non-uniform distribution of inclination 
 Extinction / inclination angle However, its interpretation is complicated. Extinction mostly affect the short wavelengths (after which the emission becomes optically thin, as discussed in the introduction), but it still represents a column density of material which needs to be accounted for. For example, if a model is well fit with a low envelope mass but a high extinction (suggesting that it could be a small core with a large foreground extinction), the signature of the mass that is responsible for this extinction should be visible at long wavelengths as well. Because the dust is optically thin, the far-infrared and submillimeter wavelength measurements see the integrated emission along the line of sight. When using these fluxes to fit a model, they will most often strongly influence the mass inferred from the fit. But if the model still needs more extinction to account for the short wavelength fluxes, it suggests that the geometry is not properly modeled. 
 
 
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/incVSmass.pdf}
+\label{fig:incVSmass}
+\vspace{-1cm}
+\caption[Inclination versus mass]{Inclination versus mass.}
+\end{center}
+\end{figure}
+
+
+
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/slumVSalpha.pdf}
+\label{fig:slumVSalpha}
+\vspace{-1cm}
+\caption[Luminosity versus spectral index.]{Luminosity versus spectral index.}
+\end{center}
+\end{figure}
+
+
+
 \section{Application to two clusters}
 
 In our sample, we focus our attention on IRAS~20050+2720 and NGC~2071 that show very clustered sources which are resolved for the first time in the mid-IR with our observations with FORCAST. The fields that were observed are shown in Fig.~\ref{fig:NGC2071_IRAS20050_RGB}, superimposed with IRAC 3-color images to provide some context.
@@ -507,7 +681,7 @@ In our sample, we focus our attention on IRAS~20050+2720 and NGC~2071 that show 
 \begin{landscape}
 \begin{figure*}
 \begin{center}
-\includegraphics[width=1.6\textwidth]{Figures/NGC2071_IRAS20050_RGB.png}
+\includegraphics[width=1.55\textwidth]{Figures/NGC2071_IRAS20050_RGB.png}
 \label{fig:NGC2071_IRAS20050_RGB}
 \caption[NGC2071 and IRAS20050+2720]{IRAC 3-color images of NGC2071 and IRAS20050+2720. 
 %\textit{Left:} The two white squares correspond to the FORCAST fields that we observed in around the core of IRAS~20050+2720. The background RGB image is a composition of \textit{Spitzer} IRAC 8~$\um$ (red), \textit{Spitzer} IRAC 5.7 $\um$ (green) , and IRAC 3.6~$\um$ (blue). The dashed red square at the center of the image correspond to the core of the cluster, displayed in greater detail in  the picture to the right. \textit{Right:} This RGB picture shows the IRAC 1, 3, and 4 bands of the core at the center of Fig.~\ref{fig:IRAS20050_RGB}. The white contours represent the contours of the FORCAST 37~$\um$ maps, and the red circles show the FORCAST-identified point sources. An infrared nebulosity can be seen to the East of the core with physical projected size of about 0.015~pc, surrounding a cavity with slightly smaller size. The nebulosity and its cavity can be seen all the way up to 37~$\um$. The far-IR emission is mapped well onto the IRAC sources, except for SOF4, for which almost no emission can be seen at shorter wavelengths. SOF4 matches the location of the bright millimeter source MMS1 \citep{Chini:2001fa}.}
@@ -550,15 +724,15 @@ We have observed two fields within the cluster (see Fig.~\ref{fig:IRAS20050_RGB}
 \begin{longtable}{lP{2cm}P{0.7cm}P{0.7cm}P{0.7cm}P{0.7cm}P{0.7cm}P{0.7cm}P{0.7cm}P{0.7cm}P{0.7cm}}
 \toprule																			
 SOFIA name	&	Coordinates	&	ks			&	i1			&	i2			&	i3			&	i4			&	F11			&	F19			&	F31			&	F37			\\
-	&		&	Jy			&	Jy			&	Jy			&	Jy			&	Jy			&	Jy			&	Jy			&	Jy			&	Jy			\\
-\midrule																																							
-IRAS20050.1	&	20h07m06.638s +27d28m47.971s	&	0.214	$\pm$	0.021	&	0.489	$\pm$	0.049	&	0.57	$\pm$	0.057	&	0.731	$\pm$	0.073	&	0.858	$\pm$	0.086	&	0.64	$\pm$	0.07	&	1.93	$\pm$	0.20	&	4.50	$\pm$	0.35	&	6.32	$\pm$	0.59	\\
-IRAS20050.2	&	20h07m06.197s +27d28m49.127s	&	0.002	$\pm$	0.002	&	0.041	$\pm$	0.004	&	0.142	$\pm$	0.014	&	0.264	$\pm$	0.026	&	0.308	$\pm$	0.031	&	0.06	$\pm$	0.06	&	1.45	$\pm$	0.19	&	9.31	$\pm$	0.72	&	11.96	$\pm$	1.19	\\
-IRAS20050.3	&	20h07m06.319s +27d28m56.568s	&	0.028	$\pm$	0.003	&	0.09	$\pm$	0.009	&	0.218	$\pm$	0.022	&	0.339	$\pm$	0.034	&	0.429	$\pm$	0.043	&	0.18	$\pm$	0.06	&	2.58	$\pm$	0.27	&	12.53	$\pm$	0.94	&	19.34	$\pm$	1.41	\\
-IRAS20050.4	&	20h07m05.858s +27d28m59.182s	&	0.002	$\pm$	0.002	&	0.023	$\pm$	0.003	&	0.039	$\pm$	0.004	&	0.053	$\pm$	0.008	&	0.055	$\pm$	0.008	&	0.06	$\pm$	0.05	&	0.25	$\pm$	0.20	&	8.54	$\pm$	0.80	&	12.85	$\pm$	1.25	\\
-IRAS20050.5	&	20h07m06.571s +27d28m53.137s	&	0.042	$\pm$	0.004	&	0.118	$\pm$	0.012	&	0.176	$\pm$	0.018	&	0.235	$\pm$	0.024	&	0.32	$\pm$	0.032	&	0.19	$\pm$	0.05	&	1.03	$\pm$	0.21	&	2.97	$\pm$	0.33	&	5.65	$\pm$	0.65	\\
-IRAS20050.6	&	20h07m02.172s +27d30m26.014s	&	0.155	$\pm$	0.016	&	0.537	$\pm$	0.054	&	0.771	$\pm$	0.077	&	1.113	$\pm$	0.111	&	1.805	$\pm$	0.181	&	1.81	$\pm$	0.13	&	2.29	$\pm$	0.17	&	1.64	$\pm$	0.14	&	1.22	$\pm$	0.38	\\
-IRAS20050.7	&	20h07m07.927s +27d27m15.782s	&	0.002	$\pm$	0.002	&	0.004	$\pm$	0.004	&	0.024	$\pm$	0.002	&	0.06	$\pm$	0.006	&	0.072	$\pm$	0.007	&	0.06	$\pm$	0.05	&	0.11	$\pm$	0.06	&	1.15	$\pm$	0.14	&	2.09	$\pm$	0.31	\\\bottomrule					
+	&	J2000	&	Jy			&	Jy			&	Jy			&	Jy			&	Jy			&	Jy			&	Jy			&	Jy			&	Jy			\\
+\midrule																																		
+IRAS20050.1	&	20h07m06.6s +27d28m48.0s	&	0.214	$\pm$	0.021	&	0.489	$\pm$	0.049	&	0.57	$\pm$	0.057	&	0.731	$\pm$	0.073	&	0.858	$\pm$	0.086	&	0.64	$\pm$	0.07	&	1.93	$\pm$	0.20	&	4.50	$\pm$	0.35	&	6.32	$\pm$	0.59	\\
+IRAS20050.2	&	20h07m06.2s +27d28m49.1s	&	0.002	$\pm$	0.002	&	0.041	$\pm$	0.004	&	0.142	$\pm$	0.014	&	0.264	$\pm$	0.026	&	0.308	$\pm$	0.031	&	0.06	$\pm$	0.06	&	1.45	$\pm$	0.19	&	9.31	$\pm$	0.72	&	11.96	$\pm$	1.19	\\
+IRAS20050.3	&	20h07m06.3s +27d28m56.6s	&	0.028	$\pm$	0.003	&	0.09	$\pm$	0.009	&	0.218	$\pm$	0.022	&	0.339	$\pm$	0.034	&	0.429	$\pm$	0.043	&	0.18	$\pm$	0.06	&	2.58	$\pm$	0.27	&	12.53	$\pm$	0.94	&	19.34	$\pm$	1.41	\\
+IRAS20050.4	&	20h07m05.9s +27d28m59.2s	&	0.002	$\pm$	0.002	&	0.023	$\pm$	0.003	&	0.039	$\pm$	0.004	&	0.053	$\pm$	0.008	&	0.055	$\pm$	0.008	&	0.06	$\pm$	0.05	&	0.25	$\pm$	0.20	&	8.54	$\pm$	0.80	&	12.85	$\pm$	1.25	\\
+IRAS20050.5	&	20h07m06.6s +27d28m53.1s	&	0.042	$\pm$	0.004	&	0.118	$\pm$	0.012	&	0.176	$\pm$	0.018	&	0.235	$\pm$	0.024	&	0.32	$\pm$	0.032	&	0.19	$\pm$	0.05	&	1.03	$\pm$	0.21	&	2.97	$\pm$	0.33	&	5.65	$\pm$	0.65	\\
+IRAS20050.6	&	20h07m02.2s +27d30m26.0s	&	0.155	$\pm$	0.016	&	0.537	$\pm$	0.054	&	0.771	$\pm$	0.077	&	1.113	$\pm$	0.111	&	1.805	$\pm$	0.181	&	1.81	$\pm$	0.13	&	2.29	$\pm$	0.17	&	1.64	$\pm$	0.14	&	1.22	$\pm$	0.38	\\
+IRAS20050.7	&	20h07m07.9s +27d27m15.8s	&	0.002	$\pm$	0.002	&	0.004	$\pm$	0.004	&	0.024	$\pm$	0.002	&	0.06	$\pm$	0.006	&	0.072	$\pm$	0.007	&	0.06	$\pm$	0.05	&	0.11	$\pm$	0.06	&	1.15	$\pm$	0.14	&	2.09	$\pm$	0.31	\\				
 	\end{longtable} 
 \end{table}
 
@@ -571,6 +745,7 @@ Another possible explanation for this emission is that the gas and dust ejected 
 \begin{landscape}
 \begin{figure}
 \begin{center}
+\hspace*{-1in}
 \includegraphics[width=1.4\textwidth]{Figures/IRAS20050.png}
 \label{fig:IRAS20050_mosaic}
 
@@ -584,6 +759,7 @@ The 5 sources in the densest part of the cluster are all highly extincted based 
 
 \begin{figure}
 \begin{center}
+\hspace*{-1in}
 \includegraphics[width=1.4\textwidth]{Figures/IRAS20050_SEDs.png}
 \label{fig:IRAS20050_SEDs}
 

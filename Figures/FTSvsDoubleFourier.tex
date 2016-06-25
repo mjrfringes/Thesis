@@ -72,13 +72,13 @@
 
 % Double-Fourier telescope
 \coordinate (O) at (9,3);
-\coordinate (O2) at (5,3);
+\coordinate (O2) at (4.7,3);
 \coordinate (FTSBS) at (6.7,0);
 \coordinate (FTSBS2) at (6,-1);
 \coordinate (FTSFLAT) at (4,0);
 \coordinate (FTSFLAT2) at (4,-1);
 \coordinate (FTSFLAT3) at (9,2);
-\coordinate (FTSFLAT4) at (5,2);
+\coordinate (FTSFLAT4) at (4.7,2);
 \coordinate (FTSFLAT5) at (7,2);
 \coordinate (FTSFLAT6) at (6.7,2);
 \coordinate (FTSDL1) at (7,-3);
@@ -117,13 +117,13 @@
 \draw[optics] (0,-\length/3) -- (0,\length/3);
 \end{scope}
 
-\draw[rays] (O)node[right]{Pupil right} -- (FTSFLAT3);
+\draw[rays] (O)node[right]{Right pupil} -- (FTSFLAT3);
 \draw[rays] (FTSFLAT3) -- (FTSFLAT5);
 \draw[rays] (FTSFLAT5) -- (FTSDL1);
 \draw[rays] (FTSFLAT4) -- (FTSFLAT6);
 \draw[rays] (FTSFLAT6) -- (FTSBS);
 \draw[rays] (FTSBS) -- (FTSFLAT);
-\draw[rays] (O2)node[right]{Pupil left} -- (FTSFLAT4);
+\draw[rays] (O2)node[right]{Left pupil} -- (FTSFLAT4);
 \draw[rays] (FTSFLAT) -- (FTSFLAT2);
 \draw[rays] (FTSFLAT2) -- (FTSBS2);
 \draw[rays] (FTSDL1) -- (FTSDL2);
