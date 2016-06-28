@@ -169,6 +169,16 @@ print dftot[['Coordinates','R37','Lbol','Tbol']+cols].to_latex(longtable=True,na
 # First, need to select only the sources from Ophiuchus, NGC1333, NCG2071
 # convert to pandas
 
+df = clean_table.to_pandas()
+df.index = df['SOFIA_name']
+c = SkyCoord(df['RA'],df['DEC'],frame=FK5,unit=u.deg)
+df['Coordinates'] = c.to_string('hmsdms',precision=1)
+
+df = df.loc[df['Cluster'].isin(['IRAS20050'])]
+print df.columns
+
+columns = ['Coordinates','alpha','R','env_mass','env_mass_std','sLsun','sLsun_std','inc','ext','s']
+df[columns].to_csv('Data/IRAS20050_params.csv')
 
 
 df = isolated.to_pandas()

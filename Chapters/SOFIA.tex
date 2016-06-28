@@ -24,14 +24,14 @@ Previous studies have been effective in elucidating the young stellar content an
 
 \Spitzer has tremendously helped our understanding of star formation, by providing sensitive observations in continuum bands from \SI{3.6}{\um} to \SI{160}{\micro\meter}. In particular, the MIPS \SI{24}{\micro\meter} channel provided a robust way to determine the spectral index of YSOs, hence leading to dramatic improvement of understanding of the YSO population in clusters \citep[e.g.,][]{Gutermuth:2009gca,Gutermuth:2011he}.
 
-However, the most dense regions of clusters still present a challenge for the MIPS instrument, as the YSOs are too bring and/or in too close proximity, which leads to saturation and confusion, as exhibited in Fig.~\ref{fig:NGC20171_saturated}. 
+However, the most dense regions of clusters still present a challenge for the MIPS instrument, as the YSOs are too bring and/or in too close proximity, which leads to saturation and confusion, as exhibited in Fig.~\ref{fig:NGC2071saturated}. 
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/NGC2071_saturated_mosaic.png}
-\label{fig:NGC20171_saturated}
 \vspace{-0.5cm}
 \caption[Saturation and confusion]{Saturation and confusion in NGC2071.}
+\label{fig:NGC2071saturated}
 \end{center}
 \end{figure}
 
@@ -128,43 +128,43 @@ To complement our observations, we proceed to an archival search to find publicl
 In addition to the raw images, a number of calibrators were observed during each flight for different dichroic settings and wavelength bands. These calibrators are usually bright stars which guarantee to be point sources for SOFIA's angular resolution, and have very predictable mid-IR fluxes, so they can be used both for flux and PSF calibration. We use them for two purposes: the first is to obtain a robust metric to determine whether sources are extended or not; the second is to determine the aperture correction factor which will later be used for aperture photometry. 
 
 \subsection{PSF size}
-The size of the PSF can be defined in multiple ways, we adopt the approach of characterizing the PSF using its encircled energy distribution. Fig~\ref{fig:average_EE} shows the average of the normalized encircled energy distribution of the PSF, measured on all the calibrators of our sample. Each curve represents one of the five different combinations of bandpass filter and dichroic setting that we use for our observations. For each radius, the total energy is the sum of the pixels within the circular aperture of that radius, to which we subtract an estimate of the background in an annulus around the source (see Section [] for details on the background subtraction methods). 
+The size of the PSF can be defined in multiple ways, we adopt the approach of characterizing the PSF using its encircled energy distribution. Fig~\ref{fig:averageEE} shows the average of the normalized encircled energy distribution of the PSF, measured on all the calibrators of our sample. Each curve represents one of the five different combinations of bandpass filter and dichroic setting that we use for our observations. For each radius, the total energy is the sum of the pixels within the circular aperture of that radius, to which we subtract an estimate of the background in an annulus around the source (see Section [] for details on the background subtraction methods). 
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/average.png}
-\label{fig:average_EE}
 \vspace{-0.5cm}
 \caption[PSF size]{Average PSF encircled energy distribution profile for all calibrator observations.}
+\label{fig:averageEE}
 \end{center}
 \end{figure}
 
 
-As expected, the PSF at \SI{37.1}{\micro\meter} is larger than the PSFs at shorter wavelengths, but less that the traditional diffraction limit rule. This indicates that additional PSF smearing is occurring at short wavelengths, likely due to plane jitter and pointing errors, which is consistent with what other authors have found \citep[e.g.][]{Herter:2013by}. Throughout all the flights, point source calibrators always have the same encircled energy distribution shape within $\sim~4\%$ rms. 
+As expected, the PSF at \SI{37.1}{\micro\meter} is larger than the PSFs at shorter wavelengths, but less that the traditional diffraction limit rule. This indicates that additional PSF smearing is occurring at short wavelengths, likely due to plane jitter and pointing errors, which is consistent with what other authors have found \citep[e.g.][]{Herter:2013by}. Throughout all the flights, point source calibrators always have the same encircled energy distribution shape within $\sim 4\%$ rms. 
 
-To look at the behavior of the PSF in more detail, we can use the half width at half maximum of the encircled energy distribution, \Rfifty as a proxy for PSF size. The variation of this quantity for the various flights, bandpass/dichroic setting, and calibrators used is showed in Fig~\ref{fig:Rfifty_dist}. This shows the flight-to-flight differences and, for some calibrators, the in-flight variability. We find that the latter is usually small, except for the SOFIA flight on 05-02-2014, for which the spread is quite considerable and could have been caused by instrumental malfunction or abnormal levels of jitter. The variation from flight to flight is larger than the variation within a given flight, which indicates variability in the observing conditions, systematics, or thermal radiation environment of the observatory between different flights. Even considering the flight-to-flight and calibrator-to-calibrator variations, the overall spread in \Rfifty for a given observation setting is almost always less then 10\%, making this metric a useful reference to compare with scientific data. In our analysis we will compute \Rfifty for our sources and compare it to the \Rfifty from the current flight for the same filter setting, if the calibration file exists. If no calibration file exists for a given setting, we use the mean \Rfifty for that setting from calibrators observations in other flights. The ratio \Rpercent of these two quantities helps quantify the extension of the source, to within $\sim 10\%$. 
+To look at the behavior of the PSF in more detail, we can use the half width at half maximum of the encircled energy distribution, \Rfifty as a proxy for PSF size. The variation of this quantity for the various flights, bandpass/dichroic setting, and calibrators used is showed in Fig.~\ref{fig:Rfiftydist}. This shows the flight-to-flight differences and, for some calibrators, the in-flight variability. We find that the latter is usually small, except for the SOFIA flight on 05-02-2014, for which the spread is quite considerable and could have been caused by instrumental malfunction or abnormal levels of jitter. The variation from flight to flight is larger than the variation within a given flight, which indicates variability in the observing conditions, systematics, or thermal radiation environment of the observatory between different flights. Even considering the flight-to-flight and calibrator-to-calibrator variations, the overall spread in \Rfifty for a given observation setting is almost always less then 10\%, making this metric a useful reference to compare with scientific data. In our analysis we will compute \Rfifty for our sources and compare it to the \Rfifty from the current flight for the same filter setting, if the calibration file exists. If no calibration file exists for a given setting, we use the mean \Rfifty for that setting from calibrators observations in other flights. The ratio \Rpercent of these two quantities helps quantify the extension of the source, to within $\sim 10\%$. 
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/R50.png}
-\label{fig:Rfifty_dist}
 \vspace{-0.5cm}
 
 \caption[PSF size of calibrators]{Distribution of \Rfifty for all calibrators observations within each bandpass. In red: \SI{11}{\um} band, with dichroic; in green: \SI{19}{\um} band, with dichroic; in blue: \SI{31}{\um} band, with dichroic; in yellow: \SI{37}{\um} band, with dichroic; in purple: \SI{19}{\um} band, with dichroic. Down triangles: $\alpha$ Boo; Pentagons: $\alpha$ Cet; Diamonds: $\alpha$ Tau;  Up triangles: $\beta$ And; Hexagons: $\beta$ Peg; Circles: $\beta$ UMi;}
+\label{fig:Rfiftydist}
 \end{center}
 \end{figure}
 
 \subsection{Aperture correction factor}
 \label{subsec:apcorr}
-In Fig.~\ref{fig:average_EE}, we observe that the encircled energy does not vary much by the time the aperture reaches a radius of 12 pixels, so we consider this fiducial aperture as our "total flux" aperture. The goal of aperture photometry is to estimate the amount of flux in this large aperture, which we consider to be the total amount of flux from the source, by only measuring flux within a much smaller aperture. This has the advantage of reducing contamination from other sources, and increases the signal-to-noise ratio of the flux estimate since the pixels near the tail of the PSF usually contain more noise than signal. 
-In Fig~\ref{fig:response}, we plot the aperture correction factor that we compute from the ratio of the flux measured within an aperture of 4 pixels radius and this 12-pixel aperture.  Not surprisingly, this graph follows very closely the plot of $\Rfifty$ from Fig~\ref{fig:Rfifty_dist}, showing the close link between the aperture correction factor and the shape of the calibrator's PSF. We match each observation in our data to the mean of the aperture correction factors for the same observation setting and flight.
+In Fig.~\ref{fig:averageEE}, we observe that the encircled energy does not vary much by the time the aperture reaches a radius of 12 pixels, so we consider this fiducial aperture as our "total flux" aperture. The goal of aperture photometry is to estimate the amount of flux in this large aperture, which we consider to be the total amount of flux from the source, by only measuring flux within a much smaller aperture. This has the advantage of reducing contamination from other sources, and increases the signal-to-noise ratio of the flux estimate since the pixels near the tail of the PSF usually contain more noise than signal. 
+In Fig~\ref{fig:response}, we plot the aperture correction factor that we compute from the ratio of the flux measured within an aperture of 3 pixels radius and this 12-pixel aperture.  Not surprisingly, this graph follows very closely the plot of $\Rfifty$ from Fig~\ref{fig:Rfiftydist}, showing the close link between the aperture correction factor and the shape of the calibrator's PSF. We match each observation in our data to the mean of the aperture correction factors for the same observation setting and flight.
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/Aper_corr.png}
-\label{fig:aper_corr}
 \vspace{-0.5cm}
 \caption[aperture correction]{Instrumental response and aperture correction}
+\label{fig:apercorr}
 \end{center}
 \end{figure}
 
@@ -179,9 +179,9 @@ This would suggest that we can adopt systematic $1\sigma$ uncertainties of $\sim
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/Phot_val.png}
-\label{fig:response}
 \vspace{-0.5cm}
 \caption[Instrumental response]{Instrumental response}
+\label{fig:response}
 \end{center}
 \end{figure}
 
@@ -205,19 +205,17 @@ After these manual steps, the Level 2 images are multiplied by the calibration f
 
 \subsection{Source flux extraction}
 
-We feed the adjusted FITS and associated metadata files to our photometry pipeline. For each identified source, we determine its flux in all bands using aperture photometry with local background subtraction. The aperture correction factor we use is the one determined from the calibrators observed for the same observation setting during this flight. If a calibrator was not available during the flight, we use the average aperture correction factor taken over 9 of our 10 flights (we choose to exclude the flight on 05/02/2014 which seems to have abnormal behavior).
+We feed the adjusted FITS and associated metadata files to our photometry pipeline. For each identified source, we determine its flux in all bands using aperture photometry with local background subtraction. The aperture correction factor we use is the one determined from the calibrators observed for the same observation setting during the same flight as the one when the data was taken. If a calibrator is not available during the flight, we use the average aperture correction factor taken over 9 of our 10 flights (we choose to exclude the flight on 05/02/2014 which seems to have abnormal behavior).
 
 We distinguish between 3 types of sources after manual identification: \textit{isolated}, which are point sources with no nearby objects; \textit{clustered}, which are point sources with nearby objects; and \textit{extended}, which are not consistent with being point sources. 
 
-For point sources that are isolated, we use our standard aperture of 4 pixels at all wavelengths. We consider an annulus surrounding the source extending from 12 to 20 pixels radius (24 to 40 for clustered sources): the local background is determined from the mode of the pixels in the annulus, while the sensitivity is calculated by measuring the standard deviation of the flux values within 4-pixel apertures spread over that annulus [Cite Taro's paper and the Herschel photometry paper that Tracy gave us]. We apply the aperture correction derived from the calibrator observations taken during that flight.
+For point sources that are isolated, we use our standard aperture of 3 pixels at all wavelengths. We consider an annulus surrounding the source extending from 12 to 20 pixels radius (24 to 40 for clustered sources): the local background is determined from the mode of the pixels in the annulus, while the sensitivity is calculated by measuring the standard deviation of the flux values within 4-pixel apertures spread over that annulus \citep{Shimizu:2016if}. We apply the aperture correction derived from the calibrator observations taken during that flight.
 
 For extended sources, an elliptical aperture is determined manually from the \SI{37}{\micro\meter} images. The local background is determined from the mode of an elliptical annulus, with an inner boundary at the elliptical aperture and an outer boundary corresponding to an ellipse 20\% larger. The sensitivity quoted is the point source sensitivity, and is determined following the same method as for point sources, using the standard deviation of apertures spread across the elliptical annulus. 
 
 The photometry from sources that were observed in different flights is then combined to increase the signal-to-noise ratio. This combination takes into account the sensitivity of each source by appropriately weighing each image.
 
 The source sensitivity calculated is added to the systematic uncertainty of the instrument, for which we follow the recommendation from \citep{Herter:2012hv} to adopt a 7\%, $1\sigma$ uncertainty. 
-
-To validate our flux extraction method, we compare our results with data from \citet{Harvey:2012kw} who observed one of the sources in our sample, S140. Their photometry (shown in their Table 1.) of IRS 1, 2 and 3 (respectively corresponding to our targets S140.5, S140.4, and S140.3) is compared to our photometry in Table~\ref{tab:SOFIAPhotometryHarvey}.
 
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
@@ -235,7 +233,7 @@ S140.3	&	10.28	&	9.70	&	101.49	&	419.41	&	401.00	&	525.90	&	669.00	\\
 S140.4	&	3.80	&	4.00	&	88.95	&	337.22	&	368.00	&	352.07	&	485.00	\\
 S140.5	&	110.57	&	110.00	&	830.97	&	2065.13	&	1585.00	&	2278.61	&	2176.00	\\
 \midrule															
-Sum of point sources in cluster	&	124.65	&	123.70	&	1021.40	&	2821.76	&	2354.00	&	3156.58	&	3330.00	\\
+Sum of sources in cluster	&	124.65	&	123.70	&	1021.40	&	2821.76	&	2354.00	&	3156.58	&	3330.00	\\
 Total cluster emission	&	135.20	&	145.00	&	1194.57	&	4449.46	&	3780.00	&	5840.64	&	6730.00	\\
 Ratio	&	1.08	&	1.17	&	1.17	&	1.58	&	1.61	&	1.85	&	2.02	\\
 \bottomrule					
@@ -244,7 +242,12 @@ Ratio	&	1.08	&	1.17	&	1.17	&	1.58	&	1.61	&	1.85	&	2.02	\\
 
 \end{table}
 
+
+To validate our flux extraction method, we compare our results with data from \citet{Harvey:2012kw} who observed one of the sources in our sample, S140. Their photometry (shown in their Table 1) of IRS 1, 2 and 3 (respectively corresponding to our targets S140.5, S140.4, and S140.3) is compared to our photometry in Table~\ref{tab:SOFIAPhotometryHarvey}. We find very good agreement between our fluxes and theirs. The remaining differences can always be explained by slight differences in the center location of the aperture.
+
+
 \subsection{Image sensitivity}
+
 
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
@@ -270,12 +273,12 @@ S140 	&	0.04	&	0.03	&	0.03	&	0.16	&	0.03	&	0.03	&	0.21	&	0.07	&	0.09	&	0.35	&	0.
 S171 	&	0.04	&	0.03	&	0.03	&	0.07	&	0.04	&	0.03	&	0.07	&	0.05	&	0.12	&	0.16	&	0.06	&	0.23	&	2	\\
 \bottomrule					
 	\end{longtable} 
-\caption*{For each band, we measure the 1$\sigma$ sensitivity \sigman and \sigstd in each field from the data using two different methods (see Section~\ref{} for details), and present here the median of all fields. The theoretical sensitivity \sigth corresponds to the expected sensitivity for the effective integration time, using the SOFIA FORCAST observation planning tools. All sensitivity values are in Janskies.}
+\caption*{For each band, we measure the 1$\sigma$ sensitivity \sigman and \sigstd in each field from the data using two different methods (see text), and present here the median of all fields. The theoretical sensitivity \sigth corresponds to the expected sensitivity for the actual integration time, using the SOFIA FORCAST observation planning tools and assuming moderate water vapor content. All sensitivity values are in Janskies.}
 %List of our 12 proposed targets, with approximate RA and Dec, distance $d$ in parsecs, peak number density in \# stars/pc$^{2}$ from \citep{Gutermuth:2009p1325}, whether the image saturates in Spitzer/in WISE, the number of different fields for each target, the number of YSOs above our threshold level derived from WISE photometry, and the requested time in minutes on source that we request. Note that the latter DOES NOT include overheads.}
 \label{tab:SOFIASensitivity}
 \end{table}
 
-In order to determine the absolute sensitivity in the image, we use two methods. First, we manually determine a region in each cluster that visually appears devoid of flux. We calculate the sensitivity as if this background region was a source, by patching apertures in an annulus around this background location and calculating the standard deviation of the obtained fluxes. We call this sensitivity measurement $\sigman$. The main downside of this method is that it requires a manual operation to select the appropriate background field, and hence could have more variation depending on which field we select. Second, we use a routine that iteratively isolates the pixel values above $2\sigma$ of the image, in order to remove the contamination from our actual sources. The standard deviation of the resulting image is then calculated, and is multiplied by the square root of the number of pixels in an aperture of 4 pixel radius. This corresponds to a floor sensitivity $\sigstd$. We present our results in Table~\ref{tab:SOFIASensitivity}, where we also compare this sensitivity with the expected sensitivity $\sigth$ obtained using the online calculator with the actual exposure time of our images. We note that usually, the theoretical values are more in agreement with our first method. 
+In order to determine the absolute sensitivity in the image, we use two methods. First, we manually determine a region in each cluster that visually appears devoid of flux. We calculate the sensitivity as if this background region was a source, by patching apertures in an annulus around this background location and calculating the standard deviation of the obtained fluxes. We call this sensitivity measurement $\sigman$. The main downside of this method is that it requires a manual operation to select the appropriate background field, and hence could have more variation depending on which field we select. Second, we use a routine that iteratively isolates the pixel values above $2\sigma$ of the image, in order to remove the contamination from our actual sources. The standard deviation of the resulting image is then calculated, and is multiplied by the square root of the number of pixels in an aperture of 3 pixel radius. This corresponds to a floor sensitivity $\sigstd$. We present our results in Table~\ref{tab:SOFIASensitivity}, where we also compare this sensitivity with the expected sensitivity $\sigth$ obtained using the online calculator with the actual exposure time of our images. We note that usually, the theoretical values are more in agreement with our first method. 
 
 
 
@@ -307,7 +310,7 @@ IRAS20050.3	&	0.181	&	0.122	&	0.082	&	0.121	\\
 IRAS20050.6	&	-0.044	&	-0.046	&	-0.092	&	-0.056	\\
 \bottomrule					
 	\end{longtable} 
-\caption*{Fractional difference between our own aperture photometry on \Spitzer archival images and published \Spitzer photometry from \citet{Megeath:2012cn} for NGC2071, and \citet{Gutermuth:2009gca} for IRAS20050+2720. When values are negative, it means that their photometry is lower than ours.}
+\caption*{\textbf{Note:} Fractional difference between our own aperture photometry on \Spitzer archival images and published \Spitzer photometry from \citet{Megeath:2012cn} for NGC2071, and \citet{Gutermuth:2009gca} for IRAS20050+2720. When values are negative, it means that their photometry is lower than ours.}
 \label{tab:SpitzerPhotometry}
 \end{table}
 
@@ -320,41 +323,42 @@ The SOFIA FORCAST archival images consist of $\sim~200$ individual images, each 
 
 Before mosaicing the fields, we proceed to a 2D background subtraction. This method divides the images into sections of $50\times 50$ pixels, estimates the median in each cell, and fits a 2D function to these median values. This function is then used to construct a smooth background, which is then completely removed from the image. Each background-subtracted image is then calibrated (using the calibration factor that is supplied by the FORCAST pipeline), and weighed by its exposure time before it is co-added into a mosaic in the WCS coordinate frame. Note that although these maps are useful to take a quick glance at the flux distribution and spot artifacts, the actual photometry described in the previous sections uses each individual raw field, before the mosaicing and without background subtraction. If a source is present in multiple fields, the photometry from each of these fields is combined to provide a better flux estimate.
 
-In Fig.~\ref{fig:variety_sources} we present a variety of maps from our cluster sample. Each map is a three-color image (red: \SI{37}{\micron}, green: \SI{31}{\micron} and blue: \SI{19}{\micron}), and the scale and stretch of each color is adjusted to balance each color. 
+In Fig.~\ref{fig:varietySources} we present a variety of maps from our cluster sample. Each map is a three-color image (red: \SI{37}{\micron}, green: \SI{31}{\micron} and blue: \SI{19}{\micron}), and the scale and stretch of each color is adjusted to balance each color. 
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/RGBmosaic.png}
-\label{fig:variety_sources}
 \vspace{-1cm}
 \caption[RGB images of select sample of sources]{Selected sample of sources}
+\label{fig:varietySources}
 \end{center}
 \end{figure}
 
 \subsection{Photometry and SEDs}
 %We also produce enhanced SEDs for all of our sources, where we combine archival data with our new SOFIA photometry. The SED plots are complemented with snapshots of the source seen with IRAC and SOFIA. In addition, a snapshot of the corresponding FORCAST \SI{37}{\um} calibrator is shown, which allows to quickly determine the degree of spatial extension of the sources.
 
+The main type of data made available to the community is a list consolidated list of fluxes for most of our clusters, where we gather 2MASS, \Spitzer, FORCAST, \Herschel, SCUBA, and SMA data, when available, for $\sim 90$ sources. Most sources are point sources for the SOFIA FORCAST \SI{37}{\um} band, but some sources present a certain spatial extension which was not known before. 
+
 
 \begin{figure}
 \begin{center}
 \hspace*{-1.5in}
 \includegraphics[width=1.4\textwidth]{Figures/NGC1333_SEDs.png}
+\caption[NGC1333 SEDs]{SEDs of the point sources in NGC1333. The red curve represents the bet fit. The grey curves represent all the fits with $R$ within 0.5 of the best fit. Red triangles: 2MASS. Green diamonds: \Spitzer (our data or data from other existing catalogs). Dark blue triangles: FORCAST (our data). Purple stars: \Herschel (our photometry). Green triangles: Data from \citep{vanKempen:2009ku} and \citep{vanKempen:2012fb}. Light blue triangles: Data from \citet{Enoch:2009ch}.}
 \label{fig:NGC1333_SEDs}
-\caption[NGC1333 SEDs]{SEDs of the point sources in NGC1333.}
 \end{center}
 \end{figure}
-
 
 \begin{figure}
 \begin{center}
 \hspace*{-1.5in}
 \includegraphics[width=1.4\textwidth]{Figures/Oph_SEDs.png}
 \label{fig:Oph_SEDs}
-\caption[Ophiuchus SEDs]{SEDs of the point sources in the Ophiuchus cluster.}
+\caption[Ophiuchus SEDs]{SEDs of the point sources in the Ophiuchus cluster. Same legend as Fig.~\ref{fig:NGC1333_SEDs}}
 \end{center}
 \end{figure}
 
-
+A few other parameters are determined from the FORCAST data and shown in the data release: the $R_{37}$, which consists of the ratio of \Rfifty for the source and \Rfifty for the last observed calibrator; the spectral index and its uncertainty, computed out of the fluxes from \SI{2.2}{\um} to \SI{37}{\um}; and the bolometric luminosity and temperatures for each source. An excerpt of the final table is shown in Table~\ref {tab:OphiuchusNGC1333}.
 \begin{landscape}
 \begin{table}[!h]
 \tiny
@@ -404,24 +408,23 @@ NGC1333.6	&	03h29m13.0s	+31d18m13.8s	&	34.781	&	8.007	&	21.255	&	6.628	&	--	&	--
 \end{table}																														\end{landscape}
 
 
-\subsection{Fitted physical parameters and sample statistics}
+\subsection{Fitted physical parameters}
 
-The point sources in our sample are almost exclusively class 0 and I protostars, using the traditional spectral index determination (which uses wavelengths from \SI{2}{\micron} to \SI{24}{\micron}. They all have a spectral index from 0 to 0.2, which indicates the rising SED of an embedded object. However, for a large fraction of our sample, \Spitzer \SI{24}{\um} is unavailable, which makes the spectral index rely only on the 2-\SI{8}{\um} flux to determine the stage of the object. 
+The spectral index distribution for the point sources in our sample, using a modified spectral index extending out to \SI{37}{\um}, is shown on the left of Fig.~\ref{fig:SpectralIndex}. Most sources have positive spectra index, indicative of a rise in the SED and a large proportion of long-wavelength emission. These objects are more dusty, and believed to be younger than objects with negative spectral index. A closer inspection reveals that targets with negative index mostly lie in the Ophiuchus cluster, and can consist in late type I objects which have already cleared most of their envelopes. These exhibit higher bolometric temperatures, as most of the emission is shifted towards shorter wavelengths.
 
-We suggest using SOFIA's bands for a more robust estimate of the spectral index. Using wavelengths from 2 to \SI{37}{\um} gives more leverage and avoids misidentification. The difference in the distributions is show in Fig.~\ref{fig:SpectralIndex}.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/SpectralIndex.pdf}
-\label{fig:SpectralIndex}
 \vspace{-1cm}
 \caption[Spectral Index distribution of point sources]{Spectral Index distribution of point sources. \textit{Left}: standard determination of the spectral index, using 2MASS and \Spitzer from \SI{2}{\micron} to \SI{24}{\micron}, when data is available. \textit{Right}: Determination of the spectral index using data from 2MASS, \Spitzer and our FORCAST data up to \SI{37}{\micron}. The distribution changes significantly when you account for the longer fluxes in these clustered regions.}
+\label{fig:SpectralIndex}
 \end{center}
 \end{figure}
 
-
+The final data release also includes all of the physical parameters derived using the technique from Section~\ref{sec:SEDFitting}, as well as their uncertainties.
 																							
 \section{SED fitting}
-
+\label{sec:SEDFitting}
 \subsection{A custom grid of models}
 
 SED fitting is prone to many degeneracies: usually many geometrical and physical parameters are used to construct detailed radiative transfer models, but only a handful of measurement points are available to fit, leading to a dramatically under-constrained problem. As our starting point of our investigation of the SEDs of these sources, we used the \textit{sedfitter} tool from \citep{Robitaille:2006cb}. These authors computed a large grid of tens of thousands of SED models using a radiative transfer code by \citep{Whitney:2003ke}, by varying 14 geometrical and physical parameters in the dust density grid such as the size of the disk, the accretion rates, the radius and mass of the envelope, etc. The models are then evaluated in the bands corresponding to our data, and a $\chi^2$ metric is evaluated for each model. By exploring the distribution of $\chi^2$, we noticed, as expected, the very large correlations between the parameters which is indicative of many local minimas in the grid. Hence, inferring geometrical and physical parameters from such a grid can be misleading.
@@ -536,44 +539,60 @@ For each source, we calculate $R$ for each model in our grid. The model with the
 In practice, all of our models fall in that second case, since our parameter grid sampling is sufficiently dense. After visual inspection we estimate there is very little significant difference between values of $R$ which are separated by $\sim 0.5$, as they all can be considered equally good fits. Hence, for a robust measure of the best-fitting model parameters, we choose the mode (the most likely value) of the parameters from models which are within $R_\textrm{min}$ and $R_\textrm{min}+0.2$. The error on the parameter estimate is then estimated using the models within $R_\textrm{min}$ and $R_\textrm{min}+0.5$, and is described in the next section.
 
 \subsection{Overview of derived parameters}
-Data with available long-wavelength data (for good estimate of Lbol)
-Plots: Lestimated vs Lbol; explain differences (noisy data)
-R distribution
-envmass/lum vs alpha
 
-show table with fluxes and derived parameters
-
-show that inclinations decrease with mass; could be an artifact
-
-Show SED mosaics.
+The distribution of the best fit of the envelope mass and central luminosity is shown in Fig.~\ref{fig:MassLumHist}. Our sample covers a broad range of masses, but is naturally biased towards high luminosities given our instrumental sensitivity and cluster selection.
 
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/MassLumHist.pdf}
-\label{fig:MassLumHist}
 \vspace{-1cm}
 \caption[Fitted envelope mass and luminosity distribution]{Fitted envelope mass and luminosity distribution.}
+\label{fig:MassLumHist}
 \end{center}
 \end{figure}
 
+The simple grid that we used manages to fit most of the data pretty well. The distribution of $R$ for all the isolated point sources is shown in Fig.~\ref{fig:Rdistr}. Note that targets where less data points are available, or where data points are more noisy, usually have lower $R$ than targets with a lot of available data points, even if the fits are not necessarily as good. This has also been observed by \citep{Furlan:2016df}.
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/Rdistr.pdf}
+\vspace{-1cm}
+\caption[Distribution of $R$]{$R$ distribution across all point sources.}
+\label{fig:Rdistr}
+\end{center}
+\end{figure}
+
+
+For our sample, we can compare the fitted central luminosity, \Ltot, with the integrated luminosity from the datapoints, \Lbol (Fig.~\ref{fig:LbolVsLest}) for our entire sample of point sources. This shows relatively good agreement, although a systematic excess in fitted central luminosity can be observed, which we attribute to the widespread choice of using an external extinction coefficient. By using this external extinction as a model parameter, we artificially reduce the emission at short wavelengths, which would tend to decrease the bolometric luminosity.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/LbolVsLest.pdf}
-\label{fig:LbolVsLest}
 \vspace{-1cm}
 \caption[Estimated luminosity vs bolometric luminosity]{Estimated luminosity vs bolometric luminosity. The best fit line is shown in red, along with 95\% confidence intervals. The grey dashed line represents $\Ltot = \Lbol$. The excess modeled luminosity for smaller luminosities is caused by the external extinction, which absorbs a large fraction of the luminosity emitted by the central object but does not re-radiate it at longer wavelengths - this is one of the limitations of this exercise.}
+\label{fig:LbolVsLest}
 \end{center}
 \end{figure}
+
+The luminosity excess is more pronounced for lower masses, as the short wavelength emission represents a larger portion of the total emission from the source (Fig.~\ref{fig:LbolMinusLestVSMass}). 
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/LbolMinusLestVSMass.pdf}
-\label{fig:LbolMinusLestVSMass}
 \vspace{-1cm}
 \caption[Luminosity excess as a function of envelope mass]{Luminosity excess as a function of envelope mass.}
+\label{fig:LbolMinusLestVSMass}
 \end{center}
 \end{figure}
+
+
+
+
+We find that this is a major limitation and inconsistency to all known SED fitting methods. \citet{Furlan:2016df} fit for extinction more than we do: they allow the external extinction to go up to $\Av = 40$ for some of their sources, and use all of the 2MASS bands in their fitting. It is not consistent to assume that so much dusty material is present along the line of sight and only affect the short wavelengths, while not also being observed at longer wavelengths. Since the dust is optically thin at longer wavelengths, the far-infrared and submillimiter observations should account for this material which is obscuring the shortest wavelengths.
+
+Our exploration with the fitting routine shows that limiting the external extinction helps by forcing more inclined geometries, where the light from the central star passes through the disk before reaching us. However, we were not able to account for the entirety of the short wavelength extinction by doing this, as the mid-infrared wavelength (IRAC and FORCAST bands) are also affected dramatically by more inclined geometries, which can compromise the fits. This could indicate a fundamental limit to our geometrical representation of YSOs.
+
+For the clusters which do have submillimeter data points, the mass estimates are rather good, since these long-wavelengths points are constraining the mass along the line of sight very well. A summary of our fit results for Ophiuchus and NGC1333 is shown in Table~\ref{tab:FittedParameters}. Note that the luminosity that is used in this analysis is always the luminosity multiplied by the scaling factor $s$, under the assumption that the SED scales for small changes in luminosity. This scaling factor also represents a fundamental uncertainty in the distance measurement to our targets, as a distance error of 10\% would cause a luminosity estimate that would differ by 20\%.
 
 \begin{table}[!h]
 \scriptsize
@@ -581,12 +600,11 @@ Show SED mosaics.
 \label{tab:FittedParameters}
 \vspace{-0.5cm}
 \hspace*{-1.5cm}
-
 \begin{center}
 \begin{longtable}{lcccccccccc}
 
 \toprule																									
-SOFIA Name	&	Coordinates	&	R37	&	$\alpha$	&	R	&	\Menv			&	\Ltot			&	$\Lbol$	&	Inc.	&	Ext.	&	$s$	\\
+SOFIA Name	&	Coordinates	&	$R_{50}/R_{50,\textrm{cal}}$	&	$\alpha$	&	$R$	&	\Menv			&	\Ltot			&	$\Lbol$	&	Inc.	&	Ext.	&	$s$	\\
 	&	J2000	&		&		&		&	\si{\Msun}			&	\si{\Lsun}			&	\si{\Lsun}	&	\si{\degree}	&		&		\\
 \midrule																									
 NGC1333.1	&	03h29m08s +31d21m57s	&	0.75	&	0.28	&	3.40	&	0.59	$\pm$	0.3796	&	5.6	$\pm$	3.12	&	8.38	&	0.0	&	12	&	0.85	\\
@@ -635,15 +653,41 @@ Oph.9	&	16h27m22s -24d29m54s	&	--	&	0.49	&	2.08	&	0.011	$\pm$	0.0005	&	11.8	$\pm
 
 
 \subsection{Estimating parameter uncertainty}
-show uncertainties and discuss how they are determined
-show cross-correlation/cloud diagrams for a few targets
 
-Plot fractional error of all fits
+Parameter uncertainty estimation is important to quantify the confidence in a given fit, without which no meaningful conclusion can be drawn about the scientific meaning of the parameters. This estimation is also one of the most difficult aspect of this fitting process, since it really depends on the method used and the modeling strategy; it hard to compare it with the findings of different authors who might use a different strategy. 
 
+In this work, we propose a relatively model-independent methodology to derive the uncertainty on the best fit. First, we determine the best fit for a given parameter as the mode of the parameter values from the models that fit within $[\Rmin,\Rmin+0.2]$. This statistically more robust than picking simply the model with the lower $R$, since, given our uncertainties and approximations, there is no statistically-significant difference between models that fit within that range.
+
+Once this best fit value is determined for all parameters, the uncertainty is determined using all models that fit within $[\Rmin,\Rmin+0.5]$. We determine three quantities from these models: the standard deviation from the best fit; the median absolute deviation from the best fit; and the skewness of the distribution. All of those parameters accompany the data table which is released with this work.
+
+We admit that the choice of the $R$ intervals are empirical, so they might not work as well for other authors. However, since the metric $R$ is not model-dependent but instead is a type of \textit{distance} between our models and our observations, we think that similar values will still lead to satisfying parameter and uncertainty estimates for other authors. One limitation could occur from the density of the grid: if the models are so sparse that there are only a handful of model within each interval used in the uncertainty estimation, this could lead to errors. 
+
+
+Another important consideration is the cross-correlation between parameters. This is a phenomenon that we encountered heavily using the \textit{sedfitter} function from \citet{Robitaille:2006cb}, which attempts to fit 14-parameter models (plus extinction and scaling factor). This cross-correlation is apparent when the same observations can be fitted with models with wildly different sets of parameters, indicative of multiple local minimas in the grid.
+
+By limiting the number of parameters in the model, we dramatically reduce this effect. However, some cross-correlations...
 
 
 
 \subsection{Discussion}
+
+In this exercise, several factors have been omitted for simplicity. First, the models we use have an axisymmetric geometry which is unlikely to account for realistic mass distributions in the envelope and the disk. Second, we ignore the surrounding medium and consider it devoid of emission (hence of dust). In reality, the transition to the surrounding medium is likely much closer to a continuum. Third, we assume that the only heating source is located at the center of the YSO. The heating source consists of both the light from the star, and from the accretion luminosity, which are completely which can not be distinguished from our point of view. It is important to realize that external heating can also play a role in raising the dust temperature and changing the SED signature. The impact of the interstellar heating is explored in \citet{Furlan:2016df}, who show that it can have a substantial effect on the SED - but they also not include this parameter in their grid, since it is too case-specific. The hyperion radiative transfer code that is used to model our grid can accommodate for external radiation fields as well. 
+
+Given the relative simplicity of the model grid that we constructed, most of observations are fit well and parameters have acceptable uncertainties. This further confirms the degeneracies that exist when trying to put too much physics into very elaborate models: it is difficult to draw physical meaning just by looking at the SED. The difference in the various resolutions, sensitivity, and photometric techniques for each wavelength in the SED prevents a thorough analysis of the object, especially when located in very clustered environment when extended emission and nearby sources can contaminate the measurements. We argue that more complex models would not help in estimating the physical parameters of YSOs - but instead, this work highlights the need for higher angular resolution at wavelengths longward of \SI{37}{\um}. We note from our results that although the envelope mass appears to correlate with spectral index, the relationship is rather loose. In other words, sources with only data up to \SI{37}{\um} are likely to have poorly constrained masses, suggesting that SEDs could have the same near- to mid-IR response while having substantially different long wavelength response (REF IRAS SECTION). 
+
+Similarly to \citet{Furlan:2016df}, we find that the distribution of inclination angles for the best fits is not uniform, which is not intuitive. There is no reason why protostars should have a selection effect in their inclination angle with respect to us. This is indicative of an artifact of the fitting process, and possibly a degeneracy between inclination angle and envelope mass (see Fig.~\ref{fig:incVSmass}), which is much more prominent when no long-wavelength data is available.
+
+
+
+From our exploration and results, we present the following findings:
+\begin{itemize}
+ \item Simple models with only a few varying parameters can fit most class I and class 0 SEDs.
+ \item The envelope mass and luminosity cannot be robustly predicted from looking at standard estimators such as the spectral index
+ \end{itemize} 
+
+Multi-resolution
+
+Given that we were able to fit most SEDs with our relatively simple model grid, 
 
 External heating; over-simple geometry; non-uniform distribution of inclination angles. Variability;
 
@@ -718,7 +762,7 @@ We have observed two fields within the cluster (see Fig.~\ref{fig:IRAS20050_RGB}
 \def\labelitemi{--}
 \begin{table}[!h]
 \scriptsize
-\caption[Source fluxes in IRAS~20050+2720's dense core]{Sources fluxes (Jy) in IRAS~20050+2720.}
+\caption[Source fluxes in IRAS~20050+2720's dense core]{Sources fluxes in IRAS~20050+2720.}
 \label{tab:IRAS20050fluxes}
 \vspace{-0.5cm}
 \begin{longtable}{lP{2cm}P{0.7cm}P{0.7cm}P{0.7cm}P{0.7cm}P{0.7cm}P{0.7cm}P{0.7cm}P{0.7cm}P{0.7cm}}
@@ -745,11 +789,12 @@ Another possible explanation for this emission is that the gas and dust ejected 
 \begin{landscape}
 \begin{figure}
 \begin{center}
-\hspace*{-1in}
+\hspace*{-1.2in}
 \includegraphics[width=1.4\textwidth]{Figures/IRAS20050.png}
-\label{fig:IRAS20050_mosaic}
+\vspace{-0.5in}
 
 \caption{The core of IRAS20050+2720 is seen in the four bands of the \textit{Spitzer} IRAS instrument, as well as with the four FORCAST bands. The increased resolution of FORCAST compared to previous instruments allows to match the long-wavelength emission with its short wavelength counterpart. The stretch in each image is adjusted for optimal readability. The white contours correspond to the FORCAST \SI{37}{\micro\meter} emission [mention the contour levels]. }
+\label{fig:IRAS20050_mosaic}
 \end{center}
 \end{figure}
 \end{landscape}
