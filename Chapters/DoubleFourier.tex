@@ -638,11 +638,37 @@ Even with a stable OPD estimator, the absolute ZPD of the instrument must be mea
 
 \subsection{Derived sensitivity and faintest detectable targets}
 
-Incorporating these sources of noise with the formulas derived in the previous sections leads to the sensitivity values shown in Table~\ref{tab:sensitivity}. In this table we show the sensitivity in the two bands. The minimum detectable flux density (MDFD), which is the flux that provides $\SNR_\mI = 1$ in a single interferogram, is 15~Jy and 26~Jy in band 1 and 2 respectively. For 200 scans averaged with a OPD noise between scans of $5~\um$, the MDFD is 1~Jy and 2~Jy, using a matched filter efficiency of 0.5 and 0.4, respectively \citep{Mighell:2005fwa}. The faintest detectable spectroscopic point source that leads to a spectral $\SNR=5$ is 25~Jy and 13~Jy, respectively. These are determined for ``normal observing", which consists of co-adding 200 scans in 10 minutes that span the whole 2'x2' field of view, using a spectral resolution of $\R=10$ and a nominal OPD noise of $5~\um$~rms. 
+Incorporating these sources of noise with the formulas derived in the previous sections leads to the sensitivity values shown in Table~\ref{tab:sensitivity}. In this table we show the sensitivity in the two bands. The minimum detectable flux density (MDFD), which is the flux that provides $\SNR_\mI = 1$ in a single interferogram, is 10~Jy and 18~Jy in band 1 and 2 respectively. For 200 scans averaged with a OPD noise between scans of $5~\um$, the MDFD is 3~Jy and 6~Jy, using a matched filter efficiency of 0.5 and 0.4, respectively \citep{Mighell:2005fwa}. The faintest detectable spectroscopic point source that leads to a spectral $\SNR=5$ is 26~Jy and 14~Jy, respectively. These are determined for ``normal observing", which consists of co-adding 200 scans in 10 minutes that span the whole 2'x2' field of view, using a spectral resolution of $\R=10$ and a nominal OPD noise of $5~\um$~rms. 
+
+\begin{table}[ht!]
+\begin{center}
+\begin{longtable}{cccc}
+\toprule \multicolumn{4}{|c|}{\textbf{Single scan}} \\
+\midrule 
+     & Band 1 &  Band 2 & SNR Target \\
+\midrule
+MDFD & 10 Jy  & 18 Jy & $\SNR_\mI = 1$\\ 
+\midrule
+\multicolumn{4}{|c|}{\textbf{Normal observing (200 scans, 10 min)}} \\
+\midrule
+MDFD & 3 Jy  & 6 Jy & $\SNR_\mI = 1$\\ 
+\midrule
+Faintest pt. source & 26 Jy  & 14 Jy & $\SNR_k = 5$\\ 
+\midrule
+\multicolumn{4}{|c|}{\textbf{Enhanced sensitivity (200 scans, 10 min)}} \\
+\midrule
+Faintest pt. source & 15 Jy  & 8 Jy & $\SNR_k = 5$\\ 
+\bottomrule 
+\end{longtable} 
+\caption{BETTII sensitivity estimates}
+\label{tab:sensitivity}
+\end{center}
+\end{table} 
+
 
 At the bottom of the table, we also show the results in case we were using the instrument in an ``enhanced sensitivity" mode. This mode is mentioned here to illustrate the flexibility of the interferometer and its observing modes. It consists of increasing the individual integration time for each point in the interferogram by a factor of 3, while reducing the interferometric field of view by the same factor of 3: while the intrinsic field of view is unchanged at the detector, for the same scan time we only cover enough OPD range to cross ZPD for a subset of the pixels of the detector (and obtain a scan of the same length). This mode could be used for example for isolated targets which are located in less crowded star fields, by optimizing the time spent close to ZPD, where there is more signal (as we are interested in low-resolution spectroscopy). BETTII's observing parameters can be changed during flight so that the instrument stays flexible to optimize the chance of seeing fringes.
 
-Finally, we show the overall sensitivity as a function of point source flux density (Eq.~\ref{eq:noisephth}) for both observing modes and both bands in Figure~\ref{fig:SpectralSNR}. In normal background-limited regime, the sensitivity curves should be straight lines. Here, OPD noise creates a decrease in overall sensitivity as a reduction in coherent power, but also, for brighter targets, from the power lost from the fringe that is converted to white noise (which causes a deviation from straight lines). For very bright targets of 50~Jy or more, it is possible to measure the OPD accurately within each interferogram by tracking the fringes in the science channels themselves (see Appendix C). For sufficiently large $\SNR$, this process has less error than the assumed $5~\um$ OPD noise coming from the indirect OPD estimation, so the OPD noise decreases for these very large fluxes to become negligible. This is particularly attractive for in-flight testing and calibration.
+Finally, we show the overall sensitivity as a function of point source flux density (Eq.~\ref{eq:noisephth}) for both observing modes and both bands in Figure~\ref{fig:SpectralSNR}. In normal background-limited regime, the sensitivity curves should be straight lines. Here, OPD noise creates a decrease in overall sensitivity as a reduction in coherent power, but also, for brighter targets, from the power lost from the fringe that is converted to white noise (which causes a deviation from straight lines). For very bright targets of 50~Jy or more, it is possible to measure the OPD accurately within each interferogram by tracking the fringes in the science channels themselves (see Appendix~A). For sufficiently large $\SNR$, this process has less error than the assumed $5~\um$ OPD noise coming from the indirect OPD estimation, so the OPD noise decreases for these very large fluxes to become negligible. This is particularly attractive for in-flight testing and calibration.
 
 It is important to note that for sufficiently faint targets, it is impossible to accurately measure the OPD using single scans or co-adds of scans: we rely on the OPD estimator to have sufficient stability to properly co-add scans until the next calibration measurement. This needs to be considered carefully when planning the observation strategy, as long stretches without calibration could lead to a total loss of the OPD information (hence a total loss in scientific data), due to other OPD noise contributors such as thermal drifts that impact the payload on long timescales.
 %\subsection{Phase noise mitigation strategies}
@@ -815,7 +841,7 @@ field add noise; this can be mitigated by cutting the interferogram for each pix
 
 We derive the spectral sensitivity of double-Fourier instruments to intensity and OPD noise. The expressions in this paper are derived in the general case and can be used to design any instrument that implements this method.
 
-Applied to the case of BETTII, these equations lead to spectral sensitivity estimates of 25 and 13~Jy in its 30-50~$\um$ and 60-90~$\um$ bands, respectively, to achieve a spectral $\SNR=5$ in 10 minutes with $\R=10$ and an assumed OPD noise of $5~\um$ rms.
+Applied to the case of BETTII, these equations lead to spectral sensitivity estimates of 26 and 14~Jy in its 30-50~$\um$ and 60-90~$\um$ bands, respectively, to achieve a spectral $\SNR=5$ in 10 minutes with $\R=10$ and an assumed OPD noise of $5~\um$ rms.
 
 
 
@@ -879,31 +905,6 @@ Total NEP & 2$\times 10^{-15}$ W.Hz$^{-0.5}$ & 1$\times 10^{-15}$ W.Hz$^{-0.5}$ 
 \end{tabular} 
 \caption{BETTII noise parameters}
 \label{tab:noise}
-\end{center}
-\end{table} 
-\begin{table}[ht!]
-\begin{center}
-\begin{tabular}{|c|c|c|c|}
-\hline \multicolumn{4}{|c|}{\textbf{Single scan}} \\
-\hline 
-     & Band 1 &  Band 2 & SNR Target \\
-\hline
-MDFD & 15 Jy  & 26 Jy & $\SNR_\mI = 1$\\ 
-\hline
-\hline \multicolumn{4}{|c|}{\textbf{Normal observing (200 scans, 10 min)}} \\
-\hline
-MDFD & 1 Jy  & 2 Jy & $\SNR_\mI = 1$\\ 
-\hline 
-Faintest pt. source & 25 Jy  & 13 Jy & $\SNR_k = 5$\\ 
-\hline 
-\hline
-\multicolumn{4}{|c|}{\textbf{Enhanced sensitivity (200 scans, 10 min)}} \\
-\hline
-Faintest pt. source & 14 Jy  & 7 Jy & $\SNR_k = 5$\\ 
-\hline 
-\end{tabular} 
-\caption{BETTII sensitivity estimates}
-\label{tab:sensitivity}
 \end{center}
 \end{table} 
 

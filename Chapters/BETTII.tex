@@ -132,7 +132,7 @@ Pupil-plane combination allows for an interferometric response of the entire fie
 	\label{fig:FTSvsDoubleFourier}
     \end{figure}
 
-A detailed derivation of the equations of Double-Fourier interferometry is presented in this work, in appendix~\ref{ap:interfero} and Chapter~\ref{chap:phasenoisepaper}.
+A detailed derivation of the equations of Double-Fourier interferometry is presented in this work, in Appendix~\ref{ap:interfero} and Chapter~\ref{chap:phasenoisepaper}.
 
 \section{BETTII Instrument design}
 
@@ -178,12 +178,27 @@ The entire balloon payload needs to be robust to handle 10~g vertical force and 
 
 The gondola is what holds the truss and attaches to the balloon train. It also holds the electronics, reaction wheels, batteries, and communications to the ground. The frame is made out of 80/20 T-slotted aluminum bars that are attached together using T-inserts, and reinforced by screwed-on corner plates. The precision of this payload is of no importance to the optical alignment. 
 
-[NEED annotated picture of BETTII]
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{Figures/BETTII-annotated.jpg} 
+	\caption[BETTII Rendering]{CAD rendering of the BETTII payload in its final state.}
+	\label{fig:BETTIICAD}
+    \end{figure}
+
+
 
 The various electronic components of the system are attached to the gondola using aluminum or honeycomb aluminum plates, which are painted with white appliance paint for better thermal behavior. These plates act as radiator panels which allow us to dissipate the heat out to space.
 
-The most critical portion of the gondola is the assembly that connects to the balloon train. This holds a single pin that needs to have the highest yield strength, since it is the only point of the payload that needs to support the entire weight. A more detailed description of the pin is presented in Section~\ref{subsec:chap3momdumpmotor}.
+The most critical portion of the gondola is the assembly that connects to the balloon train. This holds a single pin that needs to have the highest yield strength, since it is the only point of the payload that needs to support the entire weight. A more detailed description of the pin is presented in Section~\ref{chap:controls}.\ref{subsec:chap3momdumpmotor}.
 
+The entire payload is designed, assembled and tested in the building 20 high bay at NASA GSFC (Fig.~\ref{fig:HighBayOpen}).
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=\textwidth]{Figures/HighBayOpen.jpg} 
+		\caption[Payload in high bay]{Payload in the high bay before a controls test.}
+		\label{fig:HighBayOpen}
+\end{figure}
 
 
 \subsection{Warm optical system}
@@ -223,6 +238,14 @@ The beams of light enter the cryostat through a thin polypropylene window. We te
 
 Despite working at relatively long wavelengths, the tolerance in the surface figure of all the mirrors is an important consideration. Traditionally, figure errors are specified in terms of the required beam quality at in the focal plane, which starts to degrade when the wavefront errors in the optical train are comparable with the wavelength of the light beam, or introduce specific aberrations such as coma. In interferometers, the fidelity of the final image is not a priority. However, differential wavefront errors between the two optical trains before combination will result in decreased contrast of the interferograms. As a result, the surface quality of the mirrors pre-combination needs to be much lower than a wavelength of light, since errors will stack after hitting many mirrors from both sides. For our specifications, we determine that a \SI{300}{\nano\meter} r.m.s surface figure error over the entire aperture is sufficient to ensure decent scientific results. This requirement is difficult to match for the largest elements in our optical train (the siderostats and the primary mirror) - but smaller mirrors pose less of a challenge in their manufacture. It is important to mention that figure errors are a concern for us because we are using all-aluminum optics, as opposed to more traditional materials such as glass which are easier to polish.
 
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=\textwidth]{Figures/TelescopeAssembly.jpg} 
+		\caption[Telescope assembly layout]{Telescope assembly model and layout.}
+		\label{fig:TelescopeAssemblyLayout}
+\end{figure}
+
+
 The company Nu-Tek, in Aberdeen, MD manufactured all of our small optics out of aluminum. The procedure includes an initial milling process, heat treatment, followed by diamond turning and gold coating to avoid oxidation.
 
 However, very few manufacturers in the United States were able to diamond-turn the siderostats and the primary mirror assembly, while ensuring the level of surface figure we needed. The diamond-turning process uses a slowly moving diamond blade that is controlled in 3 axes to carve out the required shape. This process requires extreme temperature stability, which is often not available in traditional machine shops. 
@@ -236,7 +259,7 @@ However, very few manufacturers in the United States were able to diamond-turn t
 
 
 
-The Department of Advanced Manufacturing at North Carolina State University was able to manufacture our mirrors by meeting all of our requirements. The results are published in [REF to JATIS paper]. Each telescope assembly has a stacked r.m.s surface figure error of [], while the siderostats have []. The siderostats are more complicated because they did not exactly fit in their diamond-turning spindle. We decided to proceed with a two-step diamond turning, where they turned two sections of the ellipse consecutively. This does not guarantee that the two areas will be at the same height since they have to unmount the mirror off the spindle. However, our models show that even if different sections of the mirrors are at different heights, the beam combination can still be successful, as the parts of the pupil that are shifted in one arm are also shifted in the other. 
+The Department of Advanced Manufacturing at North Carolina State University was able to manufacture our mirrors by meeting all of our requirements. The results are published in Furst \textit{et al.} (2016, in press). Each telescope assembly has a stacked r.m.s surface figure error of \SI{300}{\nano\meter}, while the siderostats have a surface error of \SI{100}{\nano\meter} r.m.s. The siderostats are more complicated because they did not exactly fit in their diamond-turning spindle. We decided to proceed with a two-step diamond turning, where they turned two sections of the ellipse consecutively. This does not guarantee that the two areas will be at the same height since they have to unmount the mirror off the spindle. However, our models show that even if different sections of the mirrors are at different heights, the beam combination can still be successful, as the parts of the pupil that are shifted in one arm are also shifted in the other. 
 
 
 
@@ -254,6 +277,14 @@ The cryostat was design by our team. Items were sent out for manufacturing to di
 \end{figure}
 
 
+
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=0.6\textwidth]{Figures/Dewar.jpg} 
+		\caption[Cryostat crossection]{Cryostat crossection.}
+		\label{fig:CryostatCrosssection}
+\end{figure}
+
 The fridge is a ($^3$He+$^4$He) sorption refridgerator from Chase Research that cools down the main optical bench to \SI{4}{\kelvin}. It also has an intermediate cold finger at \SI{1}{\kelvin} and a final stage that brings down the detector temperature to \SI{300}{\milli\kelvin}. 
 
 At the heart of the instrument are four $9\times 9$ close-packed linear arrays of multiplexed superconducting transition edge sensors (TES) bolometers \citep{Benford:2008wk} incorporating the Backshort Under Grid (BUG) architecture \citep{Allen:2006jn}. These arrays are scaled versions of similar arrays already built for ground-based instruments \citep[e.g., GISMO,][]{Staguhn:2014jg}. Detectors are read out using advanced linear SQUID multiplexer and amplifiers. A $4\times 22$ multiplexed readout is used for each array; the extra seven channels are used for calibration signals (unilluminated pixels, “dark SQUID” channels, and an “always on” channel), allowing monitoring of all potential noise contributors \citep{deKorte:2003km}.  
@@ -262,9 +293,9 @@ At the heart of the instrument are four $9\times 9$ close-packed linear arrays o
 
 \begin{figure}[!h]
 		\centering
-		\includegraphics[width=\textwidth]{Figures/DetectorTesting.jpg} 
-		\caption[Detector testing]{Detector testing in a test dewar.}
-		\label{fig:DetectorTesting}
+		\includegraphics[width=\textwidth]{Figures/ColdBench-anottated.jpg} 
+		\caption[Cold bench]{Optics on the cold bench.}
+		\label{fig:ColdBench}
 \end{figure}
 
 
@@ -375,14 +406,14 @@ Instrument	&	\num{	4	}	&	\num{	0.7	}	&	\num{	5.80E-27	}	&	\num{	2.50E-07	}	&	Est
 CMB	&	\num{	2.728	}	&	\num{	1	}	&	\num{	1.02E-45	}	&	\num{	9.35E-17	}	&	\cite{Fixsen:1996di}	\\
 \bottomrule
 \end{longtable}
-\caption*{Thermal noise contributors, excluding the atmosphere. The calculator was designed to be scalable to designing a space mission, which is why we kept track of terms which are negligible compared to the main contributors. In space, the warm optics and window contributions would be significantly reduced and more comparable to the other terms.}
+\caption*{\textbf{Notes}: The calculator was designed to be scalable to designing a space mission, which is why we kept track of terms which are negligible compared to the main contributors. In space, the warm optics and window contributions would be significantly reduced and more comparable to the other terms.}
 
 \end{table}
 
 In addition to the noise of our own system, we need to take into account the noise generated by the atmosphere, which results in a more complex calculation. For best accuracy, we use quantities from \cite{Harries:1980cva}, who measured the actual sky radiance in a large range of wavelengths from balloon altitudes. We obtain a radiance of \SI{0.16}{\watt\per\raiseto{2}\meter\per\steradian} and \SI{0.07}{\watt\per\raiseto{2}\meter\per\steradian} for band 1 and 2 respectively. This corresponds to \num{2.6e10}~photons~\si{\per\second} and \num{5.2e10}~photons~\si{\per\second}, respectively. 
 
 
-To know how much power is actually reaching the detectors, we need a measurement of our optical throughput. The throughput is the product of the efficiencies of the various elements along the optical train: the mirrors, the cryostat window, the NIR/FIR dichroic, and all the cold filters. The latter sum up to the transmission profile shown in Fig.~\ref{fig:BETTIITransmission}), which we call $\Tbp$. We write $f_\textrm{arm1->detN}$ (resp. $f_\textrm{arm2->det1}$) the throughput of light from arm M (resp. arm 2) falling on the detector N, where N = {1,2}:
+To know how much power is actually reaching the detectors, we need a measurement of our optical throughput. The throughput is the product of the efficiencies of the various elements along the optical train: the mirrors, the cryostat window, the NIR/FIR dichroic, and all the cold filters. The latter sum up to the transmission profile shown in Fig.~\ref{fig:BETTIITransmission}), which we call $\Tbp$. We write $f_\textrm{arm1->detN}$ (resp. $f_\textrm{arm2->detN}$) the throughput of light from arm M (resp. arm 2) falling on the detector N, where N = {1,2}:
 \begin{align}
 f_\textrm{arm{1,2}->det{1,2}}(\lambda) &= \tau_\textrm{combiner}\Tbp(\lambda)\tau_\textrm{window}\tau_\textrm{dichroic}r^{N_\textrm{mirrors}} \\
 & \approx 0.38\times \Tbp,
@@ -439,7 +470,7 @@ Term	& 	Symbol	& 		Alloc.		& 	Effect on visibility	& 	\multicolumn{2}{c}{\Vloss}
 \multicolumn{6}{c}{Static contributors}													\\
 \midrule													
 Total WFE in mirror surfaces	& 	\sigWFE	& 	\SI{	2	}{\micro\meter}	& 	$\exp(-[2\pi\sigWFE/\lambda]^2)$	& 	0.906	& 	0.977	\\
-Amplitude mismatch	& 	R	& 		95	\%	& 	$2/(R^{1/2}+R^{-1/2})$	& 	0.999	& 	0.999	\\
+Amplitude mismatch	& 	$R$	& 		95	\%	& 	$2/(R^{1/2}+R^{-1/2})$	& 	0.999	& 	0.999	\\
 Polarization effects	& 	$\theta$	& 	\SI{	12	}{\degree}	& 	$\cos(\pi\theta/180/2)$	& 	0.995	& 	0.995	\\
 Pupil area overlap	& 	\foverlap	& 		90	\%	& 	\foverlap	& 	0.900	& 	0.900	\\
 \midrule													
@@ -471,11 +502,33 @@ The Minimum Detectable Flux Density (\MDFD) is the \MDLF divided by the bandwidt
 
 The faintest detectable interferometric point source with $\SNR = 1$ is then given by $\Smin= \MDFD/\Vi/\etamf$, where the \MDFD is increased due to the interferometric visibility losses and the spreading of the photons onto multiple pixels of the detector. \Smin represents the smallest flux density that leads to an $\SNR = 1$ within a single scan.
 
-Co-adding consecutive scans will improve the \SNR considerably, but it will also introduces errors and inefficiencies. We quickly realized the impact of systematic errors in co-adding scans, so a significant amount of effort went into understanding the behavior of the various error contributions, and analyzing mitigation strategies. The result of this investigation was published in \citet{Rizzo:2015gf}, and is shown here in Chap.~\ref{phasenoisepaper}. In that chapter, we discuss the meaning and importance of the phase noise or \OPD noise, and quantify the impact on the sensitivity. The \OPD noise arises when residual uncertainties in the knowledge and control of the \OPD result in errors while co-aligning and co-adding consecutive interferograms. For the rest of this discussion, we will assume that the \OPD noise amounts to \SI{5}{\micro\meter} r.m.s over 200 consecutive scans.
+Co-adding consecutive scans will improve the \SNR considerably, but it will also introduces errors and inefficiencies. We quickly realized the impact of systematic errors in co-adding scans, so a significant amount of effort went into understanding the behavior of the various error contributions, and analyzing mitigation strategies. The result of this investigation was published in \citet{Rizzo:2015gf}, and is shown here in Chap.~\ref{chap:phasenoisepaper}. In that chapter, we discuss the meaning and importance of the phase noise or \OPD noise, and quantify the impact on the sensitivity. The \OPD noise arises when residual uncertainties in the knowledge and control of the \OPD result in errors while co-aligning and co-adding consecutive interferograms. For the rest of this discussion, we will assume that the \OPD noise amounts to \SI{5}{\micro\meter} r.m.s over 200 consecutive scans.
 
-Using the formulas derived in Chap.~\ref{phasenoisepaper}, we can now correctly determine the \SNR in the co-added interferograms. However, co-added interferograms are not the only goal of BETTII. Although interferograms allow for the distinction between multiple, nearby point sources, most of the scientific information is retrieved by analyzing the spectrum of each source in the field by taking the Fourier transform of the interferogram. Hence, we want to characterize the spectral sensitivity of the instrument, and establish this metric as the default observing metric for our science.
+Using the formulas derived in Chap.~\ref{chap:phasenoisepaper}, we can now correctly determine the \SNR in the co-added interferograms. However, co-added interferograms are not the only goal of BETTII. Although interferograms allow for the distinction between multiple, nearby point sources, most of the scientific information is retrieved by analyzing the spectrum of each source in the field by taking the Fourier transform of the interferogram. Hence, we want to characterize the spectral sensitivity of the instrument, and establish this metric as the default observing metric for our science.
 
-A summary of the results is presented in Table [REF].
+A summary of the results is presented in Table~\ref{tab:BETTIIsensitivity}.
+
+\begin{table}[ht!]
+\begin{center}
+\caption{BETTII sensitivity estimates}
+\label{tab:BETTIIsensitivity}
+\begin{longtable}{cccc}
+\toprule
+  Quantity   & Band 1 &  Band 2 & SNR Target \\
+     \midrule 
+ \multicolumn{4}{c}{\textbf{Single scan (\SI{3}{\second})}} \\
+MDFD & 10 Jy  & 18 Jy & $\SNR_\mI = 1$\\ 
+\midrule
+\multicolumn{4}{c}{\textbf{Normal observing (200 scans, 10 min)}} \\
+MDFD & 3 Jy  & 6 Jy & $\SNR_\mI = 1$\\ 
+\midrule
+Faintest pt. source & 26 Jy  & 14 Jy & $\SNR_k = 5$\\ 
+\bottomrule 
+\end{longtable} 
+\caption*{\textbf{Notes}: $\SNR_\mI$ represents the \SNR in the interferogram, while $\SNR_k$ represents the spectral \SNR, or the \SNR for each wavenumber bin (see Chapter~\ref{chap:phasenoisepaper}).}
+\end{center}
+\end{table} 
+
 
 \subsection{Tracking channel estimated sensitivity}
 A similar sensitivity analysis is done for the tracking channel. This is simplified somewhat since the tracking channels consists only of two cameras, and does not involve beam combination. The levels of background noise are less obvious to estimate. We primarily use the findings of \citet{Matsumoto:1994io}, which measured \SI{2}{\micro\meter} emission line strengths from balloon altitude. This emission is thought to arise from a thin layer of OH radicals at $\sim\SI{100}{\kilo\meter}$ altitude, and is sometimes referred to as \textit{airglow}. Using the measurements by these authors, who span multiple balloon flights in the 60s and 70s, we obtain an average radiance in the NIR bands of $\Rnir~\approx~\SI{1e-4}{\watt\per\raiseto{2}\meter\per\steradian}$. According to our estimates, this is two orders of magnitudes lower than the brightest astronomical noise source in the NIR, which is the zodi scattering.
@@ -496,9 +549,9 @@ Due to the prioritization of the science channels, the NIR tracking channel is l
 \end{align}
 where $\FBW \approx 0.67$ corresponds to the fractional bandwidth, and $h$ is the Planck constant. 
 
-The detector is expected to have a read noise of $\sigRON = 18$~electrons r.m.s in up-the-ramp sampling, according the manufacturer specifications. Its frame rate changes throughout the acquire mode (REF appropriate CHAP), but the fastest mode will have a frame rate of $\sim\SI{50}{\hertz}$. Since the detector does not read destructively, saturation is an issue and needs to be addressed carefully - having to reset the pedestals to avoid saturation can complicate the software and might require a lot of tuning. Our calculations take into account a \SI{20}{\milli\second} integration time, a quantum efficiency of 70\%, and a \SI{0.6}{\arcsec\per\pixel} plate scale, which provides an effective background area $\beta = 0.43$ for a diffraction-limited PSF of diameter \ang{;;1.5} at \SI{1.5}{\micro\meter}. We consider that most of the photons will be spread on $1/\beta\approx~2.35$~pixels, so we expect about $\Nel\approx\num{3440}$~electrons per pixel from a \SI{1}{\jansky} source. A much more rigorous analysis is required once the efficiencies are measured.
+The detector is expected to have a read noise of $\sigRON = 18$~electrons r.m.s in up-the-ramp sampling, according the manufacturer specifications. Its frame rate changes throughout the acquire mode (see Chapter~\ref{chap:controls}), but the fastest mode will have a frame rate of $\sim\SI{50}{\hertz}$. Since the detector does not read destructively, saturation is an issue and needs to be addressed carefully - having to reset the pedestals to avoid saturation can complicate the software and might require a lot of tuning. Our calculations take into account a \SI{20}{\milli\second} integration time, a quantum efficiency of 70\%, and a \SI{0.6}{\arcsec\per\pixel} plate scale, which provides an effective background area $\beta = 0.43$ for a diffraction-limited PSF of diameter \ang{;;1.5} at \SI{1.5}{\micro\meter}. We consider that most of the photons will be spread on $1/\beta\approx~2.35$~pixels, so we expect about $\Nel\approx\num{3440}$~electrons per pixel from a \SI{1}{\jansky} source. A much more rigorous analysis is required once the efficiencies are measured.
 
-For convenience, we express the \SNR of a source using its flux $S$ in electrons\si{\per\second}:
+For convenience, we express the \SNR of a source using its flux $S$ in electron per second:
 \begin{align}
 \SNR = \frac{S}{\sqrt{S + \beta(B + \sigRON^2)}},
 \end{align}
@@ -513,7 +566,7 @@ For a $\SNR=10$, this corresponds to $\sim\SI{0.13}{\jansky}$, or $\sim$~9.66~H~
 
 \section{Targets}
 
-The science targets we seek have fluxes that are above the spectral sensitivities from table [], with a bright NIR guide star nearby. In addition, to correctly know the \OPD, we need sets of bright calibrator targets which provide high-\SNR fringes in one single scan of the delay line.
+The science targets we seek have fluxes that are above the spectral sensitivities from Table~\ref{tab:BETTIIsensitivity}, with a bright NIR guide star nearby. In addition, in order to correctly know the \OPD, we need sets of bright calibrator targets which provide high-\SNR fringes in one single scan of the delay line.
 
 The science targets need to be available during our launch window, and preferably cover a large range of projected angles (so we can study the source at multiple angles to retrieve more of the spatial distribution). For this reason, we favor circumpolar sources, since they are the ones which change orientation at the fastest pace.
 
@@ -533,5 +586,32 @@ We find that bright asteroids such as Ceres, Pallas and Vesta are the best candi
 
 
 \subsection{Science targets}
-introduce the SOFIA work here
+For our first flight, our science target list will be primarily composed of sources we have already observed with SOFIA FORCAST. In our source list, our best BETTII candidates are the sources which are bright at \SI{37}{\um}, have a large spectral index, appear point-like, are up in the sky at night during our flight, and are preferably circumpolar. 
 
+\begin{table}[ht!]
+\begin{center}
+\caption{BETTII Targets}
+\label{tab:BETTIITargets}
+\vspace{-0.5cm}
+\begin{longtable}{ccP{4cm}}
+\toprule										
+	Cluster	&	Coordinates	&	Fraction of night time between 10-\SI{75}{\degree} elevation		\\	
+\midrule										
+	S140	&	 22h19m23s +63d18m44s 	&	100.0	\%	\\		
+	Cepheus~A	&	 22h56m10s +62d03m26s 	&	95.0	\%	\\	
+	NGC~7129	&	 06h41m07s +09d33m35s 	&	100.0	\%	\\
+	Ophiuchus	&	 16h27m05s -24d30m29s 	&	80.0	\%	\\	
+	IRAS~20050+2720	&	 20h07m05s +27d28m51s 	&	70.0	\%	\\
+\bottomrule										
+\end{longtable}
+\end{center}
+\end{table}			
+
+Table~\ref{tab:BETTIITargets} computes a list of such sources, and includes the fraction of time that the target spends above 10 degrees elevation and below \SI{75}{\degree} during the planned observing night of September 15, 2016. In addition, Fig.~\ref{fig:Targets} shows the tracks in the sky. The circumpolar targets S140, Cepheus~A and IRAS~20050+2720 are available for the most time. All are located well in the East at the beginning of the night, which means we can point towards them as the Sun sets in the West. Note that when the source is at low elevations, we could experience a substantial amount of additional atmospheric noise since the line of sight sees more airmass.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=\textwidth]{Figures/TargetPlot.pdf}
+	\caption[Targets]{Polar plot showing the tracks of our targets in the night sky, between 8pm on Sept 15th and 6am on Sept 16th. The coordinates represent the local azimuth (with respect to North) and elevation, which is \SI{0}{\degree} at the horizon. Note that NGC~2071 and NGC~2264 cannot be observed at time at this period of the year.}
+	\label{fig:Targets}
+    \end{figure}

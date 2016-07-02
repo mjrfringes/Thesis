@@ -22,11 +22,17 @@ clean_table['R19'] = clean_table['R50_19']/clean_table['R50_cal_19']
 clean_table['R31'] = clean_table['R50_31']/clean_table['R50_cal_31']
 clean_table['R37'] = clean_table['R50_37']/clean_table['R50_cal_37']
 
+clean_table.sort(['F37','R37'])
+clean_table.reverse()
+clean_table['SOFIA_name','RA','DEC','Property','R37','F37'].more()
+
 df = clean_table.to_pandas()
 df.index = df['SOFIA_name']
 c = SkyCoord(df['RA'],df['DEC'],frame=FK5,unit=u.deg)
 df['Coordinates'] = c.to_string('hmsdms',precision=1)
 print df['Coordinates']
+
+df[['SOFIA_name','Coordinates','RA','DEC','Property','R37','F37']].to_csv('Data/BETTII_Targets.csv')
 
 df1 = df.loc[df['Cluster'].isin(['IRAS20050'])]
 
@@ -36,6 +42,13 @@ cols = list(itertools.chain.from_iterable(zip(columns,e_columns)))
 print cols
 df1[cols+['Coordinates']].to_csv('Data/IRAS20050.csv')
 
+
+## export parameters for IRAS20050
+columns = ['Coordinates','R37','alpha','R','env_mass','env_mass_std','sLsun','sLsun_std','Lbol','inc','ext','s']
+dftot = df.loc[df['Cluster'].isin(['IRAS20050'])]
+dftot[columns].to_csv('Data/IRAS20050_params.csv')
+dftot = df.loc[df['Cluster'].isin(['NGC2071'])]
+dftot[columns].to_csv('Data/NGC2071_params.csv')
 
 
 # load only isolated sources

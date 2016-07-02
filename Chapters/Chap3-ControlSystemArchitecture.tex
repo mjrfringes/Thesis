@@ -267,7 +267,15 @@ We purchased three SRS-2000 fiber-optic gyroscopes from Optolink. This gyroscope
 
 The devices have a bandwidth of \SI{50}{\hertz}, but can be triggered at up to \SI{2000}{\hertz}. Their extreme stability is contingent upon proper temperature stabilization, which is done with a closed-loop set at their calibration temperature of $\SI{23.5}{\celsius}\pm\SI{0.5}{\celsius}$ using an active built-in Peltier element. This Peltier element transforms electric power into either heating or cooling \citep{Peltier:1834vu}.
 
-In the following, we describe how we measure the various properties of the gyroscopes, and discuss how they compare to the specifications.
+The three single-axis gyroscopes are assembled in an orthogonal mount configuration shown in Fig.~\ref{fig:GyroMount}. In the following, we describe how we measure the various properties of the gyroscopes, and discuss how they compare to the specifications.
+
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=\textwidth]{Figures/FOGs.jpg} 
+		\caption[Gyroscope mount]{Gyroscope mount.}
+		\label{fig:GyroMount}
+\end{figure}
+
 
 \paragraph{Sensitivity tests}
 
@@ -326,7 +334,7 @@ It is important to note that in their factory settings, the gyroscopes' noise di
 
 \paragraph{Normality tests}
 
-We ran a few standard normality tests on chunks of the 8-hour data for each gyroscope. While the tests on individual small chunks of data never reject the null hypothesis (that the distribution is normal), the distribution of the total 8 hours does with a very high probability, using both the Anderson-Darling and the Kolmogorov-Smirnov test. It means that it is extremely unlikely that the measured noise over \SI{8}{\hour} is coming from a normal distribution. [SHOW TABLE OF TEST RESULTS?]
+We ran a few standard normality tests on chunks of the 8-hour data for each gyroscope. While the tests on individual small chunks of data never reject the null hypothesis (that the distribution is normal), the distribution of the total 8 hours does with a very high probability, using both the Anderson-Darling and the Kolmogorov-Smirnov test. It means that it is extremely unlikely that the measured noise over \SI{8}{\hour} is coming from a normal distribution.
 
 Since the data is always consistent with being normally distributed over timescales of tens of minutes, after close inspection of the long-term quartile plots and histograms, we determined that it would be safe to consider the distribution as normal for the purpose of our attitude estimator (see Fig.~\ref{fig:gyroprobdensity}). 
 
@@ -409,7 +417,15 @@ Bias instability (\si{\deg\per\hour}) & \num{3.11e-4} & \num{1.8e-3} & \num{3.05
 \subsubsection{Star cameras}
 
 \paragraph{Design}
-We have designed, built and tested a custom star camera setup that provides higher accuracy measurements than commercially available devices. Our collaborators from Cardiff University provided the star camera software, which solves for the inertial orientation from a given picture. This software is a C++ set of routines that was originally developed for the EBEX balloon experiment \citep{Oxley:2004hl}. 
+We have designed, built and tested a custom star camera setup that provides higher accuracy measurements than commercially available devices. An image of our assembly is shown in Fig.~\ref{fig:StarCamera}. Our collaborators from Cardiff University provided the star camera software, which solves for the inertial orientation from a given picture. This software is a C++ set of routines that was originally developed for the EBEX balloon experiment \citep{Oxley:2004hl}. 
+
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=\textwidth]{Figures/StarCamera.jpg} 
+		\caption[Star camera assembly]{Star camera assembly.}
+		\label{fig:StarCamera}
+\end{figure}
+
 
 Our star camera design features an old-generation Nikon Nikkor \SI{300}{\mm} f/2.8 telefocal lens with manual focus and extended hood. These lenses were manufactured between 1977 and 1982 and can be found today online through websites like e-Bay. The lens provides low chromatic aberration, a magnification of \SI{688}{\arcsecond\per\mm}, a wide field of view ($\approx$~\SI{10}{\degree}) and a collecting area of \SI{90}{\mm\squared} which is is larger than most star tracking assemblies. This old lens does not feature a built-in autofocus or any of the image stabilization actuators commonly found in modern lens assemblies: these could have become a liability in the severe balloon environment. 
 
@@ -421,7 +437,7 @@ Our camera is a USB3.0 Point Grey Grasshopper3. The sensor is a Sony Pregius IMX
 \small
 \caption[Star camera properties]{Star camera properties}
 \label{tab:starcamproperties}
-\begin{tabular}{p{4cm}|P{1cm}|p{8.5cm}}
+\begin{tabular}{P{4cm}|P{1cm}|p{8.5cm}}
 \toprule
 Property & Value & Description \\
 \midrule
@@ -489,11 +505,19 @@ The torque is the variation of the momentum with time. So we can write:
 \begin{figure}[!ht]
 	\centering
 	\includestandalone{Figures/CCMG-nocase-axes}
-	\caption{}
+	\caption[CCMG schematics]{CAD rendering of the CCMG design.}
 	\label{fig:CCMGnocase}
     \end{figure}
 
 The entire CCMG assembly was tested in a vacuum chamber at cold temperatures. Several heaters are strategically located in the assembly to allow some thermal control for all the electronics in case issues arise.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{Figures/CCMG_annotated.jpg} 
+	\caption[CCMG testing]{Compensated controlled moment gyros during testing.}
+	\label{fig:BETTIICCMG}
+    \end{figure}
+
 
 \subsubsection{Momentum dump mechanism}
 \label{subsec:chap3momdumpmotor}
@@ -534,11 +558,19 @@ The momentum dump mechanism has not been tested in the environmental chamber - h
 
 
 
-\subsubsection{Elevation control (Rotators)}
+\subsubsection{Elevation control}
 
 When put in terms of ground-based telescopes, BETTII is fundamentally an Alt-Az telescope: to reach a target, it has to move in azimuth, and in elevation (also called \textit{altitude}). Instead of moving the entire payload in elevation, which would have conserved the optical setup constant for all targets, we chose to move only the siderostats for increased reliability. We paid one cost: as the siderostat cover different elevations, the fields rotate on the detector, and in opposite directions. So as the elevation changes, an active compensation needs to happen, which consists of a third rotation mechanism located downstream.
 
-These rotation mechanisms have multiple requirements: they need to operate at \SI{90}{\degree} from the gravity axis; they need to operate well at \SI{-40}{\celsius}; they need to have an inner clearance to let our \SI{2.5}{\cm} beam through; they need to be able to support many kilograms of cantilevered mass; and they need to have a precise encoder that allows not only smooth motion, but also accurate knowledge of the elevation angle. Griffin Motion LLC makes an industrial rotator that satisfies all of these conditions [Griffin picture].
+These rotation mechanisms have multiple requirements: they need to operate at \SI{90}{\degree} from the gravity axis; they need to operate well at \SI{-40}{\celsius}; they need to have an inner clearance to let our \SI{2.5}{\cm} beam through; they need to be able to support many kilograms of cantilevered mass; and they need to have a precise encoder that allows not only smooth motion, but also accurate knowledge of the elevation angle. Griffin Motion LLC makes an industrial rotator that satisfies all of these conditions (Fig.~\ref{fig:GriffinRorationStatges}).
+
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=\textwidth]{Figures/Griffin.png} 
+		\caption[Rotation stages]{Rotation stages from Griffin Motion LLC.}
+		\label{fig:GriffinRorationStatges}
+\end{figure}
+
 
 These are industrial-grade brushless DC rotators. They are controlled by a three-axis Galil Motion controller DMC-4030 with sinusoidal drives. The requirement for sinusoidal drives as opposed to pulsewidth-modulated (PWM) drives stemmed from the fact that these motors were going to be \SI{5}{\meter} away from their controller at the end of each arm, and we wanted to avoid creating electromagnetic noise by having high-frequency pulses going through such a large distance. The rotary encoder is a RENISHAW RESOLUTE absolute encoder with 26 bit resolution, which corresponds to a \ang{;;0.019} angular resolution. However, the controller ignores the two bits of lowest significance, effectively giving a 24 bit resolution, corresponding to a \ang{;;0.08} angular resolution.
 
@@ -546,11 +578,22 @@ An old version of these rotation stages was tested in our environmental chamber,
 
 \subsubsection{Delay lines}
 \label{subsec:delayLines}
+
+
+
 \subsubsection{Tip/tilt}
 
-Our tip/tilt mechanisms are Physik Instrumente S330 piezo-electric actuators that move a flat platform in tip and tilt. We attach a mirror to that platform, and put that mirror close to a pupil of the optical system, to correct for angular errors without creating beam walk. After long discussions with the company's engineers, we ordered a custom strain gauge sensor especially tune and tested to resist low temperatures: this sensor tells the angle of the platform, which is important for our control system [see section]. Similar devices have been successfully used on sounding rocket before to provide milli-arcsecond angular control \citep{Mendillo:2012fh}. 
+Our tip/tilt mechanisms are Physik Instrumente S330 piezo-electric actuators that move a flat platform in tip and tilt. We attach a mirror to that platform, and put that mirror close to a pupil of the optical system, to correct for angular errors without creating beam walk (e.g. in the K-mirror assembly, see Fig.\ref{fig:Kmirror}). After long discussions with the company's engineers, we ordered a custom strain gauge sensor especially tune and tested to resist low temperatures: this sensor tells the angle of the platform, which is important for our control system [SEE SECTION]. Similar devices have been successfully used on sounding rocket before to provide milli-arcsecond angular control \citep{Mendillo:2012fh}. 
 
 The piezo-electric driver electronics provide the required \SI{100}{\volt} to operate the platform, and amplify 10 times an analog 0-10~\si{\volt} command signal. Despite its broad range of motion ($\approx$~\SI{10}{\milli\radian}), they can still operate at multiple hundred of of \si{\hertz} bandwidth, even with a mirror load on top of the platform. The resonant frequency of the structure under load, which needs to be avoided at all costs to avoid severe damage, is at more than \SI{2}{\kilo\hertz}, way beyond the frequency at which we need to command the device.
+
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=\textwidth]{Figures/Kmirror.jpg} 
+		\caption[Kmirror]{K-mirror assembly model with a piezoelectric tip/tilt stage.}
+		\label{fig:Kmirror}
+\end{figure}
+
 
 The platform can be controlled in open-loop mode, where there is a simple gain between the command and the voltage applied to the piezo crystals. However, we baseline to use the closed-loop mode during flight. In this configuration, the electronics close the loop using the strain gauge sensor and the command corresponds to an angle rather than simply a voltage. The drawbacks of the closed-loop mode are a slightly decreased bandwidth and overall range of motion. In case more range is needed during flight, it is possible to switch back to open-loop mode. 
 
@@ -559,7 +602,7 @@ The platform can be controlled in open-loop mode, where there is a simple gain b
  
 \subsubsection{Fine guidance sensor}
 \label{subsec:FGS}
-The fine guidance sensor is a HAWAII-1RG detector with 1024$\times$1024 pixels that is sensitive to infrared wavelengths between \SI{1}{\um} and \SI{2.5}{\um}. The device will be operated at a cryogenic temperature of \SI{77}{\kelvin}, at which the expected read noise is 18~electrons r.m.s.
+The fine guidance sensor is a HAWAII-1RG detector from Teledyne with 1024$\times$1024 pixels that is sensitive to infrared wavelengths between \SI{1}{\um} and \SI{2.5}{\um}. The device will be operated at a cryogenic temperature of \SI{77}{\kelvin}, at which the expected read noise is 18~electrons r.m.s.
 
 \subsubsection{Clocks and timing}
 
@@ -573,17 +616,25 @@ To avoid future complications, all BETTII actuators and sensors are slaved to on
 \item The CCMG wheel position about its axis is checked and a correction is applied.
 \end{itemize}
 
+A diagram of all the clocks in the system is shown in Fig.~\ref{fig:Clocks}.
+\begin{figure}[!h]
+		\centering
+		\includegraphics[width=\textwidth]{Figures/Clocks.pdf} 
+		\caption[Clocks]{BETTII's clocks are all derived from one single master clock.}
+		\label{fig:Clocks}
+\end{figure}
+
+
 The advantage of this strategy can be illustrated as follows. The time it takes for a wheel to complete a revolution is set to be an integer multiple of this heartbeat, $\num{998400}=\num{124800}\times 8$ master clock ticks (about 50 revolutions per second). Hence, every 8 heartbeats, each wheel is supposed to be in the same position, and it will be controlled 8 times during one revolution to make sure it is. This completely locks in their relative velocities, on average. Let's suppose now that in their 8th position, a mechanical defect in the wheel or the bearing triggers a small vibration. This vibration will occur at a frequency which is locked with respect to our science data, such that we will see its effects every 8 data samples. In the case where these clocks are not synchronized and would unpredictably drift with respect to each other, a perturbation that occurs every 8th of a revolution has repercussions not exactly at every 8 data samples. If we think about this in the frequency domain, it means that the power peak caused by the vibration is now broadened, whereas it is very sharp in the synchronized case.
 
 In practice, however, implementing this "single clock" approach is not straightforward for a project that has modest resources and relies heavily on commercial electronics. Most commercial motion controllers do not allow for external clock synchronization. We came up with a solution with the engineers at Galil Motion, and found a way to change their controller to accept an external TTL signal that would bypass their internal crystal oscillator at \SI{1.024}{\kilo\hertz}. The controller normally uses the internal oscillator as a definition of its time basis, so the user can send input in physical units (like acceleration or velocity) - a change in the clock frequency from the introduction of an external signal will have non-trivial repercussions.
 
 The attitude control and sensing occurs every 4 heartbeats, which corresponds to $\approx$\SI{100.16}{\hertz}. In the rest of this discussion, we will always refer to this frequency as being at \SI{100}{\hertz} for simplicity of notation - but it important to remember that it is in fact derived from the master clock.
 
-[PUT here the clock diagram]
 
 \subsubsection{Computers}
 
-BETTII will have two on-board computers (see also diagram [REF]): 
+BETTII will have two on-board computers (see also Fig.~\ref{fig:FlowDiagram}): 
 \begin{enumerate}
 \item a computer which operates a real-time Linux kernel will be used to store all the date, process the up/down telemetry, acquire star camera images, solve for inertial attitude, and process the science detector and H1RG frames. This computer is named \textit{ford}.
 \item an FPGA and real-time computer from National Instruments to process the sensor input/outputs, implement the attitude estimation, and synchronize all the control loops. This computer is named \textit{boop}. This is the brain of the control system. 
@@ -625,11 +676,20 @@ $\bullet$ Automatically applies observing plan if no commands from the ground: s
 \end{tabular}
 \end{table}
 
-[MAKE DIAGRAM WITH ALL COMPUTERS]
 \textit{ford} is an Adlink Extreme Rugged Express-IBR 3517UE with a dual-core i7 CPU and 4 GB of ECC (Error Checking and Correction) memory. The ECC memory is helpful in mitigating some of the side effects of cosmic ray hits on the memory chips. The computer has a low power consumption, which allows it to function with a simple radiator instead of a fan. 
 \textit{ford} has been successfully tested at in the environmental chamber, and the temperatures of its cores under maximum CPU stress have been monitored over long periods of time. 
 
 \textit{boop} is a National Instrument cRIO- system. It features a reprogrammable FPGA chip in addition to a dual-core real-time operating system. NI LabView is the software interface to the system. \textit{boop} will generate and distribute BETTII's master clock signal at \SI{50}{\mega\hertz}.
+
+The various relationships and communications channels between the subsystems is shown in the diagram on Fig.~\ref{fig:FlowDiagram}.
+
+\begin{figure}[!h]
+		\centering
+		\includegraphics{Figures/FlowDiagram.pdf} 
+		\caption[Flow diagram]{Relationships and communications channels between the various subsystems.}
+		\label{fig:FlowDiagram}
+\end{figure}
+
 
 \subsection{Software architecture}
 

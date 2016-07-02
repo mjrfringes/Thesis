@@ -58,7 +58,7 @@ The FORCAST camera has two separate $256\times 256$ pixel infrared arrays that c
 \def\labelitemi{--}
 \begin{table}[!h]
 \scriptsize
-\caption{List of desired sensitivities}
+\caption{List of desired sensitivities for different distances}
 \vspace{-0.5cm}
 \begin{longtable}{c|cccc|c}
 \toprule
@@ -72,7 +72,7 @@ Distance & \multicolumn{4}{c|}{1$\sigma$ minimum detectable flux (Jy)} &  Corres
 1,000.00& 0.01& 0.01& 0.06& 0.1&$\sim$1.5\\
 
 \bottomrule																																		\end{longtable} 
-\caption*{List of desired sensitivities for different distances.}
+%\caption*{List of desired sensitivities for different distances.}
 \label{tab:DesiredSensitivities}
 \end{table}
 
@@ -115,7 +115,7 @@ NGC7129 	&	 21h43m07s +66d06m42s 	&	 F109 	&	1	&	1000	&	383	&	214	&	214	&	709	\\
 Ophiuchus 	&	 16h27m05s -24d30m29s 	&	 F157 	&	11	&	150	&	396	&	468	&	501	&	365	\\
 S140 	&	 22h19m23s +63d18m44s 	&	 F129 	&	1	&	900	&	322	&	393	&	393	&	568	\\
 S171 	&	 00h04m01s +68d34m50s 	&	 F132 	&	1	&	850	&	253	&	219	&	219	&	476	\\\bottomrule																																		\end{longtable} 
-\caption*{List of observed targets. For each cluster, we list the SOFIA flights on which the data was taken, the number of individual fields within the cluster, the distance, and the total integration time for each of the 4 observation bands, including all fields. Note that the \SI{37}{\micro\meter} time quote is a composite time calculated by combining the exposure time of mode 1 with that of mode 3, as discussed in the text.}
+\caption*{\textbf{Notes}: For each cluster, we list the SOFIA flights on which the data was taken, the number of individual fields within the cluster, the distance, and the total integration time for each of the 4 observation bands, including all fields. The \SI{37}{\micro\meter} time quoted is a composite time calculated by combining the exposure time of mode 1 with that of mode 3, as discussed in the text.}
 %List of our 12 proposed targets, with approximate RA and Dec, distance $d$ in parsecs, peak number density in \# stars/pc$^{2}$ from \citep{Gutermuth:2009p1325}, whether the image saturates in Spitzer/in WISE, the number of different fields for each target, the number of YSOs above our threshold level derived from WISE photometry, and the requested time in minutes on source that we request. Note that the latter DOES NOT include overheads.}
 \label{tab:times}
 \end{table}
@@ -605,8 +605,8 @@ For the clusters which do have submillimeter data points, the mass estimates are
 \begin{longtable}{lcccccccccc}
 
 \toprule																									
-SOFIA Name	&	Coordinates	&	$R_{50}/R_{50,\textrm{cal}}$	&	$\alpha$	&	$R$	&	\Menv			&	\Ltot			&	$\Lbol$	&	Inc.	&	Ext.	&	$s$	\\
-	&	J2000	&		&		&		&	\si{\Msun}			&	\si{\Lsun}			&	\si{\Lsun}	&	\si{\degree}	&		&		\\
+SOFIA Name	&	Coordinates	&	$R_{50}/R_{50,\textrm{cal}}$	&	$\alpha$	&	$R$	&	\Menv			&	\Ltot			&	$\Lbol$	&	$i$	&	\Av	&	$s$	\\
+	&	J2000	&		&		&		&	\si{\Msun}			&	\si{\Lsun}			&	\si{\Lsun}	&	\si{\degree}	&	mag	&		\\
 \midrule																									
 NGC1333.1	&	03h29m08s +31d21m57s	&	0.75	&	0.28	&	3.40	&	0.59	$\pm$	0.3796	&	5.6	$\pm$	3.12	&	8.38	&	0.0	&	12	&	0.85	\\
 NGC1333.10	&	03h28m57s +31d14m15s	&	0.80	&	1.84	&	1.12	&	0.39	$\pm$	0.2364	&	5.6	$\pm$	1.69	&	4.82	&	18.7	&	14	&	0.70	\\
@@ -752,9 +752,8 @@ We have observed two fields within the cluster (see Fig.~\ref{fig:IRAS20050_RGB}
 \begin{figure}
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/IRAS20050_core.png}
-\label{fig:IRAS20050_core}
-
 \caption{\SI{37}{\um} observations of the IRAS~20050+2720 core, with the 5 identified objects. The blue contours are from a \SI{2.7}{\milli\meter} continuum emission observed by the OVRO array \citep{Beltran:2008gu} at levels from 10 to \SI{46}{\milli\Jy\per\beam} by increments of \SI{4}{\milli\Jy\per\beam}. The resolution of the \SI{2.7}{\milli\meter} beam is $\sim\ang{;;4.8}$, while the r.m.s noise is \SI{1.5}{\milli\Jy\per\beam}. The dashed line is the axis of a bipolar outflow identified by \citet{Bachiller:1995cy}. The beam shown at the bottom left represents the resolution of the FORCAST instrument.}
+\label{fig:IRAS20050_core}
 \end{center}
 \end{figure}
 
@@ -790,10 +789,8 @@ Another possible explanation for this emission is that the gas and dust ejected 
 \begin{landscape}
 \begin{figure}
 \begin{center}
-\hspace*{-1.2in}
-\includegraphics[width=1.4\textwidth]{Figures/IRAS20050.png}
-\vspace{-0.5in}
-
+%\hspace*{-1.2in}
+\includegraphics[width=1.3\textwidth]{Figures/IRAS20050.png}
 \caption{The core of IRAS20050+2720 is seen in the four bands of the \textit{Spitzer} IRAS instrument, as well as with the four FORCAST bands. The increased resolution of FORCAST compared to previous instruments allows to match the long-wavelength emission with its short wavelength counterpart. The stretch in each image is adjusted for optimal readability. The white contours correspond to the FORCAST \SI{37}{\micro\meter} emission [mention the contour levels]. }
 \label{fig:IRAS20050_mosaic}
 \end{center}
@@ -807,9 +804,9 @@ The 5 sources in the densest part of the cluster are all highly extincted based 
 \begin{center}
 \hspace*{-1in}
 \includegraphics[width=1.4\textwidth]{Figures/IRAS20050_SEDs.png}
-\label{fig:IRAS20050_SEDs}
-
+\vspace{-1.5cm}
 \caption[IRAS20050+2720 SEDs]{SEDs of the 7 sources in the two fields. }
+\label{fig:IRAS20050_SEDs}
 \end{center}
 \end{figure}
 
@@ -830,7 +827,7 @@ This tends to favor a scenario where protostars are fragmenting from a cloud and
 \def\labelitemi{--}
 \begin{table}[!h]
 \scriptsize
-\caption[Clustered sources in IRAS20050+2720's dense core]{Clustered sources in the densest region of IRAS20050.}
+\caption[Clustered sources in IRAS~20050+2720's dense core]{Clustered sources in the densest region of IRAS~20050+2720.}
 \label{tab:IRAS20050sum}
 \vspace{-0.5cm}
 \begin{longtable}{lP{2cm}P{2cm}P{2cm}P{2cm}}
@@ -851,8 +848,40 @@ Ratio	&	1.58	&	0.98	&	0.99	&	0.88	\\
 	\end{longtable} 
 \end{table}
 
+The fitted parameters for the 7 identified sources are shown in Table~\ref{tab:IRAS20050params}. Note that since no long-wavelength data is available, the envelope masses are not very well constrained. Sources 6 and 7 are far away from the main core which was discussed previously, and do not appear to be associated with the first 5 sources. The range of fitted parameters reveals some important diagnostics of these sources:
+\begin{itemize}
+\item sources 1 and 5 appear to be at a later stage of their evolution, with a lower spectral index and much lower envelope mass;
+\item sources 2, 3 and 4 are more embedded, with steeply rising SOFIA fluxes. They are consistent with having sub-solar mass envelopes;
+\item source 6 fits less well and appears to have a very low envelope mass, as the SOFIA fluxes are steeply decreasing. Note that the \SI{24}{\um} MIPS data points are plotted, but not used in the fitting;
+\item source 7 appears to have two very different kinds of SEDs fitting the data points, as exhibited by the large error on the mass determination. More than all sources in this region, this one would greatly benefit from having long-wavelength data points.
+\end{itemize}
 
-%Cite also: \citep{Kumar:2006jo} if we want to talk about multiple generations of star formation.
+One possible conclusion, echoing the work by \citet{Beltran:2008gu}  who suggest that there are multiple generations of star formation coexisting in the same cluster. This has implication on our understanding of clustered star formation and the natural life cycle of young stars. In this new paradigm, a first generation of low-mass stars would complete its main accretion phase before intermediate-mass stars can form. This highlights the complexity of the physical processes in these regions, which 
+
+\renewcommand{\arraystretch}{1.5}
+\setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
+\def\labelitemi{--}
+\begin{table}[!h]
+\scriptsize
+\caption[Fitted parameters in IRAS~20050+2720]{Fitted parameters of sources in IRAS~20050+2720.}
+\label{tab:IRAS20050params}
+\vspace{-0.5cm}
+\begin{longtable}{lccccccccc}
+\toprule																					
+SOFIA Name	&	Coordinates	&	$\alpha$	&	R	&	\Menv			&	\Ltot		&	$i$	&	$\Av$	&	$s$	\\
+	&	J2000	&		&		&	\si{\Msun}			&	\si{\Lsun}			&	\si{\degree}	&	mag	&		\\
+\midrule																					
+IRAS20050.1	&	20h07m06.6s +27d28m48.0s	&	0.071	&	0.741	&	0.004	$\pm$	0.001	&	108.8	$\pm$	22.1	&	58	&	8	&	0.70	\\
+IRAS20050.2	&	20h07m06.2s +27d28m49.1s	&	1.649	&	0.772	&	0.256	$\pm$	0.159	&	39.9	$\pm$	9.5	&	19	&	14	&	0.70	\\
+IRAS20050.3	&	20h07m06.3s +27d28m56.6s	&	1.135	&	0.732	&	0.114	$\pm$	0.051	&	48.5	$\pm$	9.8	&	19	&	14	&	1.15	\\
+IRAS20050.4	&	20h07m05.9s +27d28m59.2s	&	1.712	&	0.266	&	0.577	$\pm$	0.413	&	57.0	$\pm$	17.4	&	38	&	3	&	1.00	\\
+IRAS20050.5	&	20h07m06.6s +27d28m53.1s	&	0.537	&	0.782	&	0.010	$\pm$	0.004	&	43.7	$\pm$	7.2	&	47	&	13	&	1.30	\\
+IRAS20050.6	&	20h07m02.2s +27d30m26.0s	&	-0.338	&	2.222	&	0.004	$\pm$	0.002	&	134.4	$\pm$	28.2	&	33	&	13	&	0.70	\\
+IRAS20050.7	&	20h07m07.9s +27d27m15.8s	&	1.294	&	1.415	&	0.022	$\pm$	0.238	&	374.4	$\pm$	225.6	&	19	&	14	&	1.30	\\
+\bottomrule																					
+	\end{longtable} 
+\end{table}
+
 
 \subsection{NGC 2071}
 
@@ -873,9 +902,10 @@ The luminosities and masses of the individual source, IRS~1, IRS~2, IRS~3, and V
 \begin{figure}
 \begin{center}
 \includegraphics[width=1.4\textwidth]{Figures/NGC2071_mosaic.png}
-\label{fig:NGC2071_mosaic}
+
 
 \caption{The core of NGC2071 is seen in two bands of the \textit{Spitzer} IRAC instrument ("I1" and "I4"), as well as with the four FORCAST bands. The increased resolution of FORCAST compared to previous instruments allows to match the long-wavelength emission with its short wavelength counterpart. The stretch in each image is adjusted for optimal readability. The white contours correspond to the FORCAST \SI{37}{\micro\meter} emission [mention the contour levels]. }
+\label{fig:NGC2071_mosaic}
 \end{center}
 \end{figure}
 \end{landscape}
@@ -906,21 +936,54 @@ Ratio	&	1.27	&	1.09	&	1.15	&	1.00	\\
 \end{table}
 
 
+\renewcommand{\arraystretch}{1.5}
+\setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
+\def\labelitemi{--}
+\begin{table}[!h]
+\scriptsize
+\caption[Fitted parameters in NGC2071]{Fitted parameters of sources in NGC2071.}
+\label{tab:NGC2071params}
+\vspace{-0.5cm}
+\begin{longtable}{lcccccccccc}
+\toprule																							
+SOFIA Name	&	Coordinates	&	$\alpha$	&	R	&	\Menv			&	\Ltot			&	\Lbol	&	$i$	&	$\Av$	&	$s$	\\
+	&	J2000	&		&		&	\si{\Msun}			&	\si{\Lsun}			&	\si{\Lsun}	&	\si{\degree}	&	mag	&		\\
+\midrule																							
+NGC2071.1	&	05h47m04.8s +00d21m43.1s	&	2.31	&	2.78	&	22.17	$\pm$	2.418	&	49.4	$\pm$	4.5	&	297.2	&	0.0	&	14	&	1.3	\\
+NGC2071.2	&	05h47m04.7s +00d21m48.2s	&	2.22	&	1.82	&	6.57	$\pm$	1.712	&	331.2	$\pm$	35.8	&	199.8	&	18.7	&	14	&	1.3	\\
+NGC2071.3	&	05h47m05.4s +00d21m50.3s	&	1.01	&	2.29	&	4.38	$\pm$	1.125	&	374.4	$\pm$	48.7	&	113.7	&	18.7	&	0	&	1.3	\\
+NGC2071.4	&	05h47m04.0s +00d22m10.5s	&	1.08	&	3.96	&	14.78	$\pm$	5.234	&	9.2	$\pm$	2.1	&	21.4	&	0.0	&	14	&	1.0	\\
+NGC2071.5	&	05h47m10.7s +00d21m14.0s	&	0.32	&	2.03	&	0.015	$\pm$	0.007	&	22.1	$\pm$	6.2	&	12.7	&	0.0	&	14	&	1.3	\\
+\bottomrule																							
+	\end{longtable} 
+\end{table}
 
 Show sum of sources compared to cluster total
 
 
+\begin{figure}
+\begin{center}
+\hspace*{-1in}
+\includegraphics[width=1.4\textwidth]{Figures/NGC2071_SEDs.png}
+\vspace{-1.5cm}
+\caption[NGC2071 SEDs]{SEDs of the 5 sources in the two fields. }
+\label{fig:NGC2071_SEDs}
+\end{center}
+\end{figure}
+
+
+
 \section{Conclusion and future work}
 
-We have used SOFIA FORCAST to image 42 fields in bright, nearby stellar clusters. We derive aperture photometry in 4 bands: \SI{11.1}{\um}, \SI{19.7}{\um}, \SI{31.5}{\um}, \SI{37.1}{\um}, for a total of 90 sources. In many cases, our photometry is the only available mid- to far-IR photometry available for these sources, since archival \Spitzer observations were either saturated or confused.
+We have used SOFIA FORCAST to image 42 fields in bright, nearby stellar clusters. We derive aperture photometry in 4 bands: \SI{11.1}{\um}, \SI{19.7}{\um}, \SI{31.5}{\um}, \SI{37.1}{\um}, for a total of 90 sources. In many cases, our photometry is the only mid- to far-IR photometry available for these sources, since archival \Spitzer observations were either saturated or confused.
 
 In multiple cases, we complete our SOFIA photometry using \Spitzer IRAC as well as \Herschel data. When the catalogs cannot be found, we use the same photometry pipeline that we developed for SOFIA on the \Spitzer and \Herschel calibrated images.
 
-We also proceed to SED fitting of our sources, based on a radiative transfer code called Hyperion. Using this code, we produce estimates for physical parameters of these YSOs, and carefully approximate the error in the parameter estimate.
+We also proceed to SED fitting of our sources, based on a radiative transfer code called Hyperion. Using a simple grid, we produce estimates for physical parameters of these YSOs, and carefully approximate the error in the parameter estimate.
 
-We take a closer look at one special cluster, IRAS~20050+2720, which contains five close-by YSOs sharing what appears to be an extended envelope, favoring a competitive accretion scenario.
+We take a closer look at two special clusters: IRAS~20050+2720, which contains five close-by YSOs sharing what appears to be an extended envelope, favoring a competitive accretion scenario; and NGC2071 [insert conclusions here]
 
-In our sample there were 15 cases of extended emission at \SI{37}{\um}. This spatial extension is not simple to model: with a FORCAST FWHM of $sim\ang{;;3.5}$, an object with spatial extension has a size on the order of a few thousands of \si{\au} at \SI{500}{\pc}: we haven't been able to show that the central object can heat dust grains at this distance sufficiently for them to emit thermally at \SI{37}{\um}. Hence, another heating mechanism is responsible for this emission: we suggest that the emission could be due to a population of non-LTE, very small dust grains. Answering this question will require further analysis and more study.
+In our sample there were 15 cases of extended emission at \SI{37}{\um}. This spatial extension is not simple to model: with a FORCAST FWHM of $\sim\ang{;;3.5}$, an object with spatial extension has a size on the order of a few thousands of \si{\au} at \SI{500}{\pc}: we haven't been able to show that the central object can heat dust grains at this distance sufficiently for them to emit thermally at \SI{37}{\um}. Hence, another heating mechanism is responsible for this emission: we suggest that the emission could be due to a population of non-LTE, very small dust grains. Answering this question will require further analysis and more study.
 %\section{Introduction}
 %Most stars in the Galaxy form in cluster environments of sizes 2-4 pc, often containing more than 100 young stellar objects (YSOs), with typical separations of $<$0.05~pc between stars near their centers \citep{Porras:2003kxa, Allen:2007wqa, Gutermuth:2009gca}.
 %Previous studies have been effective in elucidating the young stellar content and distribution in clouds on large scales (parsec down to 0.05~pc) \citep{Evans-ARAA2012}, but young cluster cores, born in dense portions of molecular clouds, are more difficult to observe. They are obscured at optical through near-IR wavelengths. At mid-IR through far-IR wavelengths, the material surrounding YSOs and involved in the stellar birth process emits due to heating by the young stars, but the resolution to date has not been sufficient to isolate individual stars in the cores of most nearby young clusters.

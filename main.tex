@@ -49,6 +49,9 @@ headsepline, % Uncomment to get a line under the header
 \usepackage{verbatim} % comments
 \usepackage{epigraph} % quotes
 
+\usepackage[titles]{tocloft} % table of contents indents
+\renewcommand*\cftchapnumwidth{2em}
+
 \setlength\epigraphwidth{8cm}
 \setlength\epigraphrule{0pt}
 
@@ -361,11 +364,11 @@ $\omega$ & angular frequency & \si{\radian} \\
 % loads up the file with all the definitions
 \include{Chapters/Introduction}
 \include{Chapters/SOFIA} 
-%\include{Chapters/BETTII} 
-%\include{Chapters/DoubleFourier} 
-%\include{Chapters/AttitudeEstimation}
-%\include{Chapters/Implementation} 
-%\include{Chapters/Conclusion}
+\include{Chapters/BETTII} 
+\include{Chapters/DoubleFourier} 
+\include{Chapters/AttitudeEstimation}
+\include{Chapters/Implementation} 
+\include{Chapters/Conclusion}
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES
@@ -376,10 +379,10 @@ $\omega$ & angular frequency & \si{\radian} \\
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 
-%\include{Appendices/AppendixA}
+\include{Appendices/AppendixA}
 %\include{Appendices/AppendixB}
-%\include{Appendices/AttitudeRepr3D}
-%\include{Appendices/PIDLoop}
+\include{Appendices/AttitudeRepr3D}
+\include{Appendices/PIDLoop}
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY

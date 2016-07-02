@@ -97,7 +97,7 @@ q_r
 q_r
 \end{bmatrix} = \begin{bmatrix}  \vectors{q}^T & q_r\end{bmatrix}^T,
 \end{equations}
-where we make a clear distinction between the quaternion's real part $q_r$, and its 3-dimensional imaginary part that we choose to represent as a vector $\vectors{q} =q_i\i + q_j\j + q_r\k$. Like complex numbers, quaternion have a conjugate operation, which negates the imaginary part: $\quat{q}^* = \begin{bmatrix}  -\vectors{q}^T & q_r\end{bmatrix}^T$.
+where we make a clear distinction between the quaternion's real part $q_r$, and its 3-dimensional imaginary part that we choose to represent as a vector $\vectors{q} =q_i\i + q_j\j + q_r\k$. Like complex numbers, quaternion have a conjugate operation, which negates the imaginary part: \begin{equations}\quat{q}^* = \begin{bmatrix}  -\vectors{q}^T & q_r\end{bmatrix}^T.\end{equations}
 
 Quaternions are interesting beyond their pure mathematical definition because the subset of quaternions of unit norm can be used to represent a coordinate frame rotation in three dimensions. The Euler rotation theorem states that any coordinate frame rotation can be described by a rotation of an angle $\theta$ about an appropriately-chosen unit vector $\vectors{u} = x\i + y\j + z\k$ (also called the "Euler axis" or "Euler vector"). This formalism has 3 degrees of freedom, the minimum needed to describe a rotation between two reference frames: two degrees of freedom in the vector (which is constrained to be of unit norm), and one in the rotation angle. If we encode this information in a quaternion using Euler's exponential notation for vectors [need references here], this precisely defines the quaternion:
 \begin{equations}
