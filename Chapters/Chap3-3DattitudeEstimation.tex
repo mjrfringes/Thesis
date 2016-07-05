@@ -3,19 +3,16 @@
 \renewcommand*{\arraystretch}{0.75}
 
 
-The attitude estimation consists of combining high-frequency angular velocity measurements of the payload with low-frequency attitude measurements. The high-frequency measurements, usually from gyroscopes, are relative measurements, and exhibit biases and noise. The attitude measurements are absolute, but they are usually very noisy. The Kalman filter \citep{Kalman:1960ii} combines these two measurements in a mathematical formalism that uses the physical relationship between them. The goal of the filter is to estimate the bias of the high-frequency measurements, hence providing bias-corrected, trustworthy dynamical information that can be used to estimate the attitude at all times, even when there is no absolute measurement.
+The attitude estimation consists of combining high-frequency angular velocity measurements of the payload with low-frequency attitude measurements. The high-frequency measurements, usually from gyroscopes, are relative measurements, and exhibit biases. The attitude measurements are absolute. The Kalman filter \citep{Kalman:1960ii} combines these two types of measurements in a mathematical formalism that uses a model of the physical relationship between them. The goal of the filter is to estimate the bias of the high-frequency measurements, hence providing bias-corrected, drift-less, trustworthy dynamical information that can be used to estimate the attitude at all times, even when there is no absolute measurement.
 
-In our situation, gyroscopes will provide high-frequency velocity data (typically at 100~Hz), while star cameras will provide absolute measurements every few seconds. The gyroscopes are much more trustworthy over short periods, so they won't be influenced by just a few star camera measurements. However, on long timescales, the attitude as propagated using the gyroscopes will drift with respect of the star cameras because of the gyroscopes' inherent biases. The Kalman filter will estimate those biases and provide a bias-corrected angular velocity to make sure that the gyroscopes do not drift away from the star camera results.
+%In our situation, gyroscopes will provide high-frequency velocity data (typically at 100~Hz), while star cameras will provide absolute measurements every few seconds. The gyroscopes are much more trustworthy over short periods, so they won't be influenced by just a few star camera measurements. However, on long timescales, the attitude as propagated using the gyroscopes will drift with respect of the star cameras because of the gyroscopes' inherent biases. The Kalman filter will estimate those biases and provide a bias-corrected angular velocity to make sure that the gyroscopes do not drift away from the star camera results.
 
-This filter is very common for spacecraft attitude and control, although a large number of variations exist. It was first popularized in the 60's in the United States during the Apollo missions, when it was used to determine the attitude of the Apollo capsules in inertial space. 
+This filter is very common for spacecraft attitude and control, although a large number of variations exist. It was first popularized in the 60's in the United States during the Apollo missions, when it was used to determine the attitude of the Apollo capsules in inertial space. It also continues to be an active field of research today \citep[e.g.,][]{Crassidis:2011ud,Markley:2014dn}. Under certain circumstances and assumptions, the Kalman filter is the optimal filter, which means that it is the filter that has the fastest possible convergence towards the steady-state.
 
-[Some paragraph on the theory of the Kalman filter: the fact that it is the optimal filter for gaussian stochastic processes, which means it converges the fastest.]
 
-[Talk about references on Kalman filter. REcent pub: \citep{Crassidis:2011ud},\citep{Markley:2014dn}]
+One of the complications of the Kalman filter is that it involves inverting matrices to find the optimal solution when new absolute measurements are received. This has implications in terms of numerical complexity which often will limit the bandwidth of the filter, especially in the context of resource-limited FPGA computers on spacecraft. In practice the trade-off is the following: either limit the bandwidth of the filter, or limit the number of state parameters (\textit{i.e.} limit the rank of the matrix to invert). Fortunately, on the ground, this limitation is usually not an issue. We will be flying a very powerful FPGA computer on our balloon, so we also will not be limited by numerical complexity for the most basic version of our filter.
 
-One of the complications of the Kalman filter is that it involves inverting matrices to find the optimal solution when new absolute measurements are received. This has implications in terms of numerical complexity which often will limit the bandwidth of the filter, especially in the context of resource-limit FPGA computers on spacecraft. In practice the trade-off is the following: either limit the bandwidth of the filter, or limit the number of state parameters (\textit{i.e.} limit the rank of the matrix to invert). Fortunately, on the ground, this limitation is usually not an issue. We will be flying a very powerful FPGA computer on our balloon, so we also will not be limited by numerical complexity.
-
-In order to set up the Kalman filter, we choose quaternions to describe our attitude, for the reasons explained in the earlier sections and their advantages in representing all the required information efficiently. In addition, because of their nice behavior when it comes to small angles, we can use quaternions in their linear, small angle approximation to create a \textit{multiplicative}, \textit{extended} Kalman filter (MEKF) \citep{Lefferts:1982dx}. It is extended because it operates in the small angle approximation, hence it is a local approximation of a non-linear relationship. And it is multiplicative, instead of being additive, because we use the quaternion multiplication operation to describe the "difference" or error between two reference frames. One popular instance where this filter was successfully implemented was on board the WMAP spacecraft \citep{Harman:2005ux}.
+In order to set up the Kalman filter, we choose quaternions to describe our attitude, which are discussed extensively and compared to other attitude representations in Appendix~\ref{sec:attituderepresentation}. In addition to the various advantages explained in this appendix quaternions have a nice behavior when it comes to small angles, so we can use them in their linear, small angle approximation to create a \textit{multiplicative}, \textit{extended} Kalman filter (MEKF) \citep{Lefferts:1982dx}. It is \textit{extended} because it operates in the small angle approximation, hence it is a local approximation of a non-linear relationship. And it is \textit{multiplicative}, instead of being additive, because we use the quaternion multiplication operation to describe the "difference" or error between two reference frames. One popular instance where this filter was successfully implemented was on board the WMAP spacecraft \citep{Harman:2005ux}.
 
 First, we need to choose a representation for our sensor suite: the gyroscopes and the star cameras. Second, we describe the equations that govern the physics of our system and connect the sensors together: this is critical for the Kalman filter to produce robust estimates, and the more accurate our representation is, the more accurate our predictions can be. Finally, we discuss the Kalman setup, and two phases of the algorithm: prediction and update.
 
@@ -23,14 +20,14 @@ First, we need to choose a representation for our sensor suite: the gyroscopes a
 \label{sec:SensorModels}
 \subsubsection{Gyroscope model}
 
-The gyroscope model that we use is: $\gyroVecMeas  =  \gyroVec + \bias + \nGyros$, where $\gyroVecMeas$ is the measured angular velocity vector, $\gyroVec$ is the true angular velocity vector, $\bias$ is the bias vector, and $\nGyros$ is the angular velocity noise vector (also called the "rate noise"). We consider that $\nGyros$ is a white noise process with a diagonal covariance matrix $\N_\gyro = \sigma_{c,\gyro}^2\bI_{3\times 3}$. 
+For our baseline design, the gyroscope model that we use is: $\gyroVecMeas  =  \gyroVec + \bias + \nGyros$, where $\gyroVecMeas$ is the measured angular velocity vector, $\gyroVec$ is the true angular velocity vector, $\bias$ is the bias vector, and $\nGyros$ is the angular velocity noise vector (also called the "rate noise"). This implies that we have ideal alignment between each gyroscope and what we define to be the gyroscope reference frame. We consider that $\nGyros$ is a white noise process with a diagonal covariance matrix $\N_\gyro = \sigma_{c,\gyro}^2\bI_{3\times 3}$. 
 
 We consider that the derivative of the bias $\bias$ is also a white noise process: $\dot{\bias} = \nBias$, where $\nBias$ has a diagonal covariance matrix $\N_\bias = \sigma_{c,b}^2\bI_{3\times 3}$.
 
 Assuming that the covariance matrices are diagonal help to set up the filter, but is not a necessary assumption in the general case. The following implementation is not relying on this assumption.
 
 %The angular random walk of the gyroscope assemblies is 0.2~deg.sec$^{-1}$ with an effective bandwidth of 50~Hz (100~Hz sampling). 
-The angular random walk (ARW) specification from the manufacturer is ARW = \SI{5e-4}{\deg\per\hour}. This means that if we integrate the gyroscope's rate for 1~hour, the $1\sigma$ uncertainty on our position would be 
+The angular random walk (ARW) that we measure is ARW~$\sim$\SI{5e-4}{\deg\per\hour}. This means that if we integrate the gyroscope's rate for 1~hour, the $1\sigma$ uncertainty on our position would be 
 $\SI{5e-4}{\deg}\sim\ang{;;1.8}$. For an integration time of 1 second, it would be \ang{;;0.03}. For a single integration time step $\Deltat = \SI{0.01}{\second}$, it would be \ang{;;0.003}. 
 
 The units required for $\sigma_\gyro$ are [\si{\radian\raiseto{-0.5}\second}], so we convert:
@@ -48,11 +45,11 @@ The bias instability units are [\si{\radian\raiseto{-3/2}\second}]. The manufact
 \begin{equations}
 \sigma_\bias\units{\si{\radian\raiseto{-3/2}\second}} = \SI{0.005}{\deg\per\hour}\times \sqrt{\textrm{BW}\units{\si{\hertz}}}  \sim \SI{1.8e-7}{\radian\raiseto{-3/2}\second}.
 \end{equations}
-This represents how much what we are trying to estimate is expected to vary. The drift is extremely slow for our gyroscopes, so in practice we will be dominated by the changes in the alignment of the system for all relevant timescales before the gyroscope bias becomes a problem. [EDIT THIS]
+This represents how much what we are trying to estimate is expected to vary. While this drift appears to be very slow, it increases linearly with time (as opposed to the ARW which increases as the square root of the time). Hence, the bias drift quickly increases the position uncertainty when integrating the gyroscopes, which justifies the efforts in trying to properly estimate its properties and correct for it as often as possible.
 
 \subsubsection{Star camera model}
 
-The star camera takes a picture of the sky to make noisy measurements of the right ascension (RA) and declination (DEC) of the boresight, as well as the roll angle (ROLL) in which the frame is taken. The RA and DEC typically are much more accurate than the roll angle. Each angle is can be used as en Euler angle to define the attitude of the payload in the inertial frame (or equivalently, the rotation from the inertial frame to the current attitude). Each angle corresponds to a quaternion rotation about a single axis: 
+The star camera takes a picture of the sky to make noisy measurements of the right ascension (RA) and declination (DEC) of the boresight, as well as the roll angle (ROLL) in which the frame is taken. The RA and DEC typically are much more accurate than the roll angle. Each angle can be used as en Euler angle to define the attitude of the payload in the inertial frame (or equivalently, the rotation from the inertial frame to the current attitude). Each angle corresponds to a quaternion rotation about a single axis: 
 \begin{eqnarrays}
 \quat{q}_\textrm{RA} &=& [0, 0, \sin(\textrm{RA}/2),\cos(\textrm{RA}/2)]^T,\\
 \quat{q}_\textrm{DEC} &=& [ 0, \sin(\textrm{DEC}/2), 0,\cos(\textrm{DEC}/2)]^T,\\
@@ -60,7 +57,7 @@ The star camera takes a picture of the sky to make noisy measurements of the rig
 \Attitude^{\textrm{meas}}_{\starcam}& = &\quat{q}_\textrm{ROLL}\quat{q}_\textrm{DEC}\quat{q}_\textrm{RA}.
 \end{eqnarrays}
 
-The errors associated with the three Euler angles are assumed to be a random vector $\nStarcam$, also with a diagonal covariance matrix $\measCovMat$. Typical star camera noises are 1-\ang{;;2} in RA and DEC and \ang{;;100} r.m.s. in ROLL. 
+The errors associated with the three Euler angles are assumed to be a random vector $\nStarcam$, also with a diagonal covariance matrix $\measCovMat$. Typical star camera noises are 1-\ang{;;2} in RA and DEC and \ang{;;100} r.m.s. in ROLL (see Chapter~\ref{chap:implementation}). 
 
 The star camera is often oriented at a fixed position on the payload, which is not necessarily aligned with the gyroscope reference frame. In that case, the attitude quaternion needs to be rotated by the quaternion representing the transformation between both reference frames. In addition, the covariance matrix needs to be rotated by the direction cosine matrix corresponding to the same transformation. This would not have an effect if the covariance matrix was a multiple of the identity matrix, but it usually is not the case since the Roll measurement is often much less sensitive. This can have implications while designing the balloon payload and deciding on the placement and orientation of the star camera: the attitude estimation will be less precise about the Roll axis of the star camera.
 
@@ -248,10 +245,25 @@ While no new star camera measurement is available, the attitude transition is ex
 Hence, once we trigger the star camera, we need to start keeping track of the matrices $\A_k$, $\B_k$, and $\C_k = \boldsymbol\Pi_{i=k-N}^k\exp\left(\frac{1}{2}\matOmega(\EstGyroVec_{i})\Deltat\right)$, appropriately reset them when a new star camera trigger has occurred, and propagate them until the estimator receives the star camera value.
 
 \subsection{Summary of Kalman filter steps}
+All Kalman filter steps discussed in the previous are summarized in Fig.~\ref{fig:kalmanFilterSteps}.
 
-\input{Figures/KalmanFilter}
+\begin{figure}[!h]
+	\centering
+	\includestandalone{Figures/KalmanFilter}
+\caption{Kalman filter steps}
+\label{fig:kalmanFilterSteps}
+\end{figure}
 
 \subsection{Enhancing the Kalman filter models}
 \label{subsec:enhancedKalman}
+
+The problem of using only bias drifts needs some explanation. In the traditional Kalman filter, gyroscope models using only a bias to account for the measurement errors. The bias, which combines linearly with the measured velocity, is adjusted to correct the errors and minimize the covariance of the error.
+
+However, this supposes that the gyroscopes are perfectly orthogonal, with unity scale factor, and the transformation between the measurement sensor (the star camera) reference frame and the gyro reference frame is known perfectly. An error in either of these two components will translate to multiplicative errors on the velocities, which will have a large effect when the velocity dramatically changes (for example, after a slew) and will not be accounted for by a simple bias model. Eventually, the bias would adjust to be in agreement with the star camera measurements - but it can a while, and during this time, the velocity that we think we are moving at is incorrect. To put this in perspective, a 1\% error on the gyroscope velocity in one axis for a \SI{10}{\degree} slew at \ang{;;400}\si{\per\second} corresponds to a position error of 6 arcminutes, a considerable amount given our pointing requirements.
+
+If this error persists during flight, the poor man's solution is as follows. Instead of tracking the Kalman filter through slew, we slew blindly and reset the estimator after the slew. We reset our starting position with the first solution from the star camera. Since we will be off our target, we will slew again to the desired target, which will be much closer. Each time this needs to be repeated, we minimize the effects of the bias errors.
+
+For our scientific purpose, a 1\% error in the gyroscope scale factor of angular velocity alignment is not a deal breaker, since their main purpose is to maintain sufficient stability to lock onto a guide star with the fine guiding sensor. The fine guiding sensor is by definition in the correct reference frame, since it observes through the optical train. 
+
 
 \subsection{Conclusions on sensor fusion}

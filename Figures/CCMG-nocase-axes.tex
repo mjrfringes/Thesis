@@ -18,9 +18,9 @@
 \coordinate (O) at (0,0,0);
 \node at (O){\includegraphics[width=\textwidth]{Figures/CCMG-nocase.png}};
 
-\draw[->,red,line width=\linewidth] (O) -- (0,0,\axissize)node[right]{\z};
-\draw[->,red,line width=\linewidth] (O) -- (0,\axissize,0)node[right]{\x};
-\draw[->,red,line width=\linewidth] (O) -- (-\axissize,0,0)node[below]{\y};
+\draw[->,red,line width=\linewidth] (O) -- (0,0,\axissize)node[right]{\vectors{z}};
+\draw[->,red,line width=\linewidth] (O) -- (0,\axissize,0)node[right]{\vectors{x}};
+\draw[->,red,line width=\linewidth] (O) -- (-\axissize,0,0)node[below]{\vectors{y}};
 
 \coordinate (V) at (6.75,2,0);
 \draw[->,red,line width=\linewidth] (V) -- (6.75,7,0)node[below]{}node[midway]{\AxisRotator[rotate=-30,->]};

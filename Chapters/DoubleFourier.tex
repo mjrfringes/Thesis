@@ -35,7 +35,7 @@ aspects of the noise in spectral measurements specific to these instruments.
 
 \subsection{Spatio-spectral interferometry}
 
-In their pioneering paper, \cite{Mariotti:1988vea} lay out the principles of spatio-spectral 
+In their pioneering paper, \citet{Mariotti:1988vea} lay out the principles of spatio-spectral 
 (or double-Fourier) interferometry. A spatio-spectral interferometer consists of a Fourier transform 
 spectrometer (FTS), where a delay line mechanism modulates the optical path difference (OPD) between two independent light beams before combining them in the pupil plane. The instrument produces interferograms, which are arrays of power measurements as a function of the OPD. Unlike traditional FTS, 
 where a single incoming beam is split, delay-modulated, and recombined, a double-Fourier 
@@ -52,7 +52,7 @@ delay difference between the two incoming beams (equivalent to the OPD) and
 the source 2D spatial structure on the sky which is more directly related to measurements
 accumulated from many different baseline vectors. The length of the baseline vectors can be changed by modifying the distance between the light collectors. The orientation of the vectors can be changed by rotating the baseline with respect to the source on the sky.
 The plane representing the source visibilities
-as a function of baseline vector is referred to as the ($u, v$)-plane and is a common notion in ground-based submillimeter and radio interferometry. This paper focuses on the reconstruction of the spectrum from closely-spaced point sources using single-baseline measurements, and does not address the techniques and sensitivities involved in using multiple baseline lengths to produce an image of the scene; a mathematical formalism that covers imaging is already proposed in \cite{Elias:2007jsa}.
+as a function of baseline vector is referred to as the ($u, v$)-plane and is a common notion in ground-based submillimeter and radio interferometry. This paper focuses on the reconstruction of the spectrum from closely-spaced point sources using single-baseline measurements, and does not address the techniques and sensitivities involved in using multiple baseline lengths to produce an image of the scene; a mathematical formalism that covers imaging is already proposed in \citet{Elias:2007jsa}.
 
 %LGM: ZPD dependence within columm for large offset not done
 
@@ -73,6 +73,16 @@ and external OPD, as relevant to an astronomical source, are not independent of 
 for example, a 1" pointing error for an 8~m long baseline corresponds to a $38~\um$ shift in OPD.
 %LGM: Added last sentence
 
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/f1.eps}
+\caption[WideField]{Concept of wide-field double-Fourier interferometry. Light from the instrument is focused after combination to an image of the sky on the detector array (represented as the grid). Each column of the detector has a distinct ZPD so the interferometric responses (right side) of two sources on different columns are centered around different delay positions. The gray stripe represents the central column on the detector array and its corresponding ZPD on the interferograms.}
+%The instrument is represented by the double-headed arrow to the left. This encompasses the light collectors, the telescopes, the tip/tilt correction stages, the pupil re-imagers, and the beam combiner. After the beam combiner, the beam is focussed onto the detector array shown in this picture. Changing the OPD modulates the intensity of the Airy disks of each source in the field, and we get interferograms, as shown to the right. In this sketch we suppose that the baseline is aligned with the rows on the detector. Hence, each column of pixels always has the same instrumental OPD. In the general case, pixels along a line perpendicular to the baseline have the same OPD. Further, each source at an angle $\theta$ from the central column has an external OPD equal to $|\baseline |\sin\theta$. When the instrumental OPD approaches the opposite of this value, fringes can be seen for the source.}
+\label{fig:widefield}
+\end{center}
+\end{figure}
+
+
 Third, bolometer-type detectors, such as being built for BETTII and envisioned for SPIRIT, are
 easily, and indeed typically, configured as two-dimensional arrays. With pupil plane combination,
 the entire field of view has an interferometric response; hence wide-field interferometry over
@@ -86,15 +96,24 @@ By sweeping the OPD, the double-Fourier instrument measures interferograms which
 \subsection{The case study: BETTII}
 
 The BETTII project \citep{Rinehart:2014gk}, is a motivation for this paper and a near-term application of spatio-spectral interferometry. BETTII consists of two 50~cm siderostats on a fixed 8~m baseline, with a far-IR beam-combining instrument at the center. It will observe the far-IR universe in two 
-wavelength bands, 30-50~$\um$ and 60-90~$\um$. The instrument is currently under construction at NASA Goddard Space Flight Center and is scheduled to launch in the Fall of 2016 on a stratospheric balloon from Fort Sumner, New Mexico, to an altitude of 35~km in order to be above most of the atmosphere. For its first flight, BETTII will focus on the study of dense star formation in nearby clusters. While a complete image reconstruction is not possible due to the static baseline length, BETTII will help resolve point source objects that are 0.5-1" apart in the short and long band, respectively, more than ten times the spatial resolution of \textit{Spitzer} at 24~$\um$ and six times the resolution of SOFIA at 37~$\um$.  Combined with a modest spectral resolution of $\R=10 - 50$, BETTII will measure the spectral energy distributions (SEDs) of clustered young stars to determine their evolutionary stage, locate the origin of the far-IR emission, and improve our understanding of how stars accrete their mass in these very dense regions of stellar birth \cite[e.g. see][and references therein]{2014prpl.conf..149T}. For resolved sources, the fixed baseline will not completely lift degeneracies between the spectral and spatial information; however detailed source modeling can put constraints on the distribution of the far-IR emission
+wavelength bands, 30-50~$\um$ and 60-110~$\um$. The instrument is currently under construction at NASA Goddard Space Flight Center and is scheduled to launch in the Fall of 2016 on a stratospheric balloon from Fort Sumner, New Mexico, to an altitude of 35~km in order to be above most of the atmosphere. For its first flight, BETTII will focus on the study of dense star formation in nearby clusters. While a complete image reconstruction is not possible due to the static baseline length, BETTII will help resolve point source objects that are 0.5-1" apart in the short and long band, respectively, more than ten times the spatial resolution of \textit{Spitzer} at 24~$\um$ and six times the resolution of SOFIA at 37~$\um$.  Combined with a modest spectral resolution of $\R=10 - 50$, BETTII will measure the spectral energy distributions (SEDs) of clustered young stars to determine their evolutionary stage, locate the origin of the far-IR emission, and improve our understanding of how stars accrete their mass in these very dense regions of stellar birth \cite[e.g. see][and references therein]{2014prpl.conf..149T}. For resolved sources, the fixed baseline will not completely lift degeneracies between the spectral and spatial information; however detailed source modeling can put constraints on the distribution of the far-IR emission
 \citep[e.g][]{Whitney:2013cw}.
 %LGM: modified last sentence and added recent reference for modeling.
 
-In this paper, we study how various types of noise propagate to the derived spectrum in an
-instrument like BETTII or SPIRIT. In section~\ref{sec:formalism}, we establish a mathematical formalism that can be used to represent interferograms. In section~3, we look at the dominant types of noise in the interferogram and define the relevant timescales associated with spatio-spectral interferometers. In section~4, we derive the spectral signal-to-noise ratio ($\SNR$). In section~5, we apply these results to the special case of BETTII to derive its point source spectral sensitivity.
+In this chapter, we study how various types of noise propagate to the derived spectrum in an
+instrument like BETTII or SPIRIT. In section~2, we establish a mathematical formalism that can be used to represent interferograms. In section~3, we look at the dominant types of noise in the interferogram and define the relevant timescales associated with spatio-spectral interferometers. In section~4, we derive the spectral signal-to-noise ratio ($\SNR$). In section~5, we apply these results to the special case of BETTII to derive its point source spectral sensitivity.
 
 \section{Mathematical formalism}
 \label{sec:formalism}
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/f2.eps}
+\caption[Optics layout of Double-Fourier interferometers]{Optical train diagram of a typical far-IR, double-Fourier instrument. The K-mirror rotates the beam to align the fields of view of the two sides. Inside the cryostat, a set of optics re-image the pupil, implement a controlled instrumental delay between them with the Cold Delay Line, and relay them towards the central beam combiner. After the combiner, the beams are imaged onto the detectors. To see the BETTII-specific implementation of this design, see \citet{Rinehart:2014gk}.}
+\label{fig:optics}
+\end{center}
+\end{figure}
+
 The general optics layout for a double-Fourier system is shown in Fig.~\ref{fig:optics} for a single baseline. 
 The combination of the siderostat and beam compressor acts as an afocal telescope 
 which outputs a  parallel beam with a diameter convenient for the rest of the optical train.
@@ -244,6 +263,15 @@ The scientifically interesting quantities are the source spectrum and source spa
 instrumental terms have to be calibrated or properly modeled
 by observing a bright point source of known spectrum. The techniques for calibrating FTS systems are well developed
 \citep[e.g.][]{Davis:2001tr}, and there are many methods proposed to correct some phase and amplitude errors \citep[e.g.][]{Forman:1966wx, Sromovsky:2003in}. 
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/f3.eps}
+\caption[interfero]{Effects of phase and intensity noise on the recovered spectrum (single realization of the noise). Left column: normalized interferograms, intensity as function of OPD. Right column: normalized DFT of interferograms. Solid: input spectrum multiplied by anti-symmetric transmission function; Solid circles: Imaginary part of DFT from interferogram; Dotted: Real part of DFT. First row: ideal measured signal, no noise; used for normalization of all other plots. Second row: results with a realization of phase noise of 10\% at each point of the interferogram. Third row: results with a realization of intensity noise and $\SNR_\mI=10$.}
+\label{fig:interfero}
+\end{center}
+\end{figure}
+
 
 The phase noise term $\Phir(x,\s)$ in Eq.~\ref{eq:interfero2}, and the $\SNR$ in the measured interferogram can have significant
 impact on the ability to recover the source spectrum with a real instrument. The upper panel in Fig.~\ref{fig:interfero} shows an example of an interferogram (left), and the transformed $\S_e(\s_k)$ (right) for a source with flat power spectrum, multiplied by a flat bandpass function with smoothed edges.
@@ -565,7 +593,7 @@ A direct OPD measurement can be achieved for example with a fringe-tracking inst
 A primary application for BETTII and proposed missions like SPIRIT will be the measurement of the spectral energy distribution
 from warm dust associated with star formation in different environments. These types of measurements require broad wavelength
 coverage but not especially high spectral resolution since the emission can be characterized as a sum of Planck functions over
-a range of temperatures. For an instrument like BETTII, covering from 30-50~$\um$ and 60-90~$\um$ simultaneously,
+a range of temperatures. For an instrument like BETTII, covering from 30-50~$\um$ and 60-110~$\um$ simultaneously,
 $\R\sim 10$ in each band is sufficient to accomplish much of the science.
 
 Spectral measurement with $\R\sim 10$ requires covering a delay range of $\pm 10~\lambda_0$ for a single source. On the other
@@ -614,14 +642,14 @@ For most source locations, the variation of the baseline orientation due to chan
 
 \subsection{Noise sources and control system}
 %The balloon environment makes observations in this wavelength range possible, but a large amount of background noise is still created by the residual atmosphere and the optics that are at ambient temperature.
-Table~\ref{tab:noise} shows our estimates of the
+Table~\ref{tab:powerNEP} showed our estimates of the
 background power levels associated with the atmosphere, warm optics, and windows in the two BETTII bands. 
 The detectors themselves have been designed to have a noise level comparable to the background to optimize the use of the
-dynamic range of the devices. The total NEPs of the short and long bands are expected to be $\sim 2\times 10^{-15}$ W.Hz$^{-0.5}$ and $\sim 1\times 10^{-15}$ W.Hz$^{-0.5}$, respectively. The source photon noise is negligible compared to the total NEP. 
+dynamic range of the devices. The total NEPs of the short and long bands are expected to be $\sim 1.5\times 10^{-15}$ W.Hz$^{-0.5}$ and $\sim 1\times 10^{-15}$ W.Hz$^{-0.5}$, respectively. The source photon noise is negligible compared to the total NEP. 
 
 Balloon instruments are subject to low frequency ($<~0.5$~Hz) pendulum modes and other oscillations introduced by the system's geometry and mass distribution, which make pointing a challenge. However, it is expected that the balloon environment is free of perturbations at any higher frequency (other than the instrument specific perturbations). Hence, sensors with high electrical bandwidth can robustly estimate the pendulum modes to gain accurate knowledge of the attitude, which can be used as our indirect OPD estimator since it is geometrically related to the phase on sufficiently short timescales.
 
-The BETTII control system is organized with three different levels of control loops \citep{Rizzo:2014jq}: the coarse pointing loop, the fine pointing loop, and the OPD loop. The coarse pointing loop uses gyroscopes and star cameras to keep the baseline oriented within 10-15" of an appropriate near-IR guide star. A dichroic splits the near-IR (1-2$~\um$) from the far-IR (30-90$~\um$) inside the cryostat before the scanning delay line. The guide star is imaged through each of the two arms on two separate readout windows of a near-IR detector array that shares most of the optical path with the science channels. The fine control loop uses fast-steering tip-tilt mirrors, located at the pupils of each arm, to control the guide star image on each window and maintain good overlap of the beams at the science detectors. This loop reads the near-IR detector and generates a tip/tilt correction at 100~Hz. We expect to achieve beam overlap to within better than 1.5" at all times when a guide star is available. The spatial resolution of an individual BETTII beam
+The BETTII control system is organized with three different levels of control loops \citep{Rizzo:2014jq}: the coarse pointing loop, the fine pointing loop, and the OPD loop. The coarse pointing loop uses gyroscopes and star cameras to keep the baseline oriented within 10-15" of an appropriate near-IR guide star. A dichroic splits the near-IR (1-2$~\um$) from the far-IR (30-110$~\um$) inside the cryostat before the scanning delay line. The guide star is imaged through each of the two arms on two separate readout windows of a near-IR detector array that shares most of the optical path with the science channels. The fine control loop uses fast-steering tip-tilt mirrors, located at the pupils of each arm, to control the guide star image on each window and maintain good overlap of the beams at the science detectors. This loop reads the near-IR detector and generates a tip/tilt correction at 100~Hz. We expect to achieve beam overlap to within better than 1.5" at all times when a guide star is available. The spatial resolution of an individual BETTII beam
 is 17" in the short wavelength band so this is a little better than 1/10th of a resolution element. The interferometric visibility loss
 for this overlap error is anticipated to be less than 0.5\%.
 
@@ -642,20 +670,21 @@ Incorporating these sources of noise with the formulas derived in the previous s
 
 \begin{table}[ht!]
 \begin{center}
+\caption{BETTII sensitivity estimates}
+\label{tab:BETTIIsensitivity}
+\vspace{-0.5cm}
 \begin{longtable}{cccc}
-\toprule \multicolumn{4}{|c|}{\textbf{Single scan}} \\
-\midrule 
-     & Band 1 &  Band 2 & SNR Target \\
-\midrule
+\toprule
+  Quantity   & Band 1 &  Band 2 & SNR Target \\
+     \midrule 
+ \multicolumn{4}{c}{\textbf{Single scan (\SI{3}{\second})}} \\
 MDFD & 10 Jy  & 18 Jy & $\SNR_\mI = 1$\\ 
 \midrule
-\multicolumn{4}{|c|}{\textbf{Normal observing (200 scans, 10 min)}} \\
-\midrule
+\multicolumn{4}{c}{\textbf{Normal observing (200 scans, 10 min)}} \\
 MDFD & 3 Jy  & 6 Jy & $\SNR_\mI = 1$\\ 
-\midrule
 Faintest pt. source & 26 Jy  & 14 Jy & $\SNR_k = 5$\\ 
 \midrule
-\multicolumn{4}{|c|}{\textbf{Enhanced sensitivity (200 scans, 10 min)}} \\
+\multicolumn{4}{c}{\textbf{Enhanced sensitivity (200 scans, 10 min)}} \\
 \midrule
 Faintest pt. source & 15 Jy  & 8 Jy & $\SNR_k = 5$\\ 
 \bottomrule 
@@ -667,6 +696,15 @@ Faintest pt. source & 15 Jy  & 8 Jy & $\SNR_k = 5$\\
 
 
 At the bottom of the table, we also show the results in case we were using the instrument in an ``enhanced sensitivity" mode. This mode is mentioned here to illustrate the flexibility of the interferometer and its observing modes. It consists of increasing the individual integration time for each point in the interferogram by a factor of 3, while reducing the interferometric field of view by the same factor of 3: while the intrinsic field of view is unchanged at the detector, for the same scan time we only cover enough OPD range to cross ZPD for a subset of the pixels of the detector (and obtain a scan of the same length). This mode could be used for example for isolated targets which are located in less crowded star fields, by optimizing the time spent close to ZPD, where there is more signal (as we are interested in low-resolution spectroscopy). BETTII's observing parameters can be changed during flight so that the instrument stays flexible to optimize the chance of seeing fringes.
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/f4.eps}
+\caption[BETTII Spectral SNR]{%Effects of phase noise and background noise on the spectral $\SNR$. This simulation is computed for BETTII's band 1 parameters and noise estimates, for R=10. We show the results in both the normal science observing mode and the enhanced sensitivity mode. Both simulations are for 200 averaged scans, or 10 minutes on a source. It is important to note that one source can be observed at multiple times during the course of one flight, hence increasing the spectral $\SNR$.
+BETTII's spectral sensitivity. Solid: Normal observing mode, band 1; Dashed: Enhanced sensitivity mode, band 1; Dotted: normal observing mode, band 2; Dot-dashed: Enhanced sensitivity mode, band 2. This plot includes the technique of fringe tracking in the science channel for sufficiently bright sources (see Appendix C). As the source flux rises, the effects of the phase noise become larger and the SNR should reach an asymptotical value. However, with fringe tracking, the phase noise itself becomes smaller since one can see fringes in one single or a few consecutive scans, so the co-adding becomes easier. Thanks to the fringe-tracking, there is no regime where the phase noise is expected to be dominant on BETTII, provided that the control system performs according to expectations.}
+\label{fig:SpectralSNR}
+\end{center}
+\end{figure}
 
 Finally, we show the overall sensitivity as a function of point source flux density (Eq.~\ref{eq:noisephth}) for both observing modes and both bands in Figure~\ref{fig:SpectralSNR}. In normal background-limited regime, the sensitivity curves should be straight lines. Here, OPD noise creates a decrease in overall sensitivity as a reduction in coherent power, but also, for brighter targets, from the power lost from the fringe that is converted to white noise (which causes a deviation from straight lines). For very bright targets of 50~Jy or more, it is possible to measure the OPD accurately within each interferogram by tracking the fringes in the science channels themselves (see Appendix~A). For sufficiently large $\SNR$, this process has less error than the assumed $5~\um$ OPD noise coming from the indirect OPD estimation, so the OPD noise decreases for these very large fluxes to become negligible. This is particularly attractive for in-flight testing and calibration.
 
@@ -841,7 +879,7 @@ field add noise; this can be mitigated by cutting the interferogram for each pix
 
 We derive the spectral sensitivity of double-Fourier instruments to intensity and OPD noise. The expressions in this paper are derived in the general case and can be used to design any instrument that implements this method.
 
-Applied to the case of BETTII, these equations lead to spectral sensitivity estimates of 26 and 14~Jy in its 30-50~$\um$ and 60-90~$\um$ bands, respectively, to achieve a spectral $\SNR=5$ in 10 minutes with $\R=10$ and an assumed OPD noise of $5~\um$ rms.
+Applied to the case of BETTII, these equations lead to spectral sensitivity estimates of 26 and 14~Jy in its 30-50~$\um$ and 60-110~$\um$ bands, respectively, to achieve a spectral $\SNR=5$ in 10 minutes with $\R=10$ and an assumed OPD noise of $5~\um$ rms.
 
 
 
@@ -872,70 +910,46 @@ Applied to the case of BETTII, these equations lead to spectral sensitivity esti
 % The material presented in this paper is based upon work supported by NASA Science Mission Directorate through the ROSES/APRA program, with additional support from NASA Goddard Space Flight Center, and NASA GSFC grant NNX11AG92A to the University of Maryland. Work by T. Veach was supported by an appointment to the NASA Postdoctoral Program at GSFC, administered by the Oak Ridge Associated Universities under contract with NASA. We would like to thank the anonymous referee for suggested improvements to the paper.
 
 
-\begin{table}[ht!]
-\begin{center}
-\begin{tabular}{|c|c|c|c|}
-\hline 
-\textbf{Parameter} & \textbf{Band 1} & \textbf{Band 2} & \textbf{Comment} \\ 
-\hline 
-Window emissivity & 0.02 & 0.02 & Measured in the lab \\ 
-\hline 
-Telescope emissivity & 0.077 & 0.077 & 10 mirrors at 0.992 reflection\\ 
-\hline 
-Sky radiance & 0.16 W.m$^{-2}$.sr$^{-1}$ & 0.07 W.m$^{-2}$.sr$^{-1}$ & \cite{Harries:1980cva} \\ 
-\hline 
-Window radiance & 0.17 W.m$^{-2}$.sr$^{-1}$ & 0.04 W.m$^{-2}$.sr$^{-1}$ & Blackbody at 240~K \\ 
-\hline 
-Telescope radiance & 0.17 W.m$^{-2}$.sr$^{-1}$ & 0.04 W.m$^{-2}$.sr$^{-1}$ & Blackbody at 240~K \\ 
-\hline 
-Total optical efficiency & 0.3 & 0.3 & Per arm, includes detectors \\ 
-\hline 
-Photon power from the sky & 35 pW & 36 pW & • \\ 
-\hline 
-Photon power from the window & 40 pW &  18 pW & • \\ 
-\hline 
-Photon power from the telescope & 108 pW & 38 pW & • \\ 
-\hline 
-Total absorbed photon NEP & 1.4$\times 10^{-15}$ W.Hz$^{-0.5}$ & 7$\times 10^{-16}$ W.Hz$^{-0.5}$ & From each arm \\ 
-\hline 
-Detector NEP & 3$\times 10^{-16}$ W.Hz$^{-0.5}$ & 3$\times 10^{-16}$ W.Hz$^{-0.5}$ & For each detector \\ 
-\hline 
-Total NEP & 2$\times 10^{-15}$ W.Hz$^{-0.5}$ & 1$\times 10^{-15}$ W.Hz$^{-0.5}$ & For the sum of both arms \\ 
-\hline 
-\end{tabular} 
-\caption{BETTII noise parameters}
-\label{tab:noise}
-\end{center}
-\end{table} 
+%\begin{table}[ht!]
+%\begin{center}
+%\begin{tabular}{|c|c|c|c|}
+%\hline 
+%\textbf{Parameter} & \textbf{Band 1} & \textbf{Band 2} & \textbf{Comment} \\ 
+%\hline 
+%Window emissivity & 0.02 & 0.02 & Measured in the lab \\ 
+%\hline 
+%Telescope emissivity & 0.077 & 0.077 & 10 mirrors at 0.992 reflection\\ 
+%\hline 
+%Sky radiance & 0.16 W.m$^{-2}$.sr$^{-1}$ & 0.07 W.m$^{-2}$.sr$^{-1}$ & \cite{Harries:1980cva} \\ 
+%\hline 
+%Window radiance & 0.17 W.m$^{-2}$.sr$^{-1}$ & 0.04 W.m$^{-2}$.sr$^{-1}$ & Blackbody at 240~K \\ 
+%\hline 
+%Telescope radiance & 0.17 W.m$^{-2}$.sr$^{-1}$ & 0.04 W.m$^{-2}$.sr$^{-1}$ & Blackbody at 240~K \\ 
+%\hline 
+%Total optical efficiency & 0.3 & 0.3 & Per arm, includes detectors \\ 
+%\hline 
+%Photon power from the sky & 35 pW & 36 pW & • \\ 
+%\hline 
+%Photon power from the window & 40 pW &  18 pW & • \\ 
+%\hline 
+%Photon power from the telescope & 108 pW & 38 pW & • \\ 
+%\hline 
+%Total absorbed photon NEP & 1.4$\times 10^{-15}$ W.Hz$^{-0.5}$ & 7$\times 10^{-16}$ W.Hz$^{-0.5}$ & From each arm \\ 
+%\hline 
+%Detector NEP & 3$\times 10^{-16}$ W.Hz$^{-0.5}$ & 3$\times 10^{-16}$ W.Hz$^{-0.5}$ & For each detector \\ 
+%\hline 
+%Total NEP & 2$\times 10^{-15}$ W.Hz$^{-0.5}$ & 1$\times 10^{-15}$ W.Hz$^{-0.5}$ & For the sum of both arms \\ 
+%\hline 
+%\end{tabular} 
+%\caption{BETTII noise parameters}
+%\label{tab:noise}
+%\end{center}
+%\end{table} 
 
 
-\begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=\textwidth]{Figures/f1.eps}
-\caption[WideField]{Concept of wide-field double-Fourier interferometry. Light from the instrument is focused after combination to an image of the sky on the detector array (represented as the grid). Each column of the detector has a distinct ZPD so the interferometric responses (right side) of two sources on different columns are centered around different delay positions. The gray stripe represents the central column on the detector array and its corresponding ZPD on the interferograms.}
-%The instrument is represented by the double-headed arrow to the left. This encompasses the light collectors, the telescopes, the tip/tilt correction stages, the pupil re-imagers, and the beam combiner. After the beam combiner, the beam is focussed onto the detector array shown in this picture. Changing the OPD modulates the intensity of the Airy disks of each source in the field, and we get interferograms, as shown to the right. In this sketch we suppose that the baseline is aligned with the rows on the detector. Hence, each column of pixels always has the same instrumental OPD. In the general case, pixels along a line perpendicular to the baseline have the same OPD. Further, each source at an angle $\theta$ from the central column has an external OPD equal to $|\baseline |\sin\theta$. When the instrumental OPD approaches the opposite of this value, fringes can be seen for the source.}
-\label{fig:widefield}
-\end{center}
-\end{figure}
 
-\begin{landscape}
-\begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=1.5\textwidth]{Figures/f2.eps}
-\caption[optics]{Optical train diagram of a typical far-IR, double-Fourier instrument. The K-mirror rotates the beam to align the fields of view of the two sides. Inside the cryostat, a set of optics re-image the pupil, implement a controlled instrumental delay between them with the Cold Delay Line, and relay them towards the central beam combiner. After the combiner, the beams are imaged onto the detectors. To see the BETTII-specific implementation of this design, see \cite{2014PASP..126..660R}.}
-\label{fig:optics}
-\end{center}
-\end{figure}
-\end{landscape}
 
 %\begin{comment}
-\begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=\textwidth]{Figures/f3.eps}
-\caption[interfero]{Effects of phase and intensity noise on the recovered spectrum (single realization of the noise). Left column: normalized interferograms, intensity as function of OPD. Right column: normalized DFT of interferograms. Solid: input spectrum multiplied by anti-symmetric transmission function; Solid circles: Imaginary part of DFT from interferogram; Dotted: Real part of DFT. First row: ideal measured signal, no noise; used for normalization of all other plots. Second row: results with a realization of phase noise of 10\% at each point of the interferogram. Third row: results with a realization of intensity noise and $\SNR_\mI=10$.}
-\label{fig:interfero}
-\end{center}
-\end{figure}
 
 %\begin{figure}[ht!]
 %\begin{center}
@@ -976,11 +990,4 @@ Total NEP & 2$\times 10^{-15}$ W.Hz$^{-0.5}$ & 1$\times 10^{-15}$ W.Hz$^{-0.5}$ 
 %\label{fig:Visibility}
 %\end{center}
 %\end{figure}
-\begin{figure}[ht!]
-\begin{center}
-\includegraphics[width=\textwidth]{Figures/f4.eps}
-\caption[BETTII Spectral SNR]{%Effects of phase noise and background noise on the spectral $\SNR$. This simulation is computed for BETTII's band 1 parameters and noise estimates, for R=10. We show the results in both the normal science observing mode and the enhanced sensitivity mode. Both simulations are for 200 averaged scans, or 10 minutes on a source. It is important to note that one source can be observed at multiple times during the course of one flight, hence increasing the spectral $\SNR$.
-BETTII's spectral sensitivity. Solid: Normal observing mode, band 1; Dashed: Enhanced sensitivity mode, band 1; Dotted: normal observing mode, band 2; Dot-dashed: Enhanced sensitivity mode, band 2. This plot includes the technique of fringe tracking in the science channel for sufficiently bright sources (see Appendix C). As the source flux rises, the effects of the phase noise become larger and the SNR should reach an asymptotical value. However, with fringe tracking, the phase noise itself becomes smaller since one can see fringes in one single or a few consecutive scans, so the co-adding becomes easier. Thanks to the fringe-tracking, there is no regime where the phase noise is expected to be dominant on BETTII, provided that the control system performs according to expectations.}
-\label{fig:SpectralSNR}
-\end{center}
-\end{figure}
+

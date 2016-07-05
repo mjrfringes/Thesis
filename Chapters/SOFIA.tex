@@ -20,11 +20,10 @@ Previous studies have been effective in elucidating the young stellar content an
 %SOFIA has a \SI{2.7}{\meter} primary mirror which is a significant size improvement over \Spitzer. The instrument we have used, FORCAST, provides unprecedented high angular resolution of \ang{;;2}-\ang{;;3.5} in multiple continuum bands from \SI{5.5}{\micro\meter} to \SI{37.1}{\micro\meter}, which allows us to probe a relatively unexplored region of phase space. We discuss our SOFIA project in Chapter~[].
 
 
-\section{Sample description and scientific goals}
 
 \Spitzer has tremendously helped our understanding of star formation, by providing sensitive observations in continuum bands from \SI{3.6}{\um} to \SI{160}{\micro\meter}. In particular, the MIPS \SI{24}{\micro\meter} channel provided a robust way to determine the spectral index of YSOs, hence leading to dramatic improvement of understanding of the YSO population in clusters \citep[e.g.,][]{Gutermuth:2009gca,Gutermuth:2011he}.
 
-However, the most dense regions of clusters still present a challenge for the MIPS instrument, as the YSOs are too bring and/or in too close proximity, which leads to saturation and confusion, as exhibited in Fig.~\ref{fig:NGC2071saturated}. 
+However, the most dense regions of clusters still present a challenge for the MIPS instrument, as the YSOs are too bring and/or in too close proximity, which leads to saturation and confusion, as exhibited in Fig.~\ref{fig:NGC2071saturated}. In this figure, we show the same region seen by the IRAC \SI{3.6}{\um} band, the MIPS \SI{24}{\um} band, and the \Herschel PACS \SI{70}{\um}, from left to right. While the IRAC instrument can clearly distinguish multiple objects within the region, the MIPS image is completely saturated, while the PACS image is confused and cannot properly resolve the individual objects. Note that these objects are much closer from each other than it is typical to see in clusters (\SI{0.01}{\pc} instead of a typical value of \SI{0.04}{\pc}). 
 
 \begin{figure}[!h]
 \begin{center}
@@ -35,23 +34,26 @@ However, the most dense regions of clusters still present a challenge for the MI
 \end{center}
 \end{figure}
 
-BETTII will tackle the confusion problem at wavelengths from 30 to \SI{100}{\micro\meter}, and will be complementary to \Herschel observations of star-forming regions. SOFIA, however, can already start studying these dense regions with its FORCAST instrument, providing 2-\ang{;;3.5} resolution between 10 and \SI{37}{\micro\meter}. 
+While future instruments like BETTII will be able to tackle the confusion problem at wavelengths from 30 to \SI{100}{\micro\meter}, and be complementary to \Herschel observations of star-forming regions, SOFIA, in the meantime, can already start studying these dense regions with its FORCAST instrument, providing 2-\ang{;;3.5} resolution between 10 and \SI{37}{\micro\meter}. 
 
-We responded to SOFIA FORCAST's first science call with a proposal for a survey of nearby star-forming cluster cores. The clusters were selected from a list of dense young clusters within 1 kpc of the Sun based on \citet{Porras:2003kxa} and \citet{Gutermuth:2009gca}. From this list we selected clusters that were: (1) north of -25 degrees declination so that they could be done from a northern hemisphere flight; (2) included membership of $>$50 YSOs; and (3) included bright 8-\SI{24}{\micro\meter} sources within the dense cores based on \Spitzer and/or WISE data. 
+\section{Sample description and scientific goals}
+
+
+We responded to SOFIA FORCAST's first science call with a proposal for a survey of nearby star-forming cluster cores. The clusters were selected from a list of dense young clusters within \SI{1}{\kilo\pc} of the Sun based on \citet{Porras:2003kxa} and \citet{Gutermuth:2009gca}. From this list we selected clusters that were: (1) north of -25 degrees declination so that they could be observed from a northern hemisphere flight; (2) included membership of $>$50 YSOs; and (3) included bright 8-\SI{24}{\micro\meter} sources within the dense cores based on \Spitzer and/or WISE data. 
 
 In order to sample the most range of the SED, we proposed to observe in 4 of FORCAST's science continuum bands: 11.1, 19.7, 31.5 and \SI{37.1}{\micron}. This wavelength coverage would be very complementary to archival data from \Spitzer and WISE. Our focus on bright regions spread all across the sky is convenient for SOFIA, and our project would be observed as a gap-filler during the primary science flight legs.
 
-The main objective of the survey is to gather statistics and fill the SED gap between {\Spitzer}'s bands and {\Herschel}'s bands. \Spitzer is often unusable for these targets because of saturation and confusion, and Herschel is confused as well. As it is often the case, \Herschel observations were not available for our targets, making these SOFIA observations the best attempt at observing those regions at mid-IR wavelengths, and our only opportunity to constrain the SED of very clustered YSOs in these regions to infer their physical properties.
+The main objective of the survey is to gather statistics and fill the SED gap between {\Spitzer}'s bands and {\Herschel}'s bands, when the latter are available. \Spitzer data are often unusable for these targets because of saturation and confusion. \Herschel observations were not available for most of our targets, making these SOFIA observations the best attempt at observing those regions between \SI{8}{\um} and the shortest ALMA band at \SI{400}{\um}. This is our only opportunity to constrain the SED of very clustered YSOs in these regions to infer their physical properties.
 
 
 
-Our strategy was successful and we were awarded time during the first and second science cycles of FORCAST (see Tab.~\ref{tab:times}). The data analysis and scientific interpretation is presented in the next few sections. First, we describe our observations, as well as the archival datasets that we use to complement our observations. Second, we properly characterize the systematics of the FORCAST instrument and their variations over multiple science flights spanning multiple years. The data reduction process is then explain, followed by a snapshot of the data products themselves. We then discuss our SED fitting strategy, and fit the SEDs of three of our clusters to derive the physical properties of their embedded YSOs.
+Our strategy was successful and we were awarded time during the first and second science cycles of FORCAST (see Tab.~\ref{tab:times}). The data analysis and scientific interpretation are presented in the next few sections. First, we describe our observations, as well as the archival datasets that we use to complement them. Second, we properly characterize the systematics of the FORCAST instrument and their variations over multiple science flights spanning multiple years. The data reduction process is then explained, followed by a snapshot of the data products themselves. We finally discuss our SED fitting strategy, and fit the SEDs of three of our clusters to derive the physical properties of their embedded YSOs.
 
 
 \section{Observations}
 \label{subsec:SOFIAObservations}
 
-The FORCAST camera has two separate $256\times 256$ pixel infrared arrays that cover the wavelength range from 5.5-\SI{37}{\um} in multiple bands with $\ang{;;0.768}\times\ang{;;0.768}$ pixels. The two arrays can observe simultaneously through a dichroic beam splitter that divides the wavelength range shortward and longward of \SI{26}{\um}. Alternatively, the long wavelength array can be used by itself as the dichroic is removed from the light path, gaining a sensitivity of $\sim 2.5$. We observe the 11.1 and \SI{37.1}{\um} together (hereafter "mode 1") and the 19.7 and \SI{31.5}{\um} together (hereafter "mode 2") . We set the 1$\sigma$ sensitivity threshold to that of a moderately rising SED for a \SI{1.5}{\Lsun} source, which is scaled appropriately for the distance to the cluster. This is an attempt at probing the same luminosities at all distances and obtain a consistent sample of YSOs. 
+The FORCAST camera has two separate $256\times 256$ pixel infrared arrays that cover the wavelength range from 5.5-\SI{37}{\um} in multiple bands with $\ang{;;0.768}\times\ang{;;0.768}$ pixels. The two arrays can observe simultaneously through a dichroic beam splitter that divides the wavelength range shortward and longward of \SI{26}{\um}. Alternatively, the long wavelength array can be used by itself as the dichroic is removed from the light path, gaining a sensitivity factor of $\sim 2.5$. We observe the 11.1 and \SI{37.1}{\um} together (hereafter "mode 1") and the 19.7 and \SI{31.5}{\um} together (hereafter "mode 2") . We set the 1$\sigma$ sensitivity threshold to that of a moderately rising SED for a \SI{1.5}{\Lsun} source, which is scaled appropriately for the distance to the cluster. This is an attempt at probing the same luminosities at all distances and obtain a consistent sample of YSOs. 
 
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
@@ -80,7 +82,7 @@ Distance & \multicolumn{4}{c|}{1$\sigma$ minimum detectable flux (Jy)} &  Corres
 
 However, for the most nearby clusters, the corresponding observing time was so short that the overhead from the observatory was very costly. Hence, we put a lower threshold to the integration time of \SI{30}{\second}. Similarly, the sensitivity of the \SI{37}{\um} band is such that in order to be consistent with our sensitivity target, this band was heavily driving the  observing time using mode 1. Hence, we observe in this mode as long as is required to meet the sensitivity target for the \SI{11}{\um} band, and request more observations in the \SI{37}{\um} band on its own (hereafter "mode 3"). This allows us to request less total observing time while keeping our sensitivity self-consistent. A summary of our target sensitivities for various distances is shown in Table~\ref{tab:DesiredSensitivities}.
 
-Various observing techniques are available to the FORCAST user to deal with background subtraction. The most robust techniques are very costly in terms of overhead for the observatory, so we decided to be audacious and requested the cheapest observing mode: the Chop-Nod-Chop mode (CNC), combined with 9 ditherings for each field, which dramatically helps when co-adding images together. Most of our data was processed by the SOFIA automated pipeline that provided calibrated Level 2 images, except for the data from the first few flights, for which we received the help of one of FORCAST's Principal Investigator, Dr. Joe Adams, who processed the raw data through his own instrument pipeline.
+Various observing techniques are available to the FORCAST user to deal with background subtraction. The most robust techniques are very costly in terms of overhead for the observatory, so we decided to be audacious and requested the cheapest observing mode: the Chop-Nod mode (C2N), combined with 9 ditherings for each field, which dramatically helps when co-adding images together. Most of our data was processed by the SOFIA automated pipeline that provided calibrated Level 2 images, except for the data from the first few flights, for which we received the help of FORCAST's Principal Investigator, Dr.~Joe~Adams, who processed the raw data through his own instrument pipeline.
 
 %\begin{figure}[!h]
 %\begin{center}
@@ -120,7 +122,7 @@ S171 	&	 00h04m01s +68d34m50s 	&	 F132 	&	1	&	850	&	253	&	219	&	219	&	476	\\\bot
 \label{tab:times}
 \end{table}
 
-To complement our observations, we proceed to an archival search to find publicly available WISE, \Spitzer, and \Herschel images. Most of our targets have already available \Spitzer IRAC and/or MIPS photometry \citep[mostly from][]{Gutermuth:2009gca,Megeath:2012cn,Evans:2009bka}, which we use in the relevant cases. In the cases where no IRAC photometry was available, we applied our own photometry algorithms. We could not find published photometry for the targets with available \Herschel images, hence we also used our own photometry pipeline to derive fluxes. In some cases, we find previously published \SI{1.3}{\milli\meter} continuum measurements to help constrain the long-wavelength behavior of the SEDs.
+To complement our observations, we proceed to an archival search to find publicly available WISE, \Spitzer, and \Herschel images. Most of our targets have already available \Spitzer IRAC and/or MIPS photometry \citep[mostly from][]{Gutermuth:2009gca,Megeath:2012cn,Evans:2009bka}, which we use in the relevant cases. In the cases where no IRAC photometry was available, we applied our own photometry algorithms. We could not find published photometry for the targets with available \Herschel images, hence we also used our own photometry pipeline to derive fluxes from archival images. In some cases, we find previously published submillimeter continuum measurements to help constrain the long-wavelength behavior of the SEDs.
 
 
 \section{FORCAST characterization}
@@ -128,7 +130,7 @@ To complement our observations, we proceed to an archival search to find publicl
 In addition to the raw images, a number of calibrators were observed during each flight for different dichroic settings and wavelength bands. These calibrators are usually bright stars which guarantee to be point sources for SOFIA's angular resolution, and have very predictable mid-IR fluxes, so they can be used both for flux and PSF calibration. We use them for two purposes: the first is to obtain a robust metric to determine whether sources are extended or not; the second is to determine the aperture correction factor which will later be used for aperture photometry. 
 
 \subsection{PSF size}
-The size of the PSF can be defined in multiple ways, we adopt the approach of characterizing the PSF using its encircled energy distribution. Fig~\ref{fig:averageEE} shows the average of the normalized encircled energy distribution of the PSF, measured on all the calibrators of our sample. Each curve represents one of the five different combinations of bandpass filter and dichroic setting that we use for our observations. For each radius, the total energy is the sum of the pixels within the circular aperture of that radius, to which we subtract an estimate of the background in an annulus around the source (see Section [] for details on the background subtraction methods). 
+The size of the PSF can be defined in multiple ways, and we adopt the approach of characterizing the PSF using its encircled energy distribution. Fig~\ref{fig:averageEE} shows the average of the normalized encircled energy distribution of the PSF, measured on all the calibrators of our sample which use the same filter settings. Each curve represents one of the five different combinations of bandpass filter and dichroic setting that we use for our observations. For each radius, the total energy is the sum of the pixels within the circular aperture of that radius, to which we subtract an estimate of the background in an annulus around the source (see Section [] for details on the background subtraction methods). 
 
 \begin{figure}[!h]
 \begin{center}
@@ -142,14 +144,14 @@ The size of the PSF can be defined in multiple ways, we adopt the approach of ch
 
 As expected, the PSF at \SI{37.1}{\micro\meter} is larger than the PSFs at shorter wavelengths, but less that the traditional diffraction limit rule. This indicates that additional PSF smearing is occurring at short wavelengths, likely due to plane jitter and pointing errors, which is consistent with what other authors have found \citep[e.g.][]{Herter:2013by}. Throughout all the flights, point source calibrators always have the same encircled energy distribution shape within $\sim 4\%$ rms. 
 
-To look at the behavior of the PSF in more detail, we can use the half width at half maximum of the encircled energy distribution, \Rfifty as a proxy for PSF size. The variation of this quantity for the various flights, bandpass/dichroic setting, and calibrators used is showed in Fig.~\ref{fig:Rfiftydist}. This shows the flight-to-flight differences and, for some calibrators, the in-flight variability. We find that the latter is usually small, except for the SOFIA flight on 05-02-2014, for which the spread is quite considerable and could have been caused by instrumental malfunction or abnormal levels of jitter. The variation from flight to flight is larger than the variation within a given flight, which indicates variability in the observing conditions, systematics, or thermal radiation environment of the observatory between different flights. Even considering the flight-to-flight and calibrator-to-calibrator variations, the overall spread in \Rfifty for a given observation setting is almost always less then 10\%, making this metric a useful reference to compare with scientific data. In our analysis we will compute \Rfifty for our sources and compare it to the \Rfifty from the current flight for the same filter setting, if the calibration file exists. If no calibration file exists for a given setting, we use the mean \Rfifty for that setting from calibrators observations in other flights. The ratio \Rpercent of these two quantities helps quantify the extension of the source, to within $\sim 10\%$. 
+To look at the behavior of the PSF in more detail, we can use the half width at half maximum of the encircled energy distribution, \Rfifty as a proxy for PSF size. The variation of this quantity for the various flights, bandpass/dichroic setting, and calibrators used is showed in Fig.~\ref{fig:Rfiftydist}. This shows the flight-to-flight differences and, for some calibrators, the in-flight variability. We find that the latter is usually small, except for the SOFIA flight on 05-02-2014, for which the spread is quite considerable and could have been caused by instrumental malfunction or abnormal levels of water vapor in the atmosphere. The variation from flight to flight is larger than the variation within a given flight, which indicates variability in the observing conditions, systematics, or thermal radiation environment of the observatory between different flights. Even considering the flight-to-flight and calibrator-to-calibrator variations, the overall spread in \Rfifty for a given observation setting is almost always less then 10\%, making this metric a useful reference to compare with scientific data. In our analysis we will compute \Rfifty for our sources and compare it to the \Rfifty from the current flight for the same filter setting, if the calibration file exists. If no calibration observation exists for a given setting, we use the mean \Rfifty for that setting from calibrators observations in other flights. The ratio $\Rfifty/\Rfifty_\textrm{cal}$ of these two quantities helps quantify the extension of the source, to within $\sim 10\%$ confidence level. 
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/R50.png}
 \vspace{-0.5cm}
 
-\caption[PSF size of calibrators]{Distribution of \Rfifty for all calibrators observations within each bandpass. In red: \SI{11}{\um} band, with dichroic; in green: \SI{19}{\um} band, with dichroic; in blue: \SI{31}{\um} band, with dichroic; in yellow: \SI{37}{\um} band, with dichroic; in purple: \SI{19}{\um} band, with dichroic. Down triangles: $\alpha$ Boo; Pentagons: $\alpha$ Cet; Diamonds: $\alpha$ Tau;  Up triangles: $\beta$ And; Hexagons: $\beta$ Peg; Circles: $\beta$ UMi;}
+\caption[PSF size of calibrators]{Distribution of \Rfifty for all calibrators observations within each bandpass. In red: \SI{11}{\um} band, with dichroic; in green: \SI{19}{\um} band, with dichroic; in blue: \SI{31}{\um} band, with dichroic; in yellow: \SI{37}{\um} band, with dichroic; in purple: \SI{37}{\um} band, no dichroic. Down triangles: $\alpha$ Boo; Pentagons: $\alpha$ Cet; Diamonds: $\alpha$ Tau;  Up triangles: $\beta$ And; Hexagons: $\beta$ Peg; Circles: $\beta$ UMi;}
 \label{fig:Rfiftydist}
 \end{center}
 \end{figure}
@@ -157,7 +159,7 @@ To look at the behavior of the PSF in more detail, we can use the half width at 
 \subsection{Aperture correction factor}
 \label{subsec:apcorr}
 In Fig.~\ref{fig:averageEE}, we observe that the encircled energy does not vary much by the time the aperture reaches a radius of 12 pixels, so we consider this fiducial aperture as our "total flux" aperture. The goal of aperture photometry is to estimate the amount of flux in this large aperture, which we consider to be the total amount of flux from the source, by only measuring flux within a much smaller aperture. This has the advantage of reducing contamination from other sources, and increases the signal-to-noise ratio of the flux estimate since the pixels near the tail of the PSF usually contain more noise than signal. 
-In Fig~\ref{fig:response}, we plot the aperture correction factor that we compute from the ratio of the flux measured within an aperture of 3 pixels radius and this 12-pixel aperture.  Not surprisingly, this graph follows very closely the plot of $\Rfifty$ from Fig~\ref{fig:Rfiftydist}, showing the close link between the aperture correction factor and the shape of the calibrator's PSF. We match each observation in our data to the mean of the aperture correction factors for the same observation setting and flight.
+In Fig~\ref{fig:apercorr}, we plot the aperture correction factor that we compute from the ratio of the flux measured within an aperture of 3 pixels radius and this 12-pixel aperture.  Not surprisingly, this graph follows very closely the plot of $\Rfifty$ from Fig~\ref{fig:Rfiftydist}, showing the close link between the aperture correction factor and the shape of the calibrator's PSF. We match each observation in our data to the mean of the aperture correction factors for the same observation setting and flight.
 
 \begin{figure}[!h]
 \begin{center}
@@ -171,7 +173,7 @@ In Fig~\ref{fig:response}, we plot the aperture correction factor that we comput
 
 
 \subsection{Instrument response and overall uncertainty}
-To validate our approach, we take a look at the calibrator fluxes after normalization by the calibration factor, which is provided directly by the FORCAST pipeline. This calibration factors converts the pixel digital value a physical flux density unit, and presumably is determined using the flux from calibrator stars as well. Here we re-measure the flux from each calibrator for each observation setting and each flight, using our standard aperture photometry method and background subtraction. Ideally, we would always obtain the same flux for each setting and calibrator, independently of the flight, an assertion we find true to within $\sim 5\%$. The in-flight errors are typically lower than this. This validates our aperture photometry method, and we can trust that the instrument's systematics are well-behaved to within these levels. 
+To validate our approach, we take a look at the calibrator fluxes after normalization by the calibration factor, which is provided directly by the FORCAST pipeline. This calibration factors converts the pixel digital value a physical flux density unit, and presumably is determined using the flux from calibrator stars as well. Here we re-measure the flux from each calibrator for each observation setting and each flight, using our standard aperture photometry method and background subtraction. Ideally, we would always obtain the same flux for each setting and calibrator, independently of the flight, an assertion we find true to within $\sim 5\%$ (Fig~\ref{fig:response}). The in-flight errors are typically lower than this. This validates our aperture photometry method, and we can trust that the instrument's systematics are well-behaved to within these levels. 
 
 This would suggest that we can adopt systematic $1\sigma$ uncertainties of $\sim 5\%$, a value which is consistent with the published uncertainties of $3\sigma \approx 20\%$ \citep{DeBuizer:2012ie}.
 
@@ -196,12 +198,12 @@ The data are processed through various versions of the online pipeline to yield 
 Some manual treatment of each image is necessary before it can be analyzed by our software, which follows this procedure: a) visually aligning the WCS coordinate system, often 10-20" off, using point sources and archival data from other wavelengths and facilities such as IRAC \SI{8}{\micro\meter}; b) cropping the images to clean off the nodded fields, and c) identify the coordinates of each source, both point-like and extended.
 
 After these manual steps, the Level 2 images are multiplied by the calibration factor provided by the online pipeline, which converts them to Jy/pixel. We do not proceed to any systematic color correction, but the effects on the fluxes are very small \citep{Herter:2013by}.
-\begin{enumerate}
-\item Adjust WCS coordinates: use images at other wavelengths (2MASS, IRAC, MIPS, WISE) to re-align the (RA, DEC) position of the field. We estimate that this process is good to within one SOFIA pixel (\ang{;;0.768}) for the fields where one or more point sources can be identified. Extended fields are less trustworthy, since matching the extended emission to other wavelengths is harder. The rotation of the field produced by the SOFIA pipeline is correct for all of our data. 
-\item Crop each image, remove chopped fields, remove artifacts.
-\item Identify and categorize sources: isolated point sources, clustered point sources, and extended sources. For extended sources, a circular or elliptical aperture is used to try to encompass the entirety of the emission.
-\item Manually identify a location in the field that corresponds to a representative background.
-\end{enumerate}
+%\begin{enumerate}
+%\item Adjust WCS coordinates: use images at other wavelengths (2MASS, IRAC, MIPS, WISE) to re-align the (RA, DEC) position of the field. We estimate that this process is good to within one SOFIA pixel (\ang{;;0.768}) for the fields where one or more point sources can be identified. Extended fields are less trustworthy, since matching the extended emission to other wavelengths is harder. The rotation of the field produced by the SOFIA pipeline is correct for all of our data. 
+%\item Crop each image, remove chopped fields, remove artifacts.
+%\item Identify and categorize sources: isolated point sources, clustered point sources, and extended sources. For extended sources, a circular or elliptical aperture is used to try to encompass the entirety of the emission.
+%\item Manually identify a location in the field that corresponds to a representative background.
+%\end{enumerate}
 
 \subsection{Source flux extraction}
 
@@ -209,7 +211,7 @@ We feed the adjusted FITS and associated metadata files to our photometry pipeli
 
 We distinguish between 3 types of sources after manual identification: \textit{isolated}, which are point sources with no nearby objects; \textit{clustered}, which are point sources with nearby objects; and \textit{extended}, which are not consistent with being point sources. 
 
-For point sources that are isolated, we use our standard aperture of 3 pixels at all wavelengths. We consider an annulus surrounding the source extending from 12 to 20 pixels radius (24 to 40 for clustered sources): the local background is determined from the mode of the pixels in the annulus, while the sensitivity is calculated by measuring the standard deviation of the flux values within 4-pixel apertures spread over that annulus \citep{Shimizu:2016if}. We apply the aperture correction derived from the calibrator observations taken during that flight.
+For point sources that are isolated, we use our standard aperture of 3 pixels at all wavelengths. We consider an annulus surrounding the source extending from 12 to 20 pixels radius (24 to 40 for clustered sources): the local background is determined from the mode of the pixels in the annulus, while the sensitivity is calculated by measuring the standard deviation of the flux values within 3-pixel apertures spread over that annulus \citep{Shimizu:2016if}. We apply the aperture correction derived from the calibrator observations taken during that flight.
 
 For extended sources, an elliptical aperture is determined manually from the \SI{37}{\micro\meter} images. The local background is determined from the mode of an elliptical annulus, with an inner boundary at the elliptical aperture and an outer boundary corresponding to an ellipse 20\% larger. The sensitivity quoted is the point source sensitivity, and is determined following the same method as for point sources, using the standard deviation of apertures spread across the elliptical annulus. 
 
@@ -252,7 +254,7 @@ To validate our flux extraction method, we compare our results with data from \c
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
 \def\labelitemi{--}
-\begin{table}[!ht]
+\begin{table}[!h]
 \scriptsize
 \caption{FORCAST Sensitivities}
 \vspace{-0.5cm}
@@ -286,7 +288,7 @@ In order to determine the absolute sensitivity in the image, we use two methods.
 
 While SOFIA provides mid-IR photometry, we looked in the literature for published fluxes on our targets in order to reconstruct more complete SEDs. In addition to our four SOFIA bands, our table includes data from 2MASS, \Spitzer, and other instruments. Photometry from these sources is published in online catalogs, which we programmatically cross-reference with the positions of our targets. The closest target that corresponds to a Vizier location query is selected to be the correct catalog match. For the 2MASS data, the location of the target needs to be less than \ang{;;2} away from our coordinates for point sources, and \ang{;;5} for extended sources. For the \Spitzer data, the matching radius is \ang{;;3} for point sources and \ang{;;10} for extended sources. In addition to automated online catalog searches, we also add values for sources in NGC2071 from \citet{vanKempen:2012fb}.
 
-For our two most clustered cases in the cores of NGC2071 and IRAS20050+2720, the published catalogs do not have all available fluxes. We assume that the sources are so clustered that they the source extraction software from these authors do not register them as point sources, due to confusion or saturation effects. Hence we adapt our own photometry routines for these clustered environments and obtain the fluxes directly from the calibrated Level 3 images themselves, which are all available on the archive. In Table~\ref{tab:SpitzerPhotometry}, we compare our photometry results with published fluxes from \citet{Megeath:2012cn} and \citet{Gutermuth:2009gca} for isolated sources elsewhere in these same fields of view. We use the \Spitzer handbook recommendations for aperture photometry on \Spitzer archival images (\ang{;;2.4} aperture with and an annulus that extends from 12 to \ang{;;20}). We find that our results are within 10\% of these other authors' results, which can reflect a simple difference in exact aperture centroiding position. 
+For our two most clustered cases in the cores of NGC~2071 and IRAS~20050+2720, the published catalogs do not have all available fluxes. We assume that the sources are so clustered that the source extraction software from these authors do not register them as point sources, due to confusion or saturation effects. Hence we adapt our own photometry routines for these clustered environments and obtain the fluxes directly from the calibrated Level 3 images themselves, which are all available on the archive. In Table~\ref{tab:SpitzerPhotometry}, we compare our photometry results with published fluxes from \citet{Megeath:2012cn} and \citet{Gutermuth:2009gca} for isolated sources elsewhere in these same fields of view. We use the \Spitzer handbook recommendations for aperture photometry on \Spitzer archival images (\ang{;;2.4} aperture with and an annulus that extends from 12 to \ang{;;20}). We find that our results are within 10\% of these other authors' results, which can reflect a simple difference in exact aperture centroiding position. 
 
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
@@ -319,7 +321,7 @@ In some cases, we also found archival Herschel images, although no published pho
 \section{Data products}
 
 \subsection{Mosaics}
-The SOFIA FORCAST archival images consist of $\sim~200$ individual images, each representing a field at a given wavelength. Some fields are revisited multiple times when the entire observation could not happen in a single flight leg. These individual fields are processed and mosaiced together to form one single map for each wavelength and each cluster. 
+The SOFIA FORCAST archival images consist of $\sim~\ 200$ individual images, each representing a field at a given wavelength. Some fields are revisited multiple times when the entire observation could not happen in a single flight leg. These individual fields are processed and mosaiced together to form one single map for each wavelength and each cluster. 
 
 Before mosaicing the fields, we proceed to a 2D background subtraction. This method divides the images into sections of $50\times 50$ pixels, estimates the median in each cell, and fits a 2D function to these median values. This function is then used to construct a smooth background, which is then completely removed from the image. Each background-subtracted image is then calibrated (using the calibration factor that is supplied by the FORCAST pipeline), and weighed by its exposure time before it is co-added into a mosaic in the WCS coordinate frame. Note that although these maps are useful to take a quick glance at the flux distribution and spot artifacts, the actual photometry described in the previous sections uses each individual raw field, before the mosaicing and without background subtraction. If a source is present in multiple fields, the photometry from each of these fields is combined to provide a better flux estimate.
 
@@ -337,7 +339,7 @@ In Fig.~\ref{fig:varietySources} we present a variety of maps from our cluster s
 \subsection{Photometry and SEDs}
 %We also produce enhanced SEDs for all of our sources, where we combine archival data with our new SOFIA photometry. The SED plots are complemented with snapshots of the source seen with IRAC and SOFIA. In addition, a snapshot of the corresponding FORCAST \SI{37}{\um} calibrator is shown, which allows to quickly determine the degree of spatial extension of the sources.
 
-The main type of data made available to the community is a list consolidated list of fluxes for most of our clusters, where we gather 2MASS, \Spitzer, FORCAST, \Herschel, SCUBA, and SMA data, when available, for $\sim 90$ sources. Most sources are point sources for the SOFIA FORCAST \SI{37}{\um} band, but some sources present a certain spatial extension which was not known before. 
+The main type of data made available to the community is a consolidated list of fluxes for most of our clusters, where we gather 2MASS, \Spitzer, FORCAST, \Herschel, SCUBA, and SMA data, when available, for $\sim 90$ sources. Most sources are point sources for the SOFIA FORCAST \SI{37}{\um} band, but some sources present a certain spatial extension which was not known before. 
 
 
 \begin{figure}
@@ -427,11 +429,11 @@ The final data release also includes all of the physical parameters derived usin
 \label{sec:SEDFitting}
 \subsection{A custom grid of models}
 
-SED fitting is prone to many degeneracies: usually many geometrical and physical parameters are used to construct detailed radiative transfer models, but only a handful of measurement points are available to fit, leading to a dramatically under-constrained problem. As our starting point of our investigation of the SEDs of these sources, we used the \textit{sedfitter} tool from \citep{Robitaille:2006cb}. These authors computed a large grid of tens of thousands of SED models using a radiative transfer code by \citep{Whitney:2003ke}, by varying 14 geometrical and physical parameters in the dust density grid such as the size of the disk, the accretion rates, the radius and mass of the envelope, etc. The models are then evaluated in the bands corresponding to our data, and a $\chi^2$ metric is evaluated for each model. By exploring the distribution of $\chi^2$, we noticed, as expected, the very large correlations between the parameters which is indicative of many local minimas in the grid. Hence, inferring geometrical and physical parameters from such a grid can be misleading.
+SED fitting is prone to many degeneracies: usually many geometrical and physical parameters are used to construct detailed radiative transfer models, but only a handful of measurement points are available to fit, leading to a dramatically under-constrained problem. As our starting point of our investigation of the SEDs of these sources, we used the \textit{sedfitter} tool from \citep{Robitaille:2006cb}. These authors computed a large grid of tens of thousands of SED models using a radiative transfer code by \citep{Whitney:2003ke}, by varying 14 geometrical and physical parameters in the dust density grid such as the size of the disk, the accretion rates, the radius and mass of the envelope, etc. The models are then evaluated in the bands corresponding to our data, and a $\chi^2$ metric is evaluated for each model. By exploring the distribution of $\chi^2$, we noticed, as expected, the very large correlations between the parameters which is indicative of many local minimas in the 14-dimensional grid. Hence, inferring geometrical and physical parameters from such a grid can be misleading.
 
-We used a more modern version of the same core radiative transfer code, called Hyperion, to develop our own capability of simulating SEDs and understand the sensitivity of these parameters on the SED shape of our Class 0 and I sources. Based on our investigation, the degeneracy between viewing angle and multiple geometrical parameters is considerable. In particular, the sensitivity of the disk properties is minimal, as most of the SED properties are determined almost entirely by the envelope. In addition, parameters of the central source such as the mass, radius and temperature are irrelevant, as they are all combined into one single term, which is the central luminosity. Similarly, the luminosity created when simulating a disk accreting onto the central object can not be distinguished from a more luminous central object and a non-accreting disk. Finally, we find that there is very little difference between Ulrich envelope models and standard power-law envelopes (see for example Fig.~14 from \citet{Whitney:2013cw}), except that the latter can more directly be related to physical parameters such as the envelope mass. 
+We used a more modern version of the same radiative transfer code, called Hyperion, to develop our own capability of simulating SEDs and understand the sensitivity of these parameters on the SED shape of our sources. Based on our investigation, the degeneracy between viewing angle and multiple geometrical parameters is considerable. In particular, the sensitivity of the disk properties is minimal, as most of the SED properties are determined almost entirely by the envelope. Parameters of the central source such as the mass, radius and temperature are irrelevant, as they are all combined into one single term, which is the central luminosity. Similarly, the luminosity created when simulating a disk accreting onto the central object can not be distinguished from a more luminous central object and a non-accreting disk. Finally, we find that there is very little difference between Ulrich envelope models and standard power-law envelopes (see for example Fig.~14 from \citet{Whitney:2013cw}), except that the latter can more directly be related to physical parameters such as the envelope mass. 
 
-From these findings, we created a simplified grid of models by significantly reducing the number of parameters. The resulting choices are presented in Table~\ref{tab:SEDModelGrid}. Unlike most authors, who use multiple kinds of dust models for different regions of the SED (which add complexity and number of parameters), we simply use the same dust model (OH5) for both the envelope and the disk, and assume a 1:100 dust-to-gas ratio. The two main parameters that we use are the central luminosity and the envelope mass, as these are the two main physical quantities that we are trying to determine from the data. 
+From these findings, we created a simplified grid of models by significantly reducing the number of parameters. The resulting choices are presented in Table~\ref{tab:SEDModelGrid}. Unlike most authors, who use multiple kinds of dust models for different regions of the SED (which add complexity and number of parameters), we simply use the same dust model (OH5) for both the envelope and the disk, and assume a 1:100 dust-to-gas ratio. By doing so, we tend to overestimate the short-wavelength emission from SEDs, because the OH5 model we use only features isotropic scattering whereas most dust grains appear to be forward-scattering. The two main parameters that we vary are the central luminosity and the envelope mass, which are the two main sufficiently decoupled quantities that we are trying to determine from the data. 
 
 
 \renewcommand{\arraystretch}{1.5}
@@ -455,7 +457,7 @@ Parameter	&	Description	&	Values	&	Units	\\
 \midrule							
 \multicolumn{4}{c}{Disk}							\\
 Type	&	Flared or alpha disk	&	Flared	&		\\
-\Mdisk	&	Disk mass	&	0.01	&	\si{\Msun}	\\
+\Mdisk	&	Disk mass	&	0.001	&	\si{\Msun}	\\
 \Rdiskmax	&	Disk outer radius	&	100	&	\si{\au}	\\
 \Rdiskmin	&	Disk inner radius	&	 sublimation radius	&	\si{\au}	\\
 $\beta$	&	Flaring parameter	&	1.25	&		\\
@@ -482,16 +484,16 @@ $\alpha_e$	&	Density profile exponent	&	0	&		\\
 \midrule							
 \multicolumn{4}{c}{Changing parameters}							\\
 \midrule							
-$i$	&	Inclination angle	&	0 to 90 in 20 constant increments of cos(i)	&	degrees	\\
-\Lstar	&	Central luminosity	&	$5\times 1.5^p$ for $p=-4, -3, \dots 15$ (from 0.99 to 288)	&	\si{\Lsun}	\\
-\Menv	&	Envelope mass	&	$0.01\times 1.5^p$ for $p=-2, -1, \dots 20$ (from 0.004 to 22.17)	&	\si{\Msun}	\\
-\Av	&	External extinction	&	$0, 1, \dots 15$	&		\\
+$i$	&	Inclination angle	&	0 to 90 in 10 constant increments of $\cos i$	&	degrees	\\
+\Lstar	&	Central luminosity	&	$5\times 1.5^p$ for $p=-4, -3, \dots 10$ (from 0.99 to 288)	&	\si{\Lsun}	\\
+\Menv	&	Envelope mass	&	$0.01\times 1.5^p$ for $p=-2, -1, \dots 19$ (from 0.001 to 22.17)	&	\si{\Msun}	\\
+\Av	&	External extinction	&	$0, 1, \dots 14$	&	mag	\\
 $s$	&	Scaling	&	0.7, 0.85, 1, 1.5, 1.3	&		\\
 \bottomrule					
 	\end{longtable} 
 \end{table}
 
-We constructed a wrapper program that can run the Hyperion software for the parameters in this grid. Because of time and resource limitations, a moderate number of photons was chosen. The details of our modeling parameters, which will be familiar to the Hyperion user, are described in Table~\ref{tab:HyperionParams}. Note that models of more than \SI{1}{\Msun} are actually run with \num{1e6} photons for imaging, in order to obtain acceptable \SNR at short wavelengths.
+We constructed a wrapper program that can run the Hyperion software for the parameters in this grid. Because of time and resource limitations, a moderate number of photons was chosen, which can increase the noise at short wavelengths. The details of our modeling parameters, which will be familiar to the Hyperion user, are described in Table~\ref{tab:HyperionParams}. Note that models of more than \SI{1}{\Msun} are actually run with \num{1e6} photons for imaging, in order to obtain acceptable \SNR at short wavelengths.
 
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
@@ -515,9 +517,9 @@ MRW	&	True	\\
 	\end{longtable} 
 \end{table}
 
-The grid is composed of 330 models which are modeled with Hyperion. For models of more than \SI{0.5}{\Msun}, we interpolate the grid in mass by increments of 20\%, which allows for a finer sampling at higher masses, but increases the number of individual models to 914. Each model is sampled at 20 inclinations, 15 values for external extinction, and five different scaling factors, for a total of $\sim 1.4$ million grid models. Each model is evaluated at all relevant observing bands, from the 2MASS bands all the way to \SI{1.3}{\milli\meter} SMA bands. Given the sparsity of the grid, and the relatively simply model used, we do not apply color correction to the fluxes, nor do we convolve the model fluxes with the band transmission function: the resulting corrections usually fall well within our approximations, and do affect significantly the outcome of the fitting.
+The grid is composed of $\sim 400$ models which are modeled with Hyperion. For models of more than \SI{0.5}{\Msun}, we interpolate the grid in mass by increments of 20\%, which allows for a finer sampling at higher masses, but increases the number of individual models to $\sim 900$. Each model is sampled at 10 inclinations, 15 values for external extinction, and five different scaling factors, for a total of $\sim 0.7$ million grid models. Each model is evaluated at all relevant observing bands, from the 2MASS bands all the way to \SI{1.3}{\milli\meter} SMA bands. Given the sparsity of the grid, and the relatively simple model used, we do not apply color correction to the fluxes, nor do we convolve the model fluxes with the band transmission function: the resulting corrections usually fall well within our approximations, and do not affect significantly the outcome of the fitting.
 
-The scaling factor is used to show the uncertainty in the distance determination \citep{Robitaille:2006cb}, but it can also be considered as a factor to sample different luminosities \citep{Furlan:2016df}. Indeed, \citet{Furlan:2016df} show that, to first order, changing luminosities by a small amount is approximately equivalent to scaling the SED in flux. In their grid, they use a scaling factor that ranges from 0.5 to 2.0, which allows them to have factors of two between their luminosity steps. We choose a more conservative approach  by actually running the grid at closer luminosity steps (factor of 1.5) and hence have a smaller scaling factor. 
+The scaling factor is used to show the uncertainty in the distance determination \citep{Robitaille:2006cb}, but it can also be considered as a factor to sample different luminosities \citep{Furlan:2016df}. Indeed, \citet{Furlan:2016df} show that, to first order, changing luminosities by a small amount is approximately equivalent to scaling the SED in flux. In their grid, they use a scaling factor that ranges from 0.5 to 2.0, which allows them to have factors of two between their luminosity steps. We choose a more conservative approach  by actually running the grid at closer luminosity steps (factor of 1.5) and hence have a smaller range of scaling factors. 
 
 The extinction parameter is used to represent extinction by material along the line of sight that is \textit{outside} of the core, commonly used for foreground material. A discussion of this parameter is proposed in the following sections.
 
@@ -534,13 +536,13 @@ where $i$ are the indices of the valid data points, the weights $w_i$ correspond
 
 \citet{Furlan:2016df} discuss in more detail the meaning of this metric, which differs from a standard $\chi^2$ metric such as the one used by \citet{Robitaille:2007dl}. Here $R$ represents a weighted average of the logarithmic deviations between the observations and the model. It is important to note that, although it is normalized, it does not have a statistical interpretation like the standard $\chi^2$ metric does. 
 
-For each source, we calculate $R$ for each model in our grid. The model with the smallest value for $R$ is the best-fitting model by this metric, but given our sparse sampling and the errors of our observations, this is not necessarily the best estimate for the model which best fit the data. We can consider two extremes to this case: in the first, the best fit has a value of $R$ which is much lower than for other models. Then, it is clearly the best fit. In the second case, let's suppose that the 1000 best-fitting models lie very close to the best $R$. In this case, concluding that the model that best fits our observations (and from which will interpret physical quantities) is the one with the minimum $R$ is too strict and does not account for the uncertainties that are present in this exercise. 
+For each source, we calculate $R$ for each model in our grid. The model with the smallest value for $R$ is the best-fitting model by this metric, but given our sparse sampling and the errors of our observations, this is not necessarily the most likely model to best fit the data. We can consider two extremes to this case: in the first, the best fit has a value of $R$ which is much lower than for other models. Then, it is clearly the best fit. In the second case, let's suppose that the 1000 best-fitting models lie very close to the best $R$. In this case, concluding that the model that best fits our observations (and from which will interpret physical quantities) is the one with the minimum $R$ is too strict and does not account for the uncertainties that are present in this exercise. 
 
 In practice, all of our models fall in that second case, since our parameter grid sampling is sufficiently dense. After visual inspection we estimate there is very little significant difference between values of $R$ which are separated by $\sim 0.5$, as they all can be considered equally good fits. Hence, for a robust measure of the best-fitting model parameters, we choose the mode (the most likely value) of the parameters from models which are within $R_\textrm{min}$ and $R_\textrm{min}+0.2$. The error on the parameter estimate is then estimated using the models within $R_\textrm{min}$ and $R_\textrm{min}+0.5$, and is described in the next section.
 
 \subsection{Overview of derived parameters}
 
-The distribution of the best fit of the envelope mass and central luminosity is shown in Fig.~\ref{fig:MassLumHist}. Our sample covers a broad range of masses, but is naturally biased towards high luminosities given our instrumental sensitivity and cluster selection.
+The distribution of the best fit solutions of the envelope mass and central luminosity is shown in Fig.~\ref{fig:MassLumHist}. Our sample covers a broad range of masses, but is naturally biased towards high luminosities given our instrumental sensitivity and cluster selection.
 
 
 \begin{figure}[!h]
@@ -552,7 +554,7 @@ The distribution of the best fit of the envelope mass and central luminosity is 
 \end{center}
 \end{figure}
 
-The simple grid that we used manages to fit most of the data pretty well. The distribution of $R$ for all the isolated point sources is shown in Fig.~\ref{fig:Rdistr}. Note that targets where less data points are available, or where data points are more noisy, usually have lower $R$ than targets with a lot of available data points, even if the fits are not necessarily as good. This has also been observed by \citep{Furlan:2016df}.
+The simple grid that we used manages to fit most of the data pretty well. From visual inspection, data with $R$ less or close to 1 appear to fit the data well. Larger $R$ show less good fits. The distribution of $R$ for all the isolated point sources is shown in Fig.~\ref{fig:Rdistr}. Note that targets where less data points are available, or where data points are more noisy, usually have lower $R$ than targets with a lot of available data points, even if the fits are not necessarily as good. This has also been observed by \citep{Furlan:2016df}.
 
 \begin{figure}[!h]
 \begin{center}
@@ -564,7 +566,7 @@ The simple grid that we used manages to fit most of the data pretty well. The di
 \end{figure}
 
 
-For our sample, we can compare the fitted central luminosity, \Ltot, with the integrated luminosity from the datapoints, \Lbol (Fig.~\ref{fig:LbolVsLest}) for our entire sample of point sources. This shows relatively good agreement, although a systematic excess in fitted central luminosity can be observed, which we attribute to the widespread choice of using an external extinction coefficient. By using this external extinction as a model parameter, we artificially reduce the emission at short wavelengths, which would tend to decrease the bolometric luminosity.
+For our sample, we can compare the fitted central luminosity, \Ltot, with the integrated luminosity from the datapoints, \Lbol for our entire sample of point sources (see Fig.~\ref{fig:LbolVsLest}). This shows relatively good agreement, although a systematic excess in fitted central luminosity can be observed, which we attribute to the widespread choice of using an external extinction coefficient. By using this external extinction as a model parameter, we artificially reduce the emission at short wavelengths, which would tend to decrease the bolometric luminosity.
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/LbolVsLest.pdf}
@@ -605,7 +607,7 @@ For the clusters which do have submillimeter data points, the mass estimates are
 \begin{longtable}{lcccccccccc}
 
 \toprule																									
-SOFIA Name	&	Coordinates	&	$R_{50}/R_{50,\textrm{cal}}$	&	$\alpha$	&	$R$	&	\Menv			&	\Ltot			&	$\Lbol$	&	$i$	&	\Av	&	$s$	\\
+SOFIA Name	&	Coordinates	&	$\Rfifty/\Rfifty_\textrm{cal}$	&	$\alpha$	&	$R$	&	\Menv			&	\Ltot			&	$\Lbol$	&	$i$	&	\Av	&	$s$	\\
 	&	J2000	&		&		&		&	\si{\Msun}			&	\si{\Lsun}			&	\si{\Lsun}	&	\si{\degree}	&	mag	&		\\
 \midrule																									
 NGC1333.1	&	03h29m08s +31d21m57s	&	0.75	&	0.28	&	3.40	&	0.59	$\pm$	0.3796	&	5.6	$\pm$	3.12	&	8.38	&	0.0	&	12	&	0.85	\\
@@ -651,59 +653,63 @@ Oph.9	&	16h27m22s -24d29m54s	&	--	&	0.49	&	2.08	&	0.011	$\pm$	0.0005	&	11.8	$\pm
 \end{center}
 \end{figure}
 
+Of the notable relationship that can be seen among our parameters, we can see for example the Envelope mass being correlated with the spectral index (see Fig.~\ref{fig:massVSalpha}) - this indicates a possibility that the SOFIA data points might become a tool to predict the envelope mass, once a sufficient amount of statistics have been gathered (to lower the scatter in that figure). 
+
 
 
 \subsection{Estimating parameter uncertainty}
 
 Parameter uncertainty estimation is important to quantify the confidence in a given fit, without which no meaningful conclusion can be drawn about the scientific meaning of the parameters. This estimation is also one of the most difficult aspect of this fitting process, since it really depends on the method used and the modeling strategy; it hard to compare it with the findings of different authors who might use a different strategy. 
 
-In this work, we propose a relatively model-independent methodology to derive the uncertainty on the best fit. First, we determine the best fit for a given parameter as the mode of the parameter values from the models that fit within $[\Rmin,\Rmin+0.2]$. This statistically more robust than picking simply the model with the lower $R$, since, given our uncertainties and approximations, there is no statistically-significant difference between models that fit within that range.
+In this work, we propose a relatively model-independent methodology to derive the uncertainty on the best fit. First, we determine the best fit for a given parameter as the mode of the parameter values from the models that fit within $[\Rmin,\Rmin+0.2]$. This is statistically more robust than picking simply the model with the lower $R$, since, given our uncertainties and approximations, there is no statistically-significant difference between models that fit within that range.
 
 Once this best fit value is determined for all parameters, the uncertainty is determined using all models that fit within $[\Rmin,\Rmin+0.5]$. We determine three quantities from these models: the standard deviation from the best fit; the median absolute deviation from the best fit; and the skewness of the distribution. All of those parameters accompany the data table which is released with this work.
 
 We admit that the choice of the $R$ intervals are empirical, so they might not work as well for other authors. However, since the metric $R$ is not model-dependent but instead is a type of \textit{distance} between our models and our observations, we think that similar values will still lead to satisfying parameter and uncertainty estimates for other authors. One limitation could occur from the density of the grid: if the models are so sparse that there are only a handful of model within each interval used in the uncertainty estimation, this could lead to errors. 
 
 
-Another important consideration is the cross-correlation between parameters. This is a phenomenon that we encountered heavily using the \textit{sedfitter} function from \citet{Robitaille:2006cb}, which attempts to fit 14-parameter models (plus extinction and scaling factor). This cross-correlation is apparent when the same observations can be fitted with models with wildly different sets of parameters, indicative of multiple local minimas in the grid.
+%Another important consideration is the cross-correlation between parameters. This is a phenomenon that we encountered heavily using the \textit{sedfitter} function from \citet{Robitaille:2006cb}, which attempts to fit 14-parameter models (plus extinction and scaling factor). This cross-correlation is apparent when the same observations can be fitted with models with wildly different sets of parameters, indicative of multiple local minimas in the grid.
 
-By limiting the number of parameters in the model, we dramatically reduce this effect. However, some cross-correlations...
+%By limiting the number of parameters in the model, we dramatically reduce this effect. However, some cross-correlations...
 
 
 
 \subsection{Discussion}
 
-In this exercise, several factors have been omitted for simplicity. First, the models we use have an axisymmetric geometry which is unlikely to account for realistic mass distributions in the envelope and the disk. Second, we ignore the surrounding medium and consider it devoid of emission (hence of dust). In reality, the transition to the surrounding medium is likely much closer to a continuum. Third, we assume that the only heating source is located at the center of the YSO. The heating source consists of both the light from the star, and from the accretion luminosity, which are completely which can not be distinguished from our point of view. It is important to realize that external heating can also play a role in raising the dust temperature and changing the SED signature. The impact of the interstellar heating is explored in \citet{Furlan:2016df}, who show that it can have a substantial effect on the SED - but they also not include this parameter in their grid, since it is too case-specific. The hyperion radiative transfer code that is used to model our grid can accommodate for external radiation fields as well. 
+In this exercise, several factors have been omitted for simplicity. First, the models we use have an axisymmetric geometry which is unlikely to account for realistic mass distributions in the envelope and the disk. Second, we ignore the surrounding medium and consider it devoid of emission (hence of dust). In reality, the transition to the surrounding medium is likely much closer to a continuum. Third, we assume that the only heating source is located at the center of the YSO. The heating source consists of both the light from the star, and from the accretion luminosity, which can not be distinguished from our point of view. It is important to realize that external heating can also play a role in raising the dust temperature and changing the SED signature. The impact of the interstellar heating is explored in \citet{Furlan:2016df}, who show that it can have a substantial effect on the SED - but they nevertheless do not include this parameter in their grid, since it is too case-specific. The Hyperion radiative transfer code that is used to model our grid could accommodate for external radiation fields as well, and this could be a future addition to our model. Finally, the observations that form our SEDs were not taken simultaneously, so it is possible for the YSO to change over the period of years that the various wavelengths were observed. This phenomenon is known as YSO variability and is described for example in [ADD REFERENCE]
 
-Given the relative simplicity of the model grid that we constructed, most of observations are fit well and parameters have acceptable uncertainties. This further confirms the degeneracies that exist when trying to put too much physics into very elaborate models: it is difficult to draw physical meaning just by looking at the SED. The difference in the various resolutions, sensitivity, and photometric techniques for each wavelength in the SED prevents a thorough analysis of the object, especially when located in very clustered environment when extended emission and nearby sources can contaminate the measurements. We argue that more complex models would not help in estimating the physical parameters of YSOs - but instead, this work highlights the need for higher angular resolution at wavelengths longward of \SI{37}{\um}. We note from our results that although the envelope mass appears to correlate with spectral index, the relationship is rather loose. In other words, sources with only data up to \SI{37}{\um} are likely to have poorly constrained masses, suggesting that SEDs could have the same near- to mid-IR response while having substantially different long wavelength response (REF IRAS SECTION). 
-
-Similarly to \citet{Furlan:2016df}, we find that the distribution of inclination angles for the best fits is not uniform, which is not intuitive. There is no reason why protostars should have a selection effect in their inclination angle with respect to us. This is indicative of an artifact of the fitting process, and possibly a degeneracy between inclination angle and envelope mass (see Fig.~\ref{fig:incVSmass}), which is much more prominent when no long-wavelength data is available.
-
-
-
-From our exploration and results, we present the following findings:
-\begin{itemize}
- \item Simple models with only a few varying parameters can fit most class I and class 0 SEDs.
- \item The envelope mass and luminosity cannot be robustly predicted from looking at standard estimators such as the spectral index
- \end{itemize} 
-
-Multi-resolution
-
-Given that we were able to fit most SEDs with our relatively simple model grid, 
-
-External heating; over-simple geometry; non-uniform distribution of inclination angles. Variability;
-
-Extinction / inclination angle However, its interpretation is complicated. Extinction mostly affect the short wavelengths (after which the emission becomes optically thin, as discussed in the introduction), but it still represents a column density of material which needs to be accounted for. For example, if a model is well fit with a low envelope mass but a high extinction (suggesting that it could be a small core with a large foreground extinction), the signature of the mass that is responsible for this extinction should be visible at long wavelengths as well. Because the dust is optically thin, the far-infrared and submillimeter wavelength measurements see the integrated emission along the line of sight. When using these fluxes to fit a model, they will most often strongly influence the mass inferred from the fit. But if the model still needs more extinction to account for the short wavelength fluxes, it suggests that the geometry is not properly modeled. 
-
-
+Given the relative simplicity of the model grid that we constructed, most of observations are fit well and parameters have acceptable uncertainties. This further confirms the degeneracies that exist when trying to put too much physics into very elaborate models: it is difficult to draw physical meaning just by looking at the SED. The difference in the various resolutions, sensitivity, and photometric techniques for each wavelength in the SED prevents a thorough analysis of the object's geometric details, especially when located in very clustered environment when extended emission and nearby sources can contaminate the measurements. We argue that more complex models would not help in estimating the physical parameters of YSOs - but instead, this work highlights the need for higher angular resolution at wavelengths longward of \SI{37}{\um}. We note from our results that although the envelope mass appears to correlate with spectral index, the relationship is rather loose. In other words, sources with only data up to \SI{37}{\um} are likely to have poorly constrained masses, suggesting that SEDs could have the same near- to mid-IR response while having substantially different long wavelength response (see Section~\ref{sec:IRAS}). 
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/incVSmass.pdf}
 \label{fig:incVSmass}
 \vspace{-1cm}
-\caption[Inclination versus mass]{Inclination versus mass.}
+\caption[Inclination versus mass]{Inclination versus envelope mass.}
 \end{center}
 \end{figure}
+
+
+
+Similarly to \citet{Furlan:2016df}, we find that the distribution of inclination angles for the best fits is not uniform, which is not intuitive. There is no reason why protostars should have a selection effect in their inclination angle with respect to us. This is indicative of an artifact of the fitting process, and possibly a degeneracy between inclination angle and envelope mass (see Fig.~\ref{fig:incVSmass}), which is much more prominent when no long-wavelength data is available.
+
+Finally, we observe that there is no statistically significant relationship between the spectral index and the total luminosity of the object. This is perhaps not too surprising, as the total luminosity of the object is not expected to significantly change with its evolutionary stage. In addition, this also points out that there are no significant cross-correlation between  the luminosity and envelope mass in our model. 
+
+%From our exploration and results, we present the following findings:
+%\begin{itemize}
+% \item Simple models with only a few varying parameters can fit most class I and class 0 SEDs.
+% \item The envelope mass and luminosity cannot be robustly predicted from looking at standard estimators such as the spectral index
+% \end{itemize} 
+%
+%Multi-resolution
+%
+%Given that we were able to fit most SEDs with our relatively simple model grid, 
+%
+%External heating; over-simple geometry; non-uniform distribution of inclination angles. Variability;
+%
+%Extinction / inclination angle However, its interpretation is complicated. Extinction mostly affect the short wavelengths (after which the emission becomes optically thin, as discussed in the introduction), but it still represents a column density of material which needs to be accounted for. For example, if a model is well fit with a low envelope mass but a high extinction (suggesting that it could be a small core with a large foreground extinction), the signature of the mass that is responsible for this extinction should be visible at long wavelengths as well. Because the dust is optically thin, the far-infrared and submillimeter wavelength measurements see the integrated emission along the line of sight. When using these fluxes to fit a model, they will most often strongly influence the mass inferred from the fit. But if the model still needs more extinction to account for the short wavelength fluxes, it suggests that the geometry is not properly modeled. 
+
+
 
 
 
@@ -727,10 +733,9 @@ In our sample, we focus our attention on IRAS~20050+2720 and NGC~2071 that show 
 \begin{figure*}
 \begin{center}
 \includegraphics[width=1.55\textwidth]{Figures/NGC2071_IRAS20050_RGB.png}
+
+\caption[NGC~2071 and IRAS~20050+2720]{IRAC 3-color images of NGC~2071 and IRAS~20050+2720.}
 \label{fig:NGC2071_IRAS20050_RGB}
-\caption[NGC2071 and IRAS20050+2720]{IRAC 3-color images of NGC2071 and IRAS20050+2720. 
-%\textit{Left:} The two white squares correspond to the FORCAST fields that we observed in around the core of IRAS~20050+2720. The background RGB image is a composition of \textit{Spitzer} IRAC 8~$\um$ (red), \textit{Spitzer} IRAC 5.7 $\um$ (green) , and IRAC 3.6~$\um$ (blue). The dashed red square at the center of the image correspond to the core of the cluster, displayed in greater detail in  the picture to the right. \textit{Right:} This RGB picture shows the IRAC 1, 3, and 4 bands of the core at the center of Fig.~\ref{fig:IRAS20050_RGB}. The white contours represent the contours of the FORCAST 37~$\um$ maps, and the red circles show the FORCAST-identified point sources. An infrared nebulosity can be seen to the East of the core with physical projected size of about 0.015~pc, surrounding a cavity with slightly smaller size. The nebulosity and its cavity can be seen all the way up to 37~$\um$. The far-IR emission is mapped well onto the IRAC sources, except for SOF4, for which almost no emission can be seen at shorter wavelengths. SOF4 matches the location of the bright millimeter source MMS1 \citep{Chini:2001fa}.}
-}
 \end{center}
 \end{figure*}
 \end{landscape}
@@ -738,7 +743,8 @@ In our sample, we focus our attention on IRAS~20050+2720 and NGC~2071 that show 
 
 
 
-\subsection{IRAS20050+2720}
+\subsection{IRAS~20050+2720}
+\label{sec:IRAS}
 
 \subsubsection{Context}
 IRAS~20050+2720 is part of an active site of intermediate-mass star formation in the Cygnus Rift located at \SI{700}{\pc} \citep{Wilking:1989el}, with the particularity that it doesn't seem to contain any massive stars \citep{Gunther:2012dq}. The main cluster core is associated with water and methanol masers \citep{Palla:1991up,Fontani:2010cf} and multipolar molecular outflows observed at millimeter wavelengths \citep{Bachiller:1995cy,Anglada:1998uu,Beltran:2008gu}, suggesting that the region might have experienced a recent episode of star formation in the past 0.1 Myr which contrasts with the average age of the cluster of 1 Myr \citep{Chen:1997tb,Gutermuth:2005hx}. \cite{Gutermuth:2009gca} have identified $>170$ YSOs surrounding the core and measured their continuum fluxes up to \SI{8}{\micro\meter} with IRAC. While measurements at longer wavelengths were able to provide estimates of the total luminosity of the cluster \citep[e.g. using IRAS,][\SI{388}{\Lsun}]{Molinari:1996td}, the measurements are confused in the densest region and it has not been possible to properly associate the far-IR emission with its short wavelength counterpart because of the small separation between IRAC-detected protostars. The IRAS point source was classified as a luminous class 0 protostar \citep{Bachiller:1996ja}, and its emission associated with the bright millimeter source MMS1 to the northwest of the core \citep{Chini:2001fa}. \citet{Beltran:2008gu} show strong evidence that this region has multiple generations of stars, and suggest that a group of low-mass stars first completed its main accretion phase, before setting the stage for the birth of new intermediate-mass stars at the core of this cluster.
@@ -780,7 +786,7 @@ IRAS20050.7	&	20h07m07.9s +27d27m15.8s	&	0.002	$\pm$	0.002	&	0.004	$\pm$	0.004	&
 	\end{longtable} 
 \end{table}
 
-We distinguish 5 sources which appear to share an envelope at \SI{37}{\um}. These sources are labeled in Fig.~\ref{fig:IRAS20050_core}. IRAS20050.4 is coincident with the source at the northwestern end of the region, which is name OVRO1 in \citet{Beltran:2008gu}. Two more sources are identified with these contours, to the south and east of OVRO1, but they do not appear to correlate with our SOFIA sources. The outflow axis \citep[Outflow "A",][]{Bachiller:1995cy} appears to be aligned with extended emission that is visible to the east of the 5 sources. This extended emission is visible in both IRAC and FORCAST, and could be coinciding with CO velocity maps from \citet{Beltran:2008gu} showing blueshifted gas. The emission, totalling $\sim\SI{6}{\Jy}$ at \SI{37}{\um}, appears diffuse and not connected to any particular YSO: this requires a mechanism to keep the dust emitting at these wavelengths, since no viable heating source is available to heat this material at these distances (many thousands of au from the nearest YSO).
+We distinguish 5 sources which appear to share an envelope at \SI{37}{\um}. These sources are labeled in Fig.~\ref{fig:IRAS20050_core}, and their IRAC and FORCAST photometry is summarized in Table~\ref{tab:IRAS20050fluxes}. IRAS20050.4 is coincident with the source at the northwestern end of the region, which is named OVRO1 in \citet{Beltran:2008gu}. Two more sources are identified with the blue contours from \citet{Beltran:2008gu}, to the south and east of OVRO1, but they do not appear to correlate with our SOFIA sources. The outflow axis \citep[Outflow "A",][]{Bachiller:1995cy} appears to be aligned with extended emission that is visible to the east of the 5 sources. This extended emission is visible in both IRAC and FORCAST, and coincides with CO velocity maps from \citet{Beltran:2008gu} showing blueshifted gas. The emission, totalling $\sim\SI{6}{\Jy}$ at \SI{37}{\um}, appears diffuse and not connected to any particular YSO: this requires a mechanism to keep the dust emitting at these wavelengths, since no viable heating source is available to heat this material at these distances (many thousands of au from the nearest YSO).
 
 Since the emission appears associated with the outflow, one possible scenario is that  the material was recently ejected from the central clump of YSOs by this powerful outflow. This could be material from the diffuse envelope which seem to surround the 5 sources, or material from one given YSO's gravitationally bound envelope. The gas and dust being ejected at high velocities \citep{Bachiller:1995cy}, it might not yet have time to completely thermalize with the surrounding medium (at which point it would not emit at these wavelengths). This scenario could be confirmed with high sensitivity sub-millimeter maps of the region, with a focus on dense gas tracers that would follow the mass in these regions. The existing maps from \citet{Beltran:2008gu} do not have sufficient sensitivity or resolution to properly identify the velocity field from the gas associated with this continuum emission.
 
@@ -797,7 +803,7 @@ Another possible explanation for this emission is that the gas and dust ejected 
 \end{figure}
 \end{landscape}
 
-The 5 sources in the densest part of the cluster are all highly extincted based on the slopes of the emission in the 2MASS bands and the depth of the \SI{10}{\um} silicate absorption feature (Fig.~\ref{fig:IRAS20050_SEDs}. IRAS20050.1 has a flat spectrum out to \SI{37}{\um}, unlike the four other sources which are rising. IRAS20050.4 is the most steeply rising source, and is barely detected in the IRAC bands, suggesting that it is the most embedded source, which is corroborated by the fact that it is coincident with the strongest millimeter source in the region. 
+The 5 sources in the densest part of the cluster are all highly extincted based on the slopes of the emission in the 2MASS bands and the depth of the \SI{10}{\um} silicate absorption feature (see Fig.~\ref{fig:IRAS20050_SEDs}). IRAS20050.1 has a flat spectrum out to \SI{37}{\um}, unlike the four other sources which are rising. IRAS20050.4 is the most steeply rising source, and is barely detected in the IRAC bands, suggesting that it is the most embedded source, which is corroborated by the fact that it is coincident with the strongest millimeter continuum source in the region. 
 
 
 \begin{figure}
@@ -814,9 +820,9 @@ The 5 sources in the densest part of the cluster are all highly extincted based 
 In testing the various scenarios of star formation, it is useful to obtain a measure of how much mass is available for the YSOs to grow after their original collapse. For this, clustered regions such as this one are an ideal laboratory since the YSOs usually appear to share an envelope. In this cluster, the typical separation between the sources are \ang{;;6}-\ang{;;8}, which correspond to projected distances of \num{3000}-\SI{5600}{\au}. This strongly indicates that the envelopes of individual YSOs are interacting with each other.
 
 
-However, appropriately measuring the flux from each individual source in these clustered regions is challenging, since the sources are so close together. With an aperture of \ang{;;2.4} (3 pixel radius), we managed to put non-overlapping apertures for all the 5 sources in IRAS~20050+2720. but since the aperture correction was derived considering a "total flux" aperture to be $\sim$12 pixel radius, we are accounting for the same flux multiple times, even if the apertures are not overlapping. If we estimate the \SI{37}{\um} flux from the eastern extended emission to be totalling $\sim\SI{5}{\Jy}$, we obtain about 22\% of excess \SI{37}{\um} flux when comparing the sum of the point sources and the total emission from the cluster (see Table~\ref{tab:IRAS20050sum}). At \SI{31}{\um}, the flux excess is only about 10\%. At \SI{19}{\um} and below, the extended emission is within the noise uncertainty of the map. 
+However, appropriately measuring the flux from each individual source in these clustered regions is challenging, since the sources are so close together. With an aperture of \ang{;;2.4} (3 pixel radius), we managed to put non-overlapping apertures for all the 5 sources in IRAS~20050+2720. but since the aperture correction was derived considering a "total flux" aperture to be $\sim$12 pixel radius, we are accounting for the same flux multiple times, even if the apertures are not overlapping. If we estimate the \SI{37}{\um} flux from the eastern extended emission to be totalling $\sim\SI{6}{\Jy}$, we obtain about 22\% of excess \SI{37}{\um} flux when comparing the sum of the point sources and the total emission from the cluster (see Table~\ref{tab:IRAS20050sum}). At \SI{31}{\um}, the flux excess is only about 10\%. At \SI{19}{\um} and below, the extended emission is within the noise uncertainty of the map. 
 
-This excess flux can only partially be explained by the tails of the PSF extending well below the aperture size (see Fig.~\ref{fig:average_EE}), with 10-15\% of the total energy still existing in the annulus outward of 8~pixels (\ang{;;6}) from the aperture center. However, the contribution of a source to any given other source is only a fraction of this since it would only correspond to the amount of flux within a 3-pixel aperture. We conclude that the PSF shape is not responsible for the observed excess flux at both wavelengths.
+This excess flux can only partially be explained by the tails of the PSF extending well below the aperture size (see Fig.~\ref{fig:averageEE}), with 10-15\% of the total energy still existing in the annulus outward of 8~pixels (\ang{;;6}) from the aperture center. However, the contribution of a source to any given other source is only a fraction of this since it would only correspond to the amount of flux within a 3-pixel aperture. We conclude that the PSF shape is not responsible for the observed excess flux at both wavelengths.
 
 One possible explanation would be that diffuse thermal emission occurs across the entire region. This could be caused by heating internal to the cluster (powered by the outflow, for example, like the eastern extended emission) or by a population of stochastically heated very small grains, which are not in LTE. The high outflow activity in this region could carve out multiple cavities which facilitate heating from the individual stars to extended our to larger distances within the envelopes and the shared mass reservoir. At \SI{37}{\um}, the level of diffuse emission required to account for the excess flux is about \SI{0.05}{\Jy\per\pixel}, which is the same as the average diffuse emission in the eastern region. Such an explanation would also help account for the high amount of external extinction that is needed to fit most of the SEDs in this region.
 
@@ -849,15 +855,6 @@ Ratio	&	1.58	&	0.98	&	0.99	&	0.88	\\
 \end{table}
 
 The fitted parameters for the 7 identified sources are shown in Table~\ref{tab:IRAS20050params}. Note that since no long-wavelength data is available, the envelope masses are not very well constrained. Sources 6 and 7 are far away from the main core which was discussed previously, and do not appear to be associated with the first 5 sources. The range of fitted parameters reveals some important diagnostics of these sources:
-\begin{itemize}
-\item sources 1 and 5 appear to be at a later stage of their evolution, with a lower spectral index and much lower envelope mass;
-\item sources 2, 3 and 4 are more embedded, with steeply rising SOFIA fluxes. They are consistent with having sub-solar mass envelopes;
-\item source 6 fits less well and appears to have a very low envelope mass, as the SOFIA fluxes are steeply decreasing. Note that the \SI{24}{\um} MIPS data points are plotted, but not used in the fitting;
-\item source 7 appears to have two very different kinds of SEDs fitting the data points, as exhibited by the large error on the mass determination. More than all sources in this region, this one would greatly benefit from having long-wavelength data points.
-\end{itemize}
-
-One possible conclusion, echoing the work by \citet{Beltran:2008gu}  who suggest that there are multiple generations of star formation coexisting in the same cluster. This has implication on our understanding of clustered star formation and the natural life cycle of young stars. In this new paradigm, a first generation of low-mass stars would complete its main accretion phase before intermediate-mass stars can form. This highlights the complexity of the physical processes in these regions, which 
-
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
 \def\labelitemi{--}
@@ -881,6 +878,17 @@ IRAS20050.7	&	20h07m07.9s +27d27m15.8s	&	1.294	&	1.415	&	0.022	$\pm$	0.238	&	374
 \bottomrule																					
 	\end{longtable} 
 \end{table}
+
+
+\begin{itemize}
+\item sources 1 and 5 appear to be at a later stage of their evolution, with a lower spectral index and much lower envelope mass;
+\item sources 2, 3 and 4 are more embedded, with steeply rising SOFIA fluxes. They are consistent with having sub-solar mass envelopes;
+\item source 6 fits less well and appears to have a very low envelope mass, as the SOFIA fluxes are steeply decreasing. Note that the \SI{24}{\um} MIPS data points are plotted, but not used in the fitting;
+\item source 7 appears to have two very different kinds of SEDs fitting the data points, as exhibited by the large error on the mass determination. More than all sources in this region, this one would greatly benefit from having long-wavelength data points.
+\end{itemize}
+
+Our findings echo the work by \citet{Beltran:2008gu}  who suggest that there are multiple generations of star formation coexisting in the same cluster. Source 2, 3 and 4 are newest generation of objects while 1 and 5 are already more evolved - but all 5 sources are still sharing that primordial envelope. This has implications on our understanding of clustered star formation and the natural life cycle of young stars. In this new paradigm, a first generation of low-mass stars would complete its main accretion phase before intermediate-mass stars can form. %This highlights the complexity of the physical processes in these regions, which 
+
 
 
 \subsection{NGC 2071}

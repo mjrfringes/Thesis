@@ -13,7 +13,6 @@ We use a simple procedure to estimate the moment of inertia about $\vectors{z}_\
 
 We measure the inertia $\inertia_\vectors{z}$ by averaging measurements of the angular acceleration $\dot{\gyroVec}_\vectors{z}$, divided by the instantaneous input torque, which is numerically more stable than averaging its inverse since the accelerations, expressed in \si{\radian\per\second} are typically very small. A measure of the inertia is then the inverse of this average. By repeating the measurement over multiple accelerations and deceleration cycles, we can also obtain an uncertainty to this estimate.
 
-[PUT HERE A TABLE WITH MEASURED INERTIA AND UNCERTAINTIES]
 
 \subsection{Sensor alignment and calibration}
 While the intrinsic noise of our sensors has been characterized in Section~\ref{subsec:gyros}, it is important to test them while mounted to the payload, align their axes to the other reference frames, and study their spectral energy distribution. Mounting the gyroscopes in a 3-dimensional mount on the truss will inevitably lead to alignment errors and the contribution of new vibration frequencies present in the structure and excited by the moving parts on the payload.
@@ -39,16 +38,18 @@ The gyroscopes were characterized in quiet laboratory environment that was desig
 \begin{subfigure}[b]{0.7\textwidth}
 		\centering
 \includegraphics[width=\textwidth]{Figures/multiPSD400.png}
-\label{fig:multiPSD400}
+
 \vspace{-0.5cm}
 	\caption{}
+	\label{fig:multiPSD400}
 	\end{subfigure}
 \begin{subfigure}[b]{0.7\textwidth}
 		\centering
 \includegraphics[width=\textwidth]{Figures/multiPSD_no_loglog_zoom_400.png}
-\label{fig:multiPSD400_no_loglog_zoom_400}
+
 \vspace{-0.5cm}
 \caption{}
+\label{fig:multiPSD400_no_loglog_zoom_400}
 	\end{subfigure}
 	\vspace{-0.5cm}
 \caption[Gyroscope noise]{Gyroscope noise}
@@ -105,17 +106,8 @@ The scale factor on the $\vectors{z}$ gyroscope can also be precisely determined
 
 Once the gyroscope is orthogonalized, it remains to be properly referenced to the star camera mount. In fact, because those two key elements of the control system are thermally separated, it is possible that they drift between one another. 
 
-For this purpose, we developed a variant to the traditional Kalman filter described in \ref{sec:KalmanFilter}, which instead of estimating the bias, it estimates the rotation matrix between the gyroscope mount and the star camera, as explained in \ref{subsec:enhancedKalman}. 
+For this purpose, we developed a variant to the traditional Kalman filter described in \ref{chap:controls}, which instead of estimating the bias, estimates the rotation matrix between the gyroscope mount and the star camera, as explained in \ref{subsec:enhancedKalman}. Running this filter can be done seamlessly, even in flight, since the number of unknowns is the same as the flight model which estimates bias drifts. 
 
-Running this filter can be done seamlessly, since the number of unknowns is the same as the flight model which estimates bias drifts. 
-
-The problem of using only bias drifts needs some explanation. In the traditional Kalman filter, gyroscope models using only a bias to account for the measurement errors. The bias, which combines linearly with the measured velocity, is adjusted to correct the errors and minimize the covariance of the error.
-
-However, this supposes that the gyroscopes are perfectly orthogonal, with unity scale factor, and the transformation between the measurement sensor (the star camera) reference frame and the gyro reference frame is known perfectly. An error in either of these two components will translate to multiplicative errors on the velocities, which will have a large effect when the velocity dramatically changes (for example, after a slew) and will not be accounted for by a simple bias model. Fig [] illustrates this effect with on-sky data. Eventually, the bias would adjust to be in agreement with the star camera measurements - but it can a while, and during this time, the velocity that we think we are moving at is incorrect. To put this in perspective, a 1\% error on the gyroscope velocity in one axis for a \SI{10}{\degree} slew at \ang{;;400}\si{\per\second} corresponds to a position error of 6 arcminutes, a considerable amount given our pointing requirements.
-
-If this error persists during flight, the poor man's solution is as follows. Instead of tracking the Kalman filter through slew, we slew blindly and reset the estimator after the slew. We reset our starting position with the first solution from the star camera. Since we will be off our target, we will slew again to the desired target, which will be much closer. Each time this needs to be repeated, we minimize the effects of the bias errors.
-
-For our scientific purpose, a 1\% error in the gyroscope scale factor of angular velocity alignment is not a deal breaker, since their main purpose is to maintain sufficient stability to lock onto a guide star with the fine guiding sensor. The fine guiding sensor is by definition in the correct reference frame, since it observes through the optical train. 
 
 
 
@@ -212,8 +204,8 @@ In Fig.~\ref{fig:GyroAttitudeEstimate}, we show the standard attitude plot. The 
 \begin{figure}[!ht]
 \begin{center}
 \includegraphics{Figures/attitude_estimate.png}
-\label{fig:GyroAttitudeEstimate}
 \caption[Attitude estimation while on the ground]{Attitude estimation while on the ground (see text for description).}
+\label{fig:GyroAttitudeEstimate}
 \end{center}
 \end{figure}
 
@@ -232,16 +224,16 @@ In order to understand this plot in more details, we show two zoomed-in plots in
 		\caption{}
 		\label{subfig:attitudeEstimateZoom2}
 \end{subfigure}
-\label{fig:AttitudeEstimateZoom}
 \caption[Zoom on attitude estimate plot]{Zoom on attitude estimate plot (see text for description).}
+\label{fig:AttitudeEstimateZoom}
 \end{figure}
 
 For each star camera solution, the software estimates a correction to apply to the bias that modifies the perceived gyro velocity. The results of this bias estimation for this particular run are shown in Fig.~\ref{fig:BiasEstimate}. Note that since the star camera is inherently less sensitive in roll (about X), the X bias estimate is more noisy and takes longer to converge. 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=0.7\textwidth]{Figures/bias_estimate.png}
-\label{fig:BiasEstimate}
 \caption[Bias estimation while on the ground]{Bias estimation while on the ground.}
+\label{fig:BiasEstimate}
 \end{center}
 \end{figure}
 
@@ -250,8 +242,8 @@ Finally, we can display the error between the estimated and measured attitude in
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=0.7\textwidth]{Figures/measured_vs_estimated.pdf}
-\label{fig:MeasuredVsEstimated}
 \caption[Error between measured position and estimated position]{Error between measured position and estimated position.}
+\label{fig:MeasuredVsEstimated}
 \end{center}
 \end{figure}
 
@@ -284,7 +276,7 @@ The zero-point adjustment of the delay can be done using fringe tracking in the 
 
 Without an absolute zero-point correction on shorter timescales, the phase estimator relies exclusively on our attitude estimator, which will consist of the bulk of the error. The phase or OPD estimate is then $\OPD = \crossEl\units{\si{\radian}}\times \SI{8}{\meter} $, which is then fed to the WDL for correction. For scaling, a \ang{;;1} attitude error corresponds to \SI{40}{\um} error of OPD. 
 
-The tuning of the WDL and CDL is discussed elsewhere (cite ARNAB's SPIE paper).
+The tuning of the WDL and CDL is discussed elsewhere (Dhabal \textit{et al} 2016, in press).
 
 
 
@@ -313,9 +305,9 @@ When the payload is lifted and hangs uncontrolled, the motion about $\vectors{z}
 \begin{figure}[!ht]
 \begin{center}
 \includegraphics{Figures/integral_lifted_gyroZ.png}
-\label{fig:intgralgyroZ400}
 \vspace{-0.5cm}
 \caption[Integrated gyro time series while hanging]{Integrated gyro time series while hanging and no motor on.}
+\label{fig:intgralgyroZ400}
 \end{center}
 \end{figure}
 
@@ -335,9 +327,9 @@ The PSD plots in Fig.~\ref{fig:multiPSD400_lifted} show that most of the motion 
 \begin{subfigure}[b]{0.7\textwidth}
 		\centering
 		\includegraphics[width=0.98\textwidth]{Figures/lifted_400.png}
-	\label{fig:multiPSD400_lifted}
 	\vspace{-0.5cm}
 	\caption{}
+	\label{fig:multiPSD400_lifted}
 	\end{subfigure}
 \begin{subfigure}[b]{0.7\textwidth}
 		\centering
@@ -345,8 +337,8 @@ The PSD plots in Fig.~\ref{fig:multiPSD400_lifted} show that most of the motion 
 	\caption{}
 	\label{fig:multiPSD100_controlled}
 	\end{subfigure}
+\caption[Noise while hanging]{Noise while hanging indoors}
 \label{fig:multiPSD}
-\caption[Noise while hanging]{Noise while hanging}
 \end{figure}
 \end{landscape}
 
@@ -366,9 +358,9 @@ Once lifted, the gyro PSD about $\vectors{z}$ is quite different (see Fig.~\ref{
 \begin{figure}[!h]
 \begin{center}
 \includegraphics{Figures/simplePlot_crossEl.png}
-\label{fig:simplePlot_crossEl}
 \vspace{-0.5cm}
 \caption[Cross-elevation error indoors]{Cross-elevation error indoors.}
+\label{fig:simplePlot_crossEl}
 \end{center}
 \end{figure}
 
@@ -393,8 +385,8 @@ On-sky, lifted pointing test is the ultimate test that we can run from the groun
 		\caption{}
 		\label{subfig:SlewWithStarcam2}
 \end{subfigure}
-\label{fig:SlewWithStarcam}
 \caption[Slew and point on the sky]{Slew and point on the sky. (\subref{subfig:SlewWithStarcam1}): Two consecutive slews with the camera in configuration~1 totalling $\sim\SI{25}{\degree}$ in azimuth. The time flows from left to right on this graph. (\subref{subfig:SlewWithStarcam2}): Point, slew and point with the camera in configuration~2. The low rate of star camera solutions towards the end of the run is due to increased cloud coverage and increased surrounding light in the very early morning.}
+\label{fig:SlewWithStarcam}
 \end{figure}
 \end{landscape}
 
@@ -412,9 +404,9 @@ For this second run, we show the pointing stability in cross-elevation in Fig.~\
 \begin{figure}[!h]
 \begin{center}
 \includegraphics{Figures/crossEl_outside.png}
-\label{fig:crossEl_outside}
 \vspace{-0.5cm}
 \caption[Cross-elevation error]{Cross-elevation error for a test on the sky (see text for description).}
+\label{fig:crossEl_outside}
 \end{center}
 \end{figure}
 
@@ -425,9 +417,9 @@ The striking asymmetry of this plot reveals that the elevation control is, for n
 \begin{figure}[!h]
 \begin{center}
 \includegraphics{Figures/simple2DPlot_crossEl_elevation.png}
-\label{fig:simple2DPlot_crossEl_elevation}
 \vspace{-0.5cm}
 \caption[Elevation and cross-elevation error]{Elevation and cross-elevation error for a test on the sky.}
+\label{fig:simple2DPlot_crossEl_elevation}
 \end{center}
 \end{figure}
 
@@ -440,13 +432,13 @@ The last on-sky pointing tests have consistently shown:
 \begin{enumerate}
 \item our ability to always know where we are pointed using a robust star camera solution
 \item our ability to slew large amounts while maintaining the wheels close to their zero position (which indicates a successful momentum dumping loop)
-\item our ability to keep the rotator vector pointed to an inertial target to within the specificied $\pm\ang{;;15}$ more a large fraction of the time
-\item our ability to have small attitude errors which can be fed to the line for further correction
+\item our ability to keep the telescope vector pointed to an inertial target to within the specificied $\pm\ang{;;15}$ more a large fraction of the time
+\item our ability to have small attitude errors which can be fed to the delay line for further correction
 \end{enumerate}
 
 However, despite this relative success, one key item has yet to be implemented before flight: the fine guiding loop, which brings both beams to overlap better than $\ang{;;1.5}$. In order to be implemented, the optics, cryostat, and tip/tilt mechanisms all have to be integrated into the payload in order to make it function.
 
-However, we have started planning for this upcoming integration by designing a C++ software to handle the task at hands. In this section we present the notional architecture for this last piece of software, but warn the reader that many unknowns will remain until the optics are installed in the truss. In particular, our main concern lies in the transition mode that we called "ACQUIRE", which might require a lot of tuning. 
+We have started planning for this upcoming integration by designing a C++ software to handle the task at hands. In this section we present the notional architecture for this last piece of software, but warn the reader that many unknowns will remain until the optics are installed in the truss. In particular, our main concern lies in the transition mode that we called "ACQUIRE", which might require a lot of tuning. 
 
 The role of the fine guiding loop is to use the fine guiding sensor (FGS, an H1RG detector with two window readouts, one for each arm) to determine the centroid of a known source within the field of view. The location of this source on each of the readout windows of the detector (each window shows what is seen by each arm) will then be compared to known pixel locations that ensure overlap between the two science beams. The errors signals are then $\Delta x_L$, $\Delta y_L$, $\Delta x_R$, $\Delta y_R$, where the subscripts designate the left and right arm, respectively. These error signals are rotated to the proper reference frame and fed to the tip/tilt mechanisms, which zeroes them out very quickly thanks to their very large actuation bandwidth and very small inertia. 
 
@@ -460,4 +452,4 @@ There are many challenges with this system. The first is to robustly, autonomous
 
 ACQUIRE mode involves progressively reducing the size of the FOV in the fine guiding sensor, starting with a $\ang{;5;}\times\ang{;5;}$ FOV at \SI{2}{\second} per frame, down to \ang{;;15}$\times$\ang{;;15} at \SI{50}{\hertz}. 
 
-\section{	Conclusion and status of implementation}
+%\section{	Conclusion and status of implementation}
