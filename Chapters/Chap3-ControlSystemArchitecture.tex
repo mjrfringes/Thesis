@@ -580,13 +580,13 @@ An old version of these rotation stages was tested in our environmental chamber,
 \subsubsection{Delay lines}
 \label{subsec:delayLines}
 
-
+We have designed, built and tested two linear mechanisms that change the OPD on BETTII: the Cold Delay Line (CDL) and the Warm Delay Line (WDL). Both of these mechanisms have optics attached to them and have been briefly discussed in Chapter~\ref{chap:BETTII}. The rationale behind using two delay lines requires some explanation. First, we realized that we had two very different problems to solve in terms of OPD. One was to produce a periodic, very repetitive modulation to produce our FTS interferograms. This requires very small range, high bandwidth. This was originally set out to be a cryogenic mechanism for symmetry reasons, and the team used a heritage design from the FIRAS delay line mechanism, using titanium flexures, voicecoil actuators, and capacitive sensors to close the PID loop. The design, fabrication, and procurement of this delay line was already underway when we realized that we needed significantly more range to tackle the second problem: the variation of OPD due to geometrical pointing errors. With the pendulum modes of balloon payloads extending to multiple arcminutes, and the large lever arm given by our baseline length, excursions in OPD can be considerable. In addition, we learned from our optical design that we had to introduce an asymmetry in the system to properly overlap the polarizations within the pupils, which most easily was achieved by having a 4-mirror set in one arm and a 3-mirror set in the other. We then decided that given the required difference in dynamic range of the two problems and the maturity of the CDL, to implement a second delay line, the WDL, also based on voicecoil actuators and capacitive sensors. This device does not have any requirement to be operated at cryogenic temperatures, so we chose to have it operate at ambient temperature.
 
 \subsubsection{Tip/tilt}
 
 Our tip/tilt mechanisms are Physik Instrumente S330 piezo-electric actuators that move a flat platform in tip and tilt. We attach a mirror to that platform, and put that mirror close to a pupil of the optical system, to correct for angular errors without creating beam walk (e.g. in the K-mirror assembly, see Fig.\ref{fig:Kmirror}). After long discussions with the company's engineers, we ordered a custom strain gauge sensor especially tune and tested to resist low temperatures: this sensor tells the angle of the platform, which is important for our control system. Similar devices have been successfully used on sounding rocket before to provide milli-arcsecond angular control \citep{Mendillo:2012fh}. 
 
-The piezo-electric driver electronics provide the required \SI{100}{\volt} to operate the platform, and amplify 10 times an analog 0-10~\si{\volt} command signal. Despite its broad range of motion ($\approx$~\SI{10}{\milli\radian}), they can still operate at multiple hundred of of \si{\hertz} bandwidth, even with a mirror load on top of the platform. The resonant frequency of the structure under load, which needs to be avoided at all costs to avoid severe damage, is at more than \SI{2}{\kilo\hertz}, way beyond the frequency at which we need to command the device.
+The piezo-electric driver electronics provide the required \SI{100}{\volt} to operate the platform, and amplify 10 times an analog 0-10~\si{\volt} command signal. Despite its broad range of motion ($\approx$~\SI{10}{\milli\radian}), they can still operate at multiple hundred \si{\hertz} bandwidth, even with a mirror load on top of the platform. The resonant frequency of the structure under load, which needs to be avoided at all costs to avoid severe damage, is at more than \SI{2}{\kilo\hertz}, way beyond the frequency at which we need to command the device.
 
 \begin{figure}[!h]
 		\centering
@@ -603,7 +603,9 @@ The platform can be controlled in open-loop mode, where there is a simple gain b
  
 \subsubsection{Fine guidance sensor}
 \label{subsec:FGS}
-The fine guidance sensor is a HAWAII-1RG detector from Teledyne with 1024$\times$1024 pixels that is sensitive to infrared wavelengths between \SI{1}{\um} and \SI{2.5}{\um}. The device will be operated at a cryogenic temperature of \SI{77}{\kelvin}, at which the expected read noise is 18~electrons r.m.s.
+The fine guidance sensor is a HAWAII-1RG detector from Teledyne with 1024$\times$1024 pixels that is sensitive to infrared wavelengths between \SI{1}{\um} and \SI{2.5}{\um}. The device will be operated at a cryogenic temperature of \SI{77}{\kelvin}, at which the expected read noise is 18~electrons r.m.s. The readout is accomplished using a San Diego State University GENIII \citep{Leach:1994fp} controller. The readout scheme accommodates simultaneous read of two windows on the array, one for each arm of the interferometer. The software can switch window size quickly, hence accommodating our ACQUIRE mode needs. 
+
+The centroid of a guide star in each window is determined, and the error between this centroid and a pre-registered location on the sensor is fed back to the tip/tilt actuators after proper rotation, to ensure overlap of the two beams in the science channels. The plate scale is \ang{;;0.6}\si{\per\second}.
 
 \subsubsection{Clocks and timing}
 

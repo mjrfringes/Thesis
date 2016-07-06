@@ -118,6 +118,9 @@ For this purpose, we developed a variant to the traditional Kalman filter descri
 
 \subsubsection{Tuning tests}
 
+We proceeded to multiple stages of tuning for the star camera, spanning many nights over the past year. In this section, we propose an small excerpt of the data acquire during one night when we varied the exposure time of the camera, to determine the most suitable value for flight. We list here (Table~\ref{tab:starCameraTests}) five experiments starting with an exposure time of \SI{250}{\milli\second} and decreasing the exposure time down to \SI{31}{\milli\second}. During these tests, we compute some statistics on the observations, and are most interested in the success rate, which is the ratio of solutions found over the total number of images taken. By computing these statistics from the outputs of the star camera software, we also noted that the fitted exposure time, which corresponds to the best fit between the known star brightness and the measured camera digital counts, was remarkably accurate when solutions were found. In addition, on the occasion when a false positive was found (that is a solution that is not correct), the exposure time was, predictably, very inaccurate. We decided to add this fitted exposure time information as an additional metric to determine the accuracy and reliability of the star camera software. 
+
+
 \renewcommand{\arraystretch}{1.5}
 \setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
 \def\labelitemi{--}
@@ -142,7 +145,7 @@ Exp5 	&	31	&	35	&	44	$\pm$	53	&	6.54	$\pm$	0.84	&	2.33	$\pm$	0.79	&	180	$\pm$	65
 \begin{landscape}
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=1.5\textwidth]{Figures/starcam_images.pdf}
+	\includegraphics[width=1.5\textwidth]{Figures/starcam_images.jpg}
 	\caption[Star camera example WISE]{\textit{Left}: Example of a background-subtracted star camera image with identified $>5\sigma$ sources circled in red. The orientation of the image on the celestial sphere is the one provided by BETTII's embedded star camera solver. This image corresponds to a field in the Scorpius constellation. \textit{Right}: WISE \SI{3.4}{\um} mosaic from the online archive, centered on the same location. This image is composed of 9 individual WISE images that we patched into a mosaic using the \textit{Montage}[CITE] software package.}
 	\label{fig:starcamexample}
     \end{figure}

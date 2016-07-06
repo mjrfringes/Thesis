@@ -265,5 +265,55 @@ If this error persists during flight, the poor man's solution is as follows. Ins
 
 For our scientific purpose, a 1\% error in the gyroscope scale factor of angular velocity alignment is not a deal breaker, since their main purpose is to maintain sufficient stability to lock onto a guide star with the fine guiding sensor. The fine guiding sensor is by definition in the correct reference frame, since it observes through the optical train. 
 
+\subsubsection{Estimating angular error between reference frames}
+
+Here, we propose a more appropriate approach to estimate the gyroscope misalignment using a different Kalman filter. In this filter, the global misalignment error of the entire reference frame is set as part of the state, and is being estimated at each step. A global misalignment error can be represented by a rotation matrix which, in the small angle approximation, can be written $\boldsymbol{C'} \approx \bI_{3\times 3} + \boldsymbol{C} $, with:
+\begin{equations}
+\boldsymbol{C} = \begin{bmatrix} 0 & c_{xy} & c_{xz} \\   -c_{xy} & 0 &c_{yz} \\  -c_{xz} & -c_{yz} & 0 \end{bmatrix}.
+\end{equations}
+We now have $\gyroVec^\textrm{meas} = (\bI_{3\times 3} + \textbf{C}\gyroVec^\textrm{true}$, so the gyro error introduced by the misalignment is $\Delta\gyroVec^\textrm{meas}=\textbf{C})\gyroVec^\textrm{true}$. The additional state components are $\textbf{c} = \begin{bmatrix} c_{xy}& c_{xz} & c_{yz}\end{bmatrix} ^T$, and we can rearrange the matrix terms to write: $\gyroVec^\textrm{true} =\boldsymbol{\Omega}_c \textbf{c}$, with $\boldsymbol{\Omega}_c = \begin{bmatrix}  \end{bmatrix}$. Similarly to the error-representation equations in the Kalman filter model expressed in the previous sections, we then obtain the new upper right block of the transition matrix:
+\begin{equation}
+\boldsymbol{\Psi_k} = \boldsymbol{\Omega}_c\Delta t.
+\end{equation}
+
+\subsubsection{Estimating the orthogonalization error and scale factor error}
+
+The full orthogonalization matrix for the three gyroscopes is a non-orthogonal matrix $\textbf{M}$:
+\begin{equations}
+\boldsymbol{M} = \begin{bmatrix} k_x & m_{xy} & m_{xz} \\   m_{yx} & k_y &m_{yz} \\  m_{zx} & m_{zy} & k_z \end{bmatrix},
+\end{equations}
+where $\textbf{k} = \begin{bmatrix}k_{x} &k_{y} &k_{z}\end{bmatrix}^T$ is the scale factor of the gyroscopes, and the cross terms correspond to the misalignments between the different axes. This can also be rearranged and rewritten in terms of the three scale factor unknowns and the 6 cross terms unknowns $\textbf{m} = \begin{bmatrix}m_{xy} &m_{xz} &m_{yx} &m_{yz} &m_{zx} &m_{zy}\end{bmatrix}^T$:
+\begin{equations}
+\Delta\gyroVec^\textrm{meas}_k = \boldsymbol{\Omega}_k\gyroVec^\textrm{true},
+\Delta\gyroVec^\textrm{meas}_m = \boldsymbol{\Omega}_m\gyroVec^\textrm{true},
+\end{equations}
+for a total error in velocity $\Delta\gyroVec^\textrm{meas} = \Delta\gyroVec^\textrm{meas}_k + \Delta\gyroVec^\textrm{meas}_m + \Delta\gyroVec^\textrm{meas}_\bias$ if we also include the bias that we discussed in our standard estimator. We have here:
+\begin{equations}
+\boldsymbol{\Omega}_k = \begin{bmatrix} \omega_x & 0 & 0 \\   0 &  \omega_y  &0 \\  0 & 0 & \omega_z \end{bmatrix}
+\end{equations}
+and
+\begin{equations}
+\boldsymbol{\Omega}_m = \begin{bmatrix} \omega_y & \omega_z & 0 & 0  & 0 & 0 \\    0 & 0 & \omega_x &\omega_z  & 0 & 0  \\  \ 0 & 0 & 0  & 0 & \omega_x &\omega_y  \end{bmatrix}.
+\end{equations}
+
+This is now a 15-state Kalman filter, with the error state:
+$\ErrorState = \begin{bmatrix}\deltaTheta &\Delta\textbf{k}  &\Delta\textbf{m} &\Delta\bias\end{bmatrix}^T$. The top right block of the transition matrix can be written:
+\begin{equation}
+\boldsymbol{\Psi_k} = \Delta t\begin{bmatrix}\boldsymbol{\Omega}_k&\boldsymbol{\Omega}_m & \bI_{3\times 3}\end{bmatrix}.
+\end{equation}
+
+This is handy for data analysis on the ground, but not appropriate for flight since increasing the state vector size quickly increases the computational cost of the filter. While running this Kalman filter implementation in the Real Time OS on \boop, we measured average run times of $\sim\SI{0.4}{\second}$, largely caused by the $15\times 15$ matrix inversion process that happens during the update phase of the filter.
+
+%It is nonetheless possible to use a more refined model of the gyroscope velocity measurement. There are three effects that can be included in a linear model: the scale factor error, the orthogonalization error, and the alignment error. The orthogonalization error comes from the fact that the individual gyroscopes do not form an orthogonal basis. The alignment error is an error of the orthogonal gyro reference frame from its expected position. We can write:
+%
+%\begin{equations}
+%\gyroVec^\textrm{meas} = \boldsymbol{C'}\boldsymbol{M'}\gyroVec^\textrm{true},
+%\end{equations}
+%where $\boldsymbol{M'}$ is is the orthogonalization matrix and $\boldsymbol{C'}$ is the rotation matrix in the small approximation:
+%\begin{equations}
+%\boldsymbol{M} = \begin{bmatrix} M_x & m_{xy} & m_{xz} \\   m_{yx} & M_y &m_{yz} \\  m_{zx} & m_{zy} & M_z \end{bmatrix}, \boldsymbol{C'} = \begin{bmatrix} 1 & c_{xy} & c_{xz} \\   -c_{xy} & 1 &c_{yz} \\  -c_{xz} & -c_{yz} & 1 \end{bmatrix}.
+%\end{equations}
+%
+%In order to convert this to a linear model, we use the small angle approximation $\boldsymbol{C'} = bI_{3\times 3} + \boldsymbol{C} $ and develop the expression ignoring second order terms:
 
 \subsection{Conclusions on sensor fusion}
