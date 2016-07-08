@@ -106,7 +106,7 @@ The scale factor on the $\vectors{z}$ gyroscope can also be precisely determined
 
 Once the gyroscope is orthogonalized, it remains to be properly referenced to the star camera mount. In fact, because those two key elements of the control system are thermally separated, it is possible that they drift between one another. 
 
-For this purpose, we developed a variant to the traditional Kalman filter described in \ref{chap:controls}, which instead of estimating the bias, estimates the rotation matrix between the gyroscope mount and the star camera, as explained in \ref{subsec:enhancedKalman}. Running this filter can be done seamlessly, even in flight, since the number of unknowns is the same as the flight model which estimates bias drifts. 
+For this purpose, we developed a variant to the traditional Kalman filter described in Chapter~\ref{chap:controls}, which instead of estimating the bias, estimates the rotation matrix between the gyroscope mount and the star camera, as explained in \ref{subsec:enhancedKalman}. Running this filter can be done seamlessly, even in flight, since the number of unknowns is the same as the flight model which estimates bias drifts. 
 
 
 

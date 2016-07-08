@@ -89,12 +89,12 @@ which is equal to $\Dx N\S\dsig = \S$ for $k=k'$ and zero everywhere else.
 Note that we have $\s_k\xn = k\dsig n\Dx = kn/N$. and $\dsig = (N\Dx)^{-1}$. The phase noise degrades the effective power of the line, so it is now $\S e^{-\varPhir/2}$ \citep{Richards:2003bp}. The noisy interferogram is $\Ikxn =\S\dsig e^{-2i\pi kn/N}e^{i\Phir\pxn}$.
 
 Designating the operator $\langle \rangle $ as the ensemble average, the noise $\varspec$ in the interferogram is the variance of the DFT:
-\begin{eqnarray}
+\begin{eqnarray*}
 \varspec [k'] & = & \VAR(\Dx\DFT(\Ikxn)[k']) \\
 & = & \Dx^2\left(\left\langle\left\vert \sum_n \Ikxn e^{2i\pi n k'/N} \right\vert^2\right\rangle - \left\vert\left\langle \sum_n \Ikxn e^{2i\pi n k'/N} \right\rangle\right\vert^2\right) ,\\
 & = & \Dx^2\left(\sum_n\sum_{n'}\left\langle \Ikxn\Iksxn\right\rangle e^{2i\pi (n-n') k'/N} - \sum_n\sum_{n'}\left\langle \Ikxn\right\rangle\left\langle\Iksxn\right\rangle e^{2i\pi (n-n') k'/N}\right), \\
 & = & \Dx^2\sum_n\sum_{n'} \left[ \left\langle \Ikxn\Iksxn\right\rangle - \left\langle \Ikxn\right\rangle\left\langle\Iksxn\right\rangle\right] e^{2i\pi (n-n') k'/N}.
-\end{eqnarray}
+\end{eqnarray*}
 We can write $\langle \Ikxn\Iksxn\rangle = \langle \S^2\dsig^2 e^{-2i\pi (n-n') k/N} e^{i(\Phir\pxn - \Phir\pxnp)}\rangle$. This quantity is equal to  $\S^2\dsig^2 e^{-2i\pi (n-n') k/N} e^{-\varPhir}$ when $n\neq n'$ and equal to $\S^2\dsig^2$ when $n=n'$. The quantity $\langle \Ikxn\rangle\langle\Iksxn\rangle$ is equal to $\S^2\dsig^2 e^{-2i\pi (n-n') k/N} e^{-\varPhir}$ for all $n$ and $n'$. Hence, the term in the sum is nonzero only for $n=n'$, for which it is $\S^2\dsig^2(1 - e^{-\varPhir})$. The value of the sum is then:
 \begin{eqnarray}
 \varspec [k'] & = & \Dx^2\sum_n\S^2\dsig^2(1-e^{-\varPhir}), \\
