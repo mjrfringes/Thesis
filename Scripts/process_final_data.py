@@ -12,10 +12,57 @@ from statsmodels.sandbox.regression.predstd import wls_prediction_std
 from astropy import constants as const
 from astropy.coordinates import SkyCoord,FK5
 import astropy.units as u
+from astropy.analytic_functions import blackbody_nu
 import itertools
+
+def distpc(target):
+	if "IRAS20050" in target:
+		return 700.
+	elif "NGC2071" in target:
+		return 410.
+	elif "Oph" in target:
+		return 140.
+	elif "1333" in target:
+		return 240.
+	elif "2264" in target:
+		return 913.
+	elif "7129" in target:
+		return 1000.
+	elif "CepA" in target:
+		return 730.
+	elif "CepC" in target:
+		return 730.
+	elif "S140" in target:
+		return 900.
+	elif "S171" in target:
+		return 850.
+
 
 # load data
 clean_table = pickle.load(open('data/clean_table.data','r'))
+
+
+clean_table['dist'] = [distpc(target) for target in clean_table['Cluster']]
+
+lam = 1.1*u.mm
+nu = const.c/lam
+nu = nu.to(u.Hz)
+Fnu = blackbody_nu(nu,20)
+clean_table['F1100'].unit = u.Jy
+clean_table['S1300'].unit = u.Jy
+clean_table['calc_mass_F1100'] = ((clean_table['dist']*u.pc)**2*clean_table['F1100'].to(u.erg/u.cm**2/u.s/u.Hz)/(blackbody_nu((const.c/(1.1*u.mm)).to(u.Hz),20)*u.sr*0.0114*u.cm**2/u.g)).to(u.M_sun)
+clean_table.mask['calc_mass_F1100'] = clean_table.mask['F1100']
+clean_table['calc_mass_S1300'] = ((clean_table['dist']*u.pc)**2*clean_table['S1300'].to(u.erg/u.cm**2/u.s/u.Hz)/(blackbody_nu((const.c/(1.3*u.mm)).to(u.Hz),20)*u.sr*0.009*u.cm**2/u.g)).to(u.M_sun)
+clean_table.mask['calc_mass_S1300'] = clean_table.mask['S1300']
+clean_table['calc_mass'] = clean_table['calc_mass_S1300'].copy()
+clean_table.mask['calc_mass'] = clean_table.mask['calc_mass_S1300'].copy()
+for i in range(len(clean_table)):
+	if clean_table.mask['calc_mass_S1300'][i]:
+		if ~clean_table.mask['calc_mass_F1100'][i]:
+			clean_table['calc_mass'][i] = clean_table['calc_mass_F1100'][i]
+			clean_table.mask['calc_mass'][i] = False
+
+clean_table['SOFIA_name','env_mass','calc_mass'].more()
 
 # add ratios
 clean_table['R19'] = clean_table['R50_19']/clean_table['R50_cal_19']
@@ -157,13 +204,13 @@ fig.savefig('../Figures/SpectralIndex.pdf',dpi=300)
 
 ### main photometry table
 dftot = df.loc[df['Cluster'].isin(['NGC1333','Oph'])]
-dftot
+print dftot
 columns = ['j','h','ks','i1','i2','i3','i4','F11','F19','m1','F31','F37','m2','H70','H160','H250','H350','H500','S850','F1100','S1300','alpha']
 e_columns = ["e_"+col for col in columns]
 flag_columns = ["flag_"+col for col in columns]
 cols = list(itertools.chain.from_iterable(zip(columns,e_columns)))
 print cols
-dftot[['Coordinates','R37','Lbol','Tbol']+cols].to_csv('Data/alldata.csv',na_rep='--')
+dftot[['Coordinates','R37','Lbol','Tbol']+cols].to_csv('Data/alldata.csv',na_rep='')
 print dftot[['Coordinates','R37','Lbol','Tbol']+cols].to_latex(longtable=True,na_rep='--')
 
 
@@ -204,7 +251,7 @@ print df.columns
 
 ### plot tables
 
-columns = ['Coordinates','R37','alpha','R','env_mass','env_mass_std','sLsun','sLsun_std','Lbol','inc','ext','s']
+columns = ['Coordinates','R37','alpha','R','env_mass','env_mass_std','calc_mass','sLsun','sLsun_std','Lbol','inc','ext','s']
 df[columns].to_csv('Data/Oph_NGC1333_NGC2071.csv')
 
 df = isolated.to_pandas()
@@ -394,6 +441,18 @@ ax.set_xlabel(r'$\log\ M_\mathrm{env}$ ($M_\odot$)')
 ax.set_ylabel(r'Inclination angle (degrees)')
 fig.tight_layout()
 fig.savefig('../Figures/incVSmass.pdf')
+
+fig,ax = plt.subplots(figsize=figsize,facecolor=facecolor)
+sns.regplot(np.log10(df['calc_mass']),np.log10(df['env_mass']),color=red)
+vals = np.arange(min(np.log10(df['env_mass'])-1),2*max(np.log10(df['env_mass'])))
+ax.plot(vals,vals,'--',color='grey')
+ax.grid(True)
+ax.set_ylabel(r'$\log\ M_\mathrm{env,fitted}$ ($M_\odot$)')
+ax.set_xlabel(r'$\log\ M_\mathrm{env,calc}$ ($M_\odot$)')
+fig.tight_layout()
+fig.savefig('../Figures/massEstvsCalc.pdf')
+
+
 plt.show()
 
 

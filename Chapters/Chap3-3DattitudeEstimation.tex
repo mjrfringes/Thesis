@@ -3,21 +3,24 @@
 \renewcommand*{\arraystretch}{0.75}
 
 
-The attitude estimation consists of combining high-frequency angular velocity measurements of the payload with low-frequency attitude measurements. The high-frequency measurements, usually from gyroscopes, are relative measurements, and exhibit biases. The attitude measurements are absolute. The Kalman filter \citep{Kalman:1960ii} combines these two types of measurements in a mathematical formalism that uses a model of the physical relationship between them. The goal of the filter is to estimate the bias of the high-frequency measurements, hence providing bias-corrected, drift-less, trustworthy dynamical information that can be used to estimate the attitude at all times, even when there is no absolute measurement.
+The attitude estimation consists of combining high-frequency angular velocity measurements of the payload with low-frequency attitude measurements. The high-frequency measurements, usually from gyroscopes, are relative measurements, and exhibit biases. The attitude measurements are absolute. The Kalman filter \citep{Kalman:1960ii} combines these two types of measurements in a mathematical formalism that uses a model of the physical relationship between them. For the simplest version of this filter, the goal is to estimate the bias of the high-frequency measurements, hence providing bias-corrected, drift-less, trustworthy dynamical information that can be used to estimate the attitude at all times, even when there is no absolute measurement. In the general sense, the filter finds the state parameters that minimize the covariance of the error between a predicted quantity (in our case, the predicted attitude from integrated gyroscope velocities), and a measured quantity (in our case, an absolute attitude measurement from the star cameras). 
 
 %In our situation, gyroscopes will provide high-frequency velocity data (typically at 100~Hz), while star cameras will provide absolute measurements every few seconds. The gyroscopes are much more trustworthy over short periods, so they won't be influenced by just a few star camera measurements. However, on long timescales, the attitude as propagated using the gyroscopes will drift with respect of the star cameras because of the gyroscopes' inherent biases. The Kalman filter will estimate those biases and provide a bias-corrected angular velocity to make sure that the gyroscopes do not drift away from the star camera results.
 
-This filter is very common for spacecraft attitude and control, although a large number of variations exist. It was first popularized in the 60's in the United States during the Apollo missions, when it was used to determine the attitude of the Apollo capsules in inertial space. It also continues to be an active field of research today \citep[e.g.,][]{Crassidis:2011ud,Markley:2014dn}. Under certain circumstances and assumptions, the Kalman filter is the optimal filter, which means that it is the filter that has the fastest possible convergence towards the steady-state.
+This filter is very common for spacecraft attitude and control, although a large number of variations exist. It was first popularized in the 60's in the United States during the Apollo missions, when it was used to determine the attitude of the Apollo capsules in inertial space. It also continues to be an active field of research today \citep[e.g.,][]{Crassidis:2011ud,Markley:2014dn}. Under certain circumstances and assumptions, the Kalman filter is the optimal filter, which means that it is the filter that has the fastest possible convergence towards the minimum steady-state error covariance.
 
 
-One of the complications of the Kalman filter is that it involves inverting matrices to find the optimal solution when new absolute measurements are received. This has implications in terms of numerical complexity which often will limit the bandwidth of the filter, especially in the context of resource-limited FPGA computers on spacecraft. In practice the trade-off is the following: either limit the bandwidth of the filter, or limit the number of state parameters (\textit{i.e.} limit the rank of the matrix to invert). Fortunately, on the ground, this limitation is usually not an issue. We will be flying a very powerful FPGA computer on our balloon, so we also will not be limited by numerical complexity for the most basic version of our filter.
+One of the complexities of the Kalman filter is that it involves inverting matrices to find the optimal solution when new absolute measurements are received. This has implications in terms of numerical complexity which often will limit the bandwidth of the filter, especially in the context of resource-limited FPGA computers on spacecraft. In practice the trade-off is the following: either limit the bandwidth of the filter, or limit the number of state parameters (\textit{i.e.} limit the rank of the matrix to invert). On the ground, this limitation is usually not an issue. But even our powerful embedded computer will be limited in the speed at which it can find solutions.
 
-In order to set up the Kalman filter, we choose quaternions to describe our attitude, which are discussed extensively and compared to other attitude representations in Appendix~\ref{sec:attituderepresentation}. In addition to the various advantages explained in this appendix quaternions have a nice behavior when it comes to small angles, so we can use them in their linear, small angle approximation to create a \textit{multiplicative}, \textit{extended} Kalman filter (MEKF) \citep{Lefferts:1982dx}. It is \textit{extended} because it operates in the small angle approximation, hence it is a local approximation of a non-linear relationship. And it is \textit{multiplicative}, instead of being additive, because we use the quaternion multiplication operation to describe the "difference" or error between two reference frames. One popular instance where this filter was successfully implemented was on board the WMAP spacecraft \citep{Harman:2005ux}.
+In order to set up the Kalman filter, we choose quaternions to describe our attitude, which are discussed extensively and compared to other attitude representations in Appendix~\ref{sec:attituderepresentation}. In addition to the various advantages explained in this appendix, quaternions have a nice behavior when it comes to small angles, so we can use them in their linear, small angle approximation to create a \textit{multiplicative}, \textit{extended} Kalman filter (MEKF) \citep{Lefferts:1982dx}. It is \textit{extended} because it operates in the small angle approximation, hence it is a local approximation of a non-linear relationship. And it is \textit{multiplicative}, instead of being additive, because we use the quaternion multiplication operation to describe the "difference" or error between measured and predicted attitudes. One popular instance where this filter was successfully implemented on board the WMAP spacecraft \citep{Harman:2005ux}.
 
-First, we need to choose a representation for our sensor suite: the gyroscopes and the star cameras. Second, we describe the equations that govern the physics of our system and connect the sensors together: this is critical for the Kalman filter to produce robust estimates, and the more accurate our representation is, the more accurate our predictions can be. Finally, we discuss the Kalman setup, and two phases of the algorithm: prediction and update.
+First, we need to choose a representation for our sensor suite: the gyroscopes and the star cameras. Second, we describe the equations that govern the physics of our system and connect the sensors together: this is critical for the Kalman filter to produce robust estimates, and the more accurate our representation is, the more accurate our predictions can be. Third, we discuss the Kalman setup, and two phases of the algorithm: prediction and update. And finally, we discuss potential improvements of the filter that can be used for ground-based analysis of the data.
 
 \subsection{Sensor models}
 \label{sec:SensorModels}
+
+This section describes the chosen mathematical model that will be used to represent our sensors. These are necessarily approximations, as they do not encompass all of the possible physical effects that will be observed. The residual, non-modeled physical effects need to be small with respect to this representation in order for this filter to work optimally. In the ideal case, when all physical contributors are accounted for, and when the residual noises have a normal distribution, the Kalman filter is the optimal filter. 
+
 \subsubsection{Gyroscope model}
 
 For our baseline design, the gyroscope model that we use is: $\gyroVecMeas  =  \gyroVec + \bias + \nGyros$, where $\gyroVecMeas$ is the measured angular velocity vector, $\gyroVec$ is the true angular velocity vector, $\bias$ is the bias vector, and $\nGyros$ is the angular velocity noise vector (also called the "rate noise"). This implies that we have ideal alignment between each gyroscope and what we define to be the gyroscope reference frame. We consider that $\nGyros$ is a white noise process with a diagonal covariance matrix $\N_\gyro = \sigma_{c,\gyro}^2\bI_{3\times 3}$. 
@@ -27,7 +30,7 @@ We consider that the derivative of the bias $\bias$ is also a white noise proces
 Assuming that the covariance matrices are diagonal help to set up the filter, but is not a necessary assumption in the general case. The following implementation is not relying on this assumption.
 
 %The angular random walk of the gyroscope assemblies is 0.2~deg.sec$^{-1}$ with an effective bandwidth of 50~Hz (100~Hz sampling). 
-The angular random walk (ARW) that we measure is ARW~$\sim$\SI{5e-4}{\deg\per\hour}. This means that if we integrate the gyroscope's rate for 1~hour, the $1\sigma$ uncertainty on our position would be 
+The angular random walk (ARW) that we measure is ARW~$\approx\SI{5e-4}{\deg\per\hour}$. This means that if we integrate the gyroscope's rate for 1~hour, the $1\sigma$ uncertainty on our position would be 
 $\SI{5e-4}{\deg}\sim\ang{;;1.8}$. For an integration time of 1 second, it would be \ang{;;0.03}. For a single integration time step $\Deltat = \SI{0.01}{\second}$, it would be \ang{;;0.003}. 
 
 The units required for $\sigma_\gyro$ are [\si{\radian\raiseto{-0.5}\second}], so we convert:
@@ -41,7 +44,7 @@ Note that we can relate the ARW to the measured discrete rate noise uncertainty 
 \end{equations}
 where $\textrm{BW}\units{\si{\hertz}}$ is the gyroscope's bandwidth, equal to \SI{50}{\hertz} for our system. We obtain a quantity close to the measured quantity, $\sigma(\nGyros^\textrm{meas})\sim\SI{0.2}{\arcsec\per\second}$.
 
-The bias instability units are [\si{\radian\raiseto{-3/2}\second}]. The manufacturer specification gives a maximum bias instability over a wide range of temperatures equal to \SI{0.005}{\deg\per\hour}. This is for a bandwidth of \SI{50}{\hertz}, so we obtain the bias instability term, which also corresponds to the process noise of our Kalman filter:
+The bias instability units are [\si{\radian\raiseto{-3/2}\second}]. We adopt the manufacturer's specification for a worst-case scenario bias instability over a wide range of temperatures equal to \SI{0.005}{\deg\per\hour}. This is for a bandwidth of \SI{50}{\hertz}, so we obtain the bias instability term, which also corresponds to the process noise of our Kalman filter:
 \begin{equations}
 \sigma_\bias\units{\si{\radian\raiseto{-3/2}\second}} = \SI{0.005}{\deg\per\hour}\times \sqrt{\textrm{BW}\units{\si{\hertz}}}  \sim \SI{1.8e-7}{\radian\raiseto{-3/2}\second}.
 \end{equations}
@@ -71,7 +74,7 @@ The star camera is often oriented at a fixed position on the payload, which is n
 
 \subsection{Continuous state equation and error}
 
-We want to use the Kalman filter to obtain an estimate of the attitude quaternion $\Attitude_k \equiv \fromto{I}{G}\Attitude(t)$, but also use it to estimate the gyroscope biases $\bias(t)$ to improve overall performance. The "state" of our system is described by the vector:
+We want to use the Kalman filter to obtain an estimate of the attitude quaternion $\Attitude_k \equiv \fromto{I}{G}\Attitude(t)$, but also use it to estimate the gyroscope biases $\bias(t)$ to improve our attitude predictions and lower the errors between predicted and measured. The "state" of our system is described by the vector:
 \begin{equations}
 \stateVec(t) = \begin{bmatrix} \fromto{I}{G}\Attitude(t) \\ \bias(t) \end{bmatrix}.
 \end{equations}
@@ -100,7 +103,7 @@ The evolution of $\EstStateVec$ as a function of time can be obtained by taking 
 \begin{eqnarrays}
 \gyroVecMeas & = & \gyroVec + \bias + \nGyros,\\
  \EstGyroVec & = & \gyroVecMeas - \EstBias, \\
-\textrm{so} \quad \gyroVec & = & \EstGyroVec - \nGyros - \deltaBias.
+\textrm{so} \quad \gyroVec^\textrm{true} & = & \EstGyroVec - \nGyros - \deltaBias.
 \end{eqnarrays}
 
 
@@ -116,13 +119,13 @@ After a lengthy derivation to express $\dot{\deltaTheta}$ from $\dot{\delta\Atti
 \begin{equations}
 \dot{\deltaTheta} = -\EstGyroVec\times\deltaTheta - \deltaBias - \nGyros.
 \end{equations}
-Note that the cross-product $\EstGyroVec\times\deltaTheta$ is equal to the matrix multiplication $\omegaCross\deltaTheta$.
+Note that the cross-product $\EstGyroVec\times\deltaTheta$ is equal to the matrix multiplication $\omegaCross\deltaTheta$, where $\omegaCross$ is the skew-symmetric matrix made out of the elements of $\EstGyroVec$.
 
 The bias equation is: 
 \begin{equations}
 \dot{\deltaBias} = \dot{\bias} - \dot{\EstBias} = \nBias.
 \end{equations}
-The equations representing the evolution of the error $\ErrorState$ are then:
+We can now write the linearized equations representing the evolution of the error state $\ErrorState$:
 \begin{equations}
 \dot{\ErrorState} = \begin{bmatrix} \dot{\deltaTheta} \\ \dot{\deltaBias} \end{bmatrix} = \Fc \begin{bmatrix} \deltaTheta \\ \deltaBias\end{bmatrix} + \Gc \begin{bmatrix} \nGyros \\ \nBias \end{bmatrix},
 \end{equations}
@@ -135,34 +138,31 @@ and:
 \Gc = \begin{bmatrix} -\bI_{3\times 3} & \bzero_{3\times 3} \\ \bzero_{3\times 3} & \bI_{3\times 3} \end{bmatrix}.
 \end{equations}
 
-Using this error representation allows us to fully describe the state error covariance matrix that will be minimized during the Kalman filter steps. 
-
-%\renewcommand*{\arraystretch}{0.75}
-It is important here to introduce the expression of the covariance matrix of this continuous representation. Writing the noise vector $\vectors{n} = \begin{bmatrix} \nGyros \\ \nBias \end{bmatrix}$, the covariance matrix is the expected value of the product of two noise vectors taken at different times \citep{Trawny:2005va}:
+It is important here to introduce the expression of the propagation error covariance matrix of this continuous representation. Writing the noise vector $\vectors{n} = \begin{bmatrix} \nGyros \\ \nBias \end{bmatrix}$, the covariance matrix is the expected value of the product of two noise vectors taken at different times \citep{Trawny:2005va}, but since we suppose that the noise samples are independent, the covariance is not a function of this time difference $\tau$:
 \begin{equations}
 \noiseCovMat_c = E[\vectors{n}(t+\tau)\vectors{n}^T(t)] = 
-\begin{bmatrix} \sigma_{c,\gyro}^2\bI_{3\times 3} & \bzero_{3\times 3}\\ \bzero_{3\times 3} & \sigma_{c,b}^2\bI_{3\times 3}\end{bmatrix}
+\begin{bmatrix} \sigma_{c,\gyro}^2\bI_{3\times 3} & \bzero_{3\times 3}\\ \bzero_{3\times 3} & \sigma_{c,b}^2\bI_{3\times 3}\end{bmatrix}.
 \end{equations}
 
 \subsection{Integration of continuous equations}
 
-Since our system has a fast sampling rate compared to the characteristic times of the system, we consider that $\Fc$ is constant over a time step. This helps the integration of the state equation between $t_{k-1}$ and $t_k=t_{k-1}+\Deltat$, which has a discrete state transition matrix $\StateTransitionMat_k$:
+Since our system has a fast sampling rate compared to the characteristic times of the system, we can consider that $\Fc$ is constant over a time step in order to express the state evolution in a discrete sense, which is appropriate for a computer implementation. We can integrate the state equation between $t_{k-1}$ and $t_k=t_{k-1}+\Deltat$, which leads to a discrete state transition matrix $\StateTransitionMat_k$:
 \begin{equations}
 \StateTransitionMat_k = \StateTransitionMat(t_k, t_{k-1}) = \exp\left(\Fc\Delta t\right) \equiv \begin{bmatrix} \boldsymbol{\Theta_k} & \boldsymbol{\Psi_k} \\ \bzero_{3\times 3} & \bI_{3\times 3}\end{bmatrix},
 \end{equations}
-with $\boldsymbol{\Theta_k} \sim \bI_{3\times 3} - \Deltat\omegaCross + \frac{\Deltat^2}{2}\omegaCross^2$ and $\boldsymbol{\Psi_k} \sim \bI_{3\times 3}\Deltat +  \frac{\Deltat^2}{2}\omegaCross - \frac{\Deltat^3}{6}\omegaCross^2$.
+with $\boldsymbol{\Theta_k} \sim \bI_{3\times 3} - \Deltat\omegaCross + \frac{\Deltat^2}{2}\omegaCross^2$ and $\boldsymbol{\Psi_k} \sim \bI_{3\times 3}\Deltat +  \frac{\Deltat^2}{2}\omegaCross - \frac{\Deltat^3}{6}\omegaCross^2$. The exponential function in this equation refers to the matrix exponential.
 
-These expressions are now what we need to establish a discrete version of the state equations, which are based on this transition matrix $\StateTransitionMat_k$.
+These expressions are now what we need to establish a discrete version of the state equations, which are based on this transition matrix $\StateTransitionMat_k$. 
 
 \subsection{Discrete covariance matrices}
-Since we have a discrete system, it is necessary to also represent the covariance matrix discretely. The discrete system covariance matrix $\noiseCovMat$ sampled between time $t_k$ and $t_{k+1} =t_{k}+\Deltat$ is related to the continuous matrix $\noiseCovMat_c$ through the complicated relationship \citep{Maybeck:1982vh}:
+Since we have a discrete system, it is also necessary to also represent the propagation error covariance matrix discretely. The discrete propagation covariance matrix $\noiseCovMat$ sampled between time $t_k$ and $t_{k+1} =t_{k}+\Deltat$ is related to the continuous matrix $\noiseCovMat_c$ through the relationship \citep{Maybeck:1982vh}:
 $$
 \displaystyle\noiseCovMat = \int^{t_{k+1}}_{t_k} \StateTransitionMat(t_{k+1},\tau)\Gc(\tau)\noiseCovMat_c\Gc^T(\tau)\StateTransitionMat^T(t_{k+1},\tau)d\tau.
 $$
-The full result of this equation is given in \citep{Trawny:2005va}. To the second order in $\Deltat$, the equations simplify when $\gyroVec\to \boldsymbol{0}$:
+The full result of this integration is given in \citep{Trawny:2005va}. To the second order in $\Deltat$, the equations simplify when $\gyroVec\to \boldsymbol{0}$ into:
 \begin{eqnarrays}
-\noiseCovMat_{11} &=& \sigma_\gyro^2\Deltat\cdot\bI_{3\times 3}\\
-\noiseCovMat_{12} &=& -\sigma_\bias^2\frac{\Deltat^2}{2}\cdot\bI_{3\times 3}\\
+\noiseCovMat_{11} &=& \sigma_\gyro^2\Deltat\cdot\bI_{3\times 3},\\
+\noiseCovMat_{12} &=& -\sigma_\bias^2\frac{\Deltat^2}{2}\cdot\bI_{3\times 3},\\
 \noiseCovMat_{22} &=& \sigma_\bias^2\Deltat\cdot\bI_{3\times 3},
 \end{eqnarrays}
 with 
@@ -171,13 +171,13 @@ with
 \end{equations}
 \subsection{Discrete Kalman filter setup}
 %A truth model is a description of how the true state evolves physically. While the state representation can be given in continuous terms, here we immediately use a discrete approach. We have:
-The Kalman filter will estimate the current attitude quaternion and gyroscope bias value, while minimizing the covariance of the error $\ErrorState$. Let's summarize the relevant physical equations that are used to set up this filter. This is useful if one wants to build a physical model of the dynamic system.
+Now that we obtained all discrete representation of our system, we can write the algorithm's steps. The Kalman filter will estimate the current attitude quaternion and gyroscope bias value, while minimizing the covariance of the error $\ErrorState$. Below, we summarize the relevant physical equations that are used to set up this filter. This is useful if one wants to build a physical model of the dynamic system.
 \begin{enumerate}
 \item \textbf{Velocity estimate}: $\EstGyroVec_{k} = \gyroVec_k^{\textrm{meas}} - \EstBias_{k}$,
 \item \textbf{Attitude propagation}: $\EstAttitude_{k} = \exp\left(\frac{1}{2}\matOmega(\EstGyroVec_{k})\Deltat\right)\EstAttitude_{k-1},$
 \item \textbf{Error state evolution}: $\ErrorState_{k}  = \StateTransitionMat_{k}\ErrorState_{k-1} + \Gc_{k}\vectors{n}_{k}$,
 \item \textbf{Error covariance to be minimized}: $\stateCovMat_{k} = \cov{\ErrorState_{k}}$,
-\item \textbf{Error covariance evolution}: $\stateCovMat_{k}  =   \StateTransitionMat_k \stateCovMat_{k-1}\StateTransitionMat^T_k + \noiseCovMat_k$
+\item \textbf{Error covariance evolution}: $\stateCovMat_{k}  =   \StateTransitionMat_k \stateCovMat_{k-1}\StateTransitionMat^T_k + \noiseCovMat_k$,
 \item \textbf{New attitude measurement}: $\Attitude^{\textrm{meas}}_k$, 
 \item \textbf{State error measurement}: $\zMeasurement_k = \measErrMat_k\ErrorState_k + \nMeas_k$. 
 \end{enumerate}
@@ -188,11 +188,9 @@ At each step, we will attempt to produce our best estimate of the state $\EstSta
 
 In the prediction phase, we use our best estimates from the previous step, along with the velocity measurements and the expected propagation relationships to predict what the estimates should be at the current step. If we don't get a new attitude measurement at that step, then these new estimates are the best we can do.
 
-When we do get a new attitude measurement, then in addition to the prediction phase, we also do an update phase. We compare the best estimate from the prediction phase to our new measurement, and use the difference to compute a correction to our state. This uses the weights of the various noise contributors in the system, as we discuss in Section~\ref{subsec:EKFUpdate}. This phase most importantly estimates the bias of the gyroscopes, to allow robust propagation of the state from one step to the next.
+When we do get a new attitude measurement, then in addition to the prediction phase, we also do an update phase. We compare the best estimate from the prediction phase to our new measurement, and use the difference to compute a correction to our state. This uses the weights of the various noise contributors in the system, as well as additional weights that can be defined by the user. This phase most importantly estimates the bias of the gyroscopes, to allow robust propagation of the state from one step to the next.
 
-For our application, update phases are rare since the star camera can take hundreds of loop cycles to produce an attitude solution. Hence, the last measured star camera occurred at step $k-N$. Until we receive a new measurement, we are trusting our gyroscope model and our bias estimate to propagate the attitude correctly.
-
-In this section, we assume that the attitude measured by the star camera $\Attitude^{\textrm{meas}}_k$ corresponds to the attitude at the current step. In reality, when we receive the star camera, it represents an attitude that was taken some number of steps ago. This is due to the slow processing of the star camera images and the catalog search. Our software cannot solve the star camera position in one single loop iteration. We tackle this issue in Section~\ref{subsec:delayed}. 
+In this section, however, we assume that the attitude measured by the star camera $\Attitude^{\textrm{meas}}_k$ corresponds to the attitude at the current step. In reality, when we receive the star camera, it represents an attitude that was taken some number of steps ago. This is due to the slow processing of the star camera images and the catalog search. Our software cannot solve the star camera position in one single loop iteration. We tackle this issue in Section~\ref{subsec:delayed}. 
 
 \subsection{Kalman filter: prediction}
 
@@ -257,13 +255,15 @@ All Kalman filter steps discussed in the previous are summarized in Fig.~\ref{fi
 \subsection{Enhancing the Kalman filter models}
 \label{subsec:enhancedKalman}
 
-The problem of using only bias drifts needs some explanation. In the traditional Kalman filter, gyroscope models using only a bias to account for the measurement errors. The bias, which combines linearly with the measured velocity, is adjusted to correct the errors and minimize the covariance of the error.
+The simple gyroscope model that we adopt is incomplete, and can cause some issues that need explanation. In our simplified representation, gyroscope models using only a bias to account for the measurement errors. The bias, which combines linearly with the measured velocity, is adjusted by the Kalman filter to correct the errors and minimize the covariance of the error.
 
-However, this supposes that the gyroscopes are perfectly orthogonal, with unity scale factor, and the transformation between the measurement sensor (the star camera) reference frame and the gyro reference frame is known perfectly. An error in either of these two components will translate to multiplicative errors on the velocities, which will have a large effect when the velocity dramatically changes (for example, after a slew) and will not be accounted for by a simple bias model. Eventually, the bias would adjust to be in agreement with the star camera measurements - but it can a while, and during this time, the velocity that we think we are moving at is incorrect. To put this in perspective, a 1\% error on the gyroscope velocity in one axis for a \SI{10}{\degree} slew at \ang{;;400}\si{\per\second} corresponds to a position error of 6 arcminutes, a considerable amount given our pointing requirements.
+However, this supposes that the gyroscopes are perfectly orthogonal, with unity scale factor, and the transformation between the absolute measurement sensor (the star camera) reference frame and the gyro reference frame is known perfectly. An alignment error in either of these two components will translate to multiplicative errors on the velocities, which will have a large effect when the velocity dramatically changes (for example, after a slew) and will not be accounted for by a simple bias model. Eventually, the bias would adjust to be in agreement with the star camera measurements - but it can take a while, and during this time, the velocity that we think we are moving at is incorrect. To put this in perspective, a 1\% error on the gyroscope velocity in one axis for a \SI{10}{\degree} slew at \ang{;;400}\si{\per\second} corresponds to a position error of 6 arcminutes, a considerable amount given our pointing requirements.
 
-If this error persists during flight, the poor man's solution is as follows. Instead of tracking the Kalman filter through slew, we slew blindly and reset the estimator after the slew. We reset our starting position with the first solution from the star camera. Since we will be off our target, we will slew again to the desired target, which will be much closer. Each time this needs to be repeated, we minimize the effects of the bias errors.
+For spacecraft projects, alignment issues and calibrations are allocated a large amount of resources to minimize these issues and come close to the ideal configuration. Our project has not dedicated enough resources to ensure exquisite alignment and calibration between the gyroscopes and the star camera, due to lack of time and resources. We nevertheles propose elements of solution in the next section.
 
-For our scientific purpose, a 1\% error in the gyroscope scale factor of angular velocity alignment is not a deal breaker, since their main purpose is to maintain sufficient stability to lock onto a guide star with the fine guiding sensor. The fine guiding sensor is by definition in the correct reference frame, since it observes through the optical train. 
+If this error persists during flight, the poor man's solution is as follows. Instead of tracking the Kalman filter during the entire duration of the slew, we discard the star camera measurements during the slew and reset the estimator after the slew is complete. This resets our starting position with the first solution from the star camera. Since we will be off our target, we will slew again to the desired target, which will be much closer. Each time this needs to be repeated, we minimize the effects of the alignment errors.
+
+For our scientific purpose, even a 1\% error in the gyroscope scale factor or angular velocity alignment is not a deal breaker, since their main purpose is to maintain sufficient stability to lock onto a guide star with the fine guiding sensor. The fine guiding sensor is by definition in the correct reference frame, since it observes through the optical train. 
 
 \subsubsection{Estimating angular error between reference frames}
 
@@ -271,10 +271,12 @@ Here, we propose a more appropriate approach to estimate the gyroscope misalignm
 \begin{equations}
 \boldsymbol{C} = \begin{bmatrix} 0 & c_{xy} & c_{xz} \\   -c_{xy} & 0 &c_{yz} \\  -c_{xz} & -c_{yz} & 0 \end{bmatrix}.
 \end{equations}
-We now have $\gyroVec^\textrm{meas} = (\bI_{3\times 3} + \textbf{C}\gyroVec^\textrm{true}$, so the gyro error introduced by the misalignment is $\Delta\gyroVec^\textrm{meas}=\textbf{C})\gyroVec^\textrm{true}$. The additional state components are $\textbf{c} = \begin{bmatrix} c_{xy}& c_{xz} & c_{yz}\end{bmatrix} ^T$, and we can rearrange the matrix terms to write: $\gyroVec^\textrm{true} =\boldsymbol{\Omega}_c \textbf{c}$, with $\boldsymbol{\Omega}_c = \begin{bmatrix}  \end{bmatrix}$. Similarly to the error-representation equations in the Kalman filter model expressed in the previous sections, we then obtain the new upper right block of the transition matrix:
+We now have $\gyroVec^\textrm{true} = (\bI_{3\times 3} - \textbf{C})\gyroVec^\textrm{meas}$, so the gyro error introduced by the misalignment is $\Delta\gyroVec=-\textbf{C}^T\gyroVec^\textrm{meas}$. The new state components are $\textbf{c} = \begin{bmatrix} c_{xy}& c_{xz} & c_{yz}\end{bmatrix} ^T$, and we can rearrange the matrix terms to express $\boldsymbol{\Omega}_c$ as a function of the components of $\gyroVec^\textrm{meas}$ and write: $\Delta\gyroVec =\boldsymbol{\Omega}_c \textbf{c}$. Similarly to the error-representation equations in the Kalman filter model expressed in the previous sections, we then obtain the new upper right block of the transition matrix:
 \begin{equation}
-\boldsymbol{\Psi_k} = \boldsymbol{\Omega}_c\Delta t.
+\boldsymbol{\Psi_k} = -\boldsymbol{\Omega}_c\Delta t.
 \end{equation}
+
+This is useful because the three additional state elements can replace the gyroscope bias for initial calibration and determination. When on the ground, it is then possible, with minimum software changes, to estimate the three components of a rotation matrix instead of the three components of a bias vector. 
 
 \subsubsection{Estimating the orthogonalization error and scale factor error}
 
@@ -284,10 +286,10 @@ The full orthogonalization matrix for the three gyroscopes is a non-orthogonal m
 \end{equations}
 where $\textbf{k} = \begin{bmatrix}k_{x} &k_{y} &k_{z}\end{bmatrix}^T$ is the scale factor of the gyroscopes, and the cross terms correspond to the misalignments between the different axes. This can also be rearranged and rewritten in terms of the three scale factor unknowns and the 6 cross terms unknowns $\textbf{m} = \begin{bmatrix}m_{xy} &m_{xz} &m_{yx} &m_{yz} &m_{zx} &m_{zy}\end{bmatrix}^T$:
 \begin{equations}
-\Delta\gyroVec^\textrm{meas}_k = \boldsymbol{\Omega}_k\gyroVec^\textrm{true},
-\Delta\gyroVec^\textrm{meas}_m = \boldsymbol{\Omega}_m\gyroVec^\textrm{true},
+\Delta\gyroVec_k = \boldsymbol{\Omega}_k\textbf{k},
+\Delta\gyroVec_m = \boldsymbol{\Omega}_m\textbf{m},
 \end{equations}
-for a total error in velocity $\Delta\gyroVec^\textrm{meas} = \Delta\gyroVec^\textrm{meas}_k + \Delta\gyroVec^\textrm{meas}_m + \Delta\gyroVec^\textrm{meas}_\bias$ if we also include the bias that we discussed in our standard estimator. We have here:
+for a total error in velocity $\Delta\gyroVec = \Delta\gyroVec_k + \Delta\gyroVec_m + \Delta\gyroVec_\bias$ if we also include the bias that we discussed in our standard estimator. We have here:
 \begin{equations}
 \boldsymbol{\Omega}_k = \begin{bmatrix} \omega_x & 0 & 0 \\   0 &  \omega_y  &0 \\  0 & 0 & \omega_z \end{bmatrix}
 \end{equations}
@@ -299,7 +301,7 @@ and
 This is now a 15-state Kalman filter, with the error state:
 $\ErrorState = \begin{bmatrix}\deltaTheta &\Delta\textbf{k}  &\Delta\textbf{m} &\Delta\bias\end{bmatrix}^T$. The top right block of the transition matrix can be written:
 \begin{equation}
-\boldsymbol{\Psi_k} = \Delta t\begin{bmatrix}\boldsymbol{\Omega}_k&\boldsymbol{\Omega}_m & \bI_{3\times 3}\end{bmatrix}.
+\boldsymbol{\Psi_k} = -\Delta t\begin{bmatrix}\boldsymbol{\Omega}_k&\boldsymbol{\Omega}_m & \bI_{3\times 3}\end{bmatrix}.
 \end{equation}
 
 This is handy for data analysis on the ground, but not appropriate for flight since increasing the state vector size quickly increases the computational cost of the filter. While running this Kalman filter implementation in the Real Time OS on \boop, we measured average run times of $\sim\SI{0.4}{\second}$, largely caused by the $15\times 15$ matrix inversion process that happens during the update phase of the filter.
@@ -317,3 +319,9 @@ This is handy for data analysis on the ground, but not appropriate for flight si
 %In order to convert this to a linear model, we use the small angle approximation $\boldsymbol{C'} = bI_{3\times 3} + \boldsymbol{C} $ and develop the expression ignoring second order terms:
 
 \subsection{Conclusions on sensor fusion}
+
+We have defined, designed, implemented a tested a complete sensor fusion algorithm based on an multiplicative, extended Kalman filter. This software, implemented entirely in Labview Real Time OS, has been the workhorse of our testing in the high bay. Similarly, we have implemented several variations of the software for use on the ground, in order to estimate the residual misalignments between the individual gyroscopes, as well as between the gyroscope frame and the star cameras.
+
+The software merges the information gathered from the gyroscopes and the star cameras, while appropriately correcting for the lag in the star camera measurements, and accounting for user-defined weights. 
+
+While this software is deeply integrated with our hardware and flight software architecture, the critical pieces of it are quite independent. We plan on sharing this software with an open-source license after the pointing test results are published. It is quite versatile and allows for many user improvement and modifications.

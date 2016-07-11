@@ -5,6 +5,8 @@ textwidth = 5.901 # in inches
 figsize = (textwidth,textwidth/2.)
 facecolor = 'white'
 
+pc = 3.08568025e+18
+c = 29979245800.0
 
 colors = sns.xkcd_palette(['pale red','medium green','denim blue','amber','dusty purple',
 	'faded green','windows blue','greyish'])

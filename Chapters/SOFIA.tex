@@ -144,7 +144,7 @@ The size of the PSF can be defined in multiple ways, and we adopt the approach o
 
 As expected, the PSF at \SI{37.1}{\micro\meter} is larger than the PSFs at shorter wavelengths, but less that the traditional diffraction limit rule. This indicates that additional PSF smearing is occurring at short wavelengths, likely due to plane jitter and pointing errors, which is consistent with what other authors have found \citep[e.g.][]{Herter:2013by}. Throughout all the flights, point source calibrators always have the same encircled energy distribution shape within $\sim 4\%$ rms. 
 
-To look at the behavior of the PSF in more detail, we can use the half width at half maximum of the encircled energy distribution, \Rfifty as a proxy for PSF size. The variation of this quantity for the various flights, bandpass/dichroic setting, and calibrators used is showed in Fig.~\ref{fig:Rfiftydist}. This shows the flight-to-flight differences and, for some calibrators, the in-flight variability. We find that the latter is usually small, except for the SOFIA flight on 05-02-2014, for which the spread is quite considerable and could have been caused by instrumental malfunction or abnormal levels of water vapor in the atmosphere. The variation from flight to flight is larger than the variation within a given flight, which indicates variability in the observing conditions, systematics, or thermal radiation environment of the observatory between different flights. Even considering the flight-to-flight and calibrator-to-calibrator variations, the overall spread in \Rfifty for a given observation setting is almost always less then 10\%, making this metric a useful reference to compare with scientific data. In our analysis we will compute \Rfifty for our sources and compare it to the \Rfifty from the current flight for the same filter setting, if the calibration file exists. If no calibration observation exists for a given setting, we use the mean \Rfifty for that setting from calibrators observations in other flights. The ratio $\Rfifty/\Rfifty_\textrm{cal}$ of these two quantities helps quantify the extension of the source, to within $\sim 10\%$ confidence level. 
+To look at the behavior of the PSF in more detail, we can use the half width at half maximum of the encircled energy distribution, \Rfifty as a proxy for PSF size. The variation of this quantity for the various flights, bandpass/dichroic setting, and calibrators used is showed in Fig.~\ref{fig:Rfiftydist}. This shows the flight-to-flight differences and, for some calibrators, the in-flight variability. We find that the latter is usually small, except for the SOFIA flight on 05-02-2014, for which the spread is quite considerable and could have been caused by instrumental malfunction or abnormal levels of water vapor in the atmosphere. The variation from flight to flight is larger than the variation within a given flight, which indicates variability in the observing conditions, systematics, or thermal radiation environment of the observatory between different flights. Even considering the flight-to-flight and calibrator-to-calibrator variations, the overall spread in \Rfifty for a given observation setting is almost always less then 10\%, making this metric a useful reference to compare with scientific data. In our analysis we will compute \Rfifty for our sources and compare it to the \Rfifty from the current flight for the same filter setting, if the calibration file exists. If no calibration observation exists for a given setting, we use the mean \Rfifty for that setting from calibrators observations in other flights. The ratio $\beta_{37}=\Rfifty/\Rfifty_\textrm{cal}$ of these two quantities helps quantify the extension of the source, to within $\sim 10\%$ confidence level. 
 
 \begin{figure}[!h]
 \begin{center}
@@ -515,7 +515,7 @@ MRW	&	True	\\
 	\end{longtable} 
 \end{table}
 
-The grid is composed of $\sim 400$ models which are modeled with Hyperion. For models of more than \SI{0.5}{\Msun}, we interpolate the grid in mass by increments of 20\%, which allows for a finer sampling at higher masses, but increases the number of individual models to $\sim 900$. Each model is sampled at 10 inclinations, 15 values for external extinction, and five different scaling factors, for a total of $\sim 0.7$ million grid models. Each model is evaluated at all relevant observing bands, from the 2MASS bands all the way to \SI{1.3}{\milli\meter} SMA bands. Given the sparsity of the grid, and the relatively simple model used, we do not apply color correction to the fluxes, nor do we convolve the model fluxes with the band transmission function: the resulting corrections usually fall well within our approximations, and do not affect significantly the outcome of the fitting.
+The grid is composed of $\sim 418$ models which are modeled with Hyperion. For models of more than \SI{0.5}{\Msun}, we interpolate the grid in mass by increments of 20\%, which allows for a finer sampling at higher masses, but increases the number of individual models to $958$. Each model is sampled at 10 inclinations, 15 values for external extinction, and five different scaling factors, for a total of \num{718500} grid models. Each model is evaluated at all relevant observing bands, from the 2MASS bands all the way to \SI{1.3}{\milli\meter} SMA bands. Given the sparsity of the grid, and the relatively simple model used, we do not apply color correction to the fluxes, nor do we convolve the model fluxes with the band transmission function: the resulting corrections usually fall well within our approximations, and do not affect significantly the outcome of the fitting.
 
 The scaling factor is used to show the uncertainty in the distance determination \citep{Robitaille:2006cb}, but it can also be considered as a factor to sample different luminosities \citep{Furlan:2016df}. Indeed, \citet{Furlan:2016df} show that, to first order, changing luminosities by a small amount is approximately equivalent to scaling the SED in flux. In their grid, they use a scaling factor that ranges from 0.5 to 2.0, which allows them to have factors of two between their luminosity steps. We choose a more conservative approach  by actually running the grid at closer luminosity steps (factor of 1.5) and hence have a smaller range of scaling factors. 
 
@@ -530,13 +530,15 @@ In order to determine which model fits the data best, we adopt a metric defined 
 \begin{equation}
 R = \frac{1}{N}\sum_i w_i|\log[\Fobs(\lambda_i)] - \log[\Fmod(\lambda_i)]|,
 \end{equation}
-where $i$ are the indices of the valid data points, the weights $w_i$ correspond to the inverse of the fractional uncertainty of each measurement, \Fobs and \Fmod are the observed and model fluxes respectively, and $N$ is the number of valid measurements. For our models, we set the fractional uncertainty to a minimum of 10\%, to avoid having just a few points completely over-constrain the problem.
+where $i$ are the indices of the valid data points, the weights $w_i$ correspond to the inverse of the fractional uncertainty of each measurement, \Fobs and \Fmod are the observed and model fluxes respectively, and $N$ is the number of valid measurements. For our models, we set the fractional uncertainty to a minimum of 10\%, to avoid having just a few points completely over-constrain the problem. Early versions of the fitting routines, which used the published $1\sigma$ uncertainties would completely skew the results by putting all the weight into a few flux measurements. This was most notable with the \Spitzer IRAC points, which only have a few percent uncertainties. We chose to override these uncertainties for this exercise.
 
 \citet{Furlan:2016df} discuss in more detail the meaning of this metric, which differs from a standard $\chi^2$ metric such as the one used by \citet{Robitaille:2007dl}. Here $R$ represents a weighted average of the logarithmic deviations between the observations and the model. It is important to note that, although it is normalized, it does not have a statistical interpretation like the standard $\chi^2$ metric does. 
 
-For each source, we calculate $R$ for each model in our grid. The model with the smallest value for $R$ is the best-fitting model by this metric, but given our sparse sampling and the errors of our observations, this is not necessarily the most likely model to best fit the data. We can consider two extremes to this case: in the first, the best fit has a value of $R$ which is much lower than for other models. Then, it is clearly the best fit. In the second case, let's suppose that the 1000 best-fitting models lie very close to the best $R$. In this case, concluding that the model that best fits our observations (and from which will interpret physical quantities) is the one with the minimum $R$ is too strict and does not account for the uncertainties that are present in this exercise. 
+For each source, we calculate $R$ for each model in our grid. The model with the smallest value for $R$ is the best-fitting model by this metric, but given our sparse sampling and the errors of our observations, this is not necessarily the most likely model to best fit the data. We can consider two extremes to this case: in the first, the best fit has a value of $R$ which is much lower than for other models. Then, it is clearly the best fit. In the second case, let's suppose that the \num{1000} best-fitting models lie very close to the best $R$. In this case, concluding that the model that best fits our observations (and from which will interpret physical quantities) is the one with the minimum $R$ is too strict and does not account for the uncertainties that are present in this exercise. 
 
 In practice, all of our models fall in that second case, since our parameter grid sampling is sufficiently dense. After visual inspection we estimate there is very little significant difference between values of $R$ which are separated by $\sim 0.5$, as they all can be considered equally good fits. Hence, for a robust measure of the best-fitting model parameters, we choose the mode (the most likely value) of the parameters from models which are within $R_\textrm{min}$ and $R_\textrm{min}+0.2$. The error on the parameter estimate is then estimated using the models within $R_\textrm{min}$ and $R_\textrm{min}+0.5$, and is described in the next section.
+
+Because we use exclusively the OH5 dust model, which we know overestimates the short-wavelength fluxes, we expect to overestimates the extinction required to match the observations. For this reason, we choose to ignore the 2MASS J and H band data points, which drive the extinction values up dramatically and sometimes leads the fit towards non realistic solutions. However, we choose to keep the \SI{2}{\um} data point.
 
 \subsection{Overview of derived parameters}
 
@@ -587,12 +589,24 @@ The luminosity excess is more pronounced for lower masses, as the short waveleng
 
 
 
-
 We find that this is a major limitation and inconsistency to all known SED fitting methods. \citet{Furlan:2016df} fit for extinction more than we do: they allow the external extinction to go up to $\Av = 40$ for some of their sources, and use all of the 2MASS bands in their fitting. It is not consistent to assume that so much dusty material is present along the line of sight and only affect the short wavelengths, while not also being observed at longer wavelengths. Since the dust is optically thin at longer wavelengths, the far-infrared and submillimiter observations should account for this material which is obscuring the shortest wavelengths.
 
 Our exploration with the fitting routine shows that limiting the external extinction helps by forcing more inclined geometries, where the light from the central star passes through the disk before reaching us. However, we were not able to account for the entirety of the short wavelength extinction by doing this, as the mid-infrared wavelength (IRAC and FORCAST bands) are also affected dramatically by more inclined geometries, which can compromise the fits. This could indicate a fundamental limit to our geometrical representation of YSOs.
 
-For the clusters which do have submillimeter data points, the mass estimates are rather good, since these long-wavelengths points are constraining the mass along the line of sight very well. A summary of our fit results for Ophiuchus and NGC1333 is shown in Table~\ref{tab:FittedParameters}. Note that the luminosity that is used in this analysis is always the luminosity multiplied by the scaling factor $s$, under the assumption that the SED scales for small changes in luminosity. This scaling factor also represents a fundamental uncertainty in the distance measurement to our targets, as a distance error of 10\% would cause a luminosity estimate that would differ by 20\%.
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=\textwidth]{Figures/massEstvsCalc.pdf}
+\vspace{-1cm}
+\caption[Estimated mass vs calculated mass]{Estimated mass vs calculated mass for the sources which have sub-millimeter data.}
+\label{fig:massEstvsCalc}
+\end{center}
+\end{figure}
+
+
+For the clusters which do have submillimeter data points, we can use the traditional mass estimate described in Section~\ref{chap:introduction}.\ref{subsec:DustExtinction} with the \SI{1.1}{\milli\meter} or \SI{1.3}{\milli\meter} fluxes. For this calculation, we use an effective dust temperature of \SI{20}{\kelvin}, assuming an opacity of \SI{0.0114}{\raiseto{2}\centi\meter\per\gram} and \SI{0.009}{\raiseto{2}\centi\meter\per\gram} for \SI{1.1}{\milli\meter} and \SI{1.3}{\milli\meter}, respectively. Note that this measurement is very sensitive on these assumptions; for example, lowering the dust temperature estimate to \SI{10}{\kelvin} increases the mass estimate by a factor of 3.
+
+The comparison of this derived mass and our fitted estimates are rather good, as shown in Fig~\ref{fig:massEstvsCalc}. For lower masses, however, our fits tend to underestimate the mass compared to the derived quantities. This could be explained since most of the lower-mass envelopes belong to more evolved objects, which can thus have higher dust temperatures: the derived mass, assuming a temperature of \SI{20}{\kelvin}, would then overestimate the amount of material in the envelope. A summary of our fit results for Ophiuchus and NGC1333 is shown in Table~\ref{tab:FittedParameters}. Note that the luminosity that is used in this analysis is always the luminosity multiplied by the scaling factor $s$, under the assumption that the SED scales for small changes in luminosity. This scaling factor also represents a fundamental uncertainty in the distance measurement to our targets, as a distance error of 10\% would cause a luminosity estimate that would differ by 20\%.
 
 \begin{landscape}
 \begin{table}[!h]
@@ -602,39 +616,39 @@ For the clusters which do have submillimeter data points, the mass estimates are
 \vspace{-0.5cm}
 \hspace*{-1.5cm}
 \begin{center}
-\begin{longtable}{lcccccccccc}
+\begin{longtable}{lccccccccccc}
 
-\toprule																									
-SOFIA Name	&	Coordinates	&	$\Rfifty/\Rfifty_\textrm{cal}$	&	$\alpha$	&	$R$	&	\Menv			&	\Ltot			&	$\Lbol$	&	$i$	&	\Av	&	$s$	\\
-	&	J2000	&		&		&		&	\si{\Msun}			&	\si{\Lsun}			&	\si{\Lsun}	&	\si{\degree}	&	mag	&		\\
-\midrule																									
-NGC1333.1	&	03h29m08s +31d21m57s	&	0.75	&	0.28	&	3.40	&	0.59	$\pm$	0.3796	&	5.6	$\pm$	3.12	&	8.38	&	0.0	&	12	&	0.85	\\
-NGC1333.10	&	03h28m57s +31d14m15s	&	0.80	&	1.84	&	1.12	&	0.39	$\pm$	0.2364	&	5.6	$\pm$	1.69	&	4.82	&	18.7	&	14	&	0.70	\\
-NGC1333.11	&	03h28m37s +31d13m30s	&	1.02	&	1.65	&	0.99	&	0.39	$\pm$	0.1571	&	7.7	$\pm$	1.37	&	7.47	&	18.7	&	12	&	0.70	\\
-NGC1333.3	&	03h29m02s +31d20m21s	&	0.90	&	0.71	&	3.29	&	1.96	$\pm$	0.8200	&	3.5	$\pm$	0.80	&	8.10	&	0.0	&	14	&	0.70	\\
-NGC1333.4	&	03h29m11s +31d18m31s	&	1.10	&	1.91	&	0.83	&	2.93	$\pm$	0.5045	&	2.8	$\pm$	0.42	&	3.06	&	18.7	&	14	&	1.00	\\
-NGC1333.5	&	03h29m11s +31d18m20s	&	1.62	&	1.75	&	1.05	&	1.96	$\pm$	0.3884	&	2.9	$\pm$	1.00	&	2.79	&	18.7	&	9	&	1.30	\\
-NGC1333.6	&	03h29m13s +31d18m14s	&	0.95	&	0.95	&	2.28	&	0.59	$\pm$	0.1589	&	4.3	$\pm$	1.72	&	1.16	&	18.7	&	14	&	1.00	\\
-NGC1333.7	&	03h28m43s +31d17m35s	&	1.19	&	1.05	&	1.88	&	0.01	$\pm$	0.0014	&	9.6	$\pm$	2.16	&	1.36	&	50.8	&	0	&	0.70	\\
-NGC1333.8	&	03h29m04s +31d16m04s	&	0.77	&	1.14	&	1.03	&	2.93	$\pm$	1.1268	&	14.3	$\pm$	2.24	&	35.11	&0	&	12	&	1.30	\\
-NGC1333.9	&	03h28m56s +31d14m37s	&	0.80	&	2.82	&	2.63	&	2.93	$\pm$	0.5367	&	19.5	$\pm$	3.67	&	24.28	&	18.7	&	14	&	1.30	\\
-Oph.1	&	16h27m10s -24d19m13s	&	0.92	&	0.27	&	0.62	&	0.017	$\pm$	0.0022	&	9.6	$\pm$	1.80	&	3.63	&	65.1	&	4	&	0.70	\\
-Oph.10	&	16h27m18s -24d28m55s	&	1.26	&	0.45	&	1.89	&	0.014	$\pm$	0.0028	&	1.9	$\pm$	0.38	&	0.55	&	61.7	&	14	&	1.15	\\
-Oph.13	&	16h27m30s -24d27m43s	&	--	&	-0.39	&	3.46	&	0.014	$\pm$	0.0023	&	6.5	$\pm$	1.63	&	1.49	&	65.1	&	14	&	1.30	\\
-Oph.14	&	16h27m28s -24d27m21s	&	1.89	&	-0.16	&	2.35	&	0.086	$\pm$	0.0405	&	2.9	$\pm$	0.78	&	0.95	&	18.7	&	14	&	1.30	\\
-Oph.15	&	16h27m29s -24d39m17s	&	1.25	&	0.01	&	1.09	&	0.014	$\pm$	0.0018	&	2.8	$\pm$	0.59	&	0.55	&	54.6	&	12	&	0.70	\\
-Oph.16	&	16h26m24s -24d24m48s	&	1.80	&	-0.74	&	1.49	&	0.011	$\pm$	0.0008	&	17.7	$\pm$	4.70	&	1.66	&	74.7	&	9	&	0.70	\\
-Oph.17	&	16h26m24s -24d24m39s	&	0.96	&	-0.11	&	1.00	&	0.011	$\pm$	0.0017	&	4.3	$\pm$	0.88	&	0.63	&	77.8	&	14	&	0.70	\\
-Oph.18	&	16h26m17s -24d23m45s	&	1.18	&	0.57	&	1.15	&	0.02	$\pm$	0.0040	&	1.3	$\pm$	0.21	&	0.22	&	65.1	&	14	&	0.70	\\
-Oph.19	&	16h26m30s -24d23m00s	&	2.51	&	0.53	&	1.15	&	0.014	$\pm$	0.0020	&	3.5	$\pm$	0.74	&	1.10	&	58.2	&	13	&	0.70	\\
-Oph.2	&	16h26m44s -24d34m48s	&	0.93	&	0.83	&	2.08	&	0.014	$\pm$	0.0015	&	5.0	$\pm$	0.97	&	1.19	&	77.8	&	14	&	1.00	\\
-Oph.3	&	16h27m09s -24d37m18s	&	0.99	&	0.57	&	1.54	&	0.017	$\pm$	0.0022	&	59.5	$\pm$	11.99	&	13.39	&	37.9	&	10	&	0.70	\\
-Oph.5	&	16h27m07s -24d38m15s	&	1.31	&	0.35	&	1.74	&	0.014	$\pm$	0.0021	&	2.9	$\pm$	0.66	&	0.53	&	68.4	&	14	&	1.30	\\
-Oph.6	&	16h27m16s -24d38m46s	&	1.29	&	2.39	&	0.83	&	0.014	$\pm$	0.0031	&	9.6	$\pm$	3.41	&	0.73	&	90.0	&	12	&	0.70	\\
-Oph.7	&	16h27m28s -24d39m34s	&	0.97	&	1.35	&	1.57	&	0.032	$\pm$	0.0043	&	26.6	$\pm$	4.90	&	6.47	&	74.7	&	14	&	0.70	\\
-Oph.8	&	16h27m37s -24d30m35s	&	1.02	&	0.55	&	1.06	&	0.017	$\pm$	0.0023	&	26.6	$\pm$	5.15	&	5.00	&	80.9	&	14	&	0.70	\\
-Oph.9	&	16h27m22s -24d29m54s	&	--	&	0.49	&	2.08	&	0.011	$\pm$	0.0005	&	11.8	$\pm$	2.71	&	0.99	&	80.9	&	14	&	0.70	\\
-\bottomrule																																															
+\toprule																											
+SOFIA Name	&	Coordinates	&	$\Rfifty/\Rfifty_\textrm{cal}$	&	$\alpha$	&	$R$	&	\Menv			&	Calc. \Menv	&	\Ltot			&	$\Lbol$	&	i	&	$\Av$	&	$s$	\\
+	&	(J2000)	&		&		&		&	(\si{\Msun})			&	(\si{\Msun})	&	(\si{\Lsun})			&	(\si{\Lsun})	&	(\si{\degree})	&	(mag)	&		\\
+\midrule																											
+NGC1333.1	&	03h29m08s +31d21m57s	&	0.75	&	0.28	&	3.40	&	0.59	$\pm$	0.3796	&	0.97	&	5.6	$\pm$	3.12	&	8.38	&	0.0	&	12	&	0.85	\\
+NGC1333.10	&	03h28m57s +31d14m15s	&	0.80	&	1.84	&	1.12	&	0.39	$\pm$	0.2364	&	0.45	&	5.6	$\pm$	1.69	&	4.82	&	18.7	&	14	&	0.70	\\
+NGC1333.11	&	03h28m37s +31d13m30s	&	1.02	&	1.65	&	0.99	&	0.39	$\pm$	0.1571	&	0.27	&	7.7	$\pm$	1.37	&	7.47	&	18.7	&	12	&	0.70	\\
+NGC1333.3	&	03h29m02s +31d20m21s	&	0.90	&	0.71	&	3.29	&	1.96	$\pm$	0.8200	&	1.12	&	3.5	$\pm$	0.80	&	8.10	&	0.0	&	14	&	0.70	\\
+NGC1333.4	&	03h29m11s +31d18m31s	&	1.10	&	1.91	&	0.83	&	2.93	$\pm$	0.5045	&	1.50	&	2.8	$\pm$	0.42	&	3.06	&	18.7	&	14	&	1.00	\\
+NGC1333.5	&	03h29m11s +31d18m20s	&	1.62	&	1.75	&	1.05	&	1.96	$\pm$	0.3884	&	1.50	&	2.9	$\pm$	1.00	&	2.79	&	18.7	&	9	&	1.30	\\
+NGC1333.6	&	03h29m13s +31d18m14s	&	0.95	&	0.95	&	2.28	&	0.59	$\pm$	0.1589	&	0.47	&	4.3	$\pm$	1.72	&	1.16	&	18.7	&	14	&	1.00	\\
+NGC1333.7	&	03h28m43s +31d17m35s	&	1.19	&	1.05	&	1.88	&	0.01	$\pm$	0.0014	&	--	&	9.6	$\pm$	2.16	&	1.36	&	50.8	&	0	&	0.70	\\
+NGC1333.8	&	03h29m04s +31d16m04s	&	0.77	&	1.14	&	1.03	&	2.93	$\pm$	1.1268	&	2.02	&	14.3	$\pm$	2.24	&	35.11	&	0.0	&	12	&	1.30	\\
+NGC1333.9	&	03h28m56s +31d14m37s	&	0.80	&	2.82	&	2.63	&	2.93	$\pm$	0.5367	&	1.72	&	19.5	$\pm$	3.67	&	24.28	&	18.7	&	14	&	1.30	\\
+Oph.1	&	16h27m10s -24d19m13s	&	0.92	&	0.27	&	0.62	&	0.017	$\pm$	0.0022	&	0.04	&	9.6	$\pm$	1.80	&	3.63	&	65.1	&	4	&	0.70	\\
+Oph.10	&	16h27m18s -24d28m55s	&	1.26	&	0.45	&	1.89	&	0.014	$\pm$	0.0028	&	0.00	&	1.9	$\pm$	0.38	&	0.55	&	61.7	&	14	&	1.15	\\
+Oph.13	&	16h27m30s -24d27m43s	&	0.00	&	-0.39	&	3.46	&	0.014	$\pm$	0.0023	&	0.01	&	6.5	$\pm$	1.63	&	1.49	&	65.1	&	14	&	1.30	\\
+Oph.14	&	16h27m28s -24d27m21s	&	1.89	&	-0.16	&	2.35	&	0.086	$\pm$	0.0405	&	0.02	&	2.9	$\pm$	0.78	&	0.95	&	18.7	&	14	&	1.30	\\
+Oph.15	&	16h27m29s -24d39m17s	&	1.25	&	0.01	&	1.09	&	0.014	$\pm$	0.0018	&	0.02	&	2.8	$\pm$	0.59	&	0.55	&	54.6	&	12	&	0.70	\\
+Oph.16	&	16h26m24s -24d24m48s	&	1.80	&	-0.74	&	1.49	&	0.011	$\pm$	0.0008	&	--	&	17.7	$\pm$	4.70	&	1.66	&	74.7	&	9	&	0.70	\\
+Oph.17	&	16h26m24s -24d24m39s	&	0.96	&	-0.11	&	1.00	&	0.011	$\pm$	0.0017	&	--	&	4.3	$\pm$	0.88	&	0.63	&	77.8	&	14	&	0.70	\\
+Oph.18	&	16h26m17s -24d23m45s	&	1.18	&	0.57	&	1.15	&	0.02	$\pm$	0.0040	&	0.04	&	1.3	$\pm$	0.21	&	0.22	&	65.1	&	14	&	0.70	\\
+Oph.19	&	16h26m30s -24d23m00s	&	2.51	&	0.53	&	1.15	&	0.014	$\pm$	0.0020	&	0.01	&	3.5	$\pm$	0.74	&	1.10	&	58.2	&	13	&	0.70	\\
+Oph.2	&	16h26m44s -24d34m48s	&	0.93	&	0.83	&	2.08	&	0.014	$\pm$	0.0015	&	0.05	&	5.0	$\pm$	0.97	&	1.19	&	77.8	&	14	&	1.00	\\
+Oph.3	&	16h27m09s -24d37m18s	&	0.99	&	0.57	&	1.54	&	0.017	$\pm$	0.0022	&	0.04	&	59.5	$\pm$	11.99	&	13.39	&	37.9	&	10	&	0.70	\\
+Oph.5	&	16h27m07s -24d38m15s	&	1.31	&	0.35	&	1.74	&	0.014	$\pm$	0.0021	&	0.03	&	2.9	$\pm$	0.66	&	0.53	&	68.4	&	14	&	1.30	\\
+Oph.6	&	16h27m16s -24d38m46s	&	1.29	&	2.39	&	0.83	&	0.014	$\pm$	0.0031	&	0.02	&	9.6	$\pm$	3.41	&	0.73	&	90.0	&	12	&	0.70	\\
+Oph.7	&	16h27m28s -24d39m34s	&	0.97	&	1.35	&	1.57	&	0.032	$\pm$	0.0043	&	0.03	&	26.6	$\pm$	4.90	&	6.47	&	74.7	&	14	&	0.70	\\
+Oph.8	&	16h27m37s -24d30m35s	&	1.02	&	0.55	&	1.06	&	0.017	$\pm$	0.0023	&	0.03	&	26.6	$\pm$	5.15	&	5.00	&	80.9	&	14	&	0.70	\\
+Oph.9	&	16h27m22s -24d29m54s	&	--	&	0.49	&	2.08	&	0.011	$\pm$	0.0005	&	0.01	&	11.8	$\pm$	2.71	&	0.99	&	80.9	&	14	&	0.70	\\
+\bottomrule																															
 \end{longtable}																																	
 %\caption*{\textbf{Note:} The complete version of this table is made available electronically}			
 \end{center}																						
@@ -681,9 +695,9 @@ Given the relative simplicity of the model grid that we constructed, most of obs
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/incVSmass.pdf}
-\label{fig:incVSmass}
 \vspace{-1cm}
-\caption[Inclination versus mass]{Inclination versus envelope mass.}
+\caption[Inclination versus mass]{The correlation between inclination angle and envelope mass might indicate a degeneracy of the modeling software.}
+\label{fig:incVSmass}
 \end{center}
 \end{figure}
 
@@ -717,7 +731,7 @@ Finally, we observe that there is no statistically significant relationship betw
 \includegraphics[width=\textwidth]{Figures/slumVSalpha.pdf}
 \label{fig:slumVSalpha}
 \vspace{-1cm}
-\caption[Luminosity versus spectral index.]{Luminosity versus spectral index.}
+\caption[Luminosity versus spectral index.]{There is no apparent correlation between fitted luminosity and spectral index.}
 \end{center}
 \end{figure}
 
@@ -796,7 +810,7 @@ Another possible explanation for this emission is that the gas and dust ejected 
 \begin{center}
 %\hspace*{-1.2in}
 \includegraphics[width=1.3\textwidth]{Figures/IRAS20050.png}
-\caption[Multi-wavelength view of the IRAS~20050+2720 core]{The core of IRAS20050+2720 is seen in the four bands of the \textit{Spitzer} IRAS instrument, as well as with the four FORCAST bands. The increased resolution of FORCAST compared to previous instruments allows to match the long-wavelength emission with its short wavelength counterpart. The stretch in each image is adjusted for optimal readability. The white contours correspond to the FORCAST \SI{37}{\micro\meter} emission [mention the contour levels]. }
+\caption[Multi-wavelength view of the IRAS~20050+2720 core]{The core of IRAS20050+2720 is seen in the four bands of the \textit{Spitzer} IRAS instrument, as well as with the four FORCAST bands. The increased resolution of FORCAST compared to previous instruments allows to match the long-wavelength emission with its short wavelength counterpart. The stretch in each image is adjusted for optimal readability. The red contours correspond to the FORCAST \SI{37}{\micro\meter} emission at 0.03, 0.07, 0.13, 0.2, 0.3 and 0.4 Jy.}
 \label{fig:IRAS20050_mosaic}
 \end{center}
 \end{figure}
@@ -894,12 +908,12 @@ Our findings echo the work by \citet{Beltran:2008gu}  who suggest that there are
 The NGC~2071 star-forming region is one of several active areas of star formation in the northern part of L1630 giant molecular cloud which is located at a distance of \SI{422}{\pc} \citep{vanDishoeck:2011em}. NGC~2071 itself is a reflection nebula.
 The NGC~2071 infrared cluster, located about 4' north of the reflection nebula, is a region of intermediate mass star formation \citep{Strom1976, Persson1981, Butner1990}. Maps of the cloud in CO and its isotopomers \citep{Buckle2010} show a large scale clump with $\sim\SI{1000}{\Msun}$ associated with the cluster. Dust continuum emission at $\lambda$=0.85 and \SI{1.3}{\milli\meter} peaks on center of the cluster extending ~1' in diameter containing ~\SI{30}{\Msun} of gas and dust \citep{Johnstone2001,Mitchell2001,Launhardt1996}. Emission from CS in the J=2-1 through J=7-6 indicate that the gas in this region is centrally condensed with a density of $sim\SI{1e6}{\raiseto{-3}\centi\meter}$ \citep{Zhou1990}. 
 
-There are a number of near infrared surveys of the young cluster \citep[e.g.,][]{Strom1976,Lada1991,Megeath2012,Spezzi2015}. \cite{Spezzi2015} identify 52 YSOs associated with the NGC~2071 cluster, with the majority Class II sources. \cite{Flaherty2008} estimate an age of $\sim$\SI{2}{\mega\year} for the cluster, consistent with the large fraction of Class II sources (\cite{Evans2009}. The brightest far infrared emission from the cluster is associated with the IRS1 region \citep{Harvey1979,Butner1990}, which has an estimated total luminosity of \SI{520}{\Lsun}. The immediate region of IRS 1 is, in fact, home to a number of YSOs that are infrared, X-ray, and radio sources \citep{Skinner2009,C-G2012,Kempen2012}. The radio \citep{C-G2012} and H$_2$ emission line imaging indicate that IRS~1, IRS~2, IRS~3, and, perhaps, VLA~1 are YSOs with outflows. The larger scale molecular outflow associated with this region is well studied in a number of molecules \citep{Bally1982,Chernin1993,Stoji2008}.
+There are a number of near infrared surveys of the young cluster \citep[e.g.,][]{Strom1976,Lada1991,Megeath2012,Spezzi2015}. \citet{Spezzi2015} identify 52 YSOs associated with the NGC~2071 cluster, with the majority Class II sources. \citet{Flaherty2008} estimate an age of $\sim$\SI{2}{\mega\year} for the cluster, consistent with the large fraction of Class II sources \citep{Evans2009}. The brightest far infrared emission from the cluster is associated with the IRS1 region \citep{Harvey1979,Butner1990}, which has an estimated total luminosity of \SI{520}{\Lsun}. The immediate region of IRS 1 is, in fact, home to a number of YSOs that are infrared, X-ray, and radio sources \citep{Skinner2009,C-G2012,Kempen2012}. The radio \citep{C-G2012} and H$_2$ emission line imaging indicate that IRS~1, IRS~2, IRS~3, and, perhaps, VLA~1 are YSOs with outflows. The larger scale molecular outflow associated with this region is well studied in a number of molecules \citep{Bally1982,Chernin1993,Stoji2008}.
 
 Figure \ref{fig:n2071overview} shows the Spitzer 3.1~$\mu$m image of the IRS~1 region on the left \citep[image from Spitzer Archive:][]{Megeath2012} and the Herschel 70~$\mu$m image on the right (image from Herschel Archive: Gould Belt Project, P.I. Andr\'e). The plus marks in both panels indicate the position of the brighter YSOs: IRS~1, IRS~2, IRS~3, IRS~4, and VLA~1. The inner red circle with a diameter of \ang{;;26} indicates the extend of the saturated region in the Spitzer MIPS \SI{24}{\um} image; the outer red circle, diameter \ang{;;60}, encompasses the region with strong imaging artifacts in the MIPS \SI{24}{\um} image.
 The right panel shows Herschel 70~$\mu$m image which does not resolve the emission from IRS~1, IRS~2, IRS~3, and VLA~1. The centroid of the \SI{24}{\um} and \SI{70}{\um} emission is between IRS~1 and VLA~1 indicating that several of the sources are contributing to the total observed emission. Interferometric observations show that the millimeter wavelength dust emission is dominated by envelopes associated with IRS~1 and IRS~3, with estimated masses of 8.2 and \SI{12.3}{\Msun} material, respectively \citep{Kempen2012}. The millimeter emission also reveals the presence of disks with radii $\le$\SI{100}{\au} associated with IRS~1 and IRS~3 \citep{Kempen2012}.
 
-The luminosities and masses of the individual source, IRS~1, IRS~2, IRS~3, and VLA~1, are not known. The Spectral Energy Distributions (SEDs) shortward of 10~$\mu$m support their identification as embedded YSOS \citep{Skinner2009}. \cite{Skinner2009} gives a clear discussion of the possibilities for IRS~1 and concludes that it is likely a mid-to late B~star. \cite{Kempen2012} find luminosities of 10, 3.4, and $\le$\SI{27}{\Lsun} for IRS~1, 2, and 3, respectively, and stellar masses of $\le$\SI{1}{\Msun} for each, based on SED fitting. These masses and luminosities are not consistent with estimate of the total luminosity of the region of \SI{520}{\Lsun} \citep{Butner1990}. The far infrared images from Herschel reveal that IRS~1 alone does not totally dominate, as seen in Fig.~\ref{fig:NGC20171_saturated}; IRS~1, VLA~1, and IRS~3 likely make substantial contributions to the emission with lesser emission from IRS~2 and IRS~4.
+The luminosities and masses of the individual source, IRS~1, IRS~2, IRS~3, and VLA~1, are not known. The Spectral Energy Distributions (SEDs) shortward of 10~$\mu$m support their identification as embedded YSOS \citep{Skinner2009}. \citet{Skinner2009} gives a clear discussion of the possibilities for IRS~1 and concludes that it is likely a mid-to late B~star. \cite{Kempen2012} find luminosities of 10, 3.4, and $\le$\SI{27}{\Lsun} for IRS~1, 2, and 3, respectively, and stellar masses of $\le$\SI{1}{\Msun} for each, based on SED fitting. These masses and luminosities are not consistent with estimate of the total luminosity of the region of \SI{520}{\Lsun} \citep{Butner1990}. The far infrared images from Herschel reveal that IRS~1 alone does not totally dominate, as seen in Fig.~\ref{fig:NGC2071saturated}; IRS~1, VLA~1, and IRS~3 likely make substantial contributions to the emission with lesser emission from IRS~2 and IRS~4.
 
 \subsubsection{Observations and discussion}
 
@@ -909,7 +923,7 @@ The luminosities and masses of the individual source, IRS~1, IRS~2, IRS~3, and V
 \includegraphics[width=1.4\textwidth]{Figures/NGC2071_mosaic.png}
 
 
-\caption[Multi-wavelength view of the NGC~2071 core]{The core of NGC2071 is seen in two bands of the \textit{Spitzer} IRAC instrument ("I1" and "I4"), as well as with the four FORCAST bands. The increased resolution of FORCAST compared to previous instruments allows to match the long-wavelength emission with its short wavelength counterpart. The stretch in each image is adjusted for optimal readability. The white contours correspond to the FORCAST \SI{37}{\micro\meter} emission [mention the contour levels]. }
+\caption[Multi-wavelength view of the NGC~2071 core]{The core of NGC2071 is seen in two bands of the \textit{Spitzer} IRAC instrument ("I1" and "I4"), as well as with the four FORCAST bands. The increased resolution of FORCAST compared to previous instruments allows to match the long-wavelength emission with its short wavelength counterpart. The stretch in each image is adjusted for optimal readability. The red contours correspond to the FORCAST \SI{37}{\micro\meter} emission, between 0.1 and 2.4~Jy by increment of 0.25~Jy. }
 \label{fig:NGC2071_mosaic}
 \end{center}
 \end{figure}
@@ -922,7 +936,7 @@ The luminosities and masses of the individual source, IRS~1, IRS~2, IRS~3, and V
 \begin{table}[!h]
 \scriptsize
 \caption[Sources in NGC2071's dense core]{Sources in the densest region of NGC2071.}
-\label{tab:IRAS20050sum}
+\label{tab:NGC2071sum}
 \vspace{-0.5cm}
 \begin{longtable}{lP{2cm}P{2cm}P{2cm}P{2cm}}
 \toprule																			

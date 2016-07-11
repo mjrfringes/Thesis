@@ -217,7 +217,7 @@ In the following, we will be describing our attitude using quaternions or rotati
 
 Covariance matrices contain information about the cross-correlation of the variables in the state vector. The diagonal elements represent the auto-covariance of a given variable, while the terms off the diagonal indicate the degree of covariance (or correlation) between the different variables. For example, we will have three gyroscopes which will be mounted orthogonally from each other, each measuring the angular velocity about three different axes. In the ideal case, all gyroscopes are independent and the covariance matrix associated to the set of three angular velocities is diagonal, with the variances of each gyroscope on the diagonal.
 
-If we rotate the gyroscopes' frame with a rotation matrix $\R$, the new covariance matrix $\noiseCovMat$ needs to be rotated as well: $\noiseCovMat' = \R\noiseCovMat\R^T$. 
+If we rotate the gyroscopes' frame with a rotation matrix \textbf{C}, the new covariance matrix $\noiseCovMat$ needs to be rotated as well: $\noiseCovMat' = \textbf{C}\noiseCovMat\textbf{C}^T$. 
 
 \subsection{Small angle approximation}
 

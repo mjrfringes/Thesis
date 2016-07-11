@@ -1,8 +1,10 @@
-\section{Control system architecture}
-\label{sec:Chap3-ControlSystemArchitecture}
 Chapter~\ref{chap:phasenoisepaper} sets the general background to double-Fourier interferometry when used mostly in spectroscopy mode. It sets the mathematical formalism to estimate the spectral sensitivity, given various sources of gaussian noises. 
 
-In this section, we see more directly how this applies to BETTII, and how the system is designed to satisfy these requirements in order to guarantee good observations.
+In this chapter, we see more directly how this applies to BETTII, and how the system is designed to satisfy these requirements in order to guarantee good observations. First, we describe the overall architecture and system-level strategy that we use, before going into some details of BETTII's subsystems. Second, we describe the main algorithm used in the flight software, which estimates the position of the payload at all time. Because of the importance of this algorithm, and its potential usability by others, we decided to elaborate on some of the mathematical derivations that define the attitude estimator. 
+
+
+\section{Control system architecture}
+\label{sec:Chap3-ControlSystemArchitecture}
 
 \subsection{Overall strategy}
 
@@ -684,27 +686,30 @@ $\bullet$ Automatically applies observing plan if no commands from the ground: s
 
 \textit{boop} is a National Instrument cRIO- system. It features a reprogrammable FPGA chip in addition to a dual-core real-time operating system. NI LabView is the software interface to the system. \textit{boop} will generate and distribute BETTII's master clock signal at \SI{50}{\mega\hertz}.
 
-The various relationships and communications channels between the subsystems is shown in the diagram on Fig.~\ref{fig:FlowDiagram}.
-
 \begin{figure}[!h]
 		\centering
-		\includegraphics{Figures/FlowDiagram.pdf} 
-		\caption[Flow diagram]{Relationships and communications channels between the various subsystems.}
+		\includegraphics[width=0.7\textwidth]{Figures/FlowDiagram.pdf} 
+		\caption[Flow diagram]{Relationships and communications channels between the various subsystems, from \citet{Rizzo:2014jq}.}
 		\label{fig:FlowDiagram}
 \end{figure}
 
 
+The various relationships and communications channels between the subsystems is shown in the diagram on Fig.~\ref{fig:FlowDiagram}.
+
+
+
 \subsection{Software architecture}
 
-A diagram showing the flow of the main loop inthe control software is shown in Fig.~\ref{fig:SoftwareFlow}. 
+A diagram showing the flow of the main loop of the control software is shown in Fig.~\ref{fig:SoftwareFlow}. This loop is operated at a nominal frequency of \SI{100}{\hertz}, which is the speed at which we read out the gyroscopes and issue new commands to the control system. The star camera, as well as other absolute sensors are being processed by the Real time software, and appropriately propagated since they often correspond to a measurement that was taken some number of loops ago. Using a robust synchronization scheme slaved to our system's master clock, we can align the various pieces of information with very high accuracy.
+
 \begin{figure}[!h]
 	\centering
 	\includestandalone{Figures/SoftwareFlow}
-	\caption[Software diagram]{Software layout}
+	\caption[Software diagram]{Two loops of the main control software. Right at each clock tick, the gyros are triggered in \boop FPGA and read out. Once the sensors are triggered and read out, it triggers the loop in \boop RT,  which has then less than \SI{10}{\milli\second} to complete and send new commands back to the \boop FPGA. These commands are not applied by the actuators until the next clock tick. This has the advantage to completely lock all moving parts of our payload to our heartbeat. The commands sent are using information from exactly 1 loop ago. This constant lag is preferred, as opposed to a scenario where the commands are applied as soon as possible, which would lead a variable lag which would depend on the processing time within \boop RT.}
 	\label{fig:SoftwareFlow}
     \end{figure}
     
-This loop is operated at a nominal frequency of \SI{100}{\hertz}, which is the speed at which we read out the gyroscopes and issue new commands to the control system. The star camera, as well as other absolute sensors are being processed by the Real time software, and appropriately propagated since they often correspond to a measurement that was taken some number of loops ago. Using a robust synchronization scheme slaved to our system's master clock, aligning the various pieces of information is possible with very high accuracy.
+    
 
 \subsection{Controls architecture summary}
 
