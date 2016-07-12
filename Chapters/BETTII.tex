@@ -8,12 +8,12 @@ like IRAS \citep[12-100 \um;][]{1984ApJ...278L...1N}, ISO \citep[2.5-240 $\um$;]
 these wavelengths; but the spatial resolution of space-based observatories is limited by the cost 
 and complexity of building and flying progressively larger aperture telescopes. 
 
-High-altitude platforms are a good compromise between ground and space observatories: while less sensitive because of the surrounding thermal emission from the atmosphere, they can still feature larger optics and payloads, more experimental setups, and instrumentation that can be changed on a more frequent and significantly less costly basis.
+High-altitude platforms are a good compromise between ground and space observatories: while less sensitive because of the surrounding thermal emission from the atmosphere and the instrument components which are at ambient temperature, they can still feature larger optics and payloads, more experimental setups, and instrumentation that can be changed on a more frequent and significantly less costly basis.
 
-BETTII is an experiment that aims at breaking from the single-aperture paradigm by using interferometry between 30 and \SI{110}{\micro\meter} from a balloon platform. Interferometry is commonly used on the ground at other wavelengths such as optical and radio, and is a viable path forward to obtain much higher resolution than what single apertures can provide.
+BETTII is an experiment that aims at breaking from the single-aperture paradigm by using interferometry between 30 and \SI{110}{\micro\meter} from a balloon platform. Interferometry is commonly used on the ground at other wavelengths such as optical and radio, and is a viable path forward to obtain much higher resolution than what single apertures can reasonably provide.
 
 BETTII is founded on a particular technique called \textit{spatio-spectral interferometry} \citep{Mariotti:1988vea}, which is a way to achieve 
-high angular and moderate spectral resolutions at far-IR wavelengths from above the atmosphere, without the cost and limitations of large single apertures. 
+high angular and moderate spectral resolutions at far-IR wavelengths, without the cost and limitations of large single apertures. 
 
 
 %\subsection{The stratospheric balloon environment}
@@ -24,18 +24,18 @@ high angular and moderate spectral resolutions at far-IR wavelengths from above 
 \section{BETTII description}
 
 %The Ballon Experimental Twin Telescope for Infrared Interferometr (BETTII) project is pioneering a new technique that could lead to dramatically increased spatial resolution in the far-infrared: spatio-spectral interferometry. 
-As a cryogenic payload flying at an altitude of \SI{37}{\kilo\meter}, BETTII is the first flying "direct detection" interferometer: it will attempt to coherently combine light from two different telescopes to provide increased angular resolution. Because it is operating from above the atmosphere, it can see the far-infrared universe between 30 and 110 \si{\micro\meter}, and provide \ang{;;0.5}-\ang{;;1} spatial resolution at these wavelengths - a key region of parameter space well-suited to study protostars evolving in dense clustered environments.
+As a cryogenic payload flying at an altitude of \SI{37}{\kilo\meter} (\SI{120000}{\foot}, BETTII is the first flying "direct detection" interferometer: it will attempt to coherently combine light from two different telescopes to provide increased angular resolution. Because it is operating from above most the atmosphere, it can see the far-infrared universe between 30 and 110 \si{\micro\meter}, and provide \ang{;;0.5}-\ang{;;1} spatial resolution at these wavelengths - a key region of parameter space well-suited to study protostars evolving in dense clustered environments.
 
 To provide this resolution (which matches that of \JWST  at \SI{25}{\micro\meter}), BETTII needs to be have two collectors separated by $\sim$~\SI{8}{\meter}; because of its operating wavelength, it needs to have a cryogenic instrument; because it is an interferometer, it needs optics with exquisite surface quality; and because it flies on a balloon platform, it needs to be robust to large changes in temperature, large pointing errors, and severe shock resistance for the landing phase.
 
-Throughout this chapter, we will first discuss the basics of double-Fourier interferometers, before presenting the general design of BETTII payload and most of its subsystems.
+This chapter will first discuss the basics of double-Fourier interferometers, then present the general design of BETTII payload and most of its subsystems.
 
 
 \section{Basics of interferometry}
 
 Since the end of the 19th century, scientists have learned how to use the wave properties of light to learn about new astrophysical phenomena. It did not take long for what first started as a laboratory experiment by \citet{Michelson:1887wc} to be applied to astronomy, with the Michelson Stellar Interferometer experiment. 
 
-The principle of interferometry is simple. Because light behaves like a wave, two beams of light coming from the same source can be combined \textit{coherently}, provided that their amplitudes and phases are controlled. The intensity of the combined signal is a function of the brightness of the light beam, and also the relative phase and wavefront of each beam, which can create a modulation of that brightness.
+The principle of interferometry is simple. Because light behaves like a wave, two beams of light coming from the same source can be combined \textit{coherently}, provided that their amplitudes and phases are controlled. The intensity of the combined signal is a function of the brightness of the light beam, and the relative phase and wavefront of each beam. Changes in the relative phase create a modulation of that brightness.
 
 \citet{Michelson:1887wc} created what became the standard Michelson interferometer (Fig.~\ref{fig:michelson}). It uses one single source of light and a 50/50 beam splitter that creates two coherent light beams from that one source. The two light beams go through two separate \textit{arms} before being recombined. While adjusting the length of one arm with respect to the other, we modulate the phase difference between the two arms, leaving everything else the same. This creates a modulation called an \textit{interferogram}, which describes the measured intensity variation as a function of the phase difference between the two arms.
 
@@ -47,14 +47,14 @@ The principle of interferometry is simple. Because light behaves like a wave, tw
 \end{figure}
 
 
-The phase difference is expressed in radians and depends on the wavelength of the light that is used. In this work, we will usually refer to this difference in terms of an actually physical distance instead: the optical path difference (\OPD). This has the advantage of being wavelength-independent and relate more easily to opto-mechanical considerations.
+The phase difference is expressed in radians and depends on the wavelength of the light that is used. In this work, we will usually refer to this difference in terms of an actual physical distance: the optical path difference (\OPD). This has the advantage of being wavelength-independent and relate more easily to opto-mechanical considerations.
 
 
 
 
 \subsection{Fourier transform spectroscopy}
 
-One immediate consequence of the original Michelson experiment is to realize that the interferogram actually contains spectral information. For an ideally monochromatic source, the intensity modulation (or \textit{fringe}) depends on the \OPD only modulo a wavelength. This means that the modulation is identical whether we introduce an $\OPD = \lambda$, or $\OPD = n\lambda$, where $n$ is an integer. This is because the monochromatic wave can essentially be represented by an amplitude times a cosine function of phase (or a cosine function of $2\pi\OPD/\lambda$).
+One immediate consequence of the original Michelson experiment is to realize that the interferogram actually contains spectral information. For an ideal monochromatic source, the interferogram depends on the \OPD only modulo a wavelength. This means that the modulation is identical whether we introduce an $\OPD = \lambda$, or $\OPD = n\lambda$, where $n$ is an integer. This is because the monochromatic wave can essentially be represented by an amplitude times a cosine function of phase (a cosine function of $2\pi\OPD/\lambda$).
 
 \begin{figure}[!ht]
 	\centering
@@ -64,13 +64,13 @@ One immediate consequence of the original Michelson experiment is to realize tha
     \end{figure}
 
 
-The intensity of modulation for a given wavelength is then a cosine wave as well, with an amplitude related to the intensity of the signal, and a period equal to the wavelength of the incident light.
+The interferogram for a given wavelength is a cosine wave, with an amplitude related to the intensity of the signal, and a period equal to the wavelength of the incident light.
 
-If we consider a polychromatic signal as a sum of monochromatic wavelengths, this phenomenon happens for each single wavelength, and the resulting intensity modulations add \textit{coherently}: the total intensity is the coherent sum of the intensity modulations created by each individual wavelength (see Fig.~\ref{fig:interferogram}). This has the effect of smearing the resulting modulation in most places except around the precise location where the \OPD is zero. Around this location, fringes are always seen. These are commonly referred to as \textit{white light fringes}. The range of wavelengths in which fringes can be seen is called the \textit{coherence length} \Lc. When all wavelengths are weighted equally in a bandpass $\Delta\lambda$, the coherence length can be expressed as:
+If we consider a polychromatic signal as a sum of monochromatic wavelengths, this phenomenon happens for each single wavelength, and the resulting intensity modulations add \textit{coherently}: the total intensity is the coherent sum of the intensity modulations created by each individual wavelength (see Fig.~\ref{fig:interferogram}). This has the effect of smearing the resulting modulation in most places except around the precise location where the \OPD is zero (which is called \textit{ZPD}). Around this location, a modulation is always seen. This is commonly referred to as \textit{white light fringes}, where a \textit{fringe} represents one wavelength of the interferogram. The range of OPD in which fringes can be seen is called the \textit{coherence length} \Lc. When all wavelengths are weighted equally in a bandpass $\Delta\lambda$, the coherence length can be expressed as:
 \begin{equation}
 \Lc = \frac{\lambda^2}{\Delta\lambda},
 \end{equation}
-and the interferogram can be represented by a carrier frequency modulated by an envelope function:
+and the interferogram can be represented by a carrier frequency modulated by an envelope function.
 
 %[add equation for the integral of interferograms]
 %\begin{equation}
@@ -90,26 +90,26 @@ Since the modulation is a coherent superposition of cosine waves, it contains sp
     \end{figure}
 
 
-An interferogram is produced by coherently combining photons from one single source of light. This can be applied for example for an infinitely far astronomical source: as the light propagates from the source, by the time it reaches our instrument the radius of curvature of its wavefront is extremely large, and the latter can be approximated as being flat. The photons from this source nominally enter each arm of the interferometer with the same phase, when the alignment is perfect. When combined, these photons would also interfere and create an interferogram.
+An interferogram is produced by coherently combining photons from one single source of light. This can be applied for example for an infinitely distant astronomical source: as the light propagates from the source, by the time it reaches our instrument the radius of curvature of its wavefront is extremely large, and the latter can be approximated as being flat. The photons from this source nominally enter each arm of the interferometer with the same phase, when the alignment is perfect. When combined, these photons interfere and create an interferogram.
 
-However, let's suppose that a second source is sufficiently far away from the first source that its wavefront enters the interferometer at an angle (see the red source in Fig.~\ref{fig:interferometer}). This means the photons from the second source enter one arm slightly later than the other - or that photons need to cross more optical path in one arm than in the other. These photons would also create an interferogram, but the latter will be centered about a different position in \OPD  space than the interferogram created by the photons from the first source. Now let's suppose that the second source is exactly as bright as the first one, and that it is apart from the first by an angle $\theta$ such that $\baseline\cdot\hat{\vectors{s}} = \B\sin\theta = \lambda/2$, where $\hat{\vectors{s}}$ is a unity vector representing the line of sight of the telescope. In this case, the interferogram created by the photons from the second source has the same amplitude as the first interferogram, but is shifted by half a wavelength in \OPD. As a result, the two (monochromatic) interferograms would exactly cancel each other, and we would say that the \textit{spatial degree of coherence} between the two sources is zero. Although the sources are not coherent in the strict sense because they are completely independent sources, the intensity modulation (or interferograms) caused by each source would, in this case, cancel out. If the angular separation was such that $\baseline\sin\theta = \lambda$, then the modulations would add up and the resulting modulation would have twice the amplitude of that with just one single source. We would say that the spatial degree of coherence between the two sources is unity. In the bottom right of Fig.~\ref{fig:interferometer}, we show the addition of two polychromatic interferograms (in blue and red), adding up to the measured curve in black. By measuring the curve in black, we know that there are two sources along our baseline vector. The spatial resolution of the interferometer is its ability to resolve nearby sources directly in the interferogram space - in other words, it is its ability to resolve fringe packets. Usually, this quantity is equal to $\theta\sim\lambda/(2B)$. A summary of the relevant planes used in aperture synthesis is shown in Fig~\ref{fig:aperturesynthesis}.
+However, let's suppose that a second source is sufficiently far away from the first source that its wavefront enters the interferometer at an angle (see the red source in Fig.~\ref{fig:interferometer}). This means the photons from the second source enter one arm slightly later than the other - photons need to cross over more optical path in one arm than in the other. These photons would also create an interferogram, but the latter will be centered about a different position in \OPD  space than the interferogram created by the photons from the first source. Now let's suppose that the second source is exactly as bright as the first one, and that it is apart from the first by an angle $\theta$ such that $\baseline\cdot\hat{\vectors{s}} = |\B|\sin\theta = \lambda/2$, where $\hat{\vectors{s}}$ is a unity vector representing the line of sight of the telescope, and $\B$ is the baseline vector projected on the plane of the sky. In this case, the interferogram created by the photons from the second source has the same amplitude as the first interferogram, but is shifted by half a wavelength in \OPD. As a result, the two (monochromatic) interferograms would exactly cancel each other, and we would say that the visibility (sometimes referred to as the \textit{complex degree of coherence} \citep[e.g.][]{Mariotti:1988vea}) between the two sources is zero. Although the sources are not coherent in the strict sense because they are completely independent sources, the interferograms caused by each source would, in this case, cancel out. If the angular separation was such that $|\B|\sin\theta = \lambda$, then the modulations would add up and the resulting modulation would have twice the amplitude of that with just one single source. We would say that the visibility between the two sources is unity. In the bottom right of Fig.~\ref{fig:interferometer}, we show the addition of two polychromatic interferograms (in blue and red), adding up to the measured curve in black. By measuring the curve in black, we know that there are two sources along our baseline vector. The spatial resolution of the interferometer is its ability to resolve nearby sources directly in the interferogram space - in other words, it is its ability to resolve fringe packets. Usually, this spatial resolution is equal to $\theta\sim\lambda/(2B)$. A summary of the relevant planes used in aperture synthesis is shown in Fig~\ref{fig:aperturesynthesis}.
 
 \begin{figure}[!h]
 	\centering
 	\includestandalone[width=\textwidth]{Figures/aperturesynthesis}
-	\caption[Aperture synthesis]{Relevant planes in the optical train for aperture synthesis.}
+	\caption[Aperture synthesis]{Relevant planes in the optical train for aperture synthesis, inspired by Fig. 3.14 in \cite{Glindemann:2011hk}. Three sources are shown on the sky on the left. The second relevant plane is the entrance aperture or pupil plane, which is the 2D Fourier transform of the source plane, which is also called the u,v-plane. The interferometer samples two apertures in this complex plane at each given baseline length and orientation with respect to the sky. In the third plane, we show that an optical delay in introduced between each sub-aperture in the pupil plane, and the pupils are overlapped. Finally, an image is formed out of the overlapped pupils, which is shown in the detector plane.}
 	\label{fig:aperturesynthesis}
     \end{figure}
 
 
 
-One way to formalize the concept of spatial coherence is to consider an interferometer with a given baseline length and angle as a filter of the source's spatial distribution on the sky. For a given baseline length and angle with respect to the sky, the interferometer is only sensitive to a single angular frequency in a single direction on the sky. Various sources observed simultaneously by the interferometer will all contribute to a single measured interferogram (or intensity modulation), which can be characterized in terms of the spatial degree of coherence, also called \textit{complex visibility}, between the sources for a given baseline angle and length. 
+One way to formalize the concept of spatial coherence is to consider an interferometer with a given baseline length and angle as a filter of the source's spatial distribution on the sky. For a given baseline length and angle with respect to the sky, the interferometer is only sensitive to a single angular frequency in a single direction on the sky (as well as the total power). Various sources observed simultaneously by the interferometer will all contribute to a single measured interferogram, which can be characterized in terms of the complex visibility between the sources for a given baseline angle and length. 
 
 The generalization of this property is called the Van Cittert-Zernike theorem \citep{Zernike:1938kq}: the 2D Fourier transform of the intensity distribution on the sky is its complex visibility function. In other words, by mapping the complex visibility (through measuring interferograms) for all baseline angles and lengths, we can reconstruct the original image through an inverse Fourier transform. The plane of complex visibilities is commonly referred to as the (u,v)-plane \citep{Thompson:2008ww}.
 
-Interferometry and aperture synthesis is used commonly at radio wavelengths, where coherent detectors can obtain the direct phase of the incoming light by mixing the signal with a local oscillator. Both the amplitude and the phase of the signal can be recorded for each antenna, and can be combined with all the other antennas at a later time.
+Interferometry and aperture synthesis is used commonly at radio wavelengths, where coherent detectors can retain the direct phase of the incoming light by mixing the signal with a local oscillator. Both the amplitude and the phase of the signal can be recorded for each antenna, and can be combined with all the other antennas at a later time.
 
-Aperture synthesis has also been achieved at optical and near-infrared wavelengths, where a nearby guide star is used to determine a reference phase of the incoming beam. The fringe patterns measured for the science sources can then be non-ambiguously aligned with each other. This process requires very rapid imaging capabilities (on the order of \SI{10}{\milli\second}, a typical atmospheric coherence timescale) to freeze the atmospheric variations across the synthetic aperture. This requires bright guide stars. In addition, because of the large baselines, the field of view is very limited, so the targets accessible by optical interferometers are limited to scientific sources which are a few arcseconds of a bright guide star: this dramatically limits the capabilities of ground-based interferometry at these wavelengths.
+Aperture synthesis has also been achieved at optical and near-infrared wavelengths, where a nearby guide star is used to determine a reference phase of the incoming beam \citep[e.g.][]{Monnier:2004fd,Gillessen:2010fo}. The interferograms measured for the science sources can then be non-ambiguously aligned with each other. This process requires very rapid imaging capabilities (on the order of \SI{10}{\milli\second}, a typical atmospheric coherence timescale, see discussion in \cite{Mariotti:1988vea}) to freeze the atmospheric variations across the synthetic aperture. This requires bright guide stars. In addition, because of the large baselines, the field of view is very limited, so the targets accessible by optical interferometers are limited to scientific sources which are a few arcseconds of a bright guide star \citep{Glindemann:2000bf}: this dramatically limits the capabilities of ground-based interferometry at these wavelengths.
 
 
 \subsection{Double-Fourier interferometry}
@@ -119,11 +119,11 @@ In this work, we introduce the concept of Double-Fourier interferometry, which u
 
 %In the far-infrared, coherent-detection interferometers are a possibility [ESPRIT], but they presently lack sensitivity and may be fundamentally less efficient than direct-detection arrays. This takes advantage of recently-developed Transition Edge Sensor bolometer arrays, which are direct-detection, power sensors in the far-infrared (which means that we do not have access to the phase information). Hence phase referencing during flight will have to be achieved very carefully.
 
-We adopt a Michelson interferometer configuration that we use in pupil-plane combination. Unlike image-plane combination, where fringes are seen across a single Airy disk in the image plane, no fringes are visible across the field of view for a given \OPD. Instead, the intensity of the entire field of view is modulated as a function of \OPD. 
+We adopt a Michelson interferometer configuration with pupil-plane combination. Unlike image-plane combination, where fringes are seen across a single Airy disk in the image plane, no fringes are visible across the field of view at a given \OPD. Instead, the intensity of the entire field of view is modulated as a function of \OPD. 
 
-By scanning the \OPD, we obtain a modulation of each pixel on the detector, which combines information on both the spectral (through the Fourier transform of the scan) and the spatial (through the amplitude and phase of the fringe packet) content of the source, at that baseline orientation and length. By repeating the measurement over multiple baseline angles and lengths, one can unambiguously retrieve both the spatial and spectral content of the astronomical scene. 
+By scanning the \OPD, we obtain a modulation of each pixel on the detector, which contains information on both the spectral (through the Fourier transform of the scan) and the spatial (through the amplitude and phase of the fringe packet) characteristic of the source, at that baseline orientation and length. By repeating the measurement over a full range of baseline angles and lengths, one can unambiguously retrieve both the spatial and spectral content of the astronomical scene by filling the synthetic aperture. 
 
-Pupil-plane combination allows for an interferometric response of the entire field of view. The price we pay is that the \OPD scans need to be longer in order to cover enough spectral range for each pixel in the field of view. For a single-pixel detector, the \OPD scan would only need to cover enough stroke to obtain the desired spectral resolution over that one single pixel.
+Pupil-plane combination allows for an interferometric response of the entire field of view. The price we pay is that the \OPD scans need to be longer in order to cover enough range, going through ZPD for each pixel in the field of view. For a single-pixel detector, the \OPD scan would only need to cover enough stroke to obtain the desired spectral resolution for the one single pixel.
 
 
 
@@ -134,20 +134,20 @@ Pupil-plane combination allows for an interferometric response of the entire fie
 	\label{fig:FTSvsDoubleFourier}
     \end{figure}
 
-A detailed derivation of the equations of Double-Fourier interferometry starting from first principles is presented in this work, in Appendix~\ref{ap:interfero} and Chapter~\ref{chap:phasenoisepaper}.
+A detailed derivation of the equations of Double-Fourier interferometry starting from first principles is presented, in Appendix~\ref{ap:interfero} and Chapter~\ref{chap:phasenoisepaper}.
 
 \section{BETTII Instrument design}
 
 %This section summarizes the design and architecture of BETTII, including discussion of the expected sensitivity of its different channels. All key subsystems are discussed here, except the control system, which is discussed in greater detail in Chapters~\ref{chap:controls}~and~\ref{chap:implementation}.
 
 
-The BETTII payload is an \SI{8}{\meter} fixed-baseline interferometer, equipped with two \SI{50}{\centi\meter} siderostats. It operates in two wavelength bands, 30-55~\si{\micro\meter} and 55-110~\si{\micro\meter}. In these two bands, its theoretical angular resolution is $\sim$\ang{;;0.5} and $\sim$\ang{;;1}, respectively. This is significantly better than all existing or previous facilities that operate in the far-infrared, which have traditionally been limited by the mirror size. In addition, this matches the resolution of JWST at \SI{25}{\micro\meter}, hence providing a good continuity to probe astrophysical phenomena at longer wavelength but with the same linear resolution.
+The BETTII payload is an \SI{8}{\meter} fixed-baseline interferometer, equipped with two \SI{50}{\centi\meter} siderostats. It operates in two wavelength bands, 30-55~\si{\micro\meter} and 55-110~\si{\micro\meter}. In these two bands, its theoretical angular resolution is $\sim$\ang{;;0.5} and $\sim$\ang{;;1}, respectively. This is significantly better than all existing or previous facilities that operate in the far-infrared, which are limited by the mirror size. In addition, this matches the resolution of JWST at \SI{25}{\micro\meter}, hence providing the ability to probe astrophysical phenomena at longer wavelength with the same angular resolution.
 
-There are four major components to BETTII: the mechanical structure and design; the optics and their mounts; the cryostat and the detectors; and the control system. The latter will be discussed extensively in Chapter \ref{chap:controls}. In this section, we first describe the balloon environment and its constraints, before discussing the three remaining components of BETTII. 
+There are four major components to BETTII: the mechanical structure and design; the optics and their mounts; the cryostat and the detectors; and the control system. The latter will be discussed extensively in Chapter \ref{chap:controls}. In this section, we first describe the balloon environment and its constraints, before discussing these four major BETTII components. 
 
 \subsection{Stratospheric balloon environment}
 
-High-altitude balloons have for many years served as a test platforms for future space instruments, such as the FIRAS instrument on COBE \citep{Fixsen:2002jv}. These balloon platforms fly between 30 and \SI{40}{\kilo\meter}, above more than 99\% of the atmosphere, which make them particularly well suited for studying the universe at infrared, far-infrared and sub-millimeter wavelengths. Balloon launches occur year-round across all continents, including Antarctica. NASA and other agencies organize these campaigns for various areas of science.
+High-altitude balloons have for many years served as a test platforms for future space instruments, such as the FIRAS instrument on COBE \citep{Fixsen:2002jv}. These balloon platforms fly between 30 and \SI{40}{\kilo\meter}, above more than 99\% of the atmosphere, which make them particularly well suited for studying the universe at infrared, far-infrared and sub-millimeter wavelengths. Balloon launches occur year-round across multiple continents, including Antarctica. NASA and other agencies organize these campaigns for various areas of science.
 
 For a typical launch, the scientific payload is attached on the bottom of a train of about \SI{100}{\meter} that includes a parachute and a ladder. The top of the ladder attaches to the bottom of the large helium-filled balloon. 
 \begin{figure}[!ht]
@@ -161,9 +161,9 @@ For a typical launch, the scientific payload is attached on the bottom of a trai
 
 
 
-At float altitude, the air temperature is between \SI{230}{\kelvin} and \SI{250}{\kelvin}, while the air pressure is down to 0.5\% of the sea level pressure (about 5 mbar). Upper altitude winds are large-scale laminar flows that move the balloon and the payload as one. This can excite pendulum motions about the pivots underneath the balloon and at the top of the payload, which are typically of the order of a few arcminutes and have periods of a few to many tens of seconds \citep{Fixsen:1996kha}.
+At float altitude, the air temperature is between \SI{230}{\kelvin} and \SI{250}{\kelvin}, while the air pressure is 0.5\% of the sea level pressure (about 5 mbar). Upper altitude winds are large-scale laminar flows that move the balloon and the payload as one. This can excite pendulum motions about the pivots underneath the balloon and at the top of the payload, which are typically of the order of a few arcminutes and have periods of a few to many tens of seconds \citep{Fixsen:1996kha}.
 
-The payload's temperature distribution is influenced by the air temperature, the infrared radiation of the Earth, and the sunlight, which can result in complex temperature gradients across the instrument. A better temperature uniformity is expected for night flights, which is what BETTII is expecting.
+The payload's temperature distribution is influenced by the air temperature, infrared radiation of the Earth, and sunlight, which can result in complex temperature gradients across the instrument. A better temperature uniformity is expected for night flights, which is what BETTII is expecting.
 
 Balloon experiments can also be affected by cosmic rays which can damage the electronics, lead to data corruption and or failures of the software/control system. However, this becomes more of an issue for long-duration balloon flights around Antarctica, during which the payloads are exposed for many weeks to the cosmic ray environment.
 
@@ -172,7 +172,7 @@ BETTII is expected to launch from Fort Sumner, NM, for its first engineering fli
 
 \subsection{Mechanical design}
 
-BETTII has two main structures. The first is a carbon fiber and steel truss that is used as our optical bench. This was the first item that was designed in the project. The elements of this structure are built by bonding \SI{7.5}{\centi\meter} diameter hollow carbon fiber tubes to custom-made steel nosecones. The steel nosecones are lightweight and strong, and have a threaded hole on the axis: they attach to multi-faceted steel nodes like tinker toys. There are three lengths of tubes on the truss. At the interface between the nosecone and the nodes, spherical washers or polypropylene washers are used, depending on the location on the payload. The difference of material compensates for differential thermal contraction on the beams that form the long side of triangles.
+BETTII has two main structures. The first is a carbon fiber and steel truss that is used as our optical bench. This was the first item that was designed in the project. The elements of this structure are built by bonding \SI{7.5}{\centi\meter} diameter hollow carbon fiber tubes to custom-made steel conical ends, that we call \textit{nose cones}. The steel nose cones are lightweight and strong, and have a threaded hole on the axis: they attach to multi-faceted steel nodes like tinker toys. There are three lengths of tubes on the truss. At the interface between the nosecone and the nodes, spherical washers or polypropylene washers are used, depending on the location on the payload. The difference of material compensates for differential thermal contraction on the beams that form the long side of triangles.
 
 The structure is about \SI{9}{\meter} long. It is designed to be lightweight, strong, and have a first resonant mode above \SI{20}{\hertz} to ensure fast damping of residual mechanical oscillations. We measured the first resonance peaks to be within \SI{1}{\hertz} of their expected frequency, at \SI{25}{\hertz} (see Chapter~\ref{chap:implementation}).
 
@@ -192,7 +192,7 @@ An annotated rendering of BETTII is shown in Fig.~\ref{fig:BETTIICAD}. The gondo
 
 The various electronic components of the system are attached to the gondola using aluminum or honeycomb aluminum plates, which are painted with white appliance paint for better thermal behavior. These plates act as radiator panels which allow us to dissipate the heat out to space.
 
-The most critical portion of the gondola is the assembly that connects to the balloon train. This holds a single pin that needs to have the highest yield strength, since it is the only point of the payload that needs to support the entire weight. A more detailed description of the pin is presented in Section~\ref{chap:controls}.\ref{subsec:chap3momdumpmotor}.
+The most critical portion of the gondola is the assembly that connects to the balloon train. This contains a single pin that needs to have the highest yield strength, since it is the only point of the payload that needs to support the entire weight. A more detailed description of the pin is presented in Section~\ref{chap:controls}.\ref{subsec:chap3momdumpmotor}.
 
 The entire payload is designed, assembled and tested in the building 20 high bay at NASA GSFC (Fig.~\ref{fig:HighBayOpen}).
 \begin{figure}[!h]
@@ -210,7 +210,7 @@ The optical system was one of the most challenging design aspects of the project
 \subsubsection{Optics layout}
 Because the nature of balloon payloads, there can be extensive damage to the structure during parachute opening and landing. In order to minimize the repair costs from one flight to the next, it was decided to place the telescope assemblies - which are expensive, long lead-time items - away from the edges of the truss. 
 
-Instead, flat mirrors are used to redirect the light towards the telescope assemblies, which are kept close to the center of the truss where damage is expected to be minimal. 
+Instead, flat mirrors (that we call \textit{siderostats}) are used to redirect the light towards the telescope assemblies, which are kept close to the center of the truss where damage is expected to be minimal. 
 
 The telescope assemblies (Fig.~\ref{fig:TelescopeAssemblyLayout}) consist of 3 powered mirrors and a folding flat. They provide a 20:1 compression ratio of the beams with reasonable tolerance on the mirror positioning. As an all-aluminum assembly, they shrink homologously as the temperature varies during the different phases of the flight, hence maintaining optical prescriptions. 
 
@@ -222,9 +222,9 @@ The telescope assemblies (Fig.~\ref{fig:TelescopeAssemblyLayout}) consist of 3 p
 \end{figure}
 
 
-In order to perform double-Fourier interferometry, an asymmetry needs to be introduced in the system in order to properly combine the polarizations of the light at the beam combiner. This asymmetry occurs after the telescope assemblies and before entering the cryostat. In one arm, a 3-mirror assembly (called the K-mirror assembly, or KMA) is used on a rotating stage to properly de-rotate the field of view as the telescopes change elevation. On the other side, a 4-mirror delay line assembly (called the Warm Delay Line, or WDL) is set at a fixed orientation. Its role is to compensate for the optical delays caused by the residual pointing errors. 
+In order to perform double-Fourier interferometry, an extra reflection needs to be introduced in the system in order to properly combine the polarizations of the light at the beam combiner (see Fig.~\ref{fig:FTSvsDoubleFourier}). This asymmetry occurs after the telescope assemblies and before entering the cryostat. In one arm, a 3-mirror assembly (called the K-mirror assembly, or KMA) is used on a rotating stage to match the field of view rotations as the two siderostats change elevation. On the other side, a 4-mirror delay line assembly (called the Warm Delay Line, or WDL) is set at a fixed orientation. Its role is to compensate for the optical delays caused by the residual pointing errors. 
 
-On both the KMA and the WDL (Fig.~\ref{fig:SmallAssemblies}), one of the mirrors is actuated in tip and tilt, and provide the fine control required to properly overlap the two beams. There is an extensive discussion of the control system in Chapter~\ref{chap:controls}.
+On both the KMA and the WDL (Fig.~\ref{fig:SmallAssemblies}), one of the mirrors is actuated in tip and tilt, which provides the fine control required to properly overlap the two beams at the detectors. There is an extensive discussion of the control system in Chapter~\ref{chap:controls}.
 
 \begin{figure}[!h]
 		\centering
@@ -233,27 +233,28 @@ On both the KMA and the WDL (Fig.~\ref{fig:SmallAssemblies}), one of the mirrors
 		\label{fig:SmallAssemblies}
 \end{figure}
 
-The beams from each side enter the cryostat through a thin polypropylene window. We tested different window thicknesses and selected the \SI{15}{\micro\meter} thickness as our baseline design. %Test pieces with this window have been shown to comfortably resist about 1.5 times the atmospheric pressure, even after 50 cycles of pressurization. The maximum resistance is a little smaller when the pressurization occurs very rapidly and does not leave time to the window to deform elastically. A number of tests were done on identical batches of windows to ensure the repeatability of our test method. 
-Once the beams are inside the cryostat, they are split into a NIR tracking channel, and sent to the FIR optics train where they are delay-modulated by the Cold Delay Line (Fig.~\ref{fig:SmallAssemblies}), combined, and image onto the detectors. A complete layout of the optics train is shown in Fig.~\ref{fig:OpticsLayout} (Dhabal \textit{et al.}, 2016, in press).
+The beams from each side enter the cryostat through thin polypropylene windows. We tested different window thicknesses and selected the \SI{15}{\micro\meter} thickness as our baseline design. %Test pieces with this window have been shown to comfortably resist about 1.5 times the atmospheric pressure, even after 50 cycles of pressurization. The maximum resistance is a little smaller when the pressurization occurs very rapidly and does not leave time to the window to deform elastically. A number of tests were done on identical batches of windows to ensure the repeatability of our test method. 
+Once the beams are inside the cryostat, they are split into a NIR tracking channel, and into the FIR optics train where they are delay-modulated by the Cold Delay Line (Fig.~\ref{fig:SmallAssemblies}), combined, and image onto the detectors. A complete layout of the optics train is shown in Fig.~\ref{fig:OpticsLayout} (Dhabal \textit{et al.}, 2016, in press).
 
 
 \begin{figure}[!h]
 		\centering
 		\includegraphics[width=\textwidth]{Figures/OpticsLayout.png} 
-		\caption[Optics layout]{Optics layout for BETTII.}
+		\caption[Optics layout]{Optics layout for BETTII (Dhabal \textit{et al.}, 2016, in press).}
 		\label{fig:OpticsLayout}
 \end{figure}
 
 
 \subsubsection{Optics manufacturing}
 
-Despite working at relatively long wavelengths, the tolerance in the surface figure of all the mirrors is an important consideration. Traditionally, figure errors are specified in terms of the required beam quality at the focal plane, which starts to degrade when the wavefront errors in the optical train are comparable with the wavelength of the light beam, or introduce specific aberrations. In interferometers, the fidelity of the final image is not a priority. However, differential wavefront errors between the two optics trains before combination will result in decreased contrast of the interferograms. As a result, the surface quality of the mirrors pre-combination needs to be much lower than a wavelength of light, since errors will stack after hitting many mirrors from both sides. For our specifications, we determine that a \SI{300}{\nano\meter} r.m.s surface figure error over the entire aperture is sufficient to ensure acceptable contrast loss. This requirement is difficult to match for the largest elements in our optical train (the siderostats and the primary mirror) - but smaller mirrors pose less of a challenge in their manufacture. It is important to mention that figure errors are a concern for us because we are using all-aluminum optics, as opposed to more traditional materials such as glass which are easier to polish.
+Despite working at relatively long wavelengths, the tolerance in the surface figure of all the mirrors is an important consideration. %Traditionally, figure errors are specified in terms of the required beam quality at the focal plane, which starts to degrade when the wavefront errors in the optical train are comparable with the wavelength of the light beam, or introduce specific aberrations. In interferometers, the fidelity of the final image is not a priority. However,
+Differential wavefront errors between the two optics trains before combination will result in decreased contrast of the interferograms, which reduces our signal-to-noise ratio. As a result, the surface quality of the mirrors pre-combination needs to be much lower than a wavelength of light, since errors will stack after hitting many mirrors from both sides. We allocate \SI{2}{\um} of total wavefront error at combination, which translates to $\sim$\SI{0.23}{\um} of surface error per mirror. Given that known processes exist to manufacture small mirrors below this requirement, we relax the requirement for the primary mirrors and the siderostats to a \SI{300}{\nano\meter} r.m.s surface figure error over the entire aperture.
 
 
 
-The company Nu-Tek, in Aberdeen, MD manufactured all of our small optics out of aluminum. The procedure includes an initial milling process, heat treatment using a method called \textit{uphill quenching}, followed by diamond turning and gold coating to avoid oxidation.
+The company Nu-Tek, in Aberdeen, MD manufactured all of our small optics out of aluminum. The procedure includes an initial milling process, heat treatment using a method called \textit{uphill quenching}, followed by diamond turning and gold coating to avoid oxidation. 
 
-However, very few manufacturers in the United States were able to diamond-turn the siderostats and the primary mirror assemblies, while ensuring the level of surface figure we needed. The diamond-turning process uses a slowly moving diamond blade that is controlled in 3 axes to carve out the required shape. This process requires extreme temperature stability, which is often not available in traditional machine shops. Companies which are familiar working with NASA on space missions, and pretended they could produce those mirrors, were not affordable for a small project like us.
+However, very few manufacturers in the United States were able to diamond-turn the siderostats and the primary mirror assemblies, while ensuring the level of surface figure we needed. The diamond-turning process uses a slowly moving diamond blade that is controlled in 3 axes to carve out the required shape. This process requires extreme temperature stability, which is often not available in traditional machine shops. Companies which are familiar working with NASA on space missions were not affordable for a small project like us.
 
 \begin{figure}[!h]
 		\centering
@@ -264,14 +265,14 @@ However, very few manufacturers in the United States were able to diamond-turn t
 
 
 
-The Department of Advanced Manufacturing at North Carolina State University was able to manufacture our mirrors by meeting all of our requirements. The results are published in Furst \textit{et al.} (2016, in press). Each telescope assembly (see Fig.~\ref{fig:TelescopeAssemblies}) has a stacked r.m.s surface figure error of \SI{300}{\nano\meter}, while the siderostats have a surface error of \SI{100}{\nano\meter} r.m.s. The siderostats are more complicated because they did not exactly fit in their diamond-turning spindle. We decided to proceed with a two-step diamond turning, where they turned two sections of the ellipse consecutively. This does not guarantee that the two areas will be at the same height since they have to unmount the mirror off the spindle. However, our models show that even if different sections of the mirrors are at different heights, the beam combination can still be successful, as the parts of the pupil that are shifted in one arm are also shifted in the other. 
+The Department of Advanced Manufacturing at North Carolina State University proposed to manufacture our mirrors on a 'best effort' basis for a reasonable cost.  The results are published in Furst \textit{et al.} (2016, in press), although the surface quality has not yet been measured, due to difficulty with the equipment  and setup in the optics lab at NASA Goddard. Each telescope assembly (see Fig.~\ref{fig:TelescopeAssemblies}) has a stacked r.m.s surface figure error of \SI{300}{\nano\meter}, while the siderostats have a surface error of \SI{100}{\nano\meter} r.m.s. The siderostats are more complicated because they did not exactly fit in their diamond-turning spindle. We decided to proceed with a two-step diamond turning, where they turned two sections of the ellipse consecutively. This does not guarantee that the two areas will be at the same height since they have to unmount the mirror off the spindle. However, our models show that even if different sections of the mirrors are at different heights, the beam combination can still be successful, as the parts of the pupil that are shifted in one arm are also shifted in the other. 
 
 
 
 
 \subsection{Cryogenic instrument}
 
-The cryostat was designed by our team. Items were sent out for manufacturing to different companies and assembled in our lab. The cryostat is passive and does not require any mechanical cryo-cooler. It is designed to operate for a duration of \SI{40}{\hour}, which should give us enough margin considering the typical lengths of balloon flights from the U.S. of about \SI{16}{\hour}. 
+The cryostat was designed by our team. Items were sent out for manufacturing to different companies and assembled in our lab. The cold volume is passively cooled by liquid nitrogen and helium and does not require any mechanical cryo-cooler. It is designed to operate for a duration of \SI{40}{\hour}, which should give us enough margin considering the typical lengths of balloon flights from the U.S. of about \SI{16}{\hour}. 
 
 \begin{figure}[!h]
 		\centering
@@ -280,7 +281,7 @@ The cryostat was designed by our team. Items were sent out for manufacturing to 
 		\label{fig:CryostatCrosssection}
 \end{figure}
 
-The optics inside the cryostat include two sections: a near-infrared fine guidance sensor, and the far-infrared channels which lead to the science detector (Fig.~\ref{fig:CryostatCrosssection}). The incoming light beam is split right after entering the cryostat with a NIR/FIR dichroic beam splitter. This custom-made filter reflects off the far-IR and transmits the near-IR, and its recipe was suggested by P. Ade at Cardiff University. At the bottom of the cryostat, in the \SI{77}{\kelvin} volume, the fine guidance sensor is composed of 12 optics and one HAWAII-1RG detector from Teledyne. 
+The optics inside the cryostat are split into two sections: a near-infrared fine guidance system, and the far-infrared channels with the science detector (Fig.~\ref{fig:CryostatCrosssection}). The incoming light beam is split right after entering the cryostat with a NIR/FIR dichroic beam splitter. This custom-made filter reflects the far-IR and transmits the near-IR. At the bottom of the cryostat, in the \SI{77}{\kelvin} volume, the fine guidance sensor is composed of 12 optics and one HAWAII-1RG detector from Teledyne. 
 
 
 At the top of the cryostat and attached to the \SI{4}{\kelvin} cold plate, there is a cold optics bench that holds all of the far-IR optics, filters, and the Cold Delay Line. All filters were manufactured by Cardiff University in the U.K. The layout of the optical system is shown in Fig.~\ref{fig:OpticsLayout}, and more details can be found in (Dhabal \textit{et al.}, 2016, in press). A picture of the cold optical bench with populated and aligned optics is shown in Fig.~\ref{fig:ColdBench}.
@@ -292,13 +293,7 @@ At the top of the cryostat and attached to the \SI{4}{\kelvin} cold plate, there
 		\label{fig:ColdBench}
 \end{figure}
 
-
-
-
-
-
-
-The fridge is a ($^3$He+$^4$He) sorption refridgerator from Chase Research that cools down the main optical bench to \SI{4}{\kelvin} (see Fig.~\ref{fig:CryostatTopPlate} for a picture of the top plate of the cryostat while cold). It also has an intermediate cold finger at \SI{1}{\kelvin} and a final stage that brings down the detector temperature to $\sim$\SI{400}{\milli\kelvin}. 
+A ($^3$He+$^4$He) sorption refridgerator from Chase Research cools down the main optical bench to \SI{4}{\kelvin} (see Fig.~\ref{fig:CryostatTopPlate} for a picture of the top plate of the cryostat while cold). It also has an intermediate cold finger at \SI{1}{\kelvin} and a final stage that brings down the detector temperature to $\sim$\SI{400}{\milli\kelvin}. 
 
 \begin{figure}[!h]
 		\centering
@@ -308,7 +303,7 @@ The fridge is a ($^3$He+$^4$He) sorption refridgerator from Chase Research that 
 \end{figure}
 
 
-At the heart of the instrument are four $9\times 9$ close-packed linear arrays of multiplexed superconducting transition edge sensors (TES) bolometers \citep{Benford:2008wk} incorporating the Backshort Under Grid (BUG) architecture \citep{Allen:2006jn}. These arrays are scaled versions of similar arrays already built for ground-based instruments \citep[e.g., GISMO,][]{Staguhn:2014jg}. Detectors are read out using advanced linear SQUID multiplexer and amplifiers. A $4\times 22$ multiplexed readout is used for each array; the extra seven channels are used for calibration signals (unilluminated pixels, “dark SQUID” channels, and an “always on” channel), allowing monitoring of all potential noise contributors \citep{deKorte:2003km}.  
+At the heart of the instrument are four $9\times 9$ close-packed linear arrays of multiplexed superconducting transition edge sensor (TES) bolometers \citep{Benford:2008wk} incorporating the Backshort Under Grid (BUG) architecture \citep{Allen:2006jn}. These arrays are scaled versions of similar arrays already built for ground-based instruments \citep[e.g., GISMO,][]{Staguhn:2014jg}. Detectors are read out using advanced linear SQUID multiplexer and amplifiers. A $4\times 22$ multiplexed readout is used for each array; the extra seven channels are used for calibration signals (unilluminated pixels, “dark SQUID” channels, and an “always on” channel), allowing monitoring of all potential noise contributors \citep{deKorte:2003km}.  
 
 
 
@@ -324,7 +319,9 @@ Individual scans will last for a nominal duration of \SI{2.5}{\second}, and cons
 
 To describe post-processing, let's consider a \SI{10}{\minute} cube which is the {\OPD}-corrected stack of images from the 200 individual scans. The cube has a crossection of $9\times 9$ (which is the size of an individual detector frame), and a depth of 1024 frames. For each frame, the intensity of each source in the detector is determined for each \OPD, and combined into interferograms. We repeat the process for the same field observed at different baseline angles. 
 
-The set of cubes can be fed to an inversion algorithm that was developed in Dr. Juanola-Parramon's Ph.D. thesis [REFERENCE], which provides a final datacube corresponding to the images as a function of wavelength, with the spectral resolution that the user chooses. 
+Using starting points involving our existing SOFIA multi-wavelength observations, as well as the IRAC images, these interferograms will help determine the multiplicity of bright sources, their individual SED, and their position relative to the large-scale extended emission. 
+
+If BETTII had more baseline lengths and the reconstructed cubes filled the aperture more densely, it would be possible to feed them directly to an inversion software that was developed in Dr. Juanola-Parramon's Ph.D. thesis \citep{Juanola:2016}, which provides a final datacube corresponding to the images as a function of wavelength, with the spectral resolution that the user chooses. 
 
 \begin{figure}[!h]
 	\centering

@@ -32,6 +32,8 @@
 
 % draw light
 \coordinate (O) at (0,0);
+\coordinate (OPD) at (2.6*\length,-0.5*\length);
+\node at (OPD){ZPD};
 \draw[rays,middlearrow={>}] (0,\length) node[outer sep=0.2,above]{Source} -- (0,0);
 \begin{scope}[rotate = -45]
 \draw[optics] (0,-\mirrorsize/2) -- (0,\mirrorsize/2)node[above,align=center]{Beam \\ splitter};
