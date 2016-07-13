@@ -62,7 +62,7 @@ The star camera takes a picture of the sky to make noisy measurements of the rig
 
 The errors associated with the three Euler angles are assumed to be a random vector $\nStarcam$, also with a diagonal covariance matrix $\measCovMat$. Typical star camera noises are 1-\ang{;;2} in RA and DEC and \ang{;;100} r.m.s. in ROLL (see Chapter~\ref{chap:implementation}). 
 
-The star camera is often oriented at a fixed position on the payload, which is not necessarily aligned with the gyroscope reference frame. In that case, the attitude quaternion needs to be rotated by the quaternion representing the transformation between both reference frames. In addition, the covariance matrix needs to be rotated by the direction cosine matrix corresponding to the same transformation. This would not have an effect if the covariance matrix was a multiple of the identity matrix, but it usually is not the case since the Roll measurement is often much less sensitive. This can have implications while designing the balloon payload and deciding on the placement and orientation of the star camera: the attitude estimation will be less precise about the Roll axis of the star camera.
+The star camera is oriented at a fixed position on the payload, which is not necessarily aligned with the gyroscope reference frame. In that case, the attitude quaternion needs to be rotated by the quaternion representing the transformation between both reference frames. In addition, the covariance matrix needs to be rotated by the direction cosine matrix corresponding to the same transformation. This would not have an effect if the covariance matrix was a multiple of the identity matrix, but it usually is not the case since the Roll measurement is often much less sensitive. This can have implications while designing the balloon payload and deciding on the placement and orientation of the star camera: the attitude estimation will be less precise about the Roll axis of the star camera.
 
 %The fundamental problem is trying to determine the attitude of the payload in the inertial reference frame, using biased gyroscope measurements at high frequency and absolute star camera measurements at low frequency. 
 
@@ -99,7 +99,7 @@ The Kalman filter's goal is to minimize the variance of the estimator's error - 
 
 To do this, instead of following the evolution of the state $\EstStateVec$ itself, we will follow the evolution of the error vector $\ErrorState = [\deltaTheta,\deltaBias]^T$, where $\deltaTheta$ corresponds to the 3-dimensional angular error between true and estimated attitude quaternion taken from the difference quaternion $\fromto{\hat{G}}{G}\delta\Attitude = \fromto{I}{G}\Attitude\otimes\fromto{I}{\hat{G}}\EstAttitude^{-1} \approx [1,\frac{1}{2}\deltaTheta]^T$, and $\deltaBias = \bias - \EstBias$. 
 
-The evolution of $\EstStateVec$ as a function of time can be obtained by taking the quaternion derivative of the true attitude quaternion $\dotAttitude = \dot{\delta\Attitude} \otimes \EstAttitude + \delta\Attitude \otimes \dotEstAttitude$. With our gyroscope model, we can write:
+The evolution of $\ErrorState$ as a function of time can be obtained by taking the quaternion derivative of the true attitude quaternion $\dotAttitude = \dot{\delta\Attitude} \otimes \EstAttitude + \delta\Attitude \otimes \dotEstAttitude$. With our gyroscope model, we can write:
 \begin{eqnarrays}
 \gyroVecMeas & = & \gyroVec + \bias + \nGyros,\\
  \EstGyroVec & = & \gyroVecMeas - \EstBias, \\
@@ -267,7 +267,7 @@ For our scientific purpose, even a 1\% error in the gyroscope scale factor or an
 
 \subsubsection{Estimating angular error between reference frames}
 
-Here, we propose a more appropriate approach to estimate the gyroscope misalignment using a different Kalman filter. In this filter, the global misalignment error of the entire reference frame is set as part of the state, and is being estimated at each step. A global misalignment error can be represented by a rotation matrix which, in the small angle approximation, can be written $\boldsymbol{C'} \approx \bI_{3\times 3} + \boldsymbol{C} $, with:
+Here, we propose an appropriate approach to estimate the gyroscope misalignment using a different Kalman filter. In this filter, the global misalignment error of the entire reference frame is set as part of the state, and is being estimated at each step. A global misalignment error can be represented by a rotation matrix which, in the small angle approximation, can be written $\boldsymbol{C'} \approx \bI_{3\times 3} + \boldsymbol{C} $, with:
 \begin{equations}
 \boldsymbol{C} = \begin{bmatrix} 0 & c_{xy} & c_{xz} \\   -c_{xy} & 0 &c_{yz} \\  -c_{xz} & -c_{yz} & 0 \end{bmatrix}.
 \end{equations}
@@ -297,7 +297,6 @@ and
 \begin{equations}
 \boldsymbol{\Omega}_m = \begin{bmatrix} \omega_y & \omega_z & 0 & 0  & 0 & 0 \\    0 & 0 & \omega_x &\omega_z  & 0 & 0  \\  \ 0 & 0 & 0  & 0 & \omega_x &\omega_y  \end{bmatrix}.
 \end{equations}
-
 This is now a 15-state Kalman filter, with the error state:
 $\ErrorState = \begin{bmatrix}\deltaTheta &\Delta\textbf{k}  &\Delta\textbf{m} &\Delta\bias\end{bmatrix}^T$. The top right block of the transition matrix can be written:
 \begin{equation}
@@ -320,8 +319,8 @@ This is handy for data analysis on the ground, but not appropriate for flight si
 
 \subsection{Conclusions on sensor fusion}
 
-We have defined, designed, implemented a tested a complete sensor fusion algorithm based on an multiplicative, extended Kalman filter. This software, implemented entirely in Labview Real Time OS, has been the workhorse of our testing in the high bay. Similarly, we have implemented several variations of the software for use on the ground, in order to estimate the residual misalignments between the individual gyroscopes, as well as between the gyroscope frame and the star cameras.
+We have defined, designed, implemented and tested a complete sensor fusion algorithm based on an multiplicative, extended Kalman filter. This software, implemented entirely in Labview Real Time OS, has been the workhorse of our testing of the control system. Similarly, we have implemented several variations of the software for use on the ground, in order to estimate the residual misalignments between the individual gyroscopes, as well as between the gyroscope frame and the star cameras.
 
 The software merges the information gathered from the gyroscopes and the star cameras, while appropriately correcting for the lag in the star camera measurements, and accounting for user-defined weights. 
 
-While this software is deeply integrated with our hardware and flight software architecture, the critical pieces of it are quite independent. We plan on sharing this software with an open-source license after the pointing test results are published. It is quite versatile and allows for many user improvement and modifications.
+While this software is deeply integrated with our hardware and flight software architecture, its critical components are quite independent. We plan on sharing this software with an open-source license after the pointing test results are published. It is quite versatile and allows for many user improvement and modifications.

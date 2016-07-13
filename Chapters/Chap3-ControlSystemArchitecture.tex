@@ -1,6 +1,6 @@
 Chapter~\ref{chap:phasenoisepaper} sets the general background to double-Fourier interferometry when used mostly in spectroscopy mode. It sets the mathematical formalism to estimate the spectral sensitivity, given various sources of gaussian noises. 
 
-In this chapter, we see more directly how this applies to BETTII, and how the system is designed to satisfy these requirements in order to guarantee good observations. First, we describe the overall architecture and system-level strategy that we use, before going into some details of BETTII's subsystems. Second, we describe the main algorithm used in the flight software, which estimates the position of the payload at all time. Because of the importance of this algorithm, and its potential usability by others, we decided to elaborate on some of the mathematical derivations that define the attitude estimator. 
+In this chapter, we see more directly how this applies to BETTII, and how the system is designed to satisfy these requirements in order to guarantee good observations. First, we describe the overall architecture and system-level strategy that we use, before going into some details of BETTII's subsystems. Second, we describe the main algorithm used in the flight software, which estimates the position of the payload at all time. Because of the importance of this algorithm, and its potential usability by others, we decided to elaborate on some of the mathematical derivations that define the attitude estimator.
 
 
 \section{Control system architecture}
@@ -9,13 +9,13 @@ In this chapter, we see more directly how this applies to BETTII, and how the sy
 \subsection{Overall strategy}
 
 \subsubsection{Requirements}
-The strategy that we developed aims at satisfying the requirements established in the previous chapter, under the cost, time and personnel constraints that we were subject to. It fundamentally relies on the fact that \textit{knowledge} is more important than \textit{control}. While several research groups (such as the WASPS team at Wallops Flight Facility) are attempting to provide sub-arcsecond balloon gondola control, we are not going to. Our strategy uses the fundamental advantage that the interferometer has over traditional pointed observatories: the decoupling of the phase with the pointing. This feature of interferometers refers to the possibility of obtaining electromagnetic interference even when the telescopes are slightly mispointed from the target. 
+The strategy that we developed aims at satisfying the requirements established in the previous chapter, under the cost, time and personnel constraints of the BETTII project. It fundamentally relies on the fact that \textit{knowledge} is more important than \textit{control}. While several research groups (such as the WASPS team at Wallops Flight Facility) are attempting to provide sub-arcsecond balloon gondola control, we are not. Our strategy uses the fundamental advantage that the interferometer has over traditional pointed observatories: the decoupling of the phase with the telescope pointing. This feature of interferometers refers to obtaining electromagnetic interference even when the telescopes are slightly mispointed from the target. 
 
-There are three levels of requirements for our instrument to produce interferograms. First, both arms need to be pointed at the target, in order for an image of the target seen through each arm is formed at the detector. For our purpose this will largely be set by the limitation of the field of view of the instrument, which is about 2 arcminutes. When a target is not exactly on-axis with the telescope, it can still fall on the detector if tip/tilt correction happens downstream. The tip/tilt correction will create aberrations, but these are relatively well behaved at our wavelengths. Hence, this requirement can be expressed as an overall pointing requirement of the instrument to some amount that can be corrected in tip/tilt in each individual arms. We set this to $\pm\ang{;;15}$. This also roughly corresponds to one single pixel on the short band detector, and half a primary beam's FWHM.
+There are three levels of requirements for our instrument to produce interferograms. First, both arms need to be pointed at the target, in order for an image of the target seen through each arm to be formed on the detector. When a target is not exactly on-axis with the telescope, it can still fall on the detector if tip/tilt correction happens downstream. The tip/tilt correction will create aberrations, but these are relatively well behaved at our wavelengths. Hence, this requirement can be expressed as an overall pointing requirement of the instrument to some amount that can be corrected in tip/tilt in each individual arms. We set this to $\pm\ang{;;15}$. This also roughly corresponds to one single pixel on the short band detector, and half a primary beam's FWHM.
 
-Once the instrument is pointed to the desired target to within $\pm\ang{;;15}$, there needs to be a fine guiding system in each arm that allows for the remaining tip/tilt correction. This level of control needs to overlap the beams to a small fraction of a pixel to get maximum overlap and minimum visibility losses. We set this requirement to \ang{;;1.5} r.m.s., which corresponds to a tenth of a pixel's size. The fine guidance system needs to operate over a range of at least $\pm\ang{;;15}$ to pick up where the previous level of requirements stops. It also needs to happen with high bandwidth to ensure that only minimum motion is occurring at timescales comparable to a data acquisition timescale. This system is described in Section~\ref{subsec:FGS}.
+Once the instrument is pointed to the desired target to within $\pm\ang{;;15}$, there needs to be a fine guiding system in each arm that allows for the remaining tip/tilt correction. This level of control needs to overlap the beams to a small fraction of a pixel to get maximum overlap and minimum visibility losses. We set this requirement to \ang{;;1.5} r.m.s., which corresponds to a tenth of a pixel's size. The fine guidance system needs to operate over a range of at least $\pm\ang{;;15}$ to pick up where the previous level of requirements stops. It also needs to happen with high bandwidth to ensure that only minimal motion is occurring at timescales comparable to a data acquisition timescale. This system is described in Section~\ref{subsec:FGS}.
 
-Finally, an angular mispointing of the baseline vector with respect to the target might still exist, even if both beams are overlapped properly. This introduces an unwanted optical delay that can push the fringe packets outside our nominal OPD scanning range. Control of this optical delay is critical for interferometry, as it is required to properly reconstruct the OPD axis of the interferograms that are the elementary data blocks of the instrument. This can be achieved using a delay line. This is commonly done for all interferometers on the ground \citep[e.g.][]{Blind:2011ji}, and we will implement a device like this on BETTII as well which is described in Section~\ref{subsec:delayLines}. For this to work, we need to be able to monitor the changes in OPD accurately, which is equivalent, on short timescales, to accurately estimate the attitude of the payload.
+Finally, an angular mispointing of the baseline vector with respect to the target can still exist, even if both beams are overlapped properly. This introduces an unwanted optical delay that can push the fringe packets outside our nominal OPD scanning range. Control of this optical delay is critical for interferometry, as it is required to properly reconstruct the OPD axis of the interferograms that are the elementary data blocks of the instrument. The \OPD tracking can be achieved using a delay line. This is commonly done for all interferometers on the ground \citep[e.g.][]{Blind:2011ji}, and we implement such a device on BETTII, which is described in Section~\ref{subsec:delayLines}. For this to work, we need to be able to monitor the changes in OPD accurately, which is equivalent, on short timescales, to accurately estimating the attitude of the payload.
 
 
 %\begin{figure}[!ht]
@@ -34,7 +34,7 @@ Before going into the details of the controls architecture, it is important to s
 \begin{figure}[!h]
 	\centering
 	\includestandalone{Figures/BETTII_coordinate_system}
-	\caption[BETTII coordinate systems]{See text for details.}
+	\caption[BETTII coordinate systems]{Coordinate systems relevant to the pointing control system (see text for details).}
 	\label{fig:CoordinateSystem}
     \end{figure}
 
@@ -58,7 +58,7 @@ Not shown in Fig.~\ref{fig:CoordinateSystem} are the reference frames of the tip
 \begin{figure}[!h]
 	\centering
 	\includestandalone{Figures/CelestialSphereRAandDEC2}
-	\caption[The celestial sphere]{See text for details.}
+	\caption[The celestial sphere]{Gondola and star camera frames on the celestial sphere (see text for details).}
 	\label{fig:celestialSphere}
     \end{figure}
 
@@ -77,7 +77,7 @@ The telescope reference frame is omitted from Fig.~\ref{fig:celestialSphere} for
 \begin{figure}[!ht]
 	\centering
 	\includestandalone{Figures/starCameraRefFrame}
-	\caption[The star camera reference frame]{The star camera reference frame. See text for details.}
+	\caption[The star camera reference frame]{The star camera reference frame (see text for details).}
 	\label{fig:starcamRefFrame}
     \end{figure}
 
@@ -101,6 +101,8 @@ To summarize the previous discussion, the three levels of control that we need a
 \item Fine pointing control of each beam to \ang{;;1.5} r.m.s. at the science detector,
 \item Fine knowledge of the inertial attitude to $\approx$~\ang{;;0.15} r.m.s., followed by appropriate OPD control
 \end{enumerate}
+
+Goals 1 and 2 need to be achieved during the flight, while goal 3 needs to be achieved at post-processing, as the \OPD information can be corrected provided sufficient amount of information is available.
 
 At its fundamental level, the problem is to implement a system that satisfies these requirements, starting with only the target's location in right ascension (RA) and declination (DEC). Ideally, the system needs to be able to achieve these goals autonomously. All of the operating modes follow from this.
 
@@ -272,19 +274,7 @@ We purchased three SRS-2000 fiber-optic gyroscopes from Optolink. This gyroscope
 The devices have a bandwidth of \SI{50}{\hertz}, but can be triggered at up to \SI{2000}{\hertz}. Their extreme stability is contingent upon proper temperature stabilization, which is done with a closed-loop set at their calibration temperature of $\SI{23.5}{\celsius}\pm\SI{0.5}{\celsius}$ using an active built-in Peltier element. This Peltier element transforms electric power into either heating or cooling \citep{Peltier:1834vu}.
 
 The three single-axis gyroscopes are assembled in an orthogonal mount configuration shown in Fig.~\ref{fig:GyroMount}. In the following, we describe how we measure the various properties of the gyroscopes, and discuss how they compare to the specifications.
-
-\begin{figure}[!h]
-		\centering
-		\includegraphics[width=\textwidth]{Figures/FOGs.jpg} 
-		\caption[Gyroscope mount]{Gyroscope mount.}
-		\label{fig:GyroMount}
-\end{figure}
-
-
-\paragraph{Sensitivity tests}
-
-
-However, their sensitivity has complicated some of their testing. As soon as we attach a gyroscope to any structure, it measures its vibrational modes, which makes it hard to make a stable measurement of the gyroscope's drift stability. This includes the vibrations that are inherent to the building in which they are placed.
+The gyroscopes' sensitivity has complicated some of their testing. As soon as we attach a gyroscope to any structure, it measures its vibrational modes, which makes it hard to make a stable measurement of the gyroscope's drift stability. This includes the vibrations that are inherent to the building in which they are placed.
 
 We were successful at measuring the gyroscope properties over long periods of time by attaching them flush to a heavy slab of metal, and putting the slab of metal flush on the vibration-isolating floor of one of NASA Goddard's optics labs in building 34.
 
@@ -298,7 +288,7 @@ The properties that we are looking for are typical instantaneous angular random 
 
 \begin{figure}[!ht]
 		\centering
-		\includegraphics[width=0.98\textwidth]{Figures/snapshot_11005.png} 
+		\includegraphics[width=0.7\textwidth]{Figures/snapshot_11005.png} 
 		\caption[\SI{100}{\second} of gyroscope data]{Snapshot of \SI{100}{\second} of gyroscope data, taken from our \SI{8}{\hour} data sample.}
 		\label{fig:snapshot11005}
 \end{figure}
@@ -433,7 +423,6 @@ Our star camera design features an old Nikon Nikkor \SI{300}{\mm} f/2.8 telefoca
 Our camera is a USB3.0 Point Grey Grasshopper3. The sensor is a Sony Pregius IMX174 CMOS sensor with 1920$\times$1200 pixels at \SI{5.86}{\um} pitch. This provides a field of view of \SI{2.14}{\degree}$\times$\SI{1.34}{\degree} and a pixel scale of \ang{;;4.02}/pixel. It features a very convenient Linux-compatible software suite which works with all the Point Grey camera products, and leaves room for future potential upgrades of the camera. The detector characteristics are summarized in Table~\ref{tab:starcamproperties}.
 
 \renewcommand{\arraystretch}{1.5}
-\vspace{-0.5cm}
 \begin{table}[!h]
 \small
 \caption[Star camera properties]{Star camera properties}
@@ -459,7 +448,7 @@ We have successfully cycled the camera in the environmental chamber all the way 
 
 \begin{figure}[!h]
 		\centering
-		\includegraphics[width=\textwidth]{Figures/QEPtGrey.pdf} 
+		\includegraphics[width=0.7\textwidth]{Figures/QEPtGrey.pdf} 
 		\caption[Quantum efficiency of star camera sensor]{Quantum efficiency of star camera sensor.}
 		\label{fig:QE_CCD}
 \end{figure}
@@ -530,12 +519,12 @@ The momentum management strategy consists of using the balloon as a large moment
 \begin{figure}[!h]
 	\centering
 	\includestandalone{Figures/rotator}
-	\caption[Momentum dump assembly]{Momentum dump assembly}
+	\caption[Momentum dump assembly]{Momentum dump assembly.}
 	\label{fig:rotator}
     \end{figure}
 
 
-For this purpose, BETTII uses a design which has successfully flown on previous balloon payload (Fig.~\ref{fig:rotator}), with several improvements over its predecessors. It consists of a steel an titanium setup which will make the junction between to the bottom of the balloon train (at the very bottom of the ladder) and the very top of the gondola. The critical material is an alloy of steel that has been heat treated and is particularly strong. The setup consists essentially of a pivot and a pin made with this allow, connected together with grade 8 bolts. The top of the pin is attached to the pivot, and has a lip at the bottom on which two circular bearings are stacked: the bottom one uses ceramic balls (for their excellent friction properties and long lifetime), and the top one uses steel balls (for their excellent strength). Between the two bearings, there is a metal holder that extends all the way down below the pin. On top of the steel bearing, a titanium case sits, which attaches to the entire gondola. 
+For this purpose, BETTII uses a design which has successfully flown on previous balloon payload (Fig.~\ref{fig:rotator}), with several improvements over its predecessors. It consists of a steel and titanium setup which will make the junction between to the bottom of the balloon train (at the very bottom of the ladder) and the very top of the gondola. The critical material is an alloy of steel that has been heat treated and is particularly strong. The setup consists essentially of a pivot and a pin made with this alloy, connected together with grade 8 bolts. The top of the pin is attached to the pivot, and has a lip at the bottom on which two circular bearings are stacked: the bottom one uses ceramic balls (for their excellent friction properties and long lifetime), and the top one uses steel balls (for their excellent strength). Between the two bearings, there is a metal holder that extends all the way down below the pin. On top of the steel bearing, a titanium case sits, which attaches to the entire gondola. 
 
 \begin{figure}[!h]
 		\centering
@@ -555,7 +544,7 @@ The momentum dump mechanism has not been tested in the environmental chamber - h
 \begin{figure}[!h]
 	\centering
 	\includestandalone{Figures/MomDumpPID}
-	\caption[Momentum dump PID]{Momentum dump control loop}
+	\caption[Momentum dump PID]{Momentum dump control loop.}
 	\label{fig:MomDumpPID}
     \end{figure}
 
@@ -563,7 +552,7 @@ The momentum dump mechanism has not been tested in the environmental chamber - h
 
 \subsubsection{Elevation control}
 
-When put in terms of ground-based telescopes, BETTII is fundamentally an Alt-Az telescope: to reach a target, it has to move in azimuth, and in elevation (also called \textit{altitude}). Instead of moving the entire payload in elevation, which would have conserved the optical setup constant for all targets, we chose to move only the siderostats for increased reliability. We paid one cost: as the siderostat cover different elevations, the fields rotate on the detector, and in opposite directions. So as the elevation changes, an active compensation needs to happen, which consists of a third rotation mechanism located downstream.
+When put in terms of ground-based telescopes, BETTII is fundamentally an Alt-Az telescope: to reach a target, it has to move in azimuth, and in elevation (also called \textit{altitude}). Instead of moving the entire payload in elevation, which would have conserved the optical setup constant for all targets, we chose to move only the siderostats for increased reliability. We paid one cost: as the siderostat cover different elevations, the fields rotate on the detector in opposite directions in the two arms. So as the elevation changes, an active compensation needs to happen, which is done with a third rotation mechanism located downstream.
 
 These rotation mechanisms have multiple requirements: they need to operate at \SI{90}{\degree} from the gravity axis; they need to operate well at \SI{-40}{\celsius}; they need to have an inner clearance to let our \SI{2.5}{\cm} beam through; they need to be able to support many kilograms of cantilevered mass; and they need to have a precise encoder that allows not only smooth motion, but also accurate knowledge of the elevation angle. Griffin Motion LLC makes an industrial rotator that satisfies all of these conditions (Fig.~\ref{fig:GriffinRorationStatges}).
 
@@ -582,7 +571,7 @@ An old version of these rotation stages was tested in our environmental chamber,
 \subsubsection{Delay lines}
 \label{subsec:delayLines}
 
-We have designed, built and tested two linear mechanisms that change the OPD on BETTII: the Cold Delay Line (CDL) and the Warm Delay Line (WDL). Both of these mechanisms have optics attached to them and have been briefly discussed in Chapter~\ref{chap:BETTII}. The rationale behind using two delay lines requires some explanation. First, we realized that we had two very different problems to solve in terms of OPD. One was to produce a periodic, very repetitive modulation to produce our FTS interferograms. This requires very small range, high bandwidth. This was originally set out to be a cryogenic mechanism for symmetry reasons, and the team used a heritage design from the FIRAS delay line mechanism, using titanium flexures, voicecoil actuators, and capacitive sensors to close the PID loop. The design, fabrication, and procurement of this delay line was already underway when we realized that we needed significantly more range to tackle the second problem: the variation of OPD due to geometrical pointing errors. With the pendulum modes of balloon payloads extending to multiple arcminutes, and the large lever arm given by our baseline length, excursions in OPD can be considerable. In addition, we learned from our optical design that we had to introduce an asymmetry in the system to properly overlap the polarizations within the pupils, which most easily was achieved by having a 4-mirror set in one arm and a 3-mirror set in the other. We then decided that given the required difference in dynamic range of the two problems and the maturity of the CDL, to implement a second delay line, the WDL, also based on voicecoil actuators and capacitive sensors. This device does not have any requirement to be operated at cryogenic temperatures, so we chose to have it operate at ambient temperature.
+We have designed, built and tested two linear mechanisms that change the OPD on BETTII: the Cold Delay Line (CDL) and the Warm Delay Line (WDL). Both of these mechanisms have optics attached to them and have been briefly discussed in Chapter~\ref{chap:BETTII}. The rationale behind using two delay lines requires some explanation. First, we realized that we had two very different problems to solve in terms of OPD. One was to produce a periodic, very repetitive modulation to produce our interferograms. This requires very small range, high bandwidth. This was originally set out to be a cryogenic mechanism for symmetry reasons, and the team used a heritage design from the FIRAS delay line mechanism, using titanium flexures, voicecoil actuators, and capacitive sensors to close the PID loop. The design, fabrication, and procurement of this delay line was already underway when we realized that we needed significantly more range to tackle the second problem: the variation of OPD due to geometrical pointing errors. With the pendulum modes of balloon payloads extending to multiple arcminutes, and the large lever arm given by our baseline length, excursions in OPD can be considerable. In addition, we learned from our optical design that we had to introduce an asymmetry in the system to properly overlap the polarizations within the pupils, which most easily was achieved by having a 4-mirror set in one arm and a 3-mirror set in the other. We then decided that given the required difference in dynamic range of the two requirements and the maturity of the CDL, to implement a second delay line, the WDL, also based on voicecoil actuators and capacitive sensors. This device does not have any requirement to be operated at cryogenic temperatures, so we chose to have it operate at ambient temperature.
 
 \subsubsection{Tip/tilt}
 
@@ -613,19 +602,19 @@ The centroid of a guide star in each window is determined, and the error between
 
 Synchronization of the sensors and actuators are of prime importance for our payload. As an interferometer, we are extremely sensitive to vibrations which could be injected in our system by the motors. While everything was designed to maintain a very good symmetry, slight differences in the inertias or mass distribution of the reaction wheels, for example, could create a beat frequency that would be noticeable in our science data. The existence of multiple clocks, each with their own slight temperature-dependent drift, can dramatically complicate the proper retrieval of the data.
 
-To avoid future complications, all BETTII actuators and sensors are slaved to one single \SI{50}{\mega\hertz} master clock, or an integer divider of that master clock. The cascade of the various clock dividers meets at the common value of \num{124800}, which corresponds to \SI{2496000}{\nano\second}. This is BETTII's heartbeat. Hence, \num{124800} master clock ticks correspond to the elementary cycle of all critical processes:
+To avoid future complications, all BETTII actuators and sensors are slaved to one single \SI{50}{\mega\hertz} master clock, or an integer divider of that master clock. The cascade of the various clock dividers meets at the common value of \num{124800}, which corresponds precisely to \SI{2.496}{\milli\second}. This is BETTII's heartbeat. Hence, \num{124800} master clock ticks correspond to the elementary cycle of all critical processes:
 \begin{itemize}
 \item The CDL moves of one single step
 \item The fine guidance sensor reads one single frame
 \item The science detector reads one single frame
 \item The CCMG wheel position about its axis is checked and a correction is applied.
 \end{itemize}
-
 A diagram of all the clocks in the system is shown in Fig.~\ref{fig:Clocks}.
+
 \begin{figure}[!h]
 		\centering
 		\includegraphics[width=\textwidth]{Figures/Clocks.pdf} 
-		\caption[Clocks]{BETTII's clocks are all derived from one single master clock.}
+		\caption[Clocks]{BETTII's clocks are all derived from one single master clock. The heartbeat at \SI{2.496}{\milli\second} is highlighted in red.}
 		\label{fig:Clocks}
 \end{figure}
 
@@ -639,11 +628,6 @@ The attitude control and sensing occurs every 4 heartbeats, which corresponds to
 
 \subsubsection{Computers}
 
-BETTII will have two on-board computers (see also Fig.~\ref{fig:FlowDiagram}): 
-\begin{enumerate}
-\item a computer which operates a real-time Linux kernel will be used to store all the date, process the up/down telemetry, acquire star camera images, solve for inertial attitude, and process the science detector and H1RG frames. This computer is named \textit{ford}.
-\item an FPGA and real-time computer from National Instruments to process the sensor input/outputs, implement the attitude estimation, and synchronize all the control loops. This computer is named \textit{boop}. This is the brain of the control system. 
-\end{enumerate}
 
 
 \renewcommand{\arraystretch}{1.5}
@@ -680,11 +664,17 @@ $\bullet$ Automatically applies observing plan if no commands from the ground: s
 \bottomrule
 \end{tabular}
 \end{table}
+BETTII will have two on-board computers (see also Fig.~\ref{fig:FlowDiagram}): 
+\begin{enumerate}
+\item a computer which operates a real-time Linux kernel will be used to store all the date, process the up/down telemetry, acquire star camera images, solve for inertial attitude, and process the science detector and H1RG frames. This computer is named \textit{ford}.
+\item an FPGA and real-time computer from National Instruments to process the sensor input/outputs, implement the attitude estimation, and synchronize all the control loops. This computer is named \textit{boop}. This is the brain of the control system. 
+\end{enumerate}
+
+
 
 \textit{ford} is an Adlink Extreme Rugged Express-IBR 3517UE with a dual-core i7 CPU and 4 GB of ECC (Error Checking and Correction) memory. The ECC memory is helpful in mitigating some of the side effects of cosmic ray hits on the memory chips. The computer has a low power consumption, which allows it to function with a simple radiator instead of a fan. 
 \textit{ford} has been successfully tested at in the environmental chamber, and the temperatures of its cores under maximum CPU stress have been monitored over long periods of time. 
 
-\textit{boop} is a National Instrument cRIO- system. It features a reprogrammable FPGA chip in addition to a dual-core real-time operating system. NI LabView is the software interface to the system. \textit{boop} will generate and distribute BETTII's master clock signal at \SI{50}{\mega\hertz}.
 
 \begin{figure}[!h]
 		\centering
@@ -693,6 +683,7 @@ $\bullet$ Automatically applies observing plan if no commands from the ground: s
 		\label{fig:FlowDiagram}
 \end{figure}
 
+\textit{boop} is a National Instrument cRIO- system. It features a reprogrammable FPGA chip in addition to a dual-core real-time operating system. NI LabView is the software interface to the system. \textit{boop} will generate and distribute BETTII's master clock signal at \SI{50}{\mega\hertz}.
 
 The various relationships and communications channels between the subsystems is shown in the diagram on Fig.~\ref{fig:FlowDiagram}.
 

@@ -24,7 +24,7 @@ high angular and moderate spectral resolutions at far-IR wavelengths, without th
 \section{BETTII description}
 
 %The Ballon Experimental Twin Telescope for Infrared Interferometr (BETTII) project is pioneering a new technique that could lead to dramatically increased spatial resolution in the far-infrared: spatio-spectral interferometry. 
-As a cryogenic payload flying at an altitude of \SI{37}{\kilo\meter} (\SI{120000}{\foot}, BETTII is the first flying "direct detection" interferometer: it will attempt to coherently combine light from two different telescopes to provide increased angular resolution. Because it is operating from above most the atmosphere, it can see the far-infrared universe between 30 and 110 \si{\micro\meter}, and provide \ang{;;0.5}-\ang{;;1} spatial resolution at these wavelengths - a key region of parameter space well-suited to study protostars evolving in dense clustered environments.
+As a cryogenic payload flying at an altitude of \SI{37}{\kilo\meter} (\num{120000}~ft), BETTII is the first flying "direct detection" interferometer: it will attempt to coherently combine light from two different telescopes to provide increased angular resolution. Because it is operating from above most the atmosphere, it can see the far-infrared universe between 30 and 110 \si{\micro\meter}, and provide \ang{;;0.5}-\ang{;;1} spatial resolution at these wavelengths - a key region of parameter space well-suited to study protostars evolving in dense clustered environments.
 
 To provide this resolution (which matches that of \JWST  at \SI{25}{\micro\meter}), BETTII needs to be have two collectors separated by $\sim$~\SI{8}{\meter}; because of its operating wavelength, it needs to have a cryogenic instrument; because it is an interferometer, it needs optics with exquisite surface quality; and because it flies on a balloon platform, it needs to be robust to large changes in temperature, large pointing errors, and severe shock resistance for the landing phase.
 
@@ -293,7 +293,7 @@ At the top of the cryostat and attached to the \SI{4}{\kelvin} cold plate, there
 		\label{fig:ColdBench}
 \end{figure}
 
-A ($^3$He+$^4$He) sorption refridgerator from Chase Research cools down the main optical bench to \SI{4}{\kelvin} (see Fig.~\ref{fig:CryostatTopPlate} for a picture of the top plate of the cryostat while cold). It also has an intermediate cold finger at \SI{1}{\kelvin} and a final stage that brings down the detector temperature to $\sim$\SI{400}{\milli\kelvin}. 
+The cold plate of the dewar is cooled down to \SI{4}{\kelvin} with liquid Helium. A ($^3$He+$^4$He) sorption refridgerator from Chase Research is used to obtain an intermediate cold finger at \SI{1}{\kelvin} and a final stage that brings down the detector temperature to $\sim$\SI{400}{\milli\kelvin}. Fig.~\ref{fig:CryostatTopPlate} shows a a picture of the top plate of the cryostat while cold. 
 
 \begin{figure}[!h]
 		\centering
@@ -347,46 +347,47 @@ In this section, we summarize our findings and give details on the methods and e
 \caption[Instrument parameters]{Instrument design parameters for BETTII.}
 \vspace{-0.5cm}
 \label{tab:instrumentParameters}
-\begin{longtable}{P{6cm}|c|c|P{1.5cm}}
-\toprule											
-Parameter	&	\multicolumn{2}{c|}{          		 Value		} 			&	Units	\\
-\midrule											
-Input aperture	&	\multicolumn{2}{c|}{		0.196		}			&	\si{\raiseto{2}\meter}	\\
-Baseline length	&	\multicolumn{2}{c|}{		8		}			&	\si{\meter}	\\
-Detector pixels	&	\multicolumn{2}{c|}{	$	9\times 9	$	}			&	pixels	\\
-Detector quantum efficiency	&	\multicolumn{2}{c|}{		70 \%	}				&		\\
-Integration time per full frame	&	\multicolumn{2}{c|}{		2.5		}			&	\si{\milli\second}	\\
-Number of data points in one scan	&	\multicolumn{2}{c|}{		1024		}			&	points	\\
-OPD range required	&	\multicolumn{2}{c|}{		8.2		}			&	\si{\milli\meter}	\\
-Time per u,v point	&	\multicolumn{2}{c|}{		10		}			&	\si{\minute}	\\
-\midrule											
-	&		Band 1		&		Band 2		&		\\
-\midrule											
-Central wavelength	&		40		&		82		&	\si{\micro\meter}	\\
-Fractional bandwidth	&		62.5	\%	&		54.9	\%	&		\\
-Etendue per pixel	&	\num{	8.2E-10	}	&	\num{	1.8E-09	}	&	\si{\raiseto{2}\meter\steradian}	\\
-Estimated efficiency	&		34	\%	&		34	\%	&		\\
-Required spectral resolution	&		10		&		10		&	$\lambda/\Delta\lambda$	\\
-Pixel angular size	&		13.32		&		19.72		&	\si{\arcsec}	\\
-Full width half max	&		17.31		&		35.49		&	\si{\arcsec}	\\
-Field of view	&		2.00		&		2.96		&	\si{\arcmin}	\\
-Number of samples per fringe	&		4		&		8.2		&		\\
-\bottomrule											
+\begin{longtable}{P{6cm}|c|c|P{1.5cm}|P{3cm}}
+\toprule													
+Parameter	&	\multicolumn{2}{c|}{          		 Value		} 			&	Units	&	Science driver/impact	\\
+\midrule													
+\multicolumn{5}{c}{		Top-level parameters	}										\\
+Input aperture	&	\multicolumn{2}{c|}{		0.196		}			&	\si{\raiseto{2}\meter}	&	Sensitivity	\\
+Baseline length	&	\multicolumn{2}{c|}{		8		}			&	\si{\meter}	&	Angular resolution	\\
+Detector pixels	&	\multicolumn{2}{c|}{	$	9\times 9	$	}			&	pixels	&	Wide field of view	\\
+Detector quantum efficiency	&	\multicolumn{2}{c|}{		70	\%	}			&		&	Sensitivity	\\
+Integration time per full frame	&	\multicolumn{2}{c|}{		2.5		}			&	\si{\milli\second}	&	Sensitivity	\\
+Time per baseline orientation	&	\multicolumn{2}{c|}{		10		}			&	\si{\minute}	&	Sensitivity	\\
+Number of data points in one scan	&	\multicolumn{2}{c|}{		1024		}			&	points	&	Wide FOV	\\
+OPD range required	&	\multicolumn{2}{c|}{		8.2		}			&	\si{\milli\meter}	&	Wide FOV \& spectral resolution	\\
+\midrule													
+\multicolumn{5}{c}{		Optical system	}										\\
+\midrule													
+	&		Band 1		&		Band 2		&		&		\\
+Central wavelength	&		40		&		82		&	\si{\micro\meter}	&	Study YSOs	\\
+Fractional bandwidth	&		62.5	\%	&		54.9	\%	&		&	SNR at ZPD	\\
+Field of view	&		2		&		3		&	\si{\arcmin}	&	YSO regions	\\
+Etendue per pixel	&	\num{	8.2E-10	}	&	\num{	1.8E-09	}	&	\si{\raiseto{2}\meter\steradian}	&	Sensitivity	\\
+Estimated efficiency	&		20	\%	&		24	\%	&		&	Sensitivity	\\
+Pixel angular size	&		13.32		&		19.72		&	\si{\arcsec}	&	Wide field of view	\\
+Primary full width half max	&		17.31		&		35.49		&	\si{\arcsec}	&	Sensitivity	\\
+\bottomrule																					
 \end{longtable}
+\caption*{Instrument parameters that flow from the science requirement of \ang{;;0.5} and \ang{;;1} spatial resolution in bands 1 and 2 respectively, and spectral resolution $\R = 10$ in both bands.}
 \end{table}
 
 
-Table~\ref{tab:instrumentParameters} represents the key instrument parameters that are relevant for the sensitivity estimation of the two science channels of BETTII. Some of these parameters are user inputs (such as the aperture size), and some are already derived. A detailed, custom calculator tool that we developed uses a few user inputs to provide a number of instrumental properties, which in turn serve as design baseline for various subsystems. For example, the "OPD range required" is a derived output, depending on the baseline length, the field of view and the required spectral resolution.
+Table~\ref{tab:instrumentParameters} represents the key instrument parameters that are relevant for the sensitivity estimation of the two science channels of BETTII. The main impact of each parameter on some aspects of the science is shown. A detailed, custom calculator tool that we developed compiles most of the instrument parameters that flow down from these requirements, which in turn serve as design baseline for various subsystems. For example, the "OPD range required" is a derived output, depending on the baseline length, the field of view and the required spectral resolution.
 
 
 \subsection{Far-IR background noise estimation}
 
 
 
-We proceed to an estimation of the known far-IR background noise contributions from sources in thermal equilibrium. We assume that each source of noise emits like a Planck function \Bnu with a certain emissivity $\epsilon$. In Table~\ref{tab:noiseparams}, we list the number of photons generated per second for the amount of sky seen by a single pixel. The thermal emission is weighted by the normalized transmission function, which was measured in the laboratory (Fig~\ref{fig:BETTIITransmission}). By far the strongest contributors from our system are the warm optics and the cryostat's polypropylene window.
+We proceed to an estimation of the known far-IR background noise contributions from sources in thermal equilibrium. We assume that each source of noise emits like a Planck function \Bnu with a certain emissivity $\epsilon$. In Table~\ref{tab:noiseparams}, we list the number of photons generated per second for the amount of solid angle seen by a single pixel (with the exception of the atmospheric contribution, which is treated separately). The thermal emission is weighted by the normalized transmission function, which was measured in the laboratory (Fig~\ref{fig:BETTIITransmission}). By far the strongest contributors from our system are the warm optics and the cryostat's polypropylene window.
  
 
-In addition to the noise of our own system, we need to take into account the noise generated by the atmosphere, which results in a more complex calculation. For best accuracy, we use quantities from \cite{Harries:1980cva}, who measured the actual sky radiance in a large range of wavelengths from balloon altitudes. We obtain a radiance of \SI{0.16}{\watt\per\raiseto{2}\meter\per\steradian} and \SI{0.07}{\watt\per\raiseto{2}\meter\per\steradian} for band 1 and 2 respectively. This corresponds to \num{2.6e10}~photons~\si{\per\second} and \num{5.2e10}~photons~\si{\per\second}, respectively. 
+In addition to the noise of our own system and the astronomical background, we need to take into account the noise generated by the atmosphere, which results in a more complex calculation. For best accuracy, we use quantities from \cite{Harries:1980cva}, who measured the actual sky radiance in a large range of wavelengths from balloon altitudes. We obtain a radiance of \SI{0.16}{\watt\per\raiseto{2}\meter\per\steradian} and \SI{0.07}{\watt\per\raiseto{2}\meter\per\steradian} for band 1 and 2 respectively. This corresponds to \num{2.6e10}~photons~\si{\per\second} and \num{5.2e10}~photons~\si{\per\second}, respectively. 
 
 \renewcommand{\arraystretch}{1.5}
 \begin{table}
@@ -408,57 +409,54 @@ Instrument	&	\num{	4	}	&	\num{	0.7	}	&	\num{	5.80E-27	}	&	\num{	2.50E-07	}	&	Est
 CMB	&	\num{	2.728	}	&	\num{	1	}	&	\num{	1.02E-45	}	&	\num{	9.35E-17	}	&	\cite{Fixsen:1996di}	\\
 \bottomrule
 \end{longtable}
-\caption*{\textbf{Notes}: The calculator was designed to be scalable to designing a space mission, which is why we kept track of terms which are negligible compared to the main contributors. In space, the warm optics and window contributions would be significantly reduced and more comparable to the other terms.}
+\caption*{\textbf{Notes}: The calculator was designed to be scalable to designing a space mission, which is why we kept track of terms which are negligible compared to the main contributors. In space, the warm optics and window contributions would be significantly reduced and more comparable to the other terms. These quantities do not yet include the losses from the instrument's throughput}
 \end{table}
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=\textwidth]{Figures/BETTII_transmission.pdf}
 	\vspace{-0.5cm}
-	\caption[BETTII Transmission curves]{BETTII total transmission curves from all cold filters, excluding the beam combiner, cryostat window, and NIR/FIR dichroic.}
+	\caption[BETTII Transmission curves]{BETTII total transmission curves $\Tbp(\lambda)$ from all cold filters, excluding the beam combiner, cryostat window, and NIR/FIR dichroic. Bands are shown in different colors.}
 	\label{fig:BETTIITransmission}
     \end{figure}
 
 
 
-To know how much power is actually reaching the detectors, we need a measurement of our optical throughput. The throughput is the product of the efficiencies of the various elements along the optical train: the mirrors, the cryostat window, the NIR/FIR dichroic, and all the cold filters. The latter sum up to the transmission profile shown in Fig.~\ref{fig:BETTIITransmission}), which we call $\Tbp$. We write $f_\textrm{arm1->detN}$ (resp. $f_\textrm{arm2->detN}$) the throughput of light from arm M (resp. arm 2) falling on the detector N, where N = {1,2}:
+To know how much power is actually reaching the detectors, we need a measurement of our optical throughput. The throughput is the product of the efficiencies of the various elements along the optical train: the mirrors, the cryostat window, the NIR/FIR dichroic, and all the cold filters. The latter multiply to give the transmission profile shown in Fig.~\ref{fig:BETTIITransmission}, which we call $\Tbp$. We write $f_\textrm{arm1->detN}$ (resp. $f_\textrm{arm2->detN}$) the throughput of light from arm M (resp. arm 2) falling on the detector N, where N = {1, 2}:
 \begin{align}
-f_\textrm{arm{1,2}->det{1,2}}(\lambda) &= \tau_\textrm{combiner}\Tbp(\lambda)\tau_\textrm{window}\tau_\textrm{dichroic}r^{N_\textrm{mirrors}} \\
-& \approx 0.38\times \Tbp,
+f_\textrm{arm{1,2}->det{1,2}}(\lambda) &= \tau_\textrm{combiner}\tau_\textrm{window}\tau_\textrm{dichroic}r^{N_\textrm{mirrors}}\Tbp(\lambda) \\
+& \approx 0.38\times \Tbp(\lambda),
 \end{align}
-where we have used lab measurements to estimate $\tau_\textrm{window}\approx 0.98$, $\tau_\textrm{dichroic}\approx 0.95$, $\tau_\textrm{combiner}\approx 0.5$ and $r\approx 0.99 $ is the far-IR reflection of each warm mirror. There are $N_\textrm{mirrors} = 9$ within the warm optics train on the left side, and 8 on the right side. Until we obtain precise measurement of the throughput of each element as a function of wavelength, we consider that this extra factor is wavelength-independent and represents an average over the band. This is valid since most of these materials do not have steep dependence at such a long wavelength. For a 50\% mean bandpass transmission, this amounts to about $\sim 15\%$ efficiency for the light coming from one arm falling onto one detector. 
+where we have used lab measurements to estimate $\tau_\textrm{window}\approx 0.98$, $\tau_\textrm{dichroic}\approx 0.95$, $\tau_\textrm{combiner}\approx 0.5$ and $r\approx 0.99 $ is the far-IR reflection of each warm mirror, in both bands. There are $N_\textrm{mirrors} = 9$ within the warm optics train on the left side, and 8 on the right side. Until we obtain precise measurement of the throughput of each element as a function of wavelength, we consider that this extra factor is wavelength-independent and represents an average over the band. This is valid since most of these materials do not have steep dependence at such a long wavelength. The transmission $\Tbp(\lambda)$ has an average of 27\% (resp. 31\%) for band 1 (resp. 2) respectively, so the throughput amounts to about $\sim 10\%$ (resp. $\sim 12\%$) efficiency for the light coming from one arm falling onto one detector. 
 
 \renewcommand{\arraystretch}{1.5}
-\setlist[itemize,1]{nolistsep,leftmargin=*,labelsep=-\mylen}
-\def\labelitemi{--}
 \begin{table}
 \small
 \caption[Power and NEP contributors]{Estimated power and NEP contributors for a single detector pixel.}
 \vspace{-0.5cm}
 \begin{longtable}{P{3cm}|P{2cm}|P{2cm}|P{2cm}|P{2cm}}
 \toprule																	
-Noise source	 &		\multicolumn{2}{c|}{Power reaching the detector (pW)}	 &		\multicolumn{2}{c}{		NEP (\SI{e-16}{\watt\per\raiseto{0.5}\hertz})}	\\
+Noise source	 &		\multicolumn{2}{c}{		Power reaching the detector (pW)			}	 &		\multicolumn{2}{c}{		NEP (\SI{e-16}{\watt\per\raiseto{0.5}\hertz})			}	\\
 	&		Band 1		&		Band2		&		Band 1		&		Band2		\\
 \midrule																	
-Warm optics	 &	\num{	166	}	&	\num{	58	}	 &	\num{	12.8	}	&	\num{	7.6	}	\\
-Atmosphere	 &	\num{	33	}	&	\num{	30	}	 &	\num{	5.6	}	&	\num{	5.5	}	\\
-Window	 &	\num{	32	}	&	\num{	11	}	 &	\num{	5.7	}	&	\num{	3.4	}	\\
-Detectors	 &		-		&		-		 &	\num{	3	}	&	\num{	3	}	\\
-\midrule																	
-Total	&		230		&		99		&		15		&		10		\\
-\bottomrule																	
-\end{longtable}
-\caption*{\textbf{Notes}:These values are slightly different than the ones cites in \citet{Rinehart:2014gk} and \citet{Rizzo:2015gf} since we now have more precise measurements of the transmission as a function of wavelength.}
+Warm optics	 &	\num{	92	}	&	\num{	45	}	 &	\num{	9.6	}	&	\num{	6.7	}	\\
+Atmosphere	 &	\num{	18	}	&	\num{	24	}	 &	\num{	4.6	}	&	\num{	4.9	}	\\
+Window	 &	\num{	21	}	&	\num{	9	}	 &	\num{	4.3	}	&	\num{	3.0	}	\\
+Detectors	 &		-		&				 &	\num{	5	}	&	\num{	5	}	\\
+\midrule							-										
+Total	&		131		&		77		&		12		&		10		\\
+\bottomrule																						\end{longtable}
+\caption*{\textbf{Notes}: These values are lower than the ones cites in \citet{Rinehart:2014gk} and \citet{Rizzo:2015gf} since we now have more precise measurements of the transmission as a function of wavelength.}
 \label{tab:powerNEP}
 \end{table}
 
 
-We approximate the total power per pixel as:
+After accounting for all losses, we approximate the total noise power per pixel as:
 
 \begin{equation}
 P_\textrm{pix} = (f_\textrm{arm1->detN}+ f_\textrm{arm2->detN})N_\textrm{Photons~\si{\per\second}}E_\textrm{ph}\QE,
 \end{equation}
-where $N_\textrm{Photons~\si{\per\second}}$ is the total number of photons per second per pixel from the warm optics, the window, and the atmosphere, which are the three main contributors of noise. We also use the photon energy $E_\textrm{ph}$ and detector efficiency of the detector, $\QE\approx 0.7$. Throughout most the design phase of BETTII, this equation was used for the band-averaged quantities, for lack of better knowledge of the exact wavelength dependence of the various optical components. However, this is also valid on a finer scale and can be integrated over wavelength to provide more accurate estimates. In Table~\ref{tab:powerNEP}, we used our knowledge of the bandpass transmission and integrate over the band. The Noise Equivalent Power (NEP), a common measure of noise in the far-IR, is calculated as $\NEP = \sqrt{2P_\textrm{pix}E_\textrm{ph}}$. Note that the detectors are designed to contribute less than 30\% of the total estimated photon NEP, so that their noise contribution is negligible.
+where $N_\textrm{Photons~\si{\per\second}}$ is the total number of photons per second per pixel from the warm optics, the window, and the atmosphere, which are the three main contributors of noise (see Table~\ref{tab:noiseparams}). We also use the photon energy $E_\textrm{ph}$ and detector efficiency of the detector, $\QE\approx 0.7$. Throughout most the design phase of BETTII, this equation was used for the band-averaged quantities, for lack of better knowledge of the exact wavelength dependence of the various optical components. However, this is also valid on a finer scale and can be integrated over wavelength to provide more accurate estimates. In Table~\ref{tab:powerNEP}, we used our knowledge of the bandpass transmission and integrate over the band. The Noise Equivalent Power (NEP), a common measure of noise in the far-IR, is calculated as $\NEP = \sqrt{2P_\textrm{pix}E_\textrm{ph}}$. Note that the detectors are designed to contribute less than 30\% of the total estimated photon NEP, so that their noise contribution is negligible.
 
 
 \subsection{Interferometric visibility budget}
@@ -525,11 +523,10 @@ A summary of the results is presented in Table~\ref{tab:BETTIIsensitivity}.
   Quantity   & Band 1 &  Band 2 & SNR Target \\
      \midrule 
  \multicolumn{4}{c}{\textbf{Single scan (\SI{3}{\second})}} \\
-MDFD & 10 Jy  & 18 Jy & $\SNR_\mI = 1$\\ 
+MDFD & 91 Jy  & 113 Jy & $\SNR_\mI = 1$\\ 
 \midrule
 \multicolumn{4}{c}{\textbf{Normal observing (200 scans, 10 min)}} \\
-MDFD & 3 Jy  & 6 Jy & $\SNR_\mI = 1$\\ 
-Faintest pt. source & 26 Jy  & 14 Jy & $\SNR_k = 5$\\ 
+MDFD & 6 Jy  & 8 Jy & $\SNR_\mI = 1$\\ 
 \bottomrule 
 \end{longtable} 
 \caption*{\textbf{Notes}: $\SNR_\mI$ represents the \SNR in the interferogram, while $\SNR_k$ represents the spectral \SNR, or the \SNR for each wavenumber bin (see Chapter~\ref{chap:phasenoisepaper}).}
@@ -546,7 +543,7 @@ Balloon altitudes provide significantly better atmosphere transmission in the NI
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/BETTII_atmo_transmission.pdf}
 \vspace{-0.5cm}
-\caption{Model atmospheric transmission, from \cite{Rizzo:2012jp}}
+\caption{Model atmospheric transmission, from \cite{Rizzo:2012jp}.}
 \label{fig:trans}
 \end{center}
 \end{figure}
@@ -574,7 +571,7 @@ For a $\SNR=10$, this corresponds to $\sim\SI{0.13}{\jansky}$, or $\sim$~9.66~H~
 
 \section{Targets}
 
-The science targets we seek have fluxes that are above the spectral sensitivities from Table~\ref{tab:BETTIIsensitivity}, with a bright NIR guide star nearby. In addition, in order to correctly know the \OPD, we need sets of bright calibrator targets which provide high-\SNR fringes in one single scan of the delay line.
+The primary science targets for BETTII have fluxes that are above the spectral sensitivities from Table~\ref{tab:BETTIIsensitivity}, with a bright NIR guide star nearby. In addition, in order to correctly know the \OPD, we need sets of bright calibrator targets which provide high-\SNR fringes in one single scan of the delay line.
 
 The science targets need to be available during our launch window, and preferably cover a large range of projected angles (so we can study the source at multiple angles to retrieve more of the spatial distribution). For this reason, we favor circumpolar sources, since they are the ones which change orientation at the fastest pace.
 
@@ -583,7 +580,7 @@ The science targets need to be available during our launch window, and preferabl
 
 Calibrators ideally need to be point sources $\gg\SI{100}\Smin$~\si{\jansky} in our FIR bands, and it is not straightforward to identify which astronomical sources exist that would provide this kind of flux density. The planets of the solar system and their moons are usually bright enough, but they are often resolved by our instrument, which dramatically reduce their interferometric contrast. For example, we estimate the Uranus is $>\SI{1000}{\jansky}$, but because it is so resolved, the actual fringe contrast if very small, hence drastically reducing the \SNR. Nearby, bright A stars such as Alpha Boo are most likely point sources, but are usually not as bright as we would want, especially not in Band 2 since they are essentially thermal sources with temperatures of thousands of Kelvin. It is possible to use actual science sources as calibrators, but of course it is unknown whether or not they actually are extended (this is the purpose of a mission like BETTII!). 
 
-We find that bright asteroids such as Ceres, Pallas and Vesta are the best candidates for bright calibrators. Because of their temperature and size, they should provide many hundreds of \si{\jansky} in both our bands, while not being resolved. In addition, because of their albedo, they also reflect the sunlight so they would also be suitable for the tracking channels. Their only disadvantage is that they are not inertial targets - this complicates the pointing control system as their expected position moves across the sky, which requires the payload to have accurate timing capabilities to know where the object is at a given time.
+We find that bright asteroids such as Ceres, Pallas and Vesta are the best candidates for bright calibrators (respectively $> 320, 150 and 120$~Jy, respectively. In addition, because of their albedo, they also reflect the sunlight so they would also be suitable for the tracking channels (e.g. Ceres has Hmag$\sim$3. Their only disadvantage is that they are not inertial targets - this complicates the pointing control system as their expected position moves across the sky, which requires the payload to have accurate timing capabilities to know where the object is at a given time.
 
 \begin{figure}[!h]
 	\centering
@@ -606,16 +603,15 @@ For our first flight, our science target list will be primarily composed of sour
 	Cluster	&	Coordinates	&	Fraction of night time between 10-\SI{75}{\degree} elevation		\\	
 \midrule										
 	S140	&	 22h19m23s +63d18m44s 	&	100.0	\%	\\		
-	Cepheus~A	&	 22h56m10s +62d03m26s 	&	95.0	\%	\\	
+	Cepheus~A	&	 22h56m10s +62d03m26s 	&	100.0	\%	\\	
 	NGC~7129	&	 06h41m07s +09d33m35s 	&	100.0	\%	\\
-	Ophiuchus	&	 16h27m05s -24d30m29s 	&	80.0	\%	\\	
-	IRAS~20050+2720	&	 20h07m05s +27d28m51s 	&	70.0	\%	\\
+	IRAS~20050+2720	&	 20h07m05s +27d28m51s 	&	50.0	\%	\\
 \bottomrule										
 \end{longtable}
 \end{center}
 \end{table}			
 
-Table~\ref{tab:BETTIITargets} computes a list of such sources, and includes the fraction of time that the target spends above 10 degrees elevation and below \SI{75}{\degree} during the planned observing night of September 15, 2016. In addition, Fig.~\ref{fig:Targets} shows the tracks in the sky. The circumpolar targets S140, Cepheus~A and IRAS~20050+2720 are available for the most time. All are located well in the East at the beginning of the night, which means we can point towards them as the Sun sets in the West. Note that when the source is at low elevations, we could experience a substantial amount of additional atmospheric noise since the line of sight sees more airmass.
+Table~\ref{tab:BETTIITargets} gives a list of such sources, and includes the fraction of time that the target spends above 10 degrees elevation and below \SI{75}{\degree} during the planned observing night of September 15, 2016. In addition, Fig.~\ref{fig:Targets} shows the tracks in the sky. The circumpolar targets S140, Cepheus~A and NGC~7129 are available for the most time. All are located well in the East at the beginning of the night, which means we can point towards them as the Sun sets in the West. Note that when the source is at low elevations, we could experience a substantial amount of additional atmospheric noise since the line of sight sees more airmass.
 
 \begin{figure}[!h]
 	\centering

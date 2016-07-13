@@ -10,9 +10,9 @@ from matplotlib import cm
 import pickle
 from plot_library import *
 
-longitude = '-104.2455'
-latitude = '+34.4714'
-elevation = 37000 * u.m
+longitude = -104.2455
+latitude = 34.4714
+elevation = 0 * u.m
 location = EarthLocation.from_geodetic(longitude, latitude, elevation)
 
 observer = Observer(name='Fort Sumner',
@@ -23,7 +23,7 @@ observer = Observer(name='Fort Sumner',
                timezone=timezone('US/Mountain'),
                description="Launch")
                
-time_range = Time(["2016-09-15 20:00","2016-09-16 06:00"])
+time_range = Time(["2016-09-16 03:00","2016-09-16 13:00"],scale='utc')
 time_grid = time_grid_from_range(time_range)
 
 
@@ -47,17 +47,18 @@ target_table_string = """# name ra_degrees dec_degrees
 S140 334.82654 63.313836
 CepheusA 344.07913 62.031778
 NGC7129 325.77663 66.115386
-NGC2264 100.29251 9.4925956
-NGC2071 86.770544 0.36287845
-NGC1333 52.292875 31.365424
-Ophiuchus 246.78931 -24.621749
 IRAS20050+2720 301.77718 27.481741"""
 # Read in the table of targets
+# NGC2264 100.29251 9.4925956
+#NGC2071 86.770544 0.36287845
+#NGC1333 52.292875 31.365424
+#Ophiuchus 246.78931 -24.621749
+
 from astropy.io import ascii
 target_table = ascii.read(target_table_string)
 targets = [FixedTarget(coord=SkyCoord(ra=ra*u.deg,dec=dec*u.deg),name=name) for name,ra,dec in target_table]
 
-constraints = [AltitudeConstraint(10*u.deg,75*u.deg)]#[AltitudeConstraint(20*u.deg,75*u.deg),AtNightConstraint.twilight_civil()]
+constraints = [AltitudeConstraint(15*u.deg,75*u.deg)]#[AltitudeConstraint(20*u.deg,75*u.deg),AtNightConstraint.twilight_civil()]
 
 tab = observability_table(constraints,observer,targets,time_range=time_range)
 
@@ -78,3 +79,6 @@ legend.get_frame().set_facecolor('w')
 #fig.tight_layout()
 fig.savefig('../Figures/TargetPlot.pdf',dpi=300)
 plt.show()
+for t in targets:
+	print t
+
