@@ -102,7 +102,7 @@ The object now has three characteristic components: the star itself; the flatten
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics{Figures/protostar.jpg} 
+	\includegraphics[width=0.5\textwidth]{Figures/protostar.jpg} 
 	\caption[Protostar]{Cartoon of a protostar \citep{Greene:2001dg} with the envelope, a flattened circumstellar disk, the bipolar outflow/cavity, and the protostar at the center. A typical scale for the envelope of a young object is $\sim$\SI{10000}{\au}.}
 	\label{fig:Protostar}
     \end{figure}
@@ -192,14 +192,14 @@ The various classes of YSO (from 0 to III) have distinct observational signature
 
 An illustration of canonical spectral energy distributions (SED) and density structure is shown in Figs.~\ref{fig:EarlyStages} and \ref{fig:LateStages} for the four main stages, with parameters taken in \citet{Whitney:2003kc}. On the left of each picture, the SED is the measurable quantity when the YSO is unresolved at all wavelengths. The challenge is to estimate the density structure (to the right) by measuring the SED. The different lines plotted in the SEDs are different inclination angles, highlighting the enormous impact of the viewing angle on the potential interpretation of these SEDs. The dashed line corresponds to the Planck function from the central source. These models were run using the Hyperion software \citep{Robitaille:2011fc} with "OH5" dust \citep{Ossenkopf:1994tq}, as discussed in more details in Section~\ref{subsec:dust}.
 
-These SEDs are often characterized and classified with standard observational metrics, such as the bolometric temperature and luminosities \citep{Myers:1993en,Dunham:2010bx}:
+These SEDs are often characterized and classified with standard observational metrics, such as the bolometric luminosity \citep{Myers:1993en,Dunham:2010bx}:
 
 \begin{align}
 \Lbol &= 4\pi d^2\int_0^\infty\Snu d\nu,\\
-\Tbol &= \num{1.25e-11} \frac{\int_0^\infty \nu\Snu d\nu}{\int_0^\infty \Snu d\nu}~\si{\kelvin},
+%\Tbol &= \num{1.25e-11} \frac{\int_0^\infty \nu\Snu d\nu}{\int_0^\infty \Snu d\nu}~\si{\kelvin},
 \end{align}
 %
-where \Snu is the flux density in \si{\watt\per\raiseto{2}\meter\per\hertz}. We will use these simple diagnostics later in our analysis of our SOFIA FORCAST data.
+where \Snu is the flux density in \si{\watt\per\raiseto{2}\meter\per\hertz}. We will use this simple diagnostic later in our analysis of our SOFIA FORCAST data.
 
 \subsection{Mass accretion in clusters}
 
@@ -329,23 +329,25 @@ Scattering mechanisms can be much more complicated to represent, as they usually
 
 Several radiative transfer codes exist in the literature, and we have explored a few of them (DIRT, by \citet{Wolfire:1986fw}, HOCHUNK by \citet{Whitney:2003ke} and HOCHUNK3d by \citet{Whitney:2013cw}). We opted for an open-source package called Hyperion \citep{Robitaille:2011fc}, which has the advantage of having a Python interface and enjoys a relatively large community support. The code can accept different dust models and can generate various types of geometries and density grids. It contains the essential geometrical elements of a YSO: stars, disks, envelopes with cavities, which all have numerous parameters to describe their density structures. It can also accept user-generated, arbitrary density grids.
 
-The radiative transfer code uses a Monte-Carlo technique to propagate packets through the density grid. This is an iterative process, as the dust both absorbs and re-emits radiation.
+The radiative transfer code uses a Monte-Carlo technique to propagate packets through the density grid. This is an iterative process, as the dust both absorbs and re-emits radiation. The code implements multiple different techniques and proxies to improve the computation speed and the accuracy of the simulation, as explained in great details in \citet{Robitaille:2011fc}. Beyond the traditional benchmarks used in that paper, we validate our wrapper to the Hyperion code by reproducing SED behaviours from other authors (see Fig.~\ref{fig:EarlyStages}~an~\ref{fig:LateStages} for examples of simulations using this code, which match the ones in \citet{Whitney:2003kc}). 
 %Hyperion functions in two steps. The first is an iterative process that aims at determining the specific energy absorption rate of the dust in the grid. This is achieved for each dust population and each grid cell in the model. This can be linked to the temperature structure for each dust population, using pre-computed mean opacities and emissivities, as thoroughly explained in \citep{Robitaille:2011fc}. Determining the specific energy absorption rate of the dust involves a Monte-Carlo technique that propagates photon packets across the grid and makes it interacts with the dust in each cell. The process needs to be iterative because the emissivity of the dust depends on the characteristics of the photon packets hitting a given cell, which in turn depends on the emissivity of the dust. 
 %Once the dust emissivity
 %After choosing a discrete grid to represent a density model and adding energy sources, the temperature structure of the dust is calculated by propagating photon packets and determining the dust LTE temperature in each cell. Multiple iterations of this process are usually required to converge to a decent thermal structure.
 
-Once the dust temperature is known, the dust becomes a source of thermal radiation. This type of radiation is modeled using ray tracing, which provides a very good signal-to-noise ratio (\SNR). The light from the central source which was not absorbed, however, needs to be propagated and scattered off the dust grains, for example using a method called peeling-off \citep{YusefZadeh:1984ff}. For non-isotropic scattering, this process has relatively low \SNR, hence requires a lot of photons packets to function properly. While there are future plans to implement raytracing for scattering \citep{Robitaille:2011fc}, we are currently forced to wait long times for simulating YSOs with massive envelopes because of this problem.
+%Once the dust temperature is known, the dust becomes a source of thermal radiation. This type of radiation is modeled using ray tracing, which provides a very good signal-to-noise ratio (\SNR). The light from the central source which was not absorbed, however, needs to be propagated and scattered off the dust grains, for example using a method called peeling-off \citep{YusefZadeh:1984ff}. For non-isotropic scattering, this process has relatively low \SNR, hence requires a lot of photons packets to function properly. While there are future plans to implement raytracing for scattering \citep{Robitaille:2011fc}, we are currently forced to wait long times for simulating YSOs with massive envelopes because of this problem.
 
-[Put models of YSOs with different masses here?]
 
-These models usually present a large amount of degeneracies, especially when the entire range of wavelengths is not covered, as it is the case for most astronomical sources. For example, an SED will look very different depending on the viewing angle. If we see down the throat of the cavity, the short-wavelength light from the central source will not exhibit a lot of extinction. If we observe this same source through the disk and envelope, these same wavelengths will show a lot of extinction since the light has to go through a large dust column. %The short wavelength emission, up to the peak of the SED, is very geometry-dependent and highly degenerate parameters.
+
+The SEDs from models usually present a large amount of degeneracies, especially when the entire range of wavelengths is not covered, as often is the case for most observed sources. The reason for the ambiguity is a combination of limitations of astronomical instrumentation and limitations on our knowledge of the physics in these regions. On the instrumentation side, observations are always associated with measurement errors and limitations. Systematic calibration uncertainties are typically 5-20\% at all wavelengths, and different wavelengths usually probe different spatial scales which can complicate matching to the model. On the physics side, averaged dust grain properties are most often used, as the detailed physical distribution of grain sizes, types, and physical state is not known. In addition, geometrical effects such as viewing angles can dramatically change the SED shape, as it is illustrated in Fig.~\ref{fig:EarlyStages}~an~\ref{fig:LateStages}.
+
+%For example, an SED will look very different depending on the viewing angle. If we see down the throat of the cavity, the short-wavelength light from the central source will not exhibit a lot of extinction. If we observe this same source through the disk and envelope, these same wavelengths will show a lot of extinction since the light has to go through a large dust column. %The short wavelength emission, up to the peak of the SED, is very geometry-dependent and highly degenerate parameters.
 
 Others \citep[e.g.,][]{Robitaille:2006cb} have used similar codes to produce standardized grids of pre-computed models which randomly sample a very large number of source geometry parameters. These grids of models are routinely used by the community to fit a set of unresolved SED measurements at discrete wavelengths. However, most often the scatter in the parameters for the few best fit models prevents from drawing meaningful conclusions on the observations. In Chapter~\ref{chap:SOFIA}, we discuss this problem and offer an alternative method to determine the best-fitting models.
 
 %[Example?]
 %For example, in a Class 0 or I YSO, the disk geometry and mass has a very insignificant impact on the resulting SED. [Put a model of the SED with and without disk?]
 
-One of the key challenges of using this code is to determine which dust models to use. For this work, we choose to use exclusively OH5 dust \citep{Ossenkopf:1994tq}, which represents grains with an ice mantle which are the result of a coagulation phase of an initial distribution of grain sizes following $n\propto a^{-3/2}$. This model was found to accurately represent some grain distribution in the ISM [NEED CITATION, CHECK OUT TRACY'S PAPER].
+One of the key challenges of using this code is to determine which dust models to use. For this work, we choose to use exclusively OH5 dust \citep{Ossenkopf:1994tq}, which represents grains with an ice mantle which are the result of a coagulation phase of an initial distribution of grain sizes following $n\propto a^{-3/2}$. This model was found to accurately represent some grain distribution in the ISM \citep[see e.g.][]{Dunham:2010bx}.
 
 \subsection{Observing star formation}
 

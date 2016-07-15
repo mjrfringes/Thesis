@@ -258,6 +258,8 @@ df = isolated.to_pandas()
 df.index = df['SOFIA_name']
 c = SkyCoord(df['RA'],df['DEC'],frame=FK5,unit=u.deg)
 df['Coordinates'] = c.to_string('hmsdms',precision=1)
+df = df.loc[df['Cluster'].isin(['Oph','NGC1333'])]
+df = df.loc[df['R'] < 2]
 
 
 # plot R histogram
