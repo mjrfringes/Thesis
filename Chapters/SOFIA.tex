@@ -331,7 +331,7 @@ In Fig.~\ref{fig:varietySources} we present a variety of maps from our cluster s
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/RGBmosaic.png}
 \vspace{-1cm}
-\caption[RGB images of select sample of sources]{RGB images of selected sample of sources (red: \SI{37}{\micron}, green: \SI{31}{\micron} and blue: \SI{19}{\micron}). In these images, the three bands have 6.4, 6 and 5~\si{\um} FWHM for 37, 31 and \SI{19}{\um} respectively.}
+\caption[RGB images of select sample of sources]{RGB images of selected sample of sources (red: \SI{37}{\micron}, green: \SI{31}{\micron} and blue: \SI{19}{\micron}). In these images, the three bands have 6.4, 6 and 5 pixels FWHM for 37, 31 and \SI{19}{\um} respectively.}
 \label{fig:varietySources}
 \end{center}
 \end{figure}
@@ -342,30 +342,30 @@ In Fig.~\ref{fig:varietySources} we present a variety of maps from our cluster s
 The data produce a consolidated list of fluxes for most of our clusters, where we gather 2MASS, \Spitzer, FORCAST, \Herschel, SCUBA, and SMA data, when available, for $\sim 90$ sources. Most sources are point sources for the SOFIA FORCAST \SI{37}{\um} band, but some sources present a certain spatial extension which was not known before. 
 
 
-A few other parameters are determined from the FORCAST data and shown in the data release: the $R_{37}$, which consists of the ratio of \Rfifty for the source and \Rfifty for the last observed calibrator; the spectral index and its uncertainty, computed from the \SI{2.2}{\um} - \SI{37}{\um}fluxes; and the bolometric luminosity for each source. An excerpt of the final table is shown in Table~\ref {tab:OphiuchusNGC1333}.
+A few other parameters are determined from the FORCAST data and shown in the data release: the $R_{37}$, which consists of the ratio of \Rfifty for the source and \Rfifty for the last observed calibrator; the spectral index and its uncertainty, computed from the \SI{2.2}{\um} - \SI{37}{\um} fluxes; and the bolometric luminosity for each source. An excerpt of the final table is shown in Table~\ref {tab:OphiuchusNGC1333}.
 \begin{landscape}
 \begin{table}[!h]
 \tiny
-\caption[NGC1333 photometry]{Extract of NGC1333 photometry.}
+\caption[NGC1333 photometry]{Extract of NGC1333 photometry used for SED modeling.}
 \label{tab:OphiuchusNGC1333}
 \vspace{-0.5cm}
-\begin{longtable}{llrrrrrrrrrrrrr}
- \toprule																														
-SOFIA name	&	Coordinates		&	R37	&	Lbol	&	Tbol	&	j	&	e\_j	&	h	&	e\_h	&	ks	&	e\_ks	&	i1	&	e\_i1	&	i2	&	e\_i2	\\
+\begin{longtable}{llrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr}																														
+\toprule																														
+SOFIA name	&	Coordinates		&	R37	&	Lbol	&	j	&	e\_j	&	h	&	e\_h	&	ks	&	e\_ks	&	i1	&	e\_i1	&	i2	&	e\_i2			\\
 \midrule																														
-NGC1333.1	&	03h29m07.7s	+31d21m57.0s	&	0.746	&	8.385	&	22.401	&	0.0012	&	0.0001	&	0.0031	&	0.0003	&	0.0450	&	0.004	&	0.696	&	0.070	&	1.800	&	0.180	\\
-NGC1333.2	&	03h29m10.3s	+31d21m55.5s	&	2.232	&	27.832	&	24.356	&	0.2853	&	0.0285	&	0.6539	&	0.0654	&	0.9010	&	0.090	&	0.637	&	0.064	&	0.446	&	0.045	\\
-NGC1333.3	&	03h29m01.5s	+31d20m20.5s	&	0.904	&	8.104	&	20.630	&	0.0008	&	0.0001	&	0.0029	&	0.0003	&	0.0296	&	0.003	&	0.544	&	0.054	&	1.090	&	0.109	\\
-NGC1333.4	&	03h29m11.1s	+31d18m30.8s	&	1.103	&	3.056	&	4.204	&	0.0007	&	0.0007	&	0.0009	&	0.0009	&	0.0015	&	0.002	&	0.001	&	0.000	&	0.004	&	0.000	\\
-NGC1333.5	&	03h29m10.6s	+31d18m19.6s	&	1.623	&	2.786	&	4.424	&	0.0007	&	0.0007	&	0.0009	&	0.0009	&	0.0015	&	0.002	&	0.002	&	0.000	&	0.007	&	0.001	\\
-NGC1333.6	&	03h29m13.0s	+31d18m13.8s	&	0.951	&	1.155	&	17.248	&	0.0007	&	0.0007	&	0.0009	&	0.0009	&	0.0015	&	0.000	&	0.046	&	0.005	&	0.180	&	0.018	\\
+NGC1333.1	&	03h29m07.7s	+31d21m57.0s	&	0.746	&	8.385	&	0.0012	&	0.0001	&	0.0031	&	0.0003	&	0.0450	&	0.004	&	0.696	&	0.070	&	1.800	&	0.180			\\
+NGC1333.2	&	03h29m10.3s	+31d21m55.5s	&	2.232	&	27.832	&	0.2853	&	0.0285	&	0.6539	&	0.0654	&	0.9010	&	0.090	&	0.637	&	0.064	&	0.446	&	0.045			\\
+NGC1333.3	&	03h29m01.5s	+31d20m20.5s	&	0.904	&	8.104	&	0.0008	&	0.0001	&	0.0029	&	0.0003	&	0.0296	&	0.003	&	0.544	&	0.054	&	1.090	&	0.109			\\
+NGC1333.4	&	03h29m11.1s	+31d18m30.8s	&	1.103	&	3.056	&	0.0007	&	0.0007	&	0.0009	&	0.0009	&	0.0015	&	0.002	&	0.001	&	0.0007	&	0.004	&	0.0004			\\
+NGC1333.5	&	03h29m10.6s	+31d18m19.6s	&	1.623	&	2.786	&	0.0007	&	0.0007	&	0.0009	&	0.0009	&	0.0015	&	0.002	&	0.002	&	0.0002	&	0.007	&	0.001			\\
+NGC1333.6	&	03h29m13.0s	+31d18m13.8s	&	0.951	&	1.155	&	0.0007	&	0.0007	&	0.0009	&	0.0009	&	0.0015	&	0.0004	&	0.046	&	0.005	&	0.180	&	0.018			\\
 \midrule																														
 	&			&	i3	&	e\_i3	&	i4	&	e\_i4	&	F11	&	e\_F11	&	F19	&	e\_F19	&	m1	&	e\_m1	&	F31	&	e\_F31	&	F37	\\
 \midrule																														
 NGC1333.1	&	03h29m07.7s	+31d21m57.0s	&	3.060	&	0.306	&	2.550	&	0.255	&	0.225	&	0.169	&	1.502	&	0.208	&	--	&	0.260	&	6.886	&	0.640	&	10.994	\\
 NGC1333.2	&	03h29m10.3s	+31d21m55.5s	&	0.448	&	0.080	&	0.913	&	0.128	&	8.414	&	0.596	&	36.517	&	2.562	&	--	&	--	&	106.490	&	7.457	&	135.723	\\
 NGC1333.3	&	03h29m01.5s	+31d20m20.5s	&	1.690	&	0.211	&	3.060	&	0.306	&	1.681	&	0.131	&	6.902	&	0.493	&	--	&	0.069	&	9.256	&	0.656	&	9.406	\\
-NGC1333.4	&	03h29m11.1s	+31d18m30.8s	&	0.005	&	0.001	&	0.004	&	0.000	&	0.097	&	0.060	&	0.076	&	0.115	&	0.607	&	0.061	&	1.785	&	0.209	&	3.040	\\
+NGC1333.4	&	03h29m11.1s	+31d18m30.8s	&	0.005	&	0.001	&	0.004	&	0.0004	&	0.097	&	0.060	&	0.076	&	0.115	&	0.607	&	0.061	&	1.785	&	0.209	&	3.040	\\
 NGC1333.5	&	03h29m10.6s	+31d18m19.6s	&	0.010	&	0.001	&	0.011	&	0.001	&	0.114	&	0.093	&	0.150	&	0.119	&	0.771	&	0.077	&	1.946	&	0.234	&	2.166	\\
 NGC1333.6	&	03h29m13.0s	+31d18m13.8s	&	0.274	&	0.027	&	0.320	&	0.032	&	0.160	&	0.035	&	0.570	&	0.093	&	0.735	&	0.074	&	1.446	&	0.180	&	1.806	\\
 \midrule																														
@@ -381,14 +381,14 @@ NGC1333.6	&	03h29m13.0s	+31d18m13.8s	&	0.345	&	4.290	&	0.429	&	1.527	&	3.883	&	4
 	&			&	H350	&	e\_H350	&	H500	&	e\_H500	&	S850	&	e\_S850	&	F1100	&	e\_F1100	&	S1300	&	e\_S1300	&	$\alpha$	&	e\_$\alpha$	&		\\
 \midrule																														
 NGC1333.1	&	03h29m07.7s	+31d21m57.0s	&	45.559	&	17.857	&	24.264	&	16.301	&	--	&	--	&	1.300	&	0.130	&	--	&	--	&	0.280	&	0.564	&		\\
-NGC1333.2	&	03h29m10.3s	+31d21m55.5s	&	51.506	&	16.114	&	24.742	&	13.062	&	--	&	--	&	--	&	--	&	--	&	--	&	1.243	&	0.000	&		\\
+NGC1333.2	&	03h29m10.3s	+31d21m55.5s	&	51.506	&	16.114	&	24.742	&	13.062	&	--	&	--	&	--	&	--	&	--	&	--	&	1.243	&	--	&		\\
 NGC1333.3	&	03h29m01.5s	+31d20m20.5s	&	70.907	&	17.371	&	40.867	&	11.474	&	--	&	--	&	1.500	&	0.150	&	--	&	--	&	0.714	&	0.385	&		\\
 NGC1333.4	&	03h29m11.1s	+31d18m30.8s	&	38.449	&	6.033	&	18.594	&	4.666	&	--	&	--	&	2.000	&	0.200	&	--	&	--	&	1.864	&	0.458	&		\\
 NGC1333.5	&	03h29m10.6s	+31d18m19.6s	&	36.232	&	6.189	&	18.007	&	4.878	&	--	&	--	&	2.000	&	0.200	&	--	&	--	&	1.705	&	0.273	&		\\
 NGC1333.6	&	03h29m13.0s	+31d18m13.8s	&	34.781	&	8.007	&	21.255	&	6.628	&	--	&	--	&	0.630	&	0.063	&	--	&	--	&	1.001	&	0.501	&		\\
 \bottomrule																														
-\end{longtable}																																	
-\caption*{\textbf{Note:} The complete version of this table is made available electronically}																																				
+\end{longtable}																																																														
+\caption*{\textbf{Note:} The table contains the source name, coordinates in J2000, the ratio of R37$=\Rfifty_\textrm{source}/\Rfifty_\textrm{cal}$, the bolometric luminosity determined by integrating the data points, followed by the photometry and its 1$\sigma$ error in the 2MASS bands (j, h, k$_s$), IRAC bands (i1, i2, i3, i4 at 3.6, 4.5, 5.8 and \SI{8}{\um} respectively), the FORCAST bands (F11, F19, F31, F37), the \Spitzer MIPS bands (m24 and m70), the Herschel PACS and SPIRE bands (H70, H160, H250, H350 and H500), the SCUBA band (S850), the BOLOCAM band (F1100) and the SMA continuum band (S1300). The, The complete version of this table is made available electronically.}																																			
 \end{table}																														\end{landscape}
 
 
@@ -412,7 +412,7 @@ NGC1333.6	&	03h29m13.0s	+31d18m13.8s	&	34.781	&	8.007	&	21.255	&	6.628	&	--	&	--
 
 \subsection{Fitted physical parameters}
 
-The spectral index distribution for the point sources in our sample, using a modified spectral index extending out to \SI{37}{\um}, is shown on the left of Fig.~\ref{fig:SpectralIndex}. Most sources have positive spectra index, indicative of a rise in the SED and a large proportion of long-wavelength emission. These objects are more dusty, and believed to be younger than objects with negative spectral index. A closer inspection reveals that targets with negative index mostly lie in the Ophiuchus cluster, and can consist in late type I objects which have already cleared most of their envelopes. These exhibit higher bolometric temperatures, as most of the emission is shifted towards shorter wavelengths.
+The spectral index ($\alpha \equiv (d\log(\lambda F_\lambda)/d\log\lambda)$) distribution for the point sources in our sample is shown on the left of Fig.~\ref{fig:SpectralIndex}. Most sources have positive spectral index, indicative of a rise in the SED and a large proportion of long-wavelength emission. These objects are more dusty, and believed to be younger than objects with negative spectral index. A closer inspection reveals that targets with negative index mostly lie in the Ophiuchus cluster, and can consist in late Class I objects which have already cleared most of their envelopes. 
 
 \begin{figure}[!h]
 \begin{center}
@@ -423,7 +423,7 @@ The spectral index distribution for the point sources in our sample, using a mod
 \end{center}
 \end{figure}
 
-The final data release also includes all of the physical parameters derived using the technique from Section~\ref{sec:SEDFitting}, as well as their uncertainties.
+The data tables also include all of the physical parameters derived using the technique from Section~\ref{sec:SEDFitting}, as well as their uncertainties.
 																							
 \section{SED fitting}
 \label{sec:SEDFitting}
@@ -434,9 +434,11 @@ SED fitting is prone to many degeneracies: usually many geometrical and physical
 \subsection{A custom grid of models}
 
 
-We used a more modern version of the same radiative transfer code, called Hyperion, to develop our own capability of simulating SEDs and understand the sensitivity of these parameters on the SED shape of our sources. Based on our investigation, the degeneracy between viewing angle and multiple geometrical parameters is considerable. In particular, the sensitivity of the disk properties is minimal, as most of the SED properties are determined almost entirely by the envelope. Parameters of the central source such as the mass, radius and temperature are irrelevant, as they are all combined into one single term, which is the central luminosity. Similarly, the luminosity created when simulating a disk accreting onto the central object can not be distinguished from a more luminous central object and a non-accreting disk. Finally, we find that there is very little difference between Ulrich envelope models and standard power-law envelopes (see for example Fig.~14 from \citet{Whitney:2013cw}), except that the latter can more directly be related to physical parameters such as the envelope mass. 
+We use Hyperion \citep[][see also in Section~\ref{subsubsec:radiative}]{Robitaille:2011fc} to develop our own capability of calculating SEDs and understand the sensitivity of these parameters on the SED shape of our sources. Based on our investigation, the degeneracy between viewing angle and multiple geometrical parameters is considerable. The sensitivity of the SED to disk properties is minimal, as most of the SED properties are determined mostly by the envelope for younger objects like most of the ones we observed with SOFIA. Parameters of the central source such as the mass, radius and temperature are primarily important when they are combined into one single term, which is the central luminosity. Similarly, the luminosity created when simulating a disk accreting onto the central object can not be distinguished from a more luminous central object and a non-accreting disk. Finally, we find that there is very little difference between Ulrich envelope models \citep{Ulrich:1976ho} and standard power-law envelopes (see for example Fig.~14 from \citet{Whitney:2013cw}), except that the latter can more directly be related to physical parameters such as the envelope mass. 
 
-From these findings, we created a simplified grid of models by significantly reducing the number of parameters. The resulting choices are presented in Table~\ref{tab:SEDModelGrid}. Unlike most authors, who use multiple kinds of dust models for different regions of the SED (which add complexity and number of parameters), we simply use the same dust model (OH5) for both the envelope and the disk, and assume a 1:100 dust-to-gas ratio. By doing so, we tend to overestimate the short-wavelength emission from SEDs, because the OH5 model we use only features isotropic scattering whereas most dust grains appear to be forward-scattering. The two main parameters that we vary are the central luminosity and the envelope mass, which are the two main sufficiently decoupled quantities that we are trying to determine from the data. 
+From these findings, we created a simplified grid of models by significantly reducing the number of parameters. Table~\ref{tab:SEDModelGrid} introduces most of the geometric and physical parameters that are available in Hyperion, for the central source, the disk, the envelope and the bipolar cavity. Most parameters are set to constant values which we determined as average values using literature examples as well as our own investigations for the objects we try to study. The varied parameters are shown at the bottom of the table: the inclination angle, the central luminosity (irrespective of whether it is caused by the central star or by accretion), the envelope mass, the external extinction and the scaling factor (explained below). The only two physical parameters that we vary are the luminosity and the envelope mass. While others \citep[e.g.][]{Furlan:2016df} have also attempted to reduce the number of parameters for their fitting, they still include more parameters such as the disk radius, but generally conclude that they are not able to properly constrain all of their parameters.
+
+Unlike most authors, who use multiple kinds of dust models for different regions of the SED (which add complexity and number of parameters), we simply use the same dust model (OH5) for both the envelope and the disk, and assume a 1:100 dust-to-gas ratio. By doing so, we tend to overestimate the short-wavelength emission from SEDs, because the OH5 model we use only features isotropic scattering whereas most dust grains appear to be forward-scattering \citep{Draine:2011tr}.
 
 
 \renewcommand{\arraystretch}{1.5}
@@ -452,7 +454,7 @@ From these findings, we created a simplified grid of models by significantly red
 Parameter	&	Description	&	Values	&	Units	\\
 \midrule							
 \midrule							
-\multicolumn{4}{c}{Constant parameters}							\\
+\multicolumn{4}{c}{\textbf{Constant parameters}}							\\
 \midrule							
 \multicolumn{4}{c}{Central source}							\\
 \Mstar	&	Stellar mass	&	1	&	\si{\Msun}	\\
@@ -466,7 +468,7 @@ Type	&	Flared or alpha disk	&	Flared	&		\\
 $\beta$	&	Flaring parameter	&	1.25	&		\\
 $p$	&	Disk surface density exponent	&	-1	&		\\
 $r_0$	&	Reference distance for scale height	&	\Rdiskmin	&	\si{\au}	\\
-$h_0$	&	Disk scale height at $r_0$	&	0.01\Rdiskmin	&	\si{\au}	\\
+$h_0$	&	Disk scale height at $r_0$	&	0.01$\times$\Rdiskmin	&	\si{\au}	\\
 $d$	&	Dust	&	OH5	&		\\
 \midrule							
 \multicolumn{4}{c}{Envelope}							\\
@@ -485,12 +487,12 @@ $\rho_0$	&	Density at $r^\textrm{cav}_0$	&	0	&	\si{\gram\per\centi\meter}	\\
 $\alpha_e$	&	Density profile exponent	&	0	&		\\
 \midrule							
 \midrule							
-\multicolumn{4}{c}{Changing parameters}							\\
+\multicolumn{4}{c}{\textbf{Fitted parameters}}							\\
 \midrule							
 $i$	&	Inclination angle	&	0 to 90 in 10 constant increments of $\cos i$	&	degrees	\\
-\Lstar	&	Central luminosity	&	$5\times 1.5^p$ for $p=-4, -3, \dots 10$ (from 0.99 to 288)	&	\si{\Lsun}	\\
-\Menv	&	Envelope mass	&	$0.01\times 1.5^p$ for $p=-2, -1, \dots 19$ (from 0.001 to 22.17)	&	\si{\Msun}	\\
-\Av	&	External extinction	&	$0, 1, \dots 14$	&	mag	\\
+\Lstar	&	Central luminosity	&	$5\times 1.5^p$ for $p=-4, -3, \dots, 10$ (from 0.99 to 288)	&	\si{\Lsun}	\\
+\Menv	&	Envelope mass	&	$0.01\times 1.5^p$ for $p=-2, -1, \dots, 19$ (from 0.001 to 22.17)	&	\si{\Msun}	\\
+\Av	&	External extinction	&	$0, 1, \dots, 14$	&	mag	\\
 $s$	&	Scaling	&	0.7, 0.85, 1, 1.5, 1.3	&		\\
 \bottomrule					
 	\end{longtable} 
@@ -520,77 +522,77 @@ MRW	&	True	\\
 	\end{longtable} 
 \end{table}
 
-The grid is composed of $\sim 418$ models which are modeled with Hyperion. For models of more than \SI{0.5}{\Msun}, we interpolate the grid in mass by increments of 20\%, which allows for a finer sampling at higher masses, but increases the number of individual models to $958$. Each model is sampled at 10 inclinations, 15 values for external extinction, and five different scaling factors, for a total of \num{718500} grid models. Each model is evaluated at all relevant observing bands, from the 2MASS bands all the way to \SI{1.3}{\milli\meter} SMA bands. Given the sparsity of the grid, and the relatively simple model used, we do not apply color correction to the fluxes, nor do we convolve the model fluxes with the band transmission function: the resulting corrections usually fall well within our approximations, and do not affect significantly the outcome of the fitting.
+The grid is composed of $\sim 418$ models which are modeled with Hyperion. For models with $\Menv>\SI{0.5}{\Msun}$, we interpolate the grid in mass by increments of 20\%, which allows for a finer sampling at higher masses, but increases the number of individual models to $958$. Each model is sampled at 10 inclinations, 15 values for external extinction, and five different scaling factors, for a total of \num{718500} grid models. Each model is evaluated at all relevant observing bands, from the 2MASS bands all the way to the \SI{1.3}{\milli\meter} SMA bands. Given the sparsity of the grid, and the relatively simple model used, we do not apply color correction to the fluxes, nor do we convolve the model fluxes with the band transmission function: the resulting corrections fall well within our approximations, and do not affect significantly the outcome of the fitting.
 
-The scaling factor is used to show the uncertainty in the distance determination \citep{Robitaille:2006cb}, but it can also be considered as a factor to sample different luminosities \citep{Furlan:2016df}. Indeed, \citet{Furlan:2016df} show that, to first order, changing luminosities by a small amount is approximately equivalent to scaling the SED in flux. In their grid, they use a scaling factor that ranges from 0.5 to 2.0, which allows them to have factors of two between their luminosity steps. We choose a more conservative approach  by actually running the grid at closer luminosity steps (factor of 1.5) and hence have a smaller range of scaling factors. 
+The scaling factor is used to represent the uncertainty in the distance determination \citep[e.g.][]{Robitaille:2006cb}, but it can also be considered as a scaling to represent modestly different luminosities \citep{Furlan:2016df}. Indeed, \citet{Furlan:2016df} show that, to first order, changing luminosities by a small amount is approximately equivalent to scaling the SED in flux. In their grid, they use a scaling factor that ranges from 0.5 to 2.0, which allows them to have factors of 2.0 between their luminosity steps. We choose a more conservative approach  by actually running the grid at closer luminosity steps (factor of 1.5) and hence have a smaller range of scaling factors. 
 
-The extinction parameter is used to represent extinction by material along the line of sight that is \textit{outside} of the core, commonly used for foreground material. A discussion of this parameter is proposed in the following sections.
+The extinction parameter is used to represent extinction by material along the line of sight that is \textit{outside} of the core: foreground material. A discussion of this parameter is given in the following sections.
 
 
 
 \subsection{Fitting method}
 
-In order to determine which model fits the data best, we adopt a metric defined by \citet{Fischer:2012dj}:
+In order to determine which model fits the data best, we adopt a metric defined by \citet{Fischer:2012dj,Furlan:2016df}:
 
 \begin{equation}
 R = \frac{1}{N}\sum_i w_i|\log[\Fobs(\lambda_i)] - \log[\Fmod(\lambda_i)]|,
 \end{equation}
-where $i$ are the indices of the valid data points, the weights $w_i$ correspond to the inverse of the fractional uncertainty of each measurement, \Fobs and \Fmod are the observed and model fluxes respectively, and $N$ is the number of valid measurements. For our models, we set the fractional uncertainty to a minimum of 10\%, to avoid having just a few points completely over-constrain the problem. Early versions of the fitting routines, which used the published $1\sigma$ uncertainties would completely skew the results by putting all the weight into a few flux measurements. This was most notable with the \Spitzer IRAC points, which only have a few percent uncertainties. We chose to override these uncertainties for this exercise.
+where $i$ are the indices of the valid data points, the weights $w_i$ correspond to the inverse of the fractional uncertainty of each measurement, \Fobs and \Fmod are the observed and model fluxes respectively, and $N$ is the number of valid measurements. For our models, we set the fractional uncertainty to a minimum of 10\%, to avoid having a few points completely drive the fit. Early versions of the fitting routines, which used the published $1\sigma$ uncertainties would completely skew the results by putting all the weight into a few flux measurements. This was most notable for the \Spitzer IRAC points, which only have a few percent uncertainties. We chose to override these uncertainties.
 
-\citet{Furlan:2016df} discuss in more detail the meaning of this metric, which differs from a standard $\chi^2$ metric such as the one used by \citet{Robitaille:2007dl}. Here $R$ represents a weighted average of the logarithmic deviations between the observations and the model. It is important to note that, although it is normalized, it does not have a statistical interpretation like the standard $\chi^2$ metric does. 
+\citet{Furlan:2016df} discuss in more detail the meaning of this metric, which differs from a standard $\chi^2$ metric such as the one used by \citet{Robitaille:2007dl}. $R$ represents a weighted average of the logarithmic deviations between the observations and the model. It is important to note that, although it is normalized, it does not have a statistical interpretation like the standard $\chi^2$ metric. In particular, models with fewer data points or large measurement uncertainties will tend to have smaller values of $R$, even if the fit is poor.
 
-For each source, we calculate $R$ for each model in our grid. The model with the smallest value for $R$ is the best-fitting model by this metric, but given our sparse sampling and the errors of our observations, this is not necessarily the most likely model to best fit the data. We can consider two extremes to this case: in the first, the best fit has a value of $R$ which is much lower than for other models. Then, it is clearly the best fit. In the second case, let's suppose that the \num{1000} best-fitting models lie very close to the best $R$. In this case, concluding that the model that best fits our observations (and from which will interpret physical quantities) is the one with the minimum $R$ is too strict and does not account for the uncertainties that are present in this exercise. 
+For each source, we calculate $R$ for each model in our grid. The model with the smallest value for $R$ is the best-fitting model by this metric, but given our sparse sampling and the errors of our observations, this is not necessarily the most likely model to best fit the data. We can consider two extremes: in the first, the best fit has a value of $R$ which is much lower than other models. Then, it is clearly the best fit. In the second case, let's suppose that the \num{1000} best-fitting models lie very close to the best $R$. In this case, concluding that the model that best fits our observations (and from which will interpret physical quantities) is the one with the minimum $R$ is too strict and does not account for the uncertainties that are present. 
 
-In practice, all of our models fall in that second case, since our parameter grid sampling is sufficiently dense. After visual inspection we estimate there is very little significant difference between values of $R$ which are separated by $\sim 0.5$, as they all can be considered equally good fits. Hence, for a robust measure of the best-fitting model parameters, we choose the mode (the most likely value) of the parameters from models which are within $R_\textrm{min}$ and $R_\textrm{min}+0.2$. The error on the parameter estimate is then estimated using the models within $R_\textrm{min}$ and $R_\textrm{min}+0.5$, and is described in the next section.
+In practice, all of our models fall in that second case. After visual inspection of the fits, we conclude there is very little significant difference between values of $R$ which are separated by $\sim 0.5$. They all can be considered equally good (or bad) fits. Hence, for a robust measure of the best-fitting model parameters, we choose the mode (the most likely value) of the parameters from models which are within $R_\textrm{min}$ and $R_\textrm{min}+0.2$. The error on the parameter estimate is then estimated using the models within $R_\textrm{min}$ and $R_\textrm{min}+0.5$, since these models all similarly fit, and is described in the next section.
 
 Because we use exclusively the OH5 dust model, which we know overestimates the short-wavelength fluxes, we expect to overestimates the extinction required to match the observations. For this reason, we choose to ignore the 2MASS J and H band data points, which drive the extinction values up dramatically and sometimes leads the fit towards non realistic solutions. However, we choose to keep the \SI{2}{\um} data point.
 
 \subsection{Overview of derived parameters}
 
-The distribution of the best fit solutions of the envelope mass and central luminosity is shown in Fig.~\ref{fig:MassLumHist}. Our sample covers a broad range of masses, but is naturally biased towards high luminosities given our instrumental sensitivity and cluster selection.
+The distribution of the best fit solutions of the envelope mass and central luminosity is shown in Fig.~\ref{fig:MassLumHist} for the clusters for which we have long-wavelength data (Ophiuchus and NGC1333). Our sample covers a broad range of masses, but is naturally biased towards high luminosities given our instrumental sensitivity and cluster selection.
 
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/MassLumHist.pdf}
 \vspace{-1cm}
-\caption[Fitted envelope mass and luminosity distribution]{Fitted envelope mass and luminosity distribution.}
+\caption[Fitted envelope mass and luminosity distribution]{Fitted envelope mass and luminosity distribution for all observed point sources in Ophiuchus and NGC1333, where long-wavelength data is available.}
 \label{fig:MassLumHist}
 \end{center}
 \end{figure}
 
-The simple grid that we used manages to fit most of the data pretty well. From visual inspection, data with $R$ less or close to 1 appear to fit the data well. Larger $R$ show less good fits. The distribution of $R$ for all the isolated point sources is shown in Fig.~\ref{fig:Rdistr}. Note that targets where less data points are available, or where data points are more noisy, usually have lower $R$ than targets with a lot of available data points, even if the fits are not necessarily as good. This has also been observed by \citep{Furlan:2016df}.
+From visual inspection, data with $R$ less or close to 1 appear to fit the data well. Larger $R$ show less good fits. The distribution of $R$ for all the isolated point sources is shown in Fig.~\ref{fig:Rdistr}. Note that targets where less data points are available, or where data points are more noisy, usually have lower $R$ than targets with a lot of available data points, even if the fits are not necessarily as good. This has also been observed by \citep{Furlan:2016df} and is one of the drawbacks of using this $R$ metric.
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/Rdistr.pdf}
 \vspace{-1cm}
-\caption[Distribution of $R$]{$R$ distribution across all point sources.}
+\caption[Distribution of $R$]{$R$ distribution across all observed point sources in Ophiuchus and NGC1333, where long-wavelength data is available.}
 \label{fig:Rdistr}
 \end{center}
 \end{figure}
 
 
-For our sample, we can compare the fitted central luminosity, \Ltot, with the integrated luminosity from the datapoints, \Lbol for our entire sample of point sources (see Fig.~\ref{fig:LbolVsLest}). This shows relatively good agreement, although a systematic excess in fitted central luminosity can be observed, which we attribute to the widespread choice of using an external extinction coefficient. By using this external extinction as a model parameter, we artificially reduce the emission at short wavelengths, which would tend to decrease the bolometric luminosity.
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=\textwidth]{Figures/LbolVsLest.pdf}
-\vspace{-1cm}
-\caption[Estimated luminosity vs bolometric luminosity]{Estimated luminosity vs bolometric luminosity. The best fit line is shown in red, along with 95\% confidence intervals. The grey dashed line represents $\Ltot = \Lbol$. The excess modeled luminosity for smaller luminosities is caused by the external extinction, which absorbs a large fraction of the luminosity emitted by the central object but does not re-radiate it at longer wavelengths - this is one of the limitations of this exercise.}
-\label{fig:LbolVsLest}
-\end{center}
-\end{figure}
-
-The luminosity excess is more pronounced for lower masses, as the short wavelength emission represents a larger portion of the total emission from the source (Fig.~\ref{fig:LbolMinusLestVSMass}). 
-
-\begin{figure}[!h]
-\begin{center}
-\includegraphics[width=\textwidth]{Figures/LbolMinusLestVSMass.pdf}
-\vspace{-1cm}
-\caption[Luminosity excess as a function of envelope mass]{Luminosity excess as a function of envelope mass.}
-\label{fig:LbolMinusLestVSMass}
-\end{center}
-\end{figure}
+%For our sample, we can compare the fitted central luminosity, \Ltot, with the integrated luminosity from the datapoints, \Lbol for our entire sample of point sources (see Fig.~\ref{fig:LbolVsLest}). This shows relatively good agreement, although a systematic excess in fitted central luminosity can be observed, which we attribute to the widespread choice of using an external extinction coefficient. By using this external extinction as a model parameter, we artificially reduce the emission at short wavelengths, which would tend to decrease the bolometric luminosity.
+%\begin{figure}[!h]
+%\begin{center}
+%\includegraphics[width=\textwidth]{Figures/LbolVsLest.pdf}
+%\vspace{-1cm}
+%\caption[Estimated luminosity vs bolometric luminosity]{Estimated luminosity vs bolometric luminosity. The best fit line is shown in red, along with 95\% confidence intervals. The grey dashed line represents $\Ltot = \Lbol$. The excess modeled luminosity for smaller luminosities is caused by the external extinction, which absorbs a large fraction of the luminosity emitted by the central object but does not re-radiate it at longer wavelengths - this is one of the limitations of this exercise.}
+%\label{fig:LbolVsLest}
+%\end{center}
+%\end{figure}
+%
+%The luminosity excess is more pronounced for lower masses, as the short wavelength emission represents a larger portion of the total emission from the source (Fig.~\ref{fig:LbolMinusLestVSMass}). 
+%
+%\begin{figure}[!h]
+%\begin{center}
+%\includegraphics[width=\textwidth]{Figures/LbolMinusLestVSMass.pdf}
+%\vspace{-1cm}
+%\caption[Luminosity excess as a function of envelope mass]{Luminosity excess as a function of envelope mass.}
+%\label{fig:LbolMinusLestVSMass}
+%\end{center}
+%\end{figure}
 
 
 
@@ -603,58 +605,61 @@ Our exploration with the fitting routine shows that limiting the external extinc
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/massEstvsCalc.pdf}
 \vspace{-1cm}
-\caption[Estimated mass vs calculated mass]{Estimated mass vs calculated mass for the sources which have sub-millimeter data.}
+\caption[Estimated mass vs calculated mass]{Estimated mass vs calculated mass for the point sources which have sub-millimeter data.}
 \label{fig:massEstvsCalc}
 \end{center}
 \end{figure}
 
 
-For the clusters which do have submillimeter data points, we can use the traditional mass estimate described in Section~\ref{chap:introduction}.\ref{subsec:DustExtinction} with the \SI{1.1}{\milli\meter} or \SI{1.3}{\milli\meter} fluxes. For this calculation, we use an effective dust temperature of \SI{20}{\kelvin}, assuming an opacity of \SI{0.0114}{\raiseto{2}\centi\meter\per\gram} and \SI{0.009}{\raiseto{2}\centi\meter\per\gram} for \SI{1.1}{\milli\meter} and \SI{1.3}{\milli\meter}, respectively. Note that this measurement is very sensitive on these assumptions; for example, lowering the dust temperature estimate to \SI{10}{\kelvin} increases the mass estimate by a factor of 3.
+For the clusters which do have submillimeter data points, we can use the traditional mass estimate described in Section~\ref{subsec:DustExtinction} with the \SI{1.1}{\milli\meter} or \SI{1.3}{\milli\meter} fluxes. For this calculation, we use an effective dust temperature of \SI{20}{\kelvin}, assuming an opacity of \SI{0.0114}{\raiseto{2}\centi\meter\per\gram} and \SI{0.009}{\raiseto{2}\centi\meter\per\gram} for \SI{1.1}{\milli\meter} and \SI{1.3}{\milli\meter}, respectively. Note that this measurement is very sensitive on these assumptions; for example, lowering the dust temperature estimate to \SI{10}{\kelvin} increases the mass estimate by a factor of 3.
 
-The comparison of this derived mass and our fitted estimates are rather good, as shown in Fig~\ref{fig:massEstvsCalc}. For lower masses, however, our fits tend to underestimate the mass compared to the derived quantities. This could be explained since most of the lower-mass envelopes belong to more evolved objects, which can thus have higher dust temperatures: the derived mass, assuming a temperature of \SI{20}{\kelvin}, would then overestimate the amount of material in the envelope. A summary of our fit results for Ophiuchus and NGC1333 is shown in Table~\ref{tab:FittedParameters}. Note that the luminosity that is used in this analysis is always the luminosity multiplied by the scaling factor $s$, under the assumption that the SED scales for small changes in luminosity. This scaling factor also represents a fundamental uncertainty in the distance measurement to our targets, as a distance error of 10\% would cause a luminosity estimate that would differ by 20\%.
+We find that our fitted mass estimates agree with this traditional method of deriving masses, as shown in Fig~\ref{fig:massEstvsCalc}. For lower masses, however, our fits tend to underestimate the mass compared to the derived quantities. This could be explained since most of the lower-mass envelopes belong to more evolved objects, which can thus have higher dust temperatures due to less opacity: the derived mass, assuming a temperature of \SI{20}{\kelvin}, would then overestimate the amount of material in the envelope.
+
+A summary of our fit results for Ophiuchus and NGC1333 is shown in Table~\ref{tab:FittedParameters}. Note that the luminosity that is used in this analysis is always the luminosity multiplied by the scaling factor $s$, under the assumption that the SED scales for small changes in luminosity. This scaling factor also represents a fundamental uncertainty in the distance measurement to our targets, as a distance error of 10\% would cause a luminosity estimate that would differ by 20\%.
+
+We note that the fitted luminosity and bolometric luminosity are in agreement for low inclination angles, but \Lmod tend to be higher than \Lbol for more inclined geometries. This is expected since for high inclinations a large fraction of the emission is not directed towards the observer \citep[see, e.g.][for a discussion]{Furlan:2016df}.
 
 \begin{landscape}
 \begin{table}[!h]
 \scriptsize
-\caption[Fitted parameters]{Fitted parameters for the three clusters where long-wavelength photometry is available.}
+\caption[Fitted parameters]{Fitted parameters for the point sources in Ophiuchus and NGC1333 where long-wavelength photometry is available.}
 \label{tab:FittedParameters}
 \vspace{-0.5cm}
 \hspace*{-1.5cm}
 \begin{center}
-\begin{longtable}{lccccccccccc}
+\begin{longtable}{lcccccccccc}
 
-\toprule																											
-SOFIA Name	&	Coordinates	&	$\Rfifty/\Rfifty_\textrm{cal}$	&	$\alpha$	&	$R$	&	\Menv			&	Calc. \Menv	&	\Ltot			&	$\Lbol$	&	i	&	$\Av$	&	$s$	\\
-	&	(J2000)	&		&		&		&	(\si{\Msun})			&	(\si{\Msun})	&	(\si{\Lsun})			&	(\si{\Lsun})	&	(\si{\degree})	&	(mag)	&		\\
-\midrule																											
-NGC1333.1	&	03h29m08s +31d21m57s	&	0.75	&	0.28	&	3.40	&	0.59	$\pm$	0.3796	&	0.97	&	5.6	$\pm$	3.12	&	8.38	&	0.0	&	12	&	0.85	\\
-NGC1333.10	&	03h28m57s +31d14m15s	&	0.80	&	1.84	&	1.12	&	0.39	$\pm$	0.2364	&	0.45	&	5.6	$\pm$	1.69	&	4.82	&	18.7	&	14	&	0.70	\\
-NGC1333.11	&	03h28m37s +31d13m30s	&	1.02	&	1.65	&	0.99	&	0.39	$\pm$	0.1571	&	0.27	&	7.7	$\pm$	1.37	&	7.47	&	18.7	&	12	&	0.70	\\
-NGC1333.3	&	03h29m02s +31d20m21s	&	0.90	&	0.71	&	3.29	&	1.96	$\pm$	0.8200	&	1.12	&	3.5	$\pm$	0.80	&	8.10	&	0.0	&	14	&	0.70	\\
-NGC1333.4	&	03h29m11s +31d18m31s	&	1.10	&	1.91	&	0.83	&	2.93	$\pm$	0.5045	&	1.50	&	2.8	$\pm$	0.42	&	3.06	&	18.7	&	14	&	1.00	\\
-NGC1333.5	&	03h29m11s +31d18m20s	&	1.62	&	1.75	&	1.05	&	1.96	$\pm$	0.3884	&	1.50	&	2.9	$\pm$	1.00	&	2.79	&	18.7	&	9	&	1.30	\\
-NGC1333.6	&	03h29m13s +31d18m14s	&	0.95	&	0.95	&	2.28	&	0.59	$\pm$	0.1589	&	0.47	&	4.3	$\pm$	1.72	&	1.16	&	18.7	&	14	&	1.00	\\
-NGC1333.7	&	03h28m43s +31d17m35s	&	1.19	&	1.05	&	1.88	&	0.01	$\pm$	0.0014	&	--	&	9.6	$\pm$	2.16	&	1.36	&	50.8	&	0	&	0.70	\\
-NGC1333.8	&	03h29m04s +31d16m04s	&	0.77	&	1.14	&	1.03	&	2.93	$\pm$	1.1268	&	2.02	&	14.3	$\pm$	2.24	&	35.11	&	0.0	&	12	&	1.30	\\
-NGC1333.9	&	03h28m56s +31d14m37s	&	0.80	&	2.82	&	2.63	&	2.93	$\pm$	0.5367	&	1.72	&	19.5	$\pm$	3.67	&	24.28	&	18.7	&	14	&	1.30	\\
-Oph.1	&	16h27m10s -24d19m13s	&	0.92	&	0.27	&	0.62	&	0.017	$\pm$	0.0022	&	0.04	&	9.6	$\pm$	1.80	&	3.63	&	65.1	&	4	&	0.70	\\
-Oph.10	&	16h27m18s -24d28m55s	&	1.26	&	0.45	&	1.89	&	0.014	$\pm$	0.0028	&	0.00	&	1.9	$\pm$	0.38	&	0.55	&	61.7	&	14	&	1.15	\\
-Oph.13	&	16h27m30s -24d27m43s	&	0.00	&	-0.39	&	3.46	&	0.014	$\pm$	0.0023	&	0.01	&	6.5	$\pm$	1.63	&	1.49	&	65.1	&	14	&	1.30	\\
-Oph.14	&	16h27m28s -24d27m21s	&	1.89	&	-0.16	&	2.35	&	0.086	$\pm$	0.0405	&	0.02	&	2.9	$\pm$	0.78	&	0.95	&	18.7	&	14	&	1.30	\\
-Oph.15	&	16h27m29s -24d39m17s	&	1.25	&	0.01	&	1.09	&	0.014	$\pm$	0.0018	&	0.02	&	2.8	$\pm$	0.59	&	0.55	&	54.6	&	12	&	0.70	\\
-Oph.16	&	16h26m24s -24d24m48s	&	1.80	&	-0.74	&	1.49	&	0.011	$\pm$	0.0008	&	--	&	17.7	$\pm$	4.70	&	1.66	&	74.7	&	9	&	0.70	\\
-Oph.17	&	16h26m24s -24d24m39s	&	0.96	&	-0.11	&	1.00	&	0.011	$\pm$	0.0017	&	--	&	4.3	$\pm$	0.88	&	0.63	&	77.8	&	14	&	0.70	\\
-Oph.18	&	16h26m17s -24d23m45s	&	1.18	&	0.57	&	1.15	&	0.02	$\pm$	0.0040	&	0.04	&	1.3	$\pm$	0.21	&	0.22	&	65.1	&	14	&	0.70	\\
-Oph.19	&	16h26m30s -24d23m00s	&	2.51	&	0.53	&	1.15	&	0.014	$\pm$	0.0020	&	0.01	&	3.5	$\pm$	0.74	&	1.10	&	58.2	&	13	&	0.70	\\
-Oph.2	&	16h26m44s -24d34m48s	&	0.93	&	0.83	&	2.08	&	0.014	$\pm$	0.0015	&	0.05	&	5.0	$\pm$	0.97	&	1.19	&	77.8	&	14	&	1.00	\\
-Oph.3	&	16h27m09s -24d37m18s	&	0.99	&	0.57	&	1.54	&	0.017	$\pm$	0.0022	&	0.04	&	59.5	$\pm$	11.99	&	13.39	&	37.9	&	10	&	0.70	\\
-Oph.5	&	16h27m07s -24d38m15s	&	1.31	&	0.35	&	1.74	&	0.014	$\pm$	0.0021	&	0.03	&	2.9	$\pm$	0.66	&	0.53	&	68.4	&	14	&	1.30	\\
-Oph.6	&	16h27m16s -24d38m46s	&	1.29	&	2.39	&	0.83	&	0.014	$\pm$	0.0031	&	0.02	&	9.6	$\pm$	3.41	&	0.73	&	90.0	&	12	&	0.70	\\
-Oph.7	&	16h27m28s -24d39m34s	&	0.97	&	1.35	&	1.57	&	0.032	$\pm$	0.0043	&	0.03	&	26.6	$\pm$	4.90	&	6.47	&	74.7	&	14	&	0.70	\\
-Oph.8	&	16h27m37s -24d30m35s	&	1.02	&	0.55	&	1.06	&	0.017	$\pm$	0.0023	&	0.03	&	26.6	$\pm$	5.15	&	5.00	&	80.9	&	14	&	0.70	\\
-Oph.9	&	16h27m22s -24d29m54s	&	--	&	0.49	&	2.08	&	0.011	$\pm$	0.0005	&	0.01	&	11.8	$\pm$	2.71	&	0.99	&	80.9	&	14	&	0.70	\\
-\bottomrule																															
-\end{longtable}																																	
+\toprule																									
+SOFIA Name	&	Coordinates	&	$\Rfifty/\Rfifty_\textrm{cal}$	&	$\alpha$	&	$R$	&	\Menv			&	Calc. \Menv	&	\Ltot			&	$\Lbol$	&	i	&	$\Av$	\\
+	&	(J2000)	&		&		&		&	(\si{\Msun})			&	(\si{\Msun})	&	(\si{\Lsun})			&	(\si{\Lsun})	&	(\si{\degree})	&	(mag)	\\
+\midrule																									
+NGC1333.1	&	03h29m08s +31d21m57s	&	0.75	&	0.28	&	3.40	&	0.58	$\pm$	0.38	&	0.97	&	5.6	$\pm$	3.12	&	8.38	&	0.0	&	12	\\
+NGC1333.10	&	03h28m57s +31d14m15s	&	0.80	&	1.83	&	1.12	&	0.38	$\pm$	0.24	&	0.45	&	5.6	$\pm$	1.69	&	4.82	&	18.7	&	14	\\
+NGC1333.11	&	03h28m37s +31d13m30s	&	1.02	&	1.69	&	0.99	&	0.38	$\pm$	0.16	&	0.27	&	7.7	$\pm$	1.37	&	7.47	&	18.7	&	12	\\
+NGC1333.3	&	03h29m02s +31d20m21s	&	0.90	&	0.71	&	3.29	&	1.95	$\pm$	0.82	&	1.12	&	3.5	$\pm$	0.80	&	8.10	&	0.0	&	14	\\
+NGC1333.4	&	03h29m11s +31d18m31s	&	1.10	&	1.86	&	0.83	&	2.92	$\pm$	0.50	&	1.50	&	2.8	$\pm$	0.42	&	3.06	&	18.7	&	14	\\
+NGC1333.5	&	03h29m11s +31d18m20s	&	1.62	&	1.70	&	1.05	&	1.95	$\pm$	0.39	&	1.50	&	2.9	$\pm$	1.00	&	2.79	&	18.7	&	9	\\
+NGC1333.6	&	03h29m13s +31d18m14s	&	0.95	&	1.00	&	2.28	&	0.58	$\pm$	0.16	&	0.47	&	4.3	$\pm$	1.72	&	1.16	&	18.7	&	14	\\
+NGC1333.7	&	03h28m43s +31d17m35s	&	1.19	&	1.08	&	1.88	&	0.004	$\pm$	0.001	&	--	&	9.6	$\pm$	2.16	&	1.36	&	50.8	&	0	\\
+NGC1333.8	&	03h29m04s +31d16m04s	&	0.77	&	1.14	&	1.03	&	2.92	$\pm$	1.13	&	2.02	&	14.3	$\pm$	2.24	&	35.11	&	0.0	&	12	\\
+NGC1333.9	&	03h28m56s +31d14m37s	&	0.80	&	2.79	&	2.63	&	2.92	$\pm$	0.5367	&	1.72	&	19.5	$\pm$	3.67	&	24.28	&	18.7	&	14	\\
+Oph.1	&	16h27m10s -24d19m13s	&	0.92	&	0.27	&	0.62	&	0.007	$\pm$	0.002	&	0.04	&	9.6	$\pm$	1.80	&	3.63	&	65.1	&	4	\\
+Oph.10	&	16h27m18s -24d28m55s	&	1.26	&	0.50	&	1.89	&	0.004	$\pm$	0.003	&	0.004	&	1.9	$\pm$	0.38	&	0.55	&	61.7	&	14	\\
+Oph.13	&	16h27m30s -24d27m43s	&	0.00	&	-0.37	&	3.46	&	0.004	$\pm$	0.002	&	0.01	&	6.5	$\pm$	1.63	&	1.49	&	65.1	&	14	\\
+Oph.14	&	16h27m28s -24d27m21s	&	1.89	&	-0.13	&	2.35	&	0.076	$\pm$	0.040	&	0.02	&	2.9	$\pm$	0.78	&	0.95	&	18.7	&	14	\\
+Oph.15	&	16h27m29s -24d39m17s	&	1.25	&	0.10	&	1.09	&	0.004	$\pm$	0.002	&	0.02	&	2.8	$\pm$	0.59	&	0.55	&	54.6	&	12	\\
+Oph.16	&	16h26m24s -24d24m48s	&	1.80	&	-0.76	&	1.49	&	0.001	$\pm$	0.001	&	--	&	17.7	$\pm$	4.70	&	1.66	&	74.7	&	9	\\
+Oph.17	&	16h26m24s -24d24m39s	&	0.96	&	-0.09	&	1.00	&	0.001	$\pm$	0.002	&	--	&	4.3	$\pm$	0.88	&	0.63	&	77.8	&	14	\\
+Oph.18	&	16h26m17s -24d23m45s	&	1.18	&	0.63	&	1.15	&	0.010	$\pm$	0.004	&	0.04	&	1.3	$\pm$	0.21	&	0.22	&	65.1	&	14	\\
+Oph.19	&	16h26m30s -24d23m00s	&	2.51	&	0.57	&	1.15	&	0.004	$\pm$	0.002	&	0.01	&	3.5	$\pm$	0.74	&	1.10	&	58.2	&	13	\\
+Oph.2	&	16h26m44s -24d34m48s	&	0.93	&	0.83	&	2.08	&	0.004	$\pm$	0.002	&	0.05	&	5.0	$\pm$	0.97	&	1.19	&	77.8	&	14	\\
+Oph.3	&	16h27m09s -24d37m18s	&	0.99	&	0.57	&	1.54	&	0.007	$\pm$	0.002	&	0.04	&	59.5	$\pm$	11.99	&	13.39	&	37.9	&	10	\\
+Oph.5	&	16h27m07s -24d38m15s	&	1.31	&	0.31	&	1.74	&	0.004	$\pm$	0.002	&	0.03	&	2.9	$\pm$	0.66	&	0.53	&	68.4	&	14	\\
+Oph.6	&	16h27m16s -24d38m46s	&	1.29	&	2.54	&	0.83	&	0.004	$\pm$	0.003	&	0.02	&	9.6	$\pm$	3.41	&	0.73	&	90.0	&	12	\\
+Oph.7	&	16h27m28s -24d39m34s	&	0.97	&	1.35	&	1.57	&	0.022	$\pm$	0.004	&	0.03	&	26.6	$\pm$	4.90	&	6.47	&	74.7	&	14	\\
+Oph.8	&	16h27m37s -24d30m35s	&	1.02	&	0.55	&	1.06	&	0.007	$\pm$	0.002	&	0.03	&	26.6	$\pm$	5.15	&	5.00	&	80.9	&	14	\\
+Oph.9	&	16h27m22s -24d29m54s	&	--	&	0.51	&	2.08	&	0.001	$\pm$	0.001	&	0.01	&	11.8	$\pm$	2.71	&	0.99	&	80.9	&	14	\\
+\bottomrule																																			\end{longtable}																																	
 %\caption*{\textbf{Note:} The complete version of this table is made available electronically}			
 \end{center}																						
 \end{table}	
@@ -665,12 +670,13 @@ Oph.9	&	16h27m22s -24d29m54s	&	--	&	0.49	&	2.08	&	0.011	$\pm$	0.0005	&	0.01	&	11
 \begin{center}
 \includegraphics[width=\textwidth]{Figures/massVSalpha.pdf}
 \vspace{-1cm}
-\caption[Mass versus spectral index]{Mass versus spectral index.}
+\caption[Mass versus spectral index]{Mass versus spectral index for the point sources which have sub-millimeter data, and for which the fits have $R<2$.}
 \label{fig:massVSalpha}
 \end{center}
 \end{figure}
 
-Of the notable relationship that can be seen among our parameters, we can see for example the Envelope mass being correlated with the spectral index (see Fig.~\ref{fig:massVSalpha}) - this indicates a possibility that the SOFIA data points might become a tool to predict the envelope mass, once a sufficient amount of statistics have been gathered (to lower the scatter in that figure). 
+By examining the envelope mass fitted values with respect to the measured spectral index $\alpha$, we note that there is a correlation (Fig.~\ref{fig:massVSalpha}). This correlation appears to be good for $\alpha <1$, but much more loose for $\alpha>1$.
+%Of the notable relationship that can be seen among our parameters, we can see for example the envelope mass being correlated with the spectral index (see Fig.~\ref{fig:massVSalpha}) - this indicates a possibility that the SOFIA data points might become a tool to predict the envelope mass, once a sufficient amount of statistics have been gathered (to lower the scatter in that figure). 
 
 
 

@@ -182,7 +182,22 @@ for i in range(len(isolated)):
 alpha1 = isolated['alpha']
 alpha2 = isolated['alpha2']
 
-fig,(ax,ax2) = plt.subplots(1,2,figsize=figsize,facecolor=facecolor)
+# fig,(ax,ax2) = plt.subplots(1,2,figsize=figsize,facecolor=facecolor)
+# hist,bin_edges = np.histogram(alpha1.compressed(),bins=np.arange(-1,4.5,0.15))  #np.arange(-1,3,0.15)
+# w = bin_edges[1] - bin_edges[0]
+# ax.bar(bin_edges[:-1],hist,width=w,color=blue)
+# ax.set_xlabel(r'Spectral index $\alpha_{2.2-37}$')
+# ax.set_ylabel('Number of objects')
+# ax.grid(True)
+# 
+# hist,bin_edges = np.histogram(alpha2.compressed(),bins=np.arange(-1,4.5,0.15))
+# w = bin_edges[1] - bin_edges[0]
+# ax2.bar(bin_edges[:-1],hist,width=w,color=blue)
+# ax2.set_xlabel(r'Spectral index $\alpha_{2.2-24}$')
+# ax2.set_ylabel('Number of objects')
+# ax2.grid(True)
+
+fig,ax = plt.subplots(figsize=figsize,facecolor=facecolor)
 hist,bin_edges = np.histogram(alpha1.compressed(),bins=np.arange(-1,4.5,0.15))  #np.arange(-1,3,0.15)
 w = bin_edges[1] - bin_edges[0]
 ax.bar(bin_edges[:-1],hist,width=w,color=blue)
@@ -190,12 +205,6 @@ ax.set_xlabel(r'Spectral index $\alpha_{2.2-37}$')
 ax.set_ylabel('Number of objects')
 ax.grid(True)
 
-hist,bin_edges = np.histogram(alpha2.compressed(),bins=np.arange(-1,4.5,0.15))
-w = bin_edges[1] - bin_edges[0]
-ax2.bar(bin_edges[:-1],hist,width=w,color=blue)
-ax2.set_xlabel(r'Spectral index $\alpha_{2.2-24}$')
-ax2.set_ylabel('Number of objects')
-ax2.grid(True)
 
 fig.tight_layout()
 fig.savefig('../Figures/SpectralIndex.pdf',dpi=300)
@@ -260,6 +269,7 @@ c = SkyCoord(df['RA'],df['DEC'],frame=FK5,unit=u.deg)
 df['Coordinates'] = c.to_string('hmsdms',precision=1)
 df = df.loc[df['Cluster'].isin(['Oph','NGC1333'])]
 df = df.loc[df['R'] < 2]
+print df[columns]
 
 
 # plot R histogram
@@ -289,7 +299,7 @@ fig.tight_layout()
 hist,bin_edges = np.histogram(np.log10(df['sLsun']),bins=15)
 w = bin_edges[1] - bin_edges[0]
 ax2.bar(bin_edges[:-1],hist,width=w,color=blue)
-ax2.set_xlabel(r'$\log\ L_\mathrm{tot}$ ($L_\odot$)')
+ax2.set_xlabel(r'$\log\ L_\mathrm{mod}$ ($L_\odot$)')
 ax2.set_ylabel('Number of objects')
 ax2.grid(True)
 fig.tight_layout()
@@ -300,7 +310,7 @@ sns.regplot(df['alpha'],np.log10(df['env_mass']),color=red)
 X = df['alpha']
 X = sm.add_constant(X)
 model = sm.OLS(np.log10(df['env_mass']),X)
-model = sm.WLS(np.log10(df['env_mass']),X,weights=1./(df['env_masslog_std']))
+model = sm.WLS(np.log10(df['env_mass']),X,weights=1./(df['R'])**2)
 #model = smf.ols('np.log10(env_mass) ~ alpha',data=df)
 results=model.fit()
 print(results.summary())
@@ -352,7 +362,7 @@ print(results.summary())
 # ax.set_ylabel('Fitted envelope mass')
 ax.grid(True)
 ax.set_xlabel(r'$\alpha_{2.2-37}$')
-ax.set_ylabel(r'$\log\ L_\mathrm{tot}$ ($L_\odot$)')
+ax.set_ylabel(r'$\log\ L_\mathrm{mod}$ ($L_\odot$)')
 fig.tight_layout()
 fig.savefig('../Figures/slumVSalpha.pdf')
 
@@ -378,7 +388,7 @@ vals = np.arange(min(np.log10(df['Lbol'])),2*max(np.log10(df['Lbol'])))
 ax.plot(vals,vals,'--',color=grey)
 ax.set_xlim([np.log10(df['Lbol']).min()*0.95,np.log10(df['Lbol']).max()*1.05])
 fig.tight_layout()
-ax.set_ylabel(r'$\log\ L_\mathrm{tot}$ ($L_\odot$)')
+ax.set_ylabel(r'$\log\ L_\mathrm{mod}$ ($L_\odot$)')
 ax.set_xlabel(r'$\log\ L_\mathrm{bol}$ ($L_\odot$)')
 X = np.log10(df['Lbol'])
 X = sm.add_constant(X)
@@ -396,7 +406,7 @@ sns.regplot(np.log10(df['env_mass']),-np.log10(df['Lbol'])+np.log10(df['sLsun'])
 #ax.plot(vals,vals,'--',color=grey)
 ax.set_xlim([np.log10(df['env_mass']).min()*0.95,np.log10(df['env_mass']).max()*1.05])
 fig.tight_layout()
-ax.set_ylabel(r'$\log\ L_\mathrm{tot}-\log\ L_\mathrm{bol}$')
+ax.set_ylabel(r'$\log\ L_\mathrm{mod}-\log\ L_\mathrm{bol}$')
 ax.set_xlabel(r'$\log\ M_\mathrm{env}$ ($M_\odot$)')
 
 fig.savefig('../Figures/LbolMinusLestVSMass.pdf')
