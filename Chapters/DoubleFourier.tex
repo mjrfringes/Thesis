@@ -651,7 +651,7 @@ For most source locations, the variation of the baseline orientation due to chan
 Table~\ref{tab:powerNEP} showed our estimates of the
 background power levels associated with the atmosphere, warm optics, and windows in the two BETTII bands. 
 The detectors themselves have been designed to have a noise level comparable to the background to optimize the use of the
-dynamic range of the devices. The total NEPs of the short and long bands are expected to be $\sim 1.5\times 10^{-15}$ W.Hz$^{-0.5}$ and $\sim 1\times 10^{-15}$ W.Hz$^{-0.5}$, respectively. The source photon noise is negligible compared to the total NEP. 
+dynamic range of the devices. The total NEPs of the short and long bands are expected to be $\sim 1.7\times 10^{-15}$ W.Hz$^{-0.5}$ and $\sim 1\times 10^{-15}$ W.Hz$^{-0.5}$, respectively. The source photon noise is negligible compared to the total NEP. 
 
 Balloon instruments are subject to low frequency ($<~0.5$~Hz) pendulum modes and other oscillations introduced by the system's geometry and mass distribution, which make pointing a challenge. However, it is expected that the balloon environment is free of perturbations at any higher frequency (other than the instrument specific perturbations). Hence, sensors with high electrical bandwidth can robustly estimate the pendulum modes to gain accurate knowledge of the attitude, which can be used as our indirect OPD estimator since it is geometrically related to the phase on sufficiently short timescales.
 
@@ -672,7 +672,7 @@ Even with a stable OPD estimator, the absolute ZPD of the instrument must be mea
 
 \subsection{Derived sensitivity and faintest detectable targets}
 
-Incorporating these sources of noise with the formulas derived in the previous sections leads to the sensitivity values shown in Table~\ref{tab:BETTIIsensitivity2}. In this table we show the sensitivity in the two bands. The minimum detectable flux density (MDFD), which is the flux that provides $\SNR_\mI = 1$ in a single interferogram, is 10~Jy and 18~Jy in band 1 and 2 respectively. For 200 scans averaged with a OPD noise between scans of $5~\um$, the MDFD is 3~Jy and 6~Jy, using a matched filter efficiency of 0.5 and 0.4, respectively \citep{Mighell:2005fwa}. The faintest detectable spectroscopic point source that leads to a spectral $\SNR=5$ is 26~Jy and 14~Jy, respectively. These are determined for ``normal observing", which consists of co-adding 200 scans in 10 minutes that span the whole 2'x2' field of view, using a spectral resolution of $\R=10$ and a nominal OPD noise of $5~\um$~rms. 
+Incorporating these sources of noise with the formulas derived in the previous sections leads to the sensitivity values shown in Table~\ref{tab:BETTIIsensitivity2}. In this table we show the sensitivity in the two bands. The minimum detectable flux density (MDFD), which is the flux that provides $\SNR_\mI = 1$ in a single interferogram, is 77~Jy and 113~Jy in band 1 and 2 respectively. For 200 scans averaged with a OPD noise between scans of $5~\um$, the MDFD is 6~Jy and 8~Jy, using a matched filter efficiency of 0.5 and 0.4, respectively \citep{Mighell:2005fwa}. The faintest detectable spectroscopic point source that leads to a spectral $\SNR=5$ is 34~Jy and 17~Jy, respectively. These are determined for "normal observing", which consists of co-adding 200 scans in 10 minutes that span the whole 2'x2' field of view, using a spectral resolution of $\R=10$ and a nominal OPD noise of $5~\um$~rms. 
 
 \begin{table}[ht!]
 \begin{center}
@@ -684,24 +684,23 @@ Incorporating these sources of noise with the formulas derived in the previous s
   Quantity   & Band 1 &  Band 2 & SNR Target \\
      \midrule 
  \multicolumn{4}{c}{\textbf{Single scan (\SI{3}{\second})}} \\
-MDFD & 10 Jy  & 18 Jy & $\SNR_\mI = 1$\\ 
+MDFD & 77 Jy  & 113 Jy & $\SNR_\mI = 1$\\ 
 \midrule
 \multicolumn{4}{c}{\textbf{Normal observing (200 scans, 10 min)}} \\
-MDFD & 3 Jy  & 6 Jy & $\SNR_\mI = 1$\\ 
-Faintest pt. source & 26 Jy  & 14 Jy & $\SNR_k = 5$\\ 
+MDFD & 5 Jy  & 8 Jy & $\SNR_\mI = 1$\\ 
+Faintest pt. source & 34 Jy  & 17 Jy & $\SNR_k = 5$\\ 
 \midrule
 \multicolumn{4}{c}{\textbf{Enhanced sensitivity (200 scans, 10 min)}} \\
 \midrule
-Faintest pt. source & 15 Jy  & 8 Jy & $\SNR_k = 5$\\ 
+Faintest pt. source & 19 Jy  & 10 Jy & $\SNR_k = 5$\\ 
 \bottomrule 
 \end{longtable} 
-\caption{BETTII sensitivity estimates}
 \label{tab:sensitivity}
 \end{center}
 \end{table} 
 
 
-At the bottom of the table, we also show the results in case we were using the instrument in an ``enhanced sensitivity" mode. This mode is mentioned here to illustrate the flexibility of the interferometer and its observing modes. It consists of increasing the individual integration time for each point in the interferogram by a factor of 3, while reducing the interferometric field of view by the same factor of 3: while the intrinsic field of view is unchanged at the detector, for the same scan time we only cover enough OPD range to cross ZPD for a subset of the pixels of the detector (and obtain a scan of the same length). This mode could be used for example for isolated targets which are located in less crowded star fields, by optimizing the time spent close to ZPD, where there is more signal (as we are interested in low-resolution spectroscopy). BETTII's observing parameters can be changed during flight so that the instrument stays flexible to optimize the chance of seeing fringes.
+At the bottom of the table, we also show the results in case we were using the instrument in an "enhanced sensitivity" mode. This mode is mentioned here to illustrate the flexibility of the interferometer and its observing modes. It consists of increasing the individual integration time for each point in the interferogram by a factor of 3, while reducing the interferometric field of view by the same factor of 3: while the intrinsic field of view is unchanged at the detector, for the same scan time we only cover enough OPD range to cross ZPD for a subset of the pixels of the detector (and obtain a scan of the same length). This mode could be used for example for isolated targets which are located in less crowded star fields, by optimizing the time spent close to ZPD, where there is more signal (as we are interested in low-resolution spectroscopy). BETTII's observing parameters can be changed during flight so that the instrument stays flexible to optimize the chance of seeing fringes.
 
 \begin{figure}[!h]
 \begin{center}

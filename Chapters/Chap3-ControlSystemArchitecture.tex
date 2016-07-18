@@ -9,7 +9,7 @@ In this chapter, we see more directly how this applies to BETTII, and how the sy
 \subsection{Overall strategy}
 
 \subsubsection{Requirements}
-The strategy that we developed aims at satisfying the requirements established in the previous chapter, under the cost, time and personnel constraints of the BETTII project. It fundamentally relies on the fact that \textit{knowledge} is more important than \textit{control}. While several research groups (such as the WASPS team at Wallops Flight Facility) are attempting to provide sub-arcsecond balloon gondola control, we are not. Our strategy uses the fundamental advantage that the interferometer has over traditional pointed observatories: the decoupling of the phase with the telescope pointing. This feature of interferometers refers to obtaining electromagnetic interference even when the telescopes are slightly mispointed from the target. 
+The strategy that we developed aims at satisfying the requirements established in the previous chapter, under the cost, time and personnel constraints of the BETTII project. It fundamentally relies on the fact that \textit{knowledge} is more important than \textit{control}. While several research groups (such as the WASP team at Wallops Flight Facility) are attempting to provide sub-arcsecond balloon gondola control, we are not. Our strategy uses the fundamental advantage that the interferometer has over traditional pointed observatories: the decoupling of the phase with the telescope pointing. This feature of interferometers refers to obtaining electromagnetic interference even when the telescopes are slightly mispointed from the target. 
 
 There are three levels of requirements for our instrument to produce interferograms. First, both arms need to be pointed at the target, in order for an image of the target seen through each arm to be formed on the detector. When a target is not exactly on-axis with the telescope, it can still fall on the detector if tip/tilt correction happens downstream. The tip/tilt correction will create aberrations, but these are relatively well behaved at our wavelengths. Hence, this requirement can be expressed as an overall pointing requirement of the instrument to some amount that can be corrected in tip/tilt in each individual arms. We set this to $\pm\ang{;;15}$. This also roughly corresponds to one single pixel on the short band detector, and half a primary beam's FWHM.
 
@@ -463,7 +463,7 @@ At cold temperature and low pressure, we noted that the glass in the lens began 
 
 \subsubsection{Azimuth control}
 
-The Compensated Controlled Moment Gyros (CCMG) is a system with two counter-rotating reaction wheels on a gimbal that we use to control our azimuth. It features multiple encoders and motors. First, there is a brushless DC motor that spins each wheel, with a relative 13-bit encoder that monitors where the wheel is in its rotation. Second, there is a Beckhoff AS1050 stepper motor that controls the wheels' shaft angle. On the gimbal, there is a 13-bit  absolute magnetic encoder that measures the angle of the wheels from some reference. We use the latter to know where the gimbal ii positioned at all times. Hard stops prevent the wheels from moving far past $\pm\SI{90}{\degree}$ from their nominal position.
+The Compensated Controlled Moment Gyros (CCMG) is a system with two counter-rotating reaction wheels on a gimbal that we use to control our azimuth, designed and built by E. Gorman's group at NASA GSFC. It features multiple encoders and motors. First, there is a brushless DC motor that spins each wheel, with a relative 13-bit encoder that monitors where the wheel is in its rotation. Second, there is a Beckhoff AS1050 stepper motor that controls the wheels' shaft angle. On the gimbal, there is a 13-bit  absolute magnetic encoder that measures the angle of the wheels from some reference. We use the latter to know where the gimbal ii positioned at all times. Hard stops prevent the wheels from moving far past $\pm\SI{90}{\degree}$ from their nominal position.
 
 The motion controller that we use to monitor the wheel's speed is a brushless-DC Galil Motion controller DMC-4020. It reads out the wheel encoders and controls the current to the wheels accordingly. It directly and independently implements the closed-loop system of the wheels, including all of the gains, acceleration/deceleration, and jogging speeds associated with the desired motion.
 
@@ -471,7 +471,7 @@ The motion controller was modified to accept an external clock pulse in order to
 
 At power-up, the wheels immediately start accelerating to their cruising speed of \num{3000}~rpm. They take about 10 minutes to reach their target. The wheels' frequency is set for the entire duration of the flight.
 
-The gimbal is controlled with another Galil Motion controller, a 2-axis stepper driver DMC-4020, which can also be synchronized with an external clock. Only one axis is used for the CCMG, while the second axis is used by the momentum dump motor (see section~\ref{subsec:chap3momdumpmotor}). The controller operates in micro-stepping mode and has a very smooth response, in contrast to previous controllers we tested which create a lot of vibrations. The controller is set always to use 64 micro-steps per step, and the motor is a Phytron VSS200 with 200 steps per revolution. The motor is outfitted with a Beckhoff AG1000 planetary gearhead with a 3.7:1 reduction ratio. The gearbox itself has a ratio of 25, which creates a total gear ratio of 92.5. Hence, a \SI{360}{\degree} revolution of the stepper corresponds to $360/92.5=3.9^\circ$ motion of the shaft. %A motion of \SI{1}{\degree} of the shaft correspond to \num{3889} motion controller steps. A motion of \SI{90}{\degree} of the shaft correspond to \num{296000} motion controller steps. Finally, the same \SI{90}{\degree} motion will translate to a \num{2048} step change in the gimbal magnetic encoder.
+The gimbal is controlled with another Galil Motion controller, a 2-axis stepper driver DMC-4020, which is synchronized with an external clock. Only one axis is used for the CCMG, while the second axis is used by the momentum dump motor (see section~\ref{subsec:chap3momdumpmotor}). The controller operates in micro-stepping mode and has a very smooth response, in contrast to previous controllers we tested which create a lot of vibrations. The controller is set always to use 64 micro-steps per step, and the motor is a Phytron VSS200 with 200 steps per revolution. The motor is outfitted with a Beckhoff AG1000 planetary gearhead with a 3.7:1 reduction ratio. The gearbox itself has a ratio of 25, which creates a total gear ratio of 92.5. Hence, a \SI{360}{\degree} revolution of the stepper corresponds to $360/92.5=3.9^\circ$ motion of the shaft. %A motion of \SI{1}{\degree} of the shaft correspond to \num{3889} motion controller steps. A motion of \SI{90}{\degree} of the shaft correspond to \num{296000} motion controller steps. Finally, the same \SI{90}{\degree} motion will translate to a \num{2048} step change in the gimbal magnetic encoder.
 
 In practice, all of the control is done using the regular stepper motor encoder. The magnetic encoder is used for limit-checking and to feed back to the momentum dump mechanism. With this in mind, we can now relate the control signal (stepper motor micro-steps per second) to the physical torque that the wheels provide. 
 \begin{eqnarray}
@@ -519,7 +519,7 @@ The momentum management strategy consists of using the balloon as a large moment
 \begin{figure}[!h]
 	\centering
 	\includestandalone{Figures/rotator}
-	\caption[Momentum dump assembly]{Momentum dump assembly.}
+	\caption[Momentum dump assembly]{Cross-section of the momentum dump mechanism in an earlier version of the design.}
 	\label{fig:rotator}
     \end{figure}
 
@@ -529,13 +529,13 @@ For this purpose, BETTII uses a design which has successfully flown on previous 
 \begin{figure}[!h]
 		\centering
 		\includegraphics[width=\textwidth]{Figures/MomDump.jpg} 
-		\caption[Momentum dump mechanism and pin]{Momentum dump mechanism.}
+		\caption[Momentum dump mechanism and pin]{Momentum dump mechanism that was actually built, with a cross-section which is very close to Fig.~\ref{fig:rotator}.}
 		\label{fig:MomDump}
 \end{figure}
 
 The momentum dump mechanism is a simple rotary stepper motor. Its housing attaches to the steel case of the assembly - while its shaft attaches to the metal holder between the two bearings. With an assembly like this, when a vertical upward force is exerted, the gondola's weight pushes on the bearings, which then push onto the pin's lip. When the stepper motor starts spinning, it spins only the top part of the bottom bearing, and the bottom part of the top bearing: the friction force that this exerts allows to slowly dump momentum into the pin, hence into the balloon train. 
 
-This configuration seems dangerous since the entire weight of the payload rests on the two bearings and the pin's bottom lip, which can be hazardous during descent when the parachutes open and the payload can experience up to a 10~g vertical load. Hence, this piece of the assembly needs to be thoroughly tested and certified before launch. 
+Given that the entire weight of the payload rests on the two bearings and the pin's bottom lip, this can be hazardous during descent when the parachutes open and the payload can experience up to a 10~g vertical load. Hence, this piece of the assembly needs to be thoroughly tested and certified before launch. 
 
 In practice, the momentum unloading happens quite slowly due to the very low friction of the bearing. As the stepper turns the bearing, it slowly turns the entire train along with the pivot for a few tens of seconds. When the train has experienced sufficient twist, it then unfurls and gives a slight kick in the opposite direction. 
 
@@ -566,7 +566,7 @@ These rotation mechanisms have multiple requirements: they need to operate at \S
 
 These are industrial-grade brushless DC rotators. They are controlled by a three-axis Galil Motion controller DMC-4030 with sinusoidal drives. The requirement for sinusoidal drives as opposed to pulsewidth-modulated (PWM) drives stemmed from the fact that these motors were going to be \SI{5}{\meter} away from their controller at the end of each arm, and we wanted to avoid creating electromagnetic noise by having high-frequency pulses going through such a large distance. The rotary encoder is a RENISHAW RESOLUTE absolute encoder with 26 bit resolution, which corresponds to a \ang{;;0.019} angular resolution. However, the controller ignores the two bits of lowest significance, effectively giving a 24 bit resolution, corresponding to a \ang{;;0.08} angular resolution.
 
-An old version of these rotation stages was tested in our environmental chamber, but not under load. These devices are rated to operate nominally down to \SI{-40}{\celsius}, but because of their self-heating, we do not expect that they will reach that temperature. During our cold tests of the device, we noted that the friction seemed to change, which required a re-adjustment of the PID coefficients inside the Galil controller. 
+An old version of these rotation stages was tested in our environmental chamber, but not under load. These devices are rated to operate nominally down to \SI{-40}{\celsius}, but because of their self-heating, we do not expect that they will reach that temperature. During our cold tests of the device, we noted that the friction seemed to change, which required a re-adjustment of the PID coefficients inside the Galil controller. Given that only the encoder has been changed between the old and new generation of rotation stages, we expect a similar behavior. We have the capability to change the PID gains of all systems during flight.
 
 \subsubsection{Delay lines}
 \label{subsec:delayLines}
@@ -582,21 +582,21 @@ The piezo-electric driver electronics provide the required \SI{100}{\volt} to op
 \begin{figure}[!h]
 		\centering
 		\includegraphics[width=0.6\textwidth]{Figures/Kmirror.jpg} 
-		\caption[Kmirror]{K-mirror assembly model with a piezoelectric tip/tilt stage.}
+		\caption[Kmirror]{K-mirror assembly model with a piezoelectric tip/tilt actuator.}
 		\label{fig:Kmirror}
 \end{figure}
 
 
-The platform can be controlled in open-loop mode, where there is a simple gain between the command and the voltage applied to the piezo crystals. However, we baseline to use the closed-loop mode during flight. In this configuration, the electronics close the loop using the strain gauge sensor and the command corresponds to an angle rather than simply a voltage. The drawbacks of the closed-loop mode are a slightly decreased bandwidth and overall range of motion. In case more range is needed during flight, it is possible to switch back to open-loop mode. 
+The platform can be controlled in open-loop mode, where there is a simple gain between the command and the voltage applied to the piezo crystals. However, we baseline the closed-loop mode during flight. In this configuration, the electronics close the loop using the strain gauge sensor and the command corresponds to an angle rather than simply a voltage. The drawbacks of the closed-loop mode are a slightly decreased bandwidth and overall range of motion. In case more range is needed during flight, it is possible to switch back to open-loop mode. 
 
 
  
  
 \subsubsection{Fine guidance sensor}
 \label{subsec:FGS}
-The fine guidance sensor is a HAWAII-1RG detector from Teledyne with 1024$\times$1024 pixels that is sensitive to infrared wavelengths between \SI{1}{\um} and \SI{2.5}{\um}. The device will be operated at a cryogenic temperature of \SI{77}{\kelvin}, at which the expected read noise is 18~electrons r.m.s. The readout is accomplished using a San Diego State University GENIII \citep{Leach:1994fp} controller. The readout scheme accommodates simultaneous read of two windows on the array, one for each arm of the interferometer. The software can switch window size quickly, hence accommodating our ACQUIRE mode needs. 
+The fine guidance sensor is a HAWAII-1RG detector from Teledyne with 1024$\times$1024 pixels that is sensitive to infrared wavelengths between \SI{1}{\um} and \SI{2.5}{\um}. The plate scale is \ang{;;0.6}\si{\per\second}. The device will be operated at a cryogenic temperature of \SI{77}{\kelvin}, at which the expected read noise is 18~electrons r.m.s. The readout is accomplished using a San Diego State University GENIII \citep{Leach:1994fp} controller. The readout scheme accommodates simultaneous read of two windows on the array, one for each arm of the interferometer. The software can switch window size quickly, hence accommodating our ACQUIRE mode needs. 
 
-The centroid of a guide star in each window is determined, and the error between this centroid and a pre-registered location on the sensor is fed back to the tip/tilt actuators after proper rotation, to ensure overlap of the two beams in the science channels. The plate scale is \ang{;;0.6}\si{\per\second}.
+The centroid of a guide star in each window is determined, and the error between this centroid and a pre-registered location on the sensor is fed back to the tip/tilt actuators after proper rotation, to ensure overlap of the two beams in the science channels. The amount of correction required by the tip/tilt actuators to overlap the two beams is then used by the attitude estimator and converted to an overall baseline error. 
 
 \subsubsection{Clocks and timing}
 
@@ -621,7 +621,7 @@ A diagram of all the clocks in the system is shown in Fig.~\ref{fig:Clocks}.
 
 The advantage of this strategy can be illustrated as follows. The time it takes for a wheel to complete a revolution is set to be an integer multiple of this heartbeat, $\num{998400}=\num{124800}\times 8$ master clock ticks (about 50 revolutions per second). Hence, every 8 heartbeats, each wheel is supposed to be in the same position, and it will be controlled 8 times during one revolution to make sure it is. This completely locks in their relative velocities, on average. Let's suppose now that in their 8th position, a mechanical defect in the wheel or the bearing triggers a small vibration. This vibration will occur at a frequency which is locked with respect to our science data, such that we will see its effects every 8 data samples. In the case where these clocks are not synchronized and would unpredictably drift with respect to each other, a perturbation that occurs every 8th of a revolution has repercussions not exactly at every 8 data samples. If we think about this in the frequency domain, it means that the power peak caused by the vibration is now broadened, whereas it is very sharp in the synchronized case.
 
-In practice, however, implementing this "single clock" approach is not straightforward for a project that has modest resources and relies heavily on commercial electronics. Most commercial motion controllers do not allow for external clock synchronization. We came up with a solution with the engineers at Galil Motion, and found a way to change their controller to accept an external TTL signal that would bypass their internal crystal oscillator at \SI{1.024}{\kilo\hertz}. The controller normally uses the internal oscillator as a definition of its time basis, so the user can send input in physical units (like acceleration or velocity) - a change in the clock frequency from the introduction of an external signal will have non-trivial repercussions.
+%In practice, however, implementing this "single clock" approach is not straightforward for a project that has modest resources and relies heavily on commercial electronics. Most commercial motion controllers do not allow for external clock synchronization. We came up with a solution with the engineers at Galil Motion, and found a way to change their controller to accept an external TTL signal that would bypass their internal crystal oscillator at \SI{1.024}{\kilo\hertz}. The controller normally uses the internal oscillator as a definition of its time basis, so the user can send input in physical units (like acceleration or velocity) - a change in the clock frequency from the introduction of an external signal will have non-trivial repercussions.
 
 The attitude control and sensing occurs every 4 heartbeats, which corresponds to $\approx$\SI{100.16}{\hertz}. In the rest of this discussion, we will always refer to this frequency as being at \SI{100}{\hertz} for simplicity of notation - but it important to remember that it is in fact derived from the master clock.
 

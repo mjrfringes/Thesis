@@ -152,7 +152,7 @@ For clarity, we will discuss here the simple models that can be used to describe
 
 In the most common model of the evolution of young stars, there are four stages in the lifetime of a YSO. The first stage consists of a dense core right after the YSO is born. The disk is almost inexistent, the envelope still is dense and circularly symmetric. This is called Class 0. As the system evolves, the outflow increases the opening angle of the cavity, the density of the envelope decreases, and the size of the disk increases.
 
-The various classes of YSO (from 0 to III) have distinct observational signatures, although can be dependent on the viewing angle. The most commonly used tool to classify YSOs based on their SEDs is to use the spectral index, which corresponds to the mid-IR slope $\alpha$ in the log-log plots, with $\alpha = \textrm{d}(\log\lambda F_\lambda)/\textrm{d}\log\lambda$ between 2 to \SI{20}{\micro\meter} \citep{McKee:2007bd}. The four classes of YSOs are:
+The various classes of YSO (from 0 to III) have distinct observational signatures, although can be dependent on the viewing angle. The most commonly used tool to classify YSOs based on their SEDs is to use the spectral index, which corresponds to the mid-IR slope $\alpha$ in the log-log plots, with $\alpha = \textrm{d}(\log\lambda F_\lambda)/\textrm{d}(\log\lambda)$ between 2 to \SI{20}{\micro\meter} \citep{McKee:2007bd}. The four classes of YSOs are:
 
 
 \begin{figure}[!h]
@@ -175,7 +175,7 @@ The various classes of YSO (from 0 to III) have distinct observational signature
 \includegraphics[width=\textwidth]{Figures/test_whitney_classII_nice.png} 
 } \par\medskip
 \subcaptionbox{Class III.\label{subfig:StageIII}}{
-\includegraphics[width=\textwidth]{Figures/test_whitney_classIII_nice.png} 
+\includegraphics[width=\textwidth]{Figures/test_whitney_classIII_modified_nice.png} 
 }
 \caption[Late evolution of YSOs]{Late evolution of YSOs.}
 \label{fig:LateStages}
@@ -299,7 +299,7 @@ Dust grains are responsible for the extinction within molecular clouds, inside o
 
 At sufficiently long wavelength, dust opacity models can usually be represented by a simple power-law, $\Knu = \kappa_0(\nu/\nu_0)^\beta$, with the index $\beta$ depending on the specifics of the dust model \citep{Draine:2011tr}. The opacity $\Knu$ is expressed in \si{\raiseto{2}\centi\meter\per\gram}, and can be interpreted as a extinction cross-section per unit mass. Most dust models assume a 1:100 dust-to-gas ratio, and derive opacities per unit {gas+dust} mass, instead of just dust mass. From a radiative transfer perspective, the observed specific intensity from a thermal source $\Bnu(T)$ at temperature $T$ in the optically thin regime is $I_\nu = \int \Bnu(T)d\tau_\nu$, where the optical depth is $\tau_\nu = \int\Knu\rho_\dust dl$. In this expression all quantities depend on the location $l$ along the line of sight. If $T$, $\kappa_nu$, and $\rho_\dust$ are constant along the line of sight, this simplifies to:
 \begin{equations}
-I_\nu =  \tau_\nu\Bnu(T) = \kappa_nu\rho_\dust L\Bnu(T) = \kappa_nu\sigma_\dust\Bnu(T),
+I_\nu =  \tau_\nu\Bnu(T) = \kappa_\nu\rho_\dust L\Bnu(T) = \kappa_\nu\sigma_\dust\Bnu(T),
 \end{equations}
 where we define $\sigma_\dust$ as the mass surface density.
 %$\rho$ is the density and the integral is calculated along the line of sight to the source. %Note that the optical depth can also be expressed in terms of the extinction cross-section \Cext~as $\Knu = \Cext(\nu) / m_\dust$, where $m_\dust$ corresponds to the mass of a dust grain.

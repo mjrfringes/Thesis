@@ -79,8 +79,27 @@ c = SkyCoord(df['RA'],df['DEC'],frame=FK5,unit=u.deg)
 df['Coordinates'] = c.to_string('hmsdms',precision=1)
 print df['Coordinates']
 
+### main photometry table
+#dftot = df.loc[df['Cluster'].isin(['NGC1333','Oph','IRAS20050'])]
+dftot = df.loc[df['Property'].isin(['Clustered','Extended','Isolated'])]
+print dftot
+columns = ['j','h','ks','i1','i2','i3','i4','F11','F19','m1','F31','F37','m2','H70','H160','H250','H350','H500','S850','F1100','S1300']
+e_columns = ["e_"+col for col in columns]
+flag_columns = ["flag_"+col for col in columns]
+cols = list(itertools.chain.from_iterable(zip(columns,e_columns)))
+print cols
+
+# total table
+dftot[['Coordinates','Property']+cols+['R37','Lbol','alpha','R','env_mass','env_mass_std','calc_mass','sLsun','sLsun_std','Lbol','inc','ext','s']].to_csv('Data/alldata.csv',na_rep='')
+print dftot[['Coordinates','Property']+cols+['R37','Lbol','alpha','R','env_mass','env_mass_std','calc_mass','sLsun','sLsun_std','Lbol','inc','ext','s']].to_latex(longtable=True,na_rep='--')
+
+# params-only table
+dftot[['Coordinates','Property','R37','Lbol','alpha','R','env_mass','env_mass_std','calc_mass','sLsun','sLsun_std','Lbol','inc','ext','s']].to_csv('Data/alldata_params.csv',na_rep='')
+
+# targets table
 df[['SOFIA_name','Coordinates','RA','DEC','Property','R37','F37']].to_csv('Data/BETTII_Targets.csv')
 
+## IRAS20050
 df1 = df.loc[df['Cluster'].isin(['IRAS20050'])]
 
 columns = ['ks','i1','i2','i3','i4','F11','F19','m1','F31','F37']
@@ -198,7 +217,7 @@ alpha2 = isolated['alpha2']
 # ax2.grid(True)
 
 fig,ax = plt.subplots(figsize=figsize,facecolor=facecolor)
-hist,bin_edges = np.histogram(alpha1.compressed(),bins=np.arange(-1,4.5,0.15))  #np.arange(-1,3,0.15)
+hist,bin_edges = np.histogram(alpha1.compressed(),bins=np.arange(-1,3,0.15))  #np.arange(-1,3,0.15)
 w = bin_edges[1] - bin_edges[0]
 ax.bar(bin_edges[:-1],hist,width=w,color=blue)
 ax.set_xlabel(r'Spectral index $\alpha_{2.2-37}$')
@@ -211,16 +230,6 @@ fig.savefig('../Figures/SpectralIndex.pdf',dpi=300)
 #plt.show()
 
 
-### main photometry table
-dftot = df.loc[df['Cluster'].isin(['NGC1333','Oph'])]
-print dftot
-columns = ['j','h','ks','i1','i2','i3','i4','F11','F19','m1','F31','F37','m2','H70','H160','H250','H350','H500','S850','F1100','S1300','alpha']
-e_columns = ["e_"+col for col in columns]
-flag_columns = ["flag_"+col for col in columns]
-cols = list(itertools.chain.from_iterable(zip(columns,e_columns)))
-print cols
-dftot[['Coordinates','R37','Lbol','Tbol']+cols].to_csv('Data/alldata.csv',na_rep='')
-print dftot[['Coordinates','R37','Lbol','Tbol']+cols].to_latex(longtable=True,na_rep='--')
 
 
 # plot alpha histogram
@@ -464,6 +473,11 @@ ax.set_xlabel(r'$\log\ M_\mathrm{env,calc}$ ($M_\odot$)')
 fig.tight_layout()
 fig.savefig('../Figures/massEstvsCalc.pdf')
 
+#columnlist = ['i1','i2','i3','i4','F11','F19','F31','F37']
+# [3.6,4.5,5.8,8.,11.1,19.7,31.5,37.1]
+#	ax.errorbar(wllist,nptable(sourcetable[columnlist][0])*1e-17*const.c.value/wllist,nptable(sourcetable[errorlist][0])*1e-17*const.c.value/wllist, 
+#		c=color,alpha=alpha,linestyle="None",marker=marker,label = label,markersize=msize)
+#
 
 plt.show()
 

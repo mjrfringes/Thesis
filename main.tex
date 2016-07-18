@@ -73,7 +73,10 @@ headsepline, % Uncomment to get a line under the header
 \renewcommand\thesubsubsection{\thesubsection.\arabic{subsubsection}}
 \renewcommand\theparagraph{\thesubsubsection.\alph{paragraph}}
 
-
+\makeatletter
+     \renewcommand*\l@figure{\@dottedtocline{1}{1em}{3.2em}}
+     \renewcommand*\l@table{\@dottedtocline{1}{1em}{3.2em}}
+\makeatother
 
 \usepackage[backend=bibtex,style=authoryear,natbib=true,maxcitenames=1]{biblatex} % User the bibtex backend with the authoryear citation style (which resembles APA)
 
@@ -265,7 +268,7 @@ Dr. Stephen A. Rinehart, Co-Advisor (NASA GSFC)\\
 Professor Andrew Harris (UMD)\\
 Dr. Mark Wolfire (UMD)\\
 Dr. Alison Nordt (Lockheed Martin)\\
-Professor Eun-Suk Seo, Dean's representative (UMD)
+Professor Eun-Suk Seo, Graduate Dean's representative (UMD)
 
 \end{titlepage}
 
@@ -285,7 +288,16 @@ Professor Eun-Suk Seo, Dean's representative (UMD)
 \begin{acknowledgements}
 \addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
 
-The acknowledgments and the people to thank go here, don't forget to include your project advisor\ldots
+First and foremost, I would like to thank my advisors Lee~Mundy and Stephen~Rinehart for continuously supporting me during this thesis. Their guidance, knowledge and the trust they have put in me have been essential to the success of this work. Thanks for allowing me to do my first steps as a young instrument scientist, and giving me the opportunity to work on the BETTII project since day one. Special thanks also to Aki Roberge for her continued mentorship, and also to Richard Lyon, who originally inspired into getting my Ph.D. during my first internship at Goddard in 2008.
+
+Much of what is written in this thesis is a result of discussions and reflections with members of the BETTII team, who have been supporting me during my entire graduate work. On the technical side, Dale Fixsen and Dominic Benford have inspired me tremendously with their all-around knowledge of physics and engineering and how they apply to astronomical instrumentation. I thank the rest of the team for the respect and trust they have given me: David Leisawitz, Stephen Maher, Eric Mentzell, Elmer Sharp, Robert Silverberg, Johannes Staguhn; but also Arnab Dhabal, Jordi Vila, Todd Veach and Roser Juanola-Parramon who, as graduate students and postdocs, have shared this wonderful experience with me. This extends to the entire Goddard community which has always been a friendly and welcoming group to work with.
+
+Working on BETTII would not have been the same without the community of the UMD Department of Astronomy. I shared my experience with wonderful classmates, who always provided friendship, technical assistance, and support when needed. I especially want to thank Vicki Toy and John Capone for being my Goddard crew, and of course my office mate Taro Shimizu for his patience and assistance with some aspects of my work. In addition, I wanted to thank my professors for always having their door open for my questions, in particular Andrew Harris, Richard Mushotzky, and Alberto Bolatto. Finally, I have had a fantastic experience with the research scientists and staff of the department. In particular I wanted to thank Peter Teuben and Adrienne Newman for their patience in assisting me all the time.
+
+I am grateful for my friends and family in France, in the U.S., and elsewhere who have continually provided encouragements and support, despite the long distances that often separate us in this world that still doesn't seem connected enough. I want to thank especially my parents and my brother, who have been strong supporters of this endeavor. Thanks to Pauline Simonet, Jean-Baptiste Vallart, and the rest of my SUPAERO crew with who I learned so much. Thanks to Simon Oudin and Adrien Pavageau for those special moments together. Thanks to my old friends in Alsace, C\'{e}dric \& No\'{e}mie, Thibaut \& Jen, Adrien \& Aur\'{e}, and Ad\'{e}, for holding the fort and never missing an occasion to get together when I come home. 
+
+Last, but not least, no one deserves more gratitude than my wife Michelle, who has given me her unconditional support, relentless encouragements, and has always been here for me since the day I met her. Michelle, this work would have been impossible without you.
+
 
 \end{acknowledgements}
 
@@ -363,13 +375,14 @@ The acknowledgments and the people to thank go here, don't forget to include you
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
 % loads up the file with all the definitions
-\include{Chapters/Introduction}
-\include{Chapters/SOFIA} 
-%\include{Chapters/BETTII} 
-%\include{Chapters/DoubleFourier} 
-%\include{Chapters/AttitudeEstimation}
-%\include{Chapters/Implementation} 
-%\include{Chapters/Conclusion}
+%\include{Chapters/Introduction}
+\include{Chapters/intro-lgm}
+\include{Chapters/SOFIAnew} 
+\include{Chapters/BETTII} 
+\include{Chapters/DoubleFourier} 
+\include{Chapters/AttitudeEstimation}
+\include{Chapters/Implementation} 
+\include{Chapters/Conclusion}
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES
@@ -380,10 +393,11 @@ The acknowledgments and the people to thank go here, don't forget to include you
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 
-%\include{Appendices/AppendixA}
+\include{Appendices/AppendixA}
 %\include{Appendices/AppendixB}
-%\include{Appendices/AttitudeRepr3D}
-%\include{Appendices/PIDLoop}
+\include{Appendices/AttitudeRepr3D}
+\include{Appendices/PIDLoop}
+\include{Chapters/DataTables}
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY

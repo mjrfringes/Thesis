@@ -22,7 +22,12 @@ print "Jean's mass:",MJ.to(u.M_sun)
 
 # BE sphere
 BE = 1.182*cs**3/np.sqrt(const.G**3*rho)
-print "Bonnor-Ebert mass:",BE.to(u.M_sun)
+print "Bonnor-Ebert mass (thermal):",BE.to(u.M_sun)
+
+# BE sphere
+Pext = 3e5*const.k_B*u.K/u.cm**3
+BE2 = 1.182*cs**4/np.sqrt(const.G**3*Pext)
+print "Bonnor-Ebert mass (turbulent):",BE2.to(u.M_sun), "= ", BE2.to(u.M_sun)/MJ.to(u.M_sun)," MJ"
 
 # BE radius
 BR = 0.486*cs/np.sqrt(const.G*rho)
@@ -30,3 +35,14 @@ print "Bonnor-Ebert radius:",BR.to(u.pc)
 
 val = 4.*pi/(3.*8.)* ((3.*pi)/(32.))**1.5
 print val
+
+# Rtheta
+lam = 70*u.um
+D = 1*u.m
+Rtheta = 0.43*2.44*(lam.to(u.m)/D)/4.848e-6
+print "Rtheta:",Rtheta
+
+# Rlinear
+d = 500*u.pc
+Rlinear = 0.43*2.44*(lam.to(u.m)/D)*500*u.pc
+print "Rlinear:",Rlinear

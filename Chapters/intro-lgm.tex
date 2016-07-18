@@ -1,0 +1,447 @@
+% Chapter 1
+\chapter*{Introduction}
+\label{chap:introduction}
+
+
+\epigraph{\setstretch{1}\small\itshape In order to improve the mind, we ought less to learn, than to contemplate.}{R. Descartes}
+
+
+The work presented in this thesis is centered around the design, development, and testing of an astronomical balloon-borne telescope called BETTII: the Balloon Experimental Twin Telescope for Infrared Interferometry. Developed at NASA Goddard Space Flight Center, this instrument is exploring a relatively new observation technique called "Double-Fourier" interferometry, which could lead to future space-borne telescopes with high angular resolution in the far-infrared regime. Various fields in astronomy would benefit from such enhanced capability, as demonstrated by the success of far-infrared single-aperture telescopes such as \WISE, \Spitzer and \Herschel. 
+
+More than just a pathfinder, BETTII is a scientific instrument in its own right. For its first flights, it will study regions of clustered star formation in unprecedented details, providing almost an order of magnitude better spatial resolution than any existing or past far-IR facility.
+
+The following chapters describe aspects of my involvement with BETTII as well as my contributions to the scientific field of clustered star formation using another far-IR facility, the Stratospheric Observatory for Infrared Astronomy (SOFIA). The thesis is organized as follows:
+\begin{itemize}
+\item Chapter~\ref{chap:StarFormation} describes the framework and current understanding of how stars are forming in clusters, and lays out the tools that we use to study these regions at far infrared wavelengths.
+\item Chapter~\ref{chap:SOFIA} is a study of nearby star-forming clusters using new data that we obtained with the SOFIA observatory. SOFIA offers moderately high angular resolution, which we use to improve the study of the brightest, densest regions of star formation. This work is to be submitted for publication shortly after the conclusion of this dissertation. 
+\item Chapter~\ref{chap:BETTII} describes the physical principles of interferometry which drive the design of the balloon instrument. We predict the sensitivity of the BETTII instrument and identify scientific targets and calibrators that are suitable for our first flights.
+\item Chapter~\ref{chap:phasenoisepaper} is a standalone, refereed paper that was published in 2015 on the spectral sensitivity of double-Fourier interferometers in general. It proposes a mathematical framework to analyze the sensitivity of such instruments to various types of noise sources. We apply those findings to the case of BETTII.
+\item Chapter~\ref{chap:controls} discusses the design of the control system for BETTII, which presents unique challenges compared to any other balloon-borne instrument. We also discuss the controls algorithm that is used in flight to properly estimate the orientation of the payload, a key requirement to achieve successful interferometry.
+\item Chapter~\ref{chap:implementation} shows results of the implementation of the control system on BETTII. This consists of laboratory and on-sky testing of BETTII at GSFC.
+\item Chapter~\ref{chap:conclusion} summarizes our findings and discusses the path forward for the BETTII project.
+\end{itemize}
+
+BETTII will be shipping out to Fort Sumner, New Mexico, for its first balloon flight in early August. The flight window is from mid to late September. The technical work in chapters III to VI plays a key role in the success of this first flight.
+
+\chapter{Star Formation in Clustered Environments} % Main chapter title
+
+\label{chap:StarFormation}
+
+%----------------------------------------------------------------------------------------
+
+This chapter is an introduction to some of the concepts which play a role in the formation of stars. First, we discuss properties of the molecular clouds which are the sites of star formation. Second, we elaborate on the physics of the star-forming processes and the evolutionary stages in star formation. Third, we discuss the properties of the dust, which is the main observable of relevance for the rest of this thesis. This chapter is not meant to be an exhaustive review of the field, but instead explains the aspects of the star formation phenomenon which are important to understand when designing an observatory to study it.
+
+\section{Molecular Clouds}
+
+Molecular clouds are dense regions of the interstellar medium (ISM) where stars are forming. They contain about half the mass of the ISM in $<2$\% of its volume \citep[see][and references therein]{Kennicutt:2012ey}. High densities ($n \gtrsim \SI{1000}{\raiseto{-3}\centi\meter}$) of mostly molecular hydrogen and low temperatures ($< \SI{20}{\kelvin}$) distinguish molecular clouds from the other major components of the ISM in galaxies: the Hot Ionized Medium, the Warm Neutral Medium, the Warm Ionized Medium, and the other cold phase of the ISM, the Cold Neutral Medium, which is thought to be the parent medium from which molecular clouds are formed. In addition to molecular hydrogen, molecular clouds contain Helium (cosmic abundance of 10\% by number), dust ($\sim 1\%$ by mass), CO ($\sim \num{1e-4}$ by number), and traces of many other molecules.
+
+Observations reveal that molecular clouds are highly structured often with filamentary structure on a range of spatial scales \citep{Heyer:2015ee,Andre:2010ka,Andre:2014et,Williams:2000wl}.
+We are particularly interested in the star formation process in these regions so our focus is on the youngest systems, $\lesssim\SI{2}{\mega\year}$, where stars are often still embedded and may not yet have accreted the majority of their final mass.
+ %While the literature proposes multiple classifications for the various structures found in molecular clouds, we choose to focus only on two structures which are key to this work: clusters, which are more local associations of stars in virial equilibrium \citep{Lada:2003il}; and dense cores, which are sites where stars form individually or in systems of small multiples \citep{Williams:2000wl}. Clusters are formed of multiple cores, but cores can also be found outside of clusters, in the field. In the classical picture, clouds are thought to fragment into clusters, which still contain many times the Jeans' mass - the minimum mass for gravitationally-bound cores \citep{Larson:1994cj} which are also called prestellar cores \citep{DiFrancesco:2007vg}.
+
+%[The structure of clusters itself is of great interest to study the mechanisms at stake in star formation, because it gives information about the cluster's origins \citep{Lada:2003il}. Clusters are believed to be relatively short-lived, because the stars it forms can disrupt its gravitational equilibrium. Typical timescales for clusters are on the order of \SI{100}{\mega\year} \citep{Lada:2003il}. ]
+
+Approximately 60\% of all stars are thought to form in embedded, young stellar clusters with 100 or more stars \citep{Porras:2003kxa,Allen:2007wqa}. These $>$100 star clusters have characteristic sizes of 2-4 parsecs (pc) with peak surface densities of $>$10 stars per square parsec and a typical median distance between nearest neighbor young stellar objects (YSOs) $<$0.06 pc \citep{Gutermuth:2009gca}.
+
+Because star-forming clusters are surrounded by interstellar matter from the parent molecular cloud, they usually cannot be studied at optical wavelengths, due to the large obscuration from dust grains along the line of sight. Infrared observations can be used to probe these structures since the dust can acquire sufficient temperature to emit thermally from the mid-infrared through millimeter wavelengths. 
+
+The high density of YSOs within clusters, combined with their typical separations of few hundredths of parsecs requires a high angular resolution in order to capture the relevant spatial scales to identify individual sources and probe their physical characteristics.
+
+
+\section{Star formation}
+
+\subsection{Standard models}
+
+A considerable literature exists on the theory of star formation and the various physical processes involved in forming stars \citep[e.g.][and references therein]{Evans:1999gz,McKee:2007bd,PortegiesZwart:2010kc,Kennicutt:2012ey,Hennebelle:2012dk}. In this section, we review some of the most standard views that describe how stars are born and grow to acquire their final masses.
+
+\subsubsection{Gravitational collapse}
+
+The simplest way to derive characteristic quantities related to the formation of stars is to consider a pre-stellar core as a spherical clump of uniform, isothermal gas in hydrostatic equilibrium (no magnetic field or turbulence). For such a system, the Virial theorem applies, which describes the balance between the gravitational potential and the kinetic thermal energy within the gas. In other words, in hydrostatic equilibrium, the core's self-gravity is compensated by the internal pressure caused by the temperature of the gas. If the temperature decreases, or if the core mass increases, the core will contract and can become unstable to further contraction. While simplistic, this treatment leads to a handy derivation of critical timescales, sizes, and masses that form a good starting point for more elaborate theories. 
+
+First, it is important to determine what are the characteristic timescales of star formation. In the core with a uniform density, the simplest timescale to define is called the free-fall time \tff: this is the time it takes for the total gravitational collapse of a spherically-symmetric clump of uniform density $\rho$ if only the force of gravity is considered (no pressure):
+\begin{equation}
+\tff \sim \left(\frac{3\pi}{32 G\rho}\right)^{1/2}\sim \SI{1e6}{\year}\left(\frac{n}{\SI{1000}{\per\raiseto{3}\centi\meter}}\right)^{-1/2} = \SI{1e6}{\year}\left(\frac{\rho}{\SI{4e-21}{\gram\per\raiseto{3}\centi\meter}}\right)^{-1/2},
+\end{equation}
+where we have substituted a typical value for the particle density in molecular clouds $n\equiv n_{H_2}\approx\SI{1000}{\per\raiseto{3}\centi\meter}$, and also converted it into a mass density, using a mean molecular weight $\mu=2.33$ (corresponding to a Helium abundance of 10\% in number as in \citet{McKee:2007bd}). The free-fall time is usually a lower limit on the collapse timescale, since there can always be some physical mechanisms such as thermal and turbulent pressure or magnetic fields that oppose gravity and slow down the infall of gas into the potential well. 
+
+The other relevant quantity that involves time is the sound speed in the cloud, $\cs = (kT/(\mu m_H))^{1/2}$, where $\mu\approx 2.33$ is the mean molecular weight of the gas and $m_H$ the mass of hydrogen. For a given spatial scale $R$, the sound-crossing time is defined as $\ts = R/\cs = \SI{4.9e5}{\year}\left(\frac{R}{\SI{0.1}{\pc}}\right)\left(\frac{\cs}{\SI{0.2}{\kilo\meter\per\second}}\right)^{-1}$. This is the time it takes for a wave to cross the scale $R$ while traveling at the sound speed.
+Intuitively, if the core has a size $R$ such that $\tff<\ts$, it tends to collapse faster than the gas on larger scales in the cloud can react. This corresponds to a size scale that is called the Jeans' length, and corresponds to the characteristic size scale of gravitational instability within a cloud \citep{McKee:2007bd}:
+\begin{equation}
+ \lambdaJ = \cs\times\tff = \SI{0.2}{\pc}\left(\frac{\cs}{\SI{0.2}{\kilo\meter\per\second}}\right)\left(\frac{n}{\SI{1000}{\per\raiseto{3}\centi\meter}}\right)^{-1/2}.
+ \end{equation} 
+
+The Jeans mass is the amount of mass within a sphere of diameter \lambdaJ, and corresponds intuitively to the characteristic mass of a core that can undergo gravitational collapse:
+\begin{eqnarray}
+\MJ &=& \frac{4\pi}{3}\rho\left(\frac{\lambdaJ}{2}\right)^3, \\
+&=& \SI{0.3}{\Msun} \left(\frac{\cs}{\SI{0.2}{\kilo\meter\per\second}}\right)^3 \left(\frac{n}{\SI{1000}{\per\raiseto{3}\centi\meter}}\right)^{-1/2}.
+\end{eqnarray}
+
+Note that this formalism ignores the material that surrounds the core while it collapses. In practice, the cloud exerts an external pressure on the core that needs to be taken into account when calculating the critical masses. This case of a clump of self-gravitating gas that is immersed in a medium of external pressure $\Pext$ is called a Bonnor-Ebert sphere. It can be shown \citep{McKee:2007bd} that the sizescale for a critical Bonnor-Ebert sphere is similar to the Jeans' length, and the mass scale is:
+\begin{eqnarray}
+M_\textrm{BE} & = & 1.18\frac{\cs ^4}{G^{3/2 }\Pext^{1/2}},\\
+ & = &\SI{0.85}{\Msun}\left(\frac{\cs}{\SI{0.2}{\kilo\meter\per\second}}\right)^4 \left(\frac{\Pext}{\num{3e5}k_B\si{\per\raiseto{3}\centi\meter}}\right)^{-1/2},\\
+ & \sim & 2.73 \MJ.
+\end{eqnarray}
+where we have used the characteristic turbulent pressure in molecular clouds, $P_\textrm{ext, 0}= \num{3e5} \ k_B \  \si{\per\raiseto{3}\centi\meter\kelvin}$, 
+for the external pressure term \citep{McKee:2007bd} ($k_B$ is the Boltzmann constant). The turbulent pressure is dominant over thermal temperature
+on the large scale in molecular clouds because the observed turbulent velocities are supersonic (by factors of 5-10) compared to the sound speed in gas at \SI{10}{\kelvin} temperature .
+
+This turbulent nature of cloud can drive local overdensities which reach and exceed the Jean's or Bonnor-Ebert masses in regions where turbulent cells collide. The overdense region can then fragment into multiple centers of collapse, each of which will lead to a star. Accretion from the turbulent surrounding core material may occur throughout this process. Within these centers of collapse, gravity is dominating the evolution and it is still useful to refer back to simple, symmetric accretion model for overall guidance.
+
+In the simple model, the collapse from a Bonner-Ebert sphere results in an infalling envelope with density profile which follow power laws from $\renv^{-1.5}$ to $\renv^{-2}$, an important observable that can be useful to testing models. Some models of slowly-rotating infalling clouds suggest more complex density profiles for the envelopes \citep[e.g.][]{Ulrich:1976ho,Terebey:1984hi} than simple power laws, but differences from the traditional power-law  envelope have been observationally difficult to constrain due the scales at which those differences become significant, 100-\num{1000}  astronomical units (\si{\au}).
+
+%This gravitational collapse  fragments the core which can ultimately form multiple stars. 
+
+%Once the gas starts its gravitational collapse, nothing stops it until the central pressure and density reach values that trigger the ignition of nuclear fusion. This is the birth of the star. This new mechanism creates a large amount of radiation pressure that balances out the collapse and forms a new hydrostatic equilibrium. 
+
+%In practice, it is likely that a single core fragments into multiple centers of collapse, each of them exceeding the local Jeans mass. This would create systems of binaries or small multiples instead of single stars, a scenario that is currently favored [REFERENCE?].
+
+%In the standard model, the collapse begins at the center of the core and propagates outward at the sound speed, so the density structure of the initial core will change as a function of time. Most models result in an infalling envelope with density profiles which follow power laws from $\renv^{-1.5}$ to $\renv^{-2}$, an important observable that can be useful to test these theories. Some models of slowly-rotating infalling clouds suggest more complex density profiles for the envelopes \citep[e.g.][]{Ulrich:1976ho,Terebey:1984hi} than simple power laws, but are observationally difficult to constrain due to the small differences with traditional power-law envelopes and the small scales at which those differences occur (a few 100's of astronomical units (\si{\au})).
+
+Nevertheless, it is expected that collapsing cores will have some amount of angular momentum and that angular momentum becomes
+significant with the material is falling from 1,000's of AU to stellar scales, roughly 6 orders of magnitude.
+Due to conservation of angular momentum all of the material cannot fall directly onto the star and some creates a circumstellar disk.
+Observationally, we know that the process by which this disk material accretes onto the star is associated with outflows
+of material along the rotation axis, which are called bipolar outflows, and these outflows carve out a cavity in the envelope along the axis of rotation of the star. 
+
+The object now has three characteristic components: the star itself; the flattened circumstellar disk; and a diffuse envelope with an open cavity, which constitutes a mass reservoir for future accretion onto the star. A cartoon of the protostar is shown in Fig.~\ref{fig:Protostar}.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Figures/protostar.jpg} 
+	\caption[Protostar]{Cartoon of a protostar \citep{Greene:2001dg} with the envelope, a flattened circumstellar disk, the bipolar outflow/cavity, and the protostar at the center. A typical scale for the envelope of a young object is $\sim$\SI{10000}{\au}.}
+	\label{fig:Protostar}
+    \end{figure}
+
+
+%The accretion rates represent the speeds at which the mass is transferred between different objects, and are important to set relevant timescales and to relate observables to the physics. For relatively low-mass star formation, the usually adopted accretion mechanism is called Shu accretion \citep{Shu:1977ef}, and predicts a mass accretion rate of the envelope onto the disk $\Mdotenv \propto \cs^3/G$, where $\cs$ here represents the sound speed that includes turbulence, and $G$ is the gravitational constant. A typical accretion rate for $\cs\sim \SI{2.7}{\kilo\meter\per\second}$ is $\Mdotenv \sim  \SI{4.8e-6}{\Msun\per\year}$ \citep{Dunham:2010bx}. Similarly, accretion occurs from the disk to the star, and this can create a substantial amount of luminosity within a few stellar radii from the star center.
+
+Although most of the mass is contained in the $\textrm{H}_2$ gas, there is a small fraction of material in the form of dust grains of various sizes and populations. Despite their low mass, these grains play a very important role in determining the observable properties of YSOs, because they absorb short wavelengths and radiate in the thermal infrared (see Section~\ref{subsec:dust}). 
+
+%The accretion mechanism most commonly consists of Bondi accretion \citep{Bondi:1952fc}, and represents the transfer of mass from the envelope or the disk to the star. As the YSO moves through its parent cloud, it can also accrete more mass throughout its life that was not originally part of the original condensation that initiated the collapse. In these dense regions where multiple stars are forming, interactions between YSOs is more than likely and can significantly affect the final masses of stars.
+
+%Various models exist for accretion, from a quasi-static slow process \citep{Shu:1977ef} to a very rapid and brutal process \citep[e.g.][]{Larson:1967ee}. \cite{McKee:2007bd} suggest that the infall process is most likely slowing down as a function of time, which complicates its observational validation. 
+
+
+% , the speed of sound is $c_s = (kT/m)^{1/2}$.
+%Perhaps the most elementary way to model the birth of a star consists of considering an isothermal sphere of self-gravitating gas (a core) on the verge of collapse, in hydrostatic equilibrium with its surrounding cloud medium of gas pressure \Pext. This is also called a Bonnor-Ebert sphere \citep{Ebert:1955wf,Bonnor:1956cy}, and the state of this sphere is said to be \textit{critically stable}, with a critical mass defined by $\Mcrit = 1.18\frac{c^4_s}{G^{3/2}}\Pext^{-1/2}$ \citep{Shu:1977ef}, where $c_s = (kT/m)^{1/2}$ is the speed of sound in the cloud. To put this in perspective using physical quantities, we have:
+%\begin{equation}
+%M_{BE} = 0.66 \left(\frac{T}{\SI{10}{\kelvin}}\right)^2 \left(\frac{\Pext/k_B}{\SI{3e-5}{\raiseto{-3}\centi\meter\kelvin}}\right)^{-1/2}\si{\Msun},
+%\end{equation}
+%where \Pext was normalized to mean kinetic pressure at the surface of molecular clouds \citep{McKee:2007bd}. The Bonnor-Ebert radius is $R_{BE} = 0.49 c_s/(G\rho_0)^{1/2}$,  which is comparable to the characteristic fragmentation size scale called the Jeans' length. Here $\rho_0$ is the uniform density of the core. 
+
+%For a core of mass $M_{BE}$, the thermal pressure exactly compensates the gravitational forces. Collapse occurs for cores with mass $>M_{BE}$ when gravity overcomes the thermal pressure of the gas inside the sphere, which triggers the rapid mass growth of a central embryo towards infinitely high densities. In practice, the process stops when enough density is reached to ignite nuclear fusion and stabilize the embryo, which has just become a young stellar object. Even after the star is born, mass continues to fall into the potential well, emitting radiation and increasing the mass of the central object. Various scenarios exist for this phase of the accretion within individual cores, 
+
+
+
+
+%Since the accretion rate can be linked to the observed luminosities as gas falls into the gravitational potential well, it is also an important outcome of a given collapse model.
+%For low-mass star formation from cores that are marginally super-critical, the infall phase can be treated in the quasi-static limit \cite{Shu:1977ef} and follows this normalized form \citep[Eq.44,][]{McKee:2007bd}:
+%\begin{equation}
+%\dot{m}_{infall} = \num{1.54e-6} \left(\frac{T}{\SI{10}{\kelvin}}\right)^{3/2}\si{\Msun\per\year}.
+%\end{equation}
+
+%More massive stars follow an accretion behavior more similar to Bondi-Hoyle accretion
+%Conserving its original angular momentum
+
+%[Accretion rates are likely varying as a function of time {McKee:2007bd}, and can complicate the interpretation ]
+
+%[Magnetic fields, turbulence, asymmetries and non-isothermal considerations all likely play role in this balance, but dramatically complicate the mathematical treatment of the problem. In order to introduce the basic concepts of star formation, these complex processes are ignored.]
+
+%\citep{Myers:2014ct}; includes why accretion stops. Shu accretion for low mass, Bondi accretion at high mass?
+
+\subsubsection{YSO classification and characteristics}
+
+The observational characteristics of YSOs are dominated by emission from the
+ star, disk, and envelope, and the evolution of these components is reflected in the evolution of these observable characteristics. 
+The star is fairly well understood as an object in rough hydrostatic equilibrium that is accreting material on its way to the main sequence. The luminosity of a YSO is a combination of internal stellar luminisity which is due to Kelvin-Helmholtz contraction and/or hydrogen burning in the core, and accretion luminosity; in  all cases, the dominant luminosity is created within 1 to several stellar radii. The spatial distribution of gas in the disk and the envelope changes as the
+YSO evolves and is primarily responsible for the observable emission at infrared through millimeter wavelengths. Simple models assume that the material distribution is axially symmetric, but in all likelihood it is more complex. 
+%Often, the envelope is thought to open up a cavity around the poles of the rotating system, where material can escape the system (through outflows, for example [REFERENCE?]). 
+For clarity, we will discuss here the simple models that can be used to describe the YSOs in the primary stages of their evolution.
+
+In the most common model of the evolution of young stars, there are four stages in the lifetime of a YSO. The first stage consists of a dense core right after the YSO is born. The disk is almost non-existent, the envelope still is dense and circularly symmetric. This is called Class 0. As the system evolves, the YSO grows in mass, an outflow forms and increases the opening angle creating a bipolar cavity in the envelope, the density of the envelope decreases, and the size of the disk increases.
+
+The classes of YSO, from 0 to III, are defined by their broad emission spectra, called Spectral Energy Distributions (SEDs),  although the actual observed SED of a specific YSO is dependent on our viewing angle. In practice, since it is generally difficult to obtain full SEDs from optical to millimeter wavelength for large numbers of YSOs, the most commonly used tool to classify YSOs based on the spectral index of the emission, which is defined as the near-IR to mid-IR wavelength slope of the emission, $\alpha$, in the log-log plots, with $\alpha = \textrm{d}(\log\lambda F_\lambda)/\textrm{d}(\log\lambda)$ between 2 to \SI{20}{\micro\meter} \citep{McKee:2007bd}. Various authors propose different different boundaries for $\alpha$ corresponding to each class. The four classes of YSOs are:
+
+
+\begin{itemize}
+\item Class 0: Most the of short-wavelength ($<\SI{10}{\micro\meter}$) light is highly obscured by the dust in the massive envelope. Most of the emission is around \SI{100}{\micro\meter} and into the submillimeter/radio regimes. If there is a disk, it is very small. Some authors \citep{Dunham:2010bx} classify a source as Class 0 as long as the amount of the mass in the envelope is at least half the total mass. The typical spectral index is a positive number typically $>1.5$.
+\item Class I: Light scatters at short wavelength off the dust grains to give us a hint at the embedded object, but it still very obscured. The envelope's mass is lower, and the disk extends to larger distances. The typical spectral index $\alpha$ is $0<\alpha<1.5$.
+\item Class II: The YSO is now a pre-main sequence star, with a spectral index $-1.5 < \alpha < 0$ and a significant circumstellar disk. This is traditionally referred to as a classical T-Tauri star.
+\item Class III: Still a pre-main sequence star, but most of the accretion has stopped, and $\alpha < -1.5$. The envelope has almost completely disappeared, and so has most or all of the disk, as traced by infrared excess emission. 
+\end{itemize}
+
+An illustration of canonical SED and density structure is shown in Figs.~\ref{fig:EarlyStages} and \ref{fig:LateStages} for the four main classes, with parameters taken in \citet{Whitney:2003kc}\footnote{except for the Class III model, for which we reduced the envelope mass by 3 orders of magnitude, as we think it is more representative of these objects}. On the left of each picture, the SED is the measurable quantity when the YSO is unresolved at all wavelengths. The challenge is to estimate the density structure (to the right) by measuring the SED. The different lines plotted in the SEDs are different inclination angles, highlighting the enormous impact of the viewing angle on the potential interpretation of these SEDs. The dashed line corresponds to the Planck function from the central source. These models were run using the Hyperion software \citep{Robitaille:2011fc} with "OH5" dust \citep{Ossenkopf:1994tq}, as discussed in more details in Section~\ref{subsec:dust}.
+
+
+\begin{figure}[!h]
+\begin{center}
+\subcaptionbox{Class 0\label{subfig:Stage0}}{
+\includegraphics[width=\textwidth]{Figures/test_whitney_class0_nice.png} 
+} \par\medskip
+\subcaptionbox{Class I.\label{subfig:StageI}}{
+\includegraphics[width=\textwidth]{Figures/test_whitney_classI_nice.png} 
+} 
+\caption[Early evolution of YSOs]{Early evolution of YSOs. The left panel shows the spectral energy distribution (SED) of the object. Lines of different colors show different inclination angles. The dashed line corresponds to the SED of the central object only. The right panel shows a cross-section of the mass density (including both gas and dust) profile used in the modeling. Darker colors indicate higher densities. In this model, the cavity is in the up/down direction, coaligned with the circumstellar disk axis. The circumstellar disk is present in those models, although difficult to distinguish in the density maps because of its small scale.}
+\label{fig:EarlyStages}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+
+\subcaptionbox{Class II.\label{subfig:StageII}}{
+\includegraphics[width=\textwidth]{Figures/test_whitney_classII_nice.png} 
+} \par\medskip
+\subcaptionbox{Class III.\label{subfig:StageIII}}{
+\includegraphics[width=\textwidth]{Figures/test_whitney_classIII_modified_nice.png} 
+}
+\caption[Late evolution of YSOs]{Late evolution of YSOs.}
+\label{fig:LateStages}
+\end{center}
+\end{figure}
+
+
+These SEDs can also be characterized and classified with a numerical observational metric such as the bolometric luminosity \citep{Myers:1993en,Dunham:2010bx}:
+\begin{align}
+\Lbol &= 4\pi d^2\int_0^\infty\Snu d\nu,
+\end{align}
+where \Snu is the flux density in \si{\watt\per\raiseto{2}\meter\per\hertz}. We will use the bolometric luminosity later in our analysis of our SOFIA FORCAST data as it is a direct observable, whereas the "true" luminosity of most YSO system can only be derived from modeling, and the
+derived answer is model dependent.
+%\Tbol &= \num{1.25e-11} \frac{\int_0^\infty \nu\Snu d\nu}{\int_0^\infty \Snu d\nu}~\si{\kelvin},
+
+\subsection{Mass accretion in clusters}
+
+The discussion in the previous section represents a simplified view of how a single core collapses and forms a star. While it is convenient to assume that the original core forms from a fixed reservoir of gas that will determine the star's final mass, it is likely too simplistic, since YSOs are preferentially forming in cluster environments with  multiple other YSOs nearby and sharing a dense, often turbulent environment \citep{Porras:2003kxa,Allen:2007wqa,Gutermuth:2009gca}. 
+
+%Approximately 60\% of all stars are thought to form in clusters with 100 or more stars (\cite{Porras:2003p1395}; \cite{Allen:2007p1439}). These $>$100 star clusters have characteristic sizes of 2-4 parsecs with peak surface densities of 100-1,000 stars per square parsec and a typical median distance between nearest neighbor young stellar objects (YSOs) of 0.03 to 0.06 parsecs \citep{Gutermuth:2009p1325}.
+
+The answer to how stars acquire their final mass is a key issue in star formation. Does dense gas fragment into isolated centers of collapse? Do young stars competitively accrete material from a surrounding common reservoir? Do gravitational interactions between forming young objects play a significant role in setting the final stellar mass function? Better observational understanding of these clusters is necessary to address these questions and to discriminate between the different models, as noted by \citet{Bonnell:2006ee}, \citet{Offner:2011ex} and \citet{Myers:2011fy}.
+
+Given the typical stellar separations in clusters with fully formed YSOs and the typical densities of gas in these cores, several \num{1000}s of \si{\au} ($\SI{1}{\parsec} = \SI{206265}{\au} $) is the size scale over which forming stars must draw material to become 0.5-\SI{10}{\Msun}. Once the material is inside a few 100's of \si{au}, it is strongly bound to the forming stellar system (which may be one or more stars) and its fate is determined. To give an idea of the possibilities for accreting material, Fig. \ref{fig:SFscenarios} sketches three scenarios for how stars could capture mass in the cluster environment: (a) core collapse, (b) competitive accretion, and (c) collisional merging. In core collapse (CC) \citep[Fig.~\ref{subfig:scenarios:a},][]{McKee:2003gxa, Myers:2011fy}, the cluster's gas fragments into cores which collapse individually to form single, binary, or small multiple star systems; the available mass is defined by the original fragment. In competitive accretion (CA) \citep[Fig.~\ref{subfig:scenarios:b},][]{Bonnell:1997vta}, the initial core collapses but contains a small fraction of the star's final mass; additional mass is captured competitively with other forming stars from the surrounding dense core gas. In collisional merging (CM) \citep[Fig.~\ref{subfig:scenarios:c},][]{Bonnell:2002et}, the initial fragments interact gravitationally and form larger mass cores before and during the formation process. 
+
+Are all these processes observed at once in star forming clusters? Only one? What conditions favor one versus the other, and why? Do different processes dominate at different stages in the cluster's history?
+
+Recent studies by \citet{Offner:2011ex} and \citet{Myers:2011fy} compared protostar luminosity distributions with predictions of models based on these ideas. \citet{Offner:2011ex} suggest that both CC and CA could work if the star formation rate in the cluster increases with time; \citep{Myers:2011fy} finds that a CA-type model with additional Bondi accretion to produce massive stars works best. As highlighted at the end of the \citet{Offner:2011ex} paper, larger cluster samples and better data on massive stars are needed to improve the observational constraints on models.
+
+
+%\paragraph{The Initial and Core Mass Functions}
+%Initial mass function across multiple locations \citep{Myers:2014ct}: The IMF has similar properties of shape, mass scale, and high-mass slope among field stars, open clusters, and young clusters (Kroupa 2002, Chabrier 2005, Bastian et al. 2010).
+%
+%In the most widely-discussed explanation, an IMF distribution of masses arises as a cluster-forming clump fragments into condensations, or cores, due to self-gravity and turbulence. In such turbulent fragmentation models, the mass distribution of cores (CMF) is a mass-shifted version of the IMF (Padoan \& Nordlund 2002, Hennebelle \& Chabrier 2008, Hennebelle \& Chabrier 2009, Hopkins 2012), matching observational studies of cores in nearby star-forming regions (Motte et al. 1998, Alves et al. 2007, Konyves et al. 2010)
+%
+%\citep{Myers:2014ct} has all I need here to describe the IMF and CMF
+%
+%Describe the various theories of SF in clusters. 
+
+
+
+\begin{figure}[ht!]
+\begin{center}
+\begin{subfigure}[b]{0.3\textwidth}
+\centering
+\includegraphics[width=0.98\textwidth]{Figures/CC.png} 
+\caption{}
+\label{subfig:scenarios:a}
+\end{subfigure}
+\begin{subfigure}[b]{0.3\textwidth}
+\centering
+\includegraphics[width=0.98\textwidth]{Figures/CA.png} 
+\caption{}
+\label{subfig:scenarios:b}
+\end{subfigure}
+\begin{subfigure}[b]{0.3\textwidth}
+\centering
+\includegraphics[width=0.98\textwidth]{Figures/Coalescence.png} 
+\caption{}
+\label{subfig:scenarios:c}
+\end{subfigure}
+\caption[Scenarios of clustered star formation]{Three scenarios of clustered star formation: (a) core collapse, (b) competitive accretion, and (c) collisional merging. Darker colors indicate higher densities.}
+\label{fig:SFscenarios}
+\end{center}
+\end{figure}
+
+
+
+%\subsubsection{Outstanding scientific questions}
+%Examples: \citep{Hennebelle:2012dk} \citep{Kennicutt:2012ey}
+%Ex: WHERE DO THE INEFFICIENCIES COME FROM?
+%
+%Luminosity problem \citep{McKee:2007bd}
+%Angular momentum problem and magnetic flux problem  \citep{McKee:2007bd}
+%How the mass-to-flux ratio increases so dramatically during star formation is one of the classic problems of star formation (Mestel \& Spitzer 1956). 
+
+\section{Dust as a tracer of star formation}
+\label{subsec:dust}
+
+Despite being a small component by mass, interstellar dust is an important tracer of star formation activity and its absorption and emission of radiation is an important factor in the evolution and outcome of the star formation process. Dust grains are heated up by absorbing the short wavelength emission from stars and re-radiate in the thermal infrared, accounting for $\sim 30\%$ of the total luminosity of the galaxy \citep{Mathis:1990jk}. 
+
+Observationally, dust plays perhaps the most important role when it comes to studying star formation. It usually is assumed that dust is well mixed with the gas, which makes it an excellent tracer of the gravitational well and mass distribution in YSOs. Because H$_2$ and He molecules have very few spectral signatures at temperatures below \SI{100}{\kelvin}, they are difficult to observe and study directly. Dust grains block UV and visible star light and emit continuum far-IR radiation, opening a large region of the electromagnetic spectrum for astronomers to study the properties of star formation. Alternative tools to study star formation are dedicated to observing spectral lines of the molecular species of the ISM such as CO and other dense gas tracers, which reveal information about the dynamics of the gas in these regions.%and requires more assumptions to link the abundance of these compounds to the more massive neutral H$_2$ and He gas.
+
+
+\subsection{Dust populations and properties}
+
+
+One of the best early studies of the composition of dust grains in the ISM was done by \citet{Mathis:1977hp}, where they studied the absorption spectrum of the diffuse ISM, and found that the measurements were appropriately fitted with a dust grain composition of silicates and small graphite particles \citep{Stecher:1965eq}. They were able to fit the observed extinction curve with a grain-size distribution, typically $n(a) \propto a^{-3.5}$, where $a$ is the grain size (assuming spherical grains) and $n(a)$ corresponds to the number of grains of size $a$. This distribution requires low and high cutoffs for the grain sizes, typically \SI{50}{\angstrom} and \SI{0.25}{\micro\meter}, respectively \citep{Weingartner:2001du}.
+
+This grain size distribution model was later enhanced by \citet{Cardelli:1989dp} to account for the difference in interstellar extinctions (hence grain size distributions) across different galactic lines of sight. These authors were able to successfully parameterize the grain size distribution using a single parameter, $R_V$, which is the ratio of the total extinction $A(V)$ to selective extinction\footnote{Extinction and colors are expressed in magnitudes} (or color) $E(B-V) = A(B) - A(V)$. The distributions of sizes of graphite and silicate grains vary between the low density regions of the ISM, where $R_V = 3.1$, and the high density regions, where $R_V = 5.3$ \citep{Kim:1994iu}. 
+
+Observations in the thermal infrared from space telescopes have detected strong absorption lines at \SI{9.7}{\micro\meter} and \SI{18}{\micro\meter} which are attributed to stretching mode of Si-O and bending mode of O-Si-O, confirming the presence of silicates in dust compositions \citep{Weingartner:2001du}. Other emission features at 3.3, 6.2, 7.7, 8.6, and \SI{11.3}{\micro\meter} \citep{Sellgren:1994vz} are attributed to bending and stretching modes of polycyclic aromatic hydrocarbons \citep[PAH, see][]{Gillett:1973bh,Allamandola:1985cf}, which are complex, planar organic molecules.
+ 
+A consolidated model matching all-sky measurements by the COBE, IRAS and \textit{Planck} missions confirms the composition of amorphous silicates and carbonaceous grains with sizes ranging from large grains ($\approx\SI{1}{\micro\meter}$) down to tens of atoms \citep[\textit{Planck}][]{Collaboration:2016kp}, where the larger carbonaceous grains have graphitic properties and the smaller population have PAH-like properties.
+
+In the very cold and dense regions surrounding a YSO, where the dust temperature typically never exceeds a few tens of \si{\kelvin}, it is expected that these dust grains are covered by a mantel of ices which can dramatically change their radiative properties, especially at short wavelengths \citep[e.g.][]{Ossenkopf:1994tq}. It is also expected that the grain size distribution will shift to larger sizes due to coagulation of grains.
+
+%[Molecular hydrogen is believed to form by recombination on the surface of dust grains [hollenbach and salpeter 1971, and are only able to survive from UV photodissociation within these obscured clouds.]
+
+Knowledge of the dust composition and size distribution of grains is important to properly characterize its observational characteristics and relate its measured emission to the physical quantities of interest in astronomical objects. Unfortunately, the properties of dust grains, especially in the range of circumstellar environments of direct interest to modeling the infrared emission from YSOs, are not yet well known.
+Calculated dust models can provide the quantities that are needed in radiative transfer modeling (see Section~\ref{subsubsec:radiative}), such as the albedo, the scattering function, and the opacity, but knowledge of the calculated properties should not be mistaken for accurate knowledge of the true grain properties in a YSO's environment.
+
+\subsection{Basics of dust extinction}
+\label{subsec:DustExtinction}
+
+Dust grains are responsible for the extinction within molecular clouds, inside of clusters, and in the environment each YSO; in principle, each region, and even different regions within the YSO environment could have significantly different grain populations. The typical representation of the extinction along a line of sight uses the ratio of observed flux over the expected flux, measured in V-band: $\Av \equiv A(V) = 2.5\log(\Fnu^\textrm{obs}/\Fnu)$; this definition puts the visual extinction in the astronomical units of magnitudes. The extinction as a function of wavelength, $A(\lambda)$, then expresses the light absorption property of dust in magnitudes for different wavelengths. An alternative representation is to consider the extinction as being caused by an optical depth $\tau_\ext$ such that $\exp(-\tau_\ext) \equiv \Fnu^\textrm{obs}/\Fnu$. The two definitions have the equivalence $A(\lambda) = \num{1.086}\tau_\ext(\lambda)$.
+
+At sufficiently long wavelength, dust opacity models can usually be represented by a simple power-law, $\Knu = \kappa_0(\nu/\nu_0)^\beta$, with the index $\beta$ depending on the specifics of the dust model \citep{Draine:2011tr}. The opacity $\Knu$ is expressed in \si{\raiseto{2}\centi\meter\per\gram}, and can be interpreted as a extinction cross-section per unit mass. Most dust models assume a 1:100 dust-to-gas ratio, and derive opacities per unit {gas+dust} mass, instead of just dust mass. From a radiative transfer perspective, the observed specific intensity from a thermal source $\Bnu(T)$ at temperature $T$ in the optically thin regime is $I_\nu = \int \Bnu(T)d\tau_\nu$, where the optical depth is $\tau_\nu = \int\Knu\rho_\dust dl$. In this expression all quantities depend on the location $l$ along the line of sight. If $T$, $\kappa_\nu$, and $\rho_\dust$ are constant along the line of sight, this simplifies to:
+\begin{equations}
+I_\nu =  \tau_\nu\Bnu(T) = \kappa_\nu\rho_\dust L\Bnu(T) = \kappa_\nu\sigma_\dust\Bnu(T),
+\end{equations}
+where we define $\sigma_\dust$ as the mass surface density.
+%$\rho$ is the density and the integral is calculated along the line of sight to the source. %Note that the optical depth can also be expressed in terms of the extinction cross-section \Cext~as $\Knu = \Cext(\nu) / m_\dust$, where $m_\dust$ corresponds to the mass of a dust grain.
+
+A measure of the intensity from a source can thus lead to an approximation of the total mass within a primary beam of the observation, for a given dust grain model. For a source with a measured sub-millimeter flux density $S_\nu$, in the optically thin regime we can write $S_\nu=\kappa_\nu\sigma_\dust\Bnu(T)\Omega$, where $\Omega$ is the solid angle of the source. At a distance $d$, the mass is $M\approx \sigma_\dust\Omega d^2$, which leads to \citep[e.g.][]{Shirley:2000gh}:
+\begin{equation}
+M = \frac{S_\nu d^2}{B_\nu(T_\dust)\Knu},
+\end{equation}
+with a dust temperature usually taken to be between 10 to \SI{20}{\kelvin} for general regions of molecular clouds. 
+
+With only near- to mid-IR wavelengths observations (2-60~\si{\um}), however, it is more difficult to estimate the dust mass, because the system is usually not in the optically thin regime and cool dust at these temperatures emits weakly or not at all at 2-60~\si{\um} wavelengths. To use near- to mid-IR  observations, which are interesting because they naturally sample material closer to YSOs, detailed radiative transfer models are usually required (see Section~\ref{subsubsec:radiative}).
+
+The modeling requirements are especially important at short wavelengths where
+dust grains both scatter or absorb photons, and each process has its own frequency-dependent efficiency. Scattering mechanisms are more complicated to represent, as they usually involve a scattering phase function, describing the deflection angle of incident photons (which also depends on wavelength). Most models show that dust grains are preferentially forward-scattering  \citep{Draine:2011tr}. The emission
+at shorter wavelengths can also be affected by stocastic heating of small grains
+ ($<\SI{50}{\angstrom}$), where single photons can heat up the grains to much higher temperatures for short amounts of time, resulting in a statistical distribution of dust temperatures for a single dust grain size.
+
+%Talk about dust properties in the galaxy: \citep{Collaboration:2014dz} Using
+%Also maybe mention papers by Dale etc DIRBE/COBE
+%
+%A large number of dust models exist (see Section~\ref{subsubsec:radiative})
+%
+%In clusters and cores, it is likely that grains are covered with a layer of ice which could dramatically influence their radiative transfer properties
+
+\subsection{Radiative transfer modeling}
+\label{subsubsec:radiative}
+
+Several radiative transfer codes exist in the literature, and we have explored a few of them (DIRT, by \citet{Wolfire:1986fw}, HOCHUNK by \citet{Whitney:2003ke} and HOCHUNK3d by \citet{Whitney:2013cw}). We opted for an open-source package called Hyperion \citep{Robitaille:2011fc}, which has the advantage of having a Python interface and enjoys a relatively large community support. The code can accept different dust models and can generate various types of geometries and density grids. It contains the essential geometrical elements of a YSO: stars, disks, envelopes with cavities, which all have numerous parameters to describe their density structures. It can also accept user-generated, arbitrary density grids.
+
+The radiative transfer code uses a Monte-Carlo technique to propagate packets through the density grid. The code uses an iterative process to follow the absorption and emission of radiation throughout the grid until an equilibrium solution is achieved. The code implements multiple techniques and proxies to improve the computation speed and the accuracy of the simulation, as explained in detail in \citet{Robitaille:2011fc}. Beyond the traditional benchmarks used in that paper, we validate our specific usage of the Hyperion code by reproducing SED's from other authors (see Fig.~\ref{fig:EarlyStages}~an~\ref{fig:LateStages} as examples of simulations using this code, which match the calculations in \citet{Whitney:2003kc}). 
+%Hyperion functions in two steps. The first is an iterative process that aims at determining the specific energy absorption rate of the dust in the grid. This is achieved for each dust population and each grid cell in the model. This can be linked to the temperature structure for each dust population, using pre-computed mean opacities and emissivities, as thoroughly explained in \citep{Robitaille:2011fc}. Determining the specific energy absorption rate of the dust involves a Monte-Carlo technique that propagates photon packets across the grid and makes it interacts with the dust in each cell. The process needs to be iterative because the emissivity of the dust depends on the characteristics of the photon packets hitting a given cell, which in turn depends on the emissivity of the dust. 
+%Once the dust emissivity
+%After choosing a discrete grid to represent a density model and adding energy sources, the temperature structure of the dust is calculated by propagating photon packets and determining the dust LTE temperature in each cell. Multiple iterations of this process are usually required to converge to a decent thermal structure.
+
+%Once the dust temperature is known, the dust becomes a source of thermal radiation. This type of radiation is modeled using ray tracing, which provides a very good signal-to-noise ratio (\SNR). The light from the central source which was not absorbed, however, needs to be propagated and scattered off the dust grains, for example using a method called peeling-off \citep{YusefZadeh:1984ff}. For non-isotropic scattering, this process has relatively low \SNR, hence requires a lot of photons packets to function properly. While there are future plans to implement raytracing for scattering \citep{Robitaille:2011fc}, we are currently forced to wait long times for simulating YSOs with massive envelopes because of this problem.
+
+The Hyperion models \citep{Robitaille:2011fc} have a large number of parameters which describe a physical model for the star-disk-envelope system. As will be discussed in the next chapter, a number of these parameters are degenerate in terms of the calculated SED. At a broader level,
+SEDs models in general present a significant amount of degeneracy in terms of the derived physical properties of the systems, especially when the entire range of wavelengths is not covered, as often is the case for observed sources. The reasons for the ambiguity are a combination of limitations of astronomical instrumentation and limitations on our knowledge of the physics in these regions. On the instrumentation side, observations are always associated with measurement errors; systematic calibration uncertainties are typically 5-20\% at infrared wavelengths. Ideally, we would want information at scales from 1~\si{au} to 10's of \si{au}, but this is not achievable at infrared wavelengths for any star-forming region; instead, lower resolution observations can provides at best 100's to 1000's of \si{au} linear scales, which integrates over the spatial distribution of the emission and loses information about the source. On the physics side, the detailed distributions of grain sizes, compositions, and structures
+are not known, and may very significantly between different parts of the YSO environment. In addition, geometrical effects such as viewing angles can dramatically change the SED shape, as it is illustrated in Fig.~\ref{fig:EarlyStages}~an~\ref{fig:LateStages}. Fundamentally, the SED alone can yield only limited information about the properties of the YSO system.
+
+%For example, an SED will look very different depending on the viewing angle. If we see down the throat of the cavity, the short-wavelength light from the central source will not exhibit a lot of extinction. If we observe this same source through the disk and envelope, these same wavelengths will show a lot of extinction since the light has to go through a large dust column. %The short wavelength emission, up to the peak of the SED, is very geometry-dependent and highly degenerate parameters.
+
+Other authors \citep[e.g.,][]{Robitaille:2006cb} have used similar codes to produce standardized grids of pre-computed models which randomly sample a very large number of source geometry parameters. These grids of models are routinely used by the community to fit a set of unresolved SED measurements at discrete wavelengths. However, most often the scatter in the parameters for the few best fit models prevents the authors from drawing meaningful conclusions on the observations. In Chapter~\ref{chap:SOFIA}, we discuss this problem and offer an alternative method to determine the best-fitting models and the range
+in fitted model parameters.
+
+%[Example?]
+%For example, in a Class 0 or I YSO, the disk geometry and mass has a very insignificant impact on the resulting SED. [Put a model of the SED with and without disk?]
+
+One of the key challenges of using this code is to determine which dust models to use. For this work, we choose to use exclusively OH5 dust \citep{Ossenkopf:1994tq}, which represents grains with an ice mantle which are the result of a coagulation phase of an initial distribution of grain sizes following $n\propto a^{-3/2}$. This model was found to accurately represent some grain distribution in star-forming clusters \citep[see e.g.][]{Dunham:2010bx}.
+
+\subsection{Observing star formation}
+
+In the past decade, space-based infrared observatories such as \Spitzer\ and \Herschel\ have allowed the beginning of the detailed study of dust around forming stars, by sampling the SEDs in key spectral regions, such as the extended near-infrared (3-8 $\mu$m with the IRAC instrument on \Spitzer), the mid-infrared (with the MIPS instrument on \Spitzer, especially its \SI{24}{\micro\meter} channel), and the far-IR (with the PACS and SPIRE instruments on \Herschel). These single-aperture observatories have lead to major advances in our understanding of star formation on its largest scale.
+
+However, these observatories lack the angular resolution required to observe the key physics of star formation in dense clusters in the key wavelength region between \SI{30}{\micro\meter} and \SI{400}{\micro\meter}. For a diffraction-limited single aperture telescope, the angular resolution and spatial resolutions (taken as full width half max or FWHM) are FWHM$_\theta$ and FWHM$_\textrm{linear}$ are:
+\begin{align}
+\textrm{FWHM}_\theta &\sim \ang{;;15}\left(\frac{\lambda}{\SI{70}{\micro\meter}}\right)\left(\frac{D}{\SI{1}{\meter}}\right)^{-1}, \\
+\textrm{FWHM}_\textrm{linear} &= \SI{0.04}{\parsec}\left(\frac{d}{\SI{500}{\parsec}}\right)\left(\frac{\lambda}{\SI{70}{\micro\meter}}\right)\left(\frac{D}{\SI{1}{\meter}}\right)^{-1},
+\end{align}
+which shows that even \Herschel with its \SI{3.5}{\meter} primary mirror and its \SI{70}{\micro\meter} channel can barely resolve clustered YSOs (typical projected separations of a few hundredths of \si{\parsec}) for the closest star-forming clusters, let alone study the structure of a single YSO system in detail. 
+
+To further complicate the problem, most space observatories are designed to make very sensitive observations, so the brightest regions of clusters often saturate the detectors. This reduces the
+effective angular resolution and confuses the emission in regions of clustered bright YSOs with imaging
+artifacts. These two issues prevent scientists from gathering a good picture of the physics in these dense and important regions of stellar birth.
+
+In the following chapter, we discuss SOFIA FORCAST imaging from 11 to \SI{37}{\um}
+wavelength towards a number of dense star-forming regions which improve on \Spitzer and
+\Herschel in resolution. This is a first step towards a better understanding of these regions. 
+In Chapter 3, we discuss BETTII's design to provide even higher resolution SEDs from 30 to
+\SI{100}{\um} wavelength.
+
+%[Image that shows the saturation/lack of resolution]
+
+%[Talk about SOFIA]
+%\subsubsection{Observing facilities}
+%
+%Introduction notes: [DELETE THIS]
+%\begin{itemize}
+%\item \citep{Kennicutt:2012ey} Maybe start with a description of the ISM
+%\item \citep{Terebey:1984hi} Basics of infall; 
+%It is well understood how self-gravity can concentrate gas in the presence of magnetic fields, turbulence, rotation, and thermal pressure, leading to protostar formation and accretion ( McKee \& Ostriker 2007; Adams \& Shu 2007; Ballesteros-Paredes et al. 2007)
+%\item \citep{Adams:1987gy} Spectral evolution of young stellar objects; describe classes of stellar objects, using models and make sure to include size scales; YSO vs protostar
+%\item Need to mention something about star formation efficiency
+%\item Need to mention something about outflows and feedback \citep{Maury:2009co}
+%\item \citep{Larson:1994cj} Molecular cloud characteristics; maybe a good start for text | Give definition of cloud (gravitationally bound in the Virial sense), in terms of number of candidates and stellar mass density (Lada 2003)
+%\item \citep{Myers:2009fv} It is widely accepted that most stars form in concentrations of dense gas (Beichman et al. 1986), and that such young stars are most frequently found in groups and clusters in molecular clouds (Lada \& Lada 2003). It is less clear how the mass of a protostar is related to the mass of the dense core where it forms.
+%In one view, a core is essentially a fixed-mass reservoir of gas, which contributes a significant fraction of its initial mass to its protostar. Then core and protostar masses are proportional, and their mass distributions have the same shape (Motte et al. 1998; Alves et al. 2007). Many authors have suggested ways to form a mass distribution of cores which resembles the IMF, particularly from processes of turbulent fragmentation (Hennebelle \& Chabrier 2008 and references therein).
+%In another view, a core is the densest part of a more extended distribution of gas, with no physical barrier to accretion (Shu 1977; Myers \& Fuller 1992; Caselli \& Myers 1995; McKee \& Tan 2003). Protostars originate in cores, but their masses do not correlate (Bonnell et al. 1998; Bate \& Bonnell 2005), or their correlation depends on fragmentation and core definition (Swift \& Williams 2008), or on the range of gas dispersal times (Myers 2008, hereafter Paper 1). Alternately, their correlation may be coincidental rather than genetic (Hatchell \& Fuller 2008).
+%\item \citep{McKee:2010iw} Protostellar mass function
+%\item \citep{Bonnell:1997vta} Accretion in small clusters
+%\item \citep{Evans:1999gz} Review of physical conditions of star formation, also a good place to start
+%\item \citep{Myers:2011fy} These results suggest that a simple model is needed for the dense parts of clusters, where protostars start accreting in condensations resembling dense cores, where they can also gain mass from the core environment, where their accretion durations are specified, and where protostar mass is not tied to the gravitational collapse of an isolated initial condensation. | This comparison favors the core–clump model over the isolated core model for star formation in embedded clusters. It suggests that initial core structure need not set protostar mass, and that massive stars are clump-fed.
+%\item Clusters are laboratories for studying a wide range of astrophysical phenomena; stars of large range of masses which are formed roughly simultaneously (Lada 2003), can understand stellar evolution theories; 
+%\item \citep{Lada:2003il} Cluster formation within molecular clouds: Because a cluster is held together by the mutual gravitational attraction of its individual members, its evolution is determined by Newton's laws of motion and gravity; |
+%Stars form in dense gas; therefore, it is not surprising that a high fraction of all stars form in highly localized rich clusters because most of a cloud’s dense gas is contained in its localized massive cores.; |
+%This would suggest that there is a direct mapping of clump mass to stellar mass and that the substructure of cluster-forming cores reflects the initial conditions of the star-formation process in dense cores. |
+%The structure of an embedded cluster is of great interest since it likely possesses the imprint of the physical process responsible for its creation. In particular, structure in the youngest embedded clusters reflects the underlying structure in the dense molecular gas from which they formed. | A fundamental consequence of the theory of stellar structure and evolution is that, once formed, the subsequent life history of a star is essentially predetermined by one parameter, its birth mass
+%\item \citep{Bate:2003cv} Evolution of clusters (dynamics, showing simulations and such); same as \citep{Bonnell:2003iw}; realte to potentially having multiple generations of stars within the same cluster; \citep{Allen:2007wqa}
+%\item \citep{Mathis:1990jk} Pioneering paper on the interstellar extinction by dust
+%\item \citep{Weingartner:2001du} Paper on dust populations
+%\item \citep{Li:2001gk} Very small grain population and non-LTE heating
+%\item \citep{Compiegne:2010kk} Large surveys, PAHs, VSG, etc
+%\item \citep{Bastian:2010ig} Big picture: importance to universal IMF
+%\item \citep{Kennicutt:2012ey} The Challenge of Spatially Resolved Star-Formation Rates in Galaxies
+%\item \citep{Hennebelle:2012dk} Observational issues: 
+%
+%\end{itemize}
+%
+
+
+%How do stars accrete their material in dense, clustered environments? Multiple theories have been put forth to explain the forces at play in these important regions of stellar birth \citep[e.g.][]{Bonnell:1997vta, McKee:2003gxa}. Pivotal differences in the theories center around what drives the parsec-scale dense cloud to form many stars and how the forming stars acquire their mass. Does dense gas fragment into isolated centers of collapse? Are turbulent motions in the gas driving creation of super-critical cores? Do young stars competitively accrete material from a surrounding common reservoir? Do gravitational interactions between forming young objects play a significant role in setting the final stellar mass function? Better observational understanding of these clusters is necessary to address these questions and to discriminate between the different models, as noted by \cite{Bonnell:2006ee}, \cite{Offner:2011ex} and \cite{Myers:2011fy}.
+%
+%\textbf{The primary goal of the proposed science plan is to understand how stars accrete material on the scales of 100's to 1,000's of AUs in forming cluster cores}. Given the typical stellar separations in clusters with fully formed young stellar objects (YSO) and the typical densities of gas in these cores, 1,000's of AUs are the size scales over which forming stars must draw material to become 0.5-10 solar masses. Once the material is inside 100 AU, it is strongly bound to the forming stellar system (which may be one or more stars) and its fate is determined. To give an idea of the possibilities for accreting material, Fig. \ref{fig:SFscenarios} sketches three scenarios for how stars could capture mass in the cluster environment: core collapse, competitive accretion, and collisional merging. In core collapse \citep[Fig.~\ref{scenarios:a},][]{McKee:2003gxa, Myers:2011fy}, the cluster's gas fragments into cores which collapse individually to form single, binary, or small multiple star systems; the available mass is defined by the original fragment. In competitive accretion \citep[Fig.~\ref{scenarios:b},][]{Bonnell:1997vta}, the initial core collapses but contains a small fraction of the star's final mass; additional mass is captured competitively with other forming stars from the surrounding dense core gas. In collisional merging \citep[Fig.~\ref{scenarios:c},][]{Bonnell:2002et}, the initial fragments interact gravitationally and form larger mass cores before and during the formation process. 
+%
+%Are all these processes observed at once in star forming clusters? What conditions favor one versus the other, and why? Are these processes observed at different stages in the cluster's history? These questions need more observational data to be answered. \textbf{We propose to gather information about the gravitational potential within the cluster, the distribution of the turbulence, and the gas densities} \citep{Bonnell:2006ee}. This will advance the problem to the next stage and help answer some of these questions.
+%
+
+
+%\subsection{The physics of star formation}
+%
+%In here, describe the basics of star formation; include state-of-the art dynamical modeling, radiative transfer modeling, SED fitting, etc.
+%
+%\subsubsection{Dust populations}
+%
+%About how to estimate the mass
+%
+%\subsubsection{Geometry and model degeneracies}
+%
+%\subsubsection{Foreground extinction}
+%
+%\subsection{Clustered environments}
+%
+%\subsubsection{Observational challenges}
+%
+%Surveys vs pointed observations; show why BETTII is important using IRAS20050's example;
+%
+%\subsubsection{Observing facilities}
+%
+%Spitzer, Herschel, SOFIA; radio interferometers;
+

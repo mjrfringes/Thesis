@@ -24,13 +24,11 @@ high angular and moderate spectral resolutions at far-IR wavelengths, without th
 \section{BETTII description}
 
 %The Ballon Experimental Twin Telescope for Infrared Interferometr (BETTII) project is pioneering a new technique that could lead to dramatically increased spatial resolution in the far-infrared: spatio-spectral interferometry. 
-<<<<<<< Updated upstream
 As a cryogenic payload flying at an altitude of \SI{37}{\kilo\meter} (\num{120000}~ft), BETTII is the first flying "direct detection" interferometer: it will attempt to coherently combine light from two different telescopes to provide increased angular resolution. Because it is operating from above most the atmosphere, it can see the far-infrared universe between 30 and 110 \si{\micro\meter}, and provide \ang{;;0.5}-\ang{;;1} spatial resolution at these wavelengths - a key region of parameter space well-suited to study protostars evolving in dense clustered environments.
-=======
-As a cryogenic payload flying at an altitude of \SI{37}{\kilo\meter} (\num{120000}~ft, BETTII is the first flying "direct detection" interferometer: it will attempt to coherently combine light from two different telescopes to provide increased angular resolution. Because it is operating from above most the atmosphere, it can see the far-infrared universe between 30 and 110 \si{\micro\meter}, and provide \ang{;;0.5}-\ang{;;1} spatial resolution at these wavelengths - a key region of parameter space well-suited to study protostars evolving in dense clustered environments.
->>>>>>> Stashed changes
 
-To provide this resolution (which matches that of \JWST  at \SI{25}{\micro\meter}), BETTII needs to be have two collectors separated by $\sim$~\SI{8}{\meter}; because of its operating wavelength, it needs to have a cryogenic instrument; because it is an interferometer, it needs optics with exquisite surface quality; and because it flies on a balloon platform, it needs to be robust to large changes in temperature, large pointing errors, and severe shock resistance for the landing phase.
+As a cryogenic payload flying at an altitude of \SI{37}{\kilo\meter} (\num{120000}~ft, BETTII is the first flying "direct detection" interferometer: it will attempt to coherently combine light from two different telescopes to provide increased angular resolution. Because it is operating from above most the atmosphere, it can see the far-infrared universe between 30 and 110 \si{\micro\meter}, and provide \ang{;;0.5}-\ang{;;1} spatial resolution at these wavelengths - a key region of parameter space well-suited to study protostars evolving in dense clustered environments.
+
+To provide this resolution (which matches that of \JWST  at \SI{25}{\micro\meter}), BETTII needs to be have two collectors separated by $\sim$~\SI{8}{\meter}; because of its operating wavelength, it needs to have a cryogenic instrument; because it is an interferometer, it needs optics with excellent surface quality (for far-infrared standards); and because it flies on a balloon platform, it needs to accommodate for large changes in temperature, large pointing errors, and severe shock resistance for the landing phase.
 
 This chapter will first discuss the basics of double-Fourier interferometers, then present the general design of BETTII payload and most of its subsystems.
 
@@ -113,7 +111,7 @@ The generalization of this property is called the Van Cittert-Zernike theorem \c
 
 Interferometry and aperture synthesis is used commonly at radio wavelengths, where coherent detectors can retain the direct phase of the incoming light by mixing the signal with a local oscillator. Both the amplitude and the phase of the signal can be recorded for each antenna, and can be combined with all the other antennas at a later time.
 
-Aperture synthesis has also been achieved at optical and near-infrared wavelengths, where a nearby guide star is used to determine a reference phase of the incoming beam \citep[e.g.][]{Monnier:2004fd,Gillessen:2010fo}. The interferograms measured for the science sources can then be non-ambiguously aligned with each other. This process requires very rapid imaging capabilities (on the order of \SI{10}{\milli\second}, a typical atmospheric coherence timescale, see discussion in \cite{Mariotti:1988vea}) to freeze the atmospheric variations across the synthetic aperture. This requires bright guide stars. In addition, because of the large baselines, the field of view is very limited, so the targets accessible by optical interferometers are limited to scientific sources which are a few arcseconds of a bright guide star \citep{Glindemann:2000bf}: this dramatically limits the capabilities of ground-based interferometry at these wavelengths.
+Aperture synthesis has also been achieved at optical and near-infrared wavelengths from the ground, where a nearby guide star is used to determine a reference phase of the incoming beam \citep[e.g.][]{Monnier:2004fd,Gillessen:2010fo}. The interferograms measured for the science sources can then be non-ambiguously aligned with each other. This process requires very rapid imaging capabilities (on the order of \SI{10}{\milli\second}, a typical atmospheric coherence timescale, see discussion in \cite{Mariotti:1988vea}) to freeze the atmospheric variations across the synthetic aperture, which in turn requires bright guide stars. In addition, because of the large baselines, the field of view is very limited, so the targets accessible by optical interferometers are limited to scientific sources which are a few arcseconds of a bright guide star \citep{Glindemann:2000bf}: this dramatically limits the capabilities of ground-based interferometry at these wavelengths.
 
 
 \subsection{Double-Fourier interferometry}
@@ -171,12 +169,12 @@ The payload's temperature distribution is influenced by the air temperature, inf
 
 Balloon experiments can also be affected by cosmic rays which can damage the electronics, lead to data corruption and or failures of the software/control system. However, this becomes more of an issue for long-duration balloon flights around Antarctica, during which the payloads are exposed for many weeks to the cosmic ray environment.
 
-BETTII is expected to launch from Fort Sumner, NM, for its first engineering flight. After a morning launch, we expect to wait until nightfall to achieve proper thermal stabilization and achieve our science goals. We expect the flight to last about \SI{16}{\hour}, although this is highly dependent on the weather and wind patterns.
+BETTII is expected to launch from Fort Sumner, NM, for its first engineering flight in September 2016. After a morning launch, we expect to wait until nightfall to achieve proper thermal stabilization and achieve our science goals. We expect the flight to last about \SI{16}{\hour}, although this is highly dependent on the weather and wind patterns.
 
 
 \subsection{Mechanical design}
 
-BETTII has two main structures. The first is a carbon fiber and steel truss that is used as our optical bench. This was the first item that was designed in the project. The elements of this structure are built by bonding \SI{7.5}{\centi\meter} diameter hollow carbon fiber tubes to custom-made steel conical ends, that we call \textit{nose cones}. The steel nose cones are lightweight and strong, and have a threaded hole on the axis: they attach to multi-faceted steel nodes like tinker toys. There are three lengths of tubes on the truss. At the interface between the nosecone and the nodes, spherical washers or polypropylene washers are used, depending on the location on the payload. The difference of material compensates for differential thermal contraction on the beams that form the long side of triangles.
+BETTII has two main structures. The first is a carbon fiber and steel truss that is used as our optical bench, and all our optical elements are attached to this structure. This was the first item that was designed in the project. The elements of this structure are built by bonding \SI{7.5}{\centi\meter} diameter hollow carbon fiber tubes to custom-made steel conical ends, that we call \textit{nose cones}. The steel nose cones are lightweight and strong, and have a threaded hole on the axis: they attach to multi-faceted steel nodes. There are three lengths of tubes on the truss. At the interface between the nose cones and the nodes, and depending on the location on the payload, we use either a combination of spherical washers and bellville washers or polypropylene washers. The difference of the washer material compensates for differential thermal contraction on the beams that form the long side of triangles.
 
 The structure is about \SI{9}{\meter} long. It is designed to be lightweight, strong, and have a first resonant mode above \SI{20}{\hertz} to ensure fast damping of residual mechanical oscillations. We measured the first resonance peaks to be within \SI{1}{\hertz} of their expected frequency, at \SI{25}{\hertz} (see Chapter~\ref{chap:implementation}).
 
@@ -276,7 +274,7 @@ The Department of Advanced Manufacturing at North Carolina State University prop
 
 \subsection{Cryogenic instrument}
 
-The cryostat was designed by our team. Items were sent out for manufacturing to different companies and assembled in our lab. The cold volume is passively cooled by liquid nitrogen and helium and does not require any mechanical cryo-cooler. It is designed to operate for a duration of \SI{40}{\hour}, which should give us enough margin considering the typical lengths of balloon flights from the U.S. of about \SI{16}{\hour}. 
+The cryostat was designed by our team. Items were sent out for manufacturing to different companies and assembled in our lab. The cold volume is cooled by liquid nitrogen and helium and does not require any mechanical cryo-cooler. It is designed to operate for a duration of \SI{40}{\hour}, which should give us enough margin considering the typical lengths of balloon flights from the U.S. of about \SI{16}{\hour}. 
 
 \begin{figure}[!h]
 		\centering
@@ -351,18 +349,19 @@ This section summarizes the findings and gives details on the methods and equati
 \caption[Instrument parameters]{Instrument design parameters for BETTII.}
 \vspace{-0.5cm}
 \label{tab:instrumentParameters}
-\begin{longtable}{P{6cm}|c|c|P{1.5cm}|P{3cm}}
+\begin{longtable}{P{5cm}|c|c|P{1.5cm}|P{3cm}}
 \toprule													
 Parameter	&	\multicolumn{2}{c|}{          		 Value		} 			&	Units	&	Science driver/impact	\\
 \midrule													
 \multicolumn{5}{c}{		Top-level parameters	}										\\
+\midrule
 Input aperture	&	\multicolumn{2}{c|}{		0.196		}			&	\si{\raiseto{2}\meter}	&	Sensitivity	\\
 Baseline length	&	\multicolumn{2}{c|}{		8		}			&	\si{\meter}	&	Angular resolution	\\
-Detector pixels	&	\multicolumn{2}{c|}{	$	9\times 9	$	}			&	pixels	&	Wide field of view	\\
+Detector pixels	&	\multicolumn{2}{c|}{	$	9\times 9	$	}			&	pixels	&	Wide FOV\\
 Detector quantum efficiency	&	\multicolumn{2}{c|}{		70	\%	}			&		&	Sensitivity	\\
 Integration time per full frame	&	\multicolumn{2}{c|}{		2.5		}			&	\si{\milli\second}	&	Sensitivity	\\
 Time per baseline orientation	&	\multicolumn{2}{c|}{		10		}			&	\si{\minute}	&	Sensitivity	\\
-Number of data points in one scan	&	\multicolumn{2}{c|}{		1024		}			&	points	&	Wide FOV	\\
+Number of data points per scan	&	\multicolumn{2}{c|}{		1024		}			&	points	&	Wide FOV	\\
 OPD range required	&	\multicolumn{2}{c|}{		8.2		}			&	\si{\milli\meter}	&	Wide FOV \& spectral resolution	\\
 \midrule													
 \multicolumn{5}{c}{		Optical system	}										\\
@@ -373,7 +372,7 @@ Fractional bandwidth	&		62.5	\%	&		54.9	\%	&		&	SNR at ZPD	\\
 Field of view	&		2		&		3		&	\si{\arcmin}	&	YSO regions	\\
 Etendue per pixel	&	\num{	8.2E-10	}	&	\num{	1.8E-09	}	&	\si{\raiseto{2}\meter\steradian}	&	Sensitivity	\\
 Estimated efficiency	&		20	\%	&		24	\%	&		&	Sensitivity	\\
-Pixel angular size	&		13.32		&		19.72		&	\si{\arcsec}	&	Wide field of view	\\
+Pixel angular size	&		13.32		&		19.72		&	\si{\arcsec}	&	Wide FOV	\\
 Primary full width half max	&		17.31		&		35.49		&	\si{\arcsec}	&	Sensitivity	\\
 \bottomrule																					
 \end{longtable}
@@ -409,7 +408,7 @@ Zodi dust	&	\num{	245	}	&	\num{	3.00E-07	}	&	\num{	2.92E+05	}	&	\num{	3.41E+05	}
 Galactic Cirrus	&	\num{	20	}	&	\num{	1.23E-04	}	&	\num{	1.79E+01	}	&	\num{	7.67E+04	}	&	\cite{Bracco:2011gw}	\\
 Zodi scattering	&	\num{	5800	}	&	\num{	1.00E-13	}	&	\num{	1.47E+01	}	&	\num{	1.31E+01	}	&	\cite{Fixsen:2002da}	\\
 CIB	&	\num{	18.5	}	&	\num{	1.30E-05	}	&	\num{	2.19E+00	}	&	\num{	9.68E+03	}	&	\cite{Fixsen:1998br}	\\
-Instrument	&	\num{	4	}	&	\num{	0.7	}	&	\num{	5.80E-27	}	&	\num{	2.50E-07	}	&	Estimate	\\
+Instrument	&	\num{	4	}	&	\num{	1	}	&	\num{	8.3E-27	}	&	\num{	3.60E-07	}	&	Conservative estimate	\\
 CMB	&	\num{	2.728	}	&	\num{	1	}	&	\num{	1.02E-45	}	&	\num{	9.35E-17	}	&	\cite{Fixsen:1996di}	\\
 \bottomrule
 \end{longtable}
@@ -447,8 +446,8 @@ Warm optics	 &	\num{	92	}	&	\num{	45	}	 &	\num{	9.6	}	&	\num{	6.7	}	\\
 Atmosphere	 &	\num{	18	}	&	\num{	24	}	 &	\num{	4.6	}	&	\num{	4.9	}	\\
 Window	 &	\num{	21	}	&	\num{	9	}	 &	\num{	4.3	}	&	\num{	3.0	}	\\
 Detectors	 &		-		&				 &	\num{	5	}	&	\num{	5	}	\\
-\midrule							-										
-Total	&		131		&		77		&		12		&		10		\\
+\midrule																	
+Total	&		131		&		77		&		17		&		10		\\
 \bottomrule																						\end{longtable}
 \caption*{\textbf{Notes}: These values are lower than the ones cites in \citet{Rinehart:2014gk} and \citet{Rizzo:2015gf} since we now have more precise measurements of the transmission as a function of wavelength.}
 \label{tab:powerNEP}
@@ -527,13 +526,13 @@ A summary of the results is presented in Table~\ref{tab:BETTIIsensitivity}.
   Quantity   & Band 1 &  Band 2 & SNR Target \\
      \midrule 
  \multicolumn{4}{c}{\textbf{Single scan (\SI{3}{\second})}} \\
-MDFD & 91 Jy  & 113 Jy & $\SNR_\mI = 1$\\ 
+MDFD & 77 Jy  & 113 Jy & $\SNR_\mI = 1$\\ 
 \midrule
 \multicolumn{4}{c}{\textbf{Normal observing (200 scans, 10 min)}} \\
-MDFD & 6 Jy  & 8 Jy & $\SNR_\mI = 1$\\ 
+MDFD & 5 Jy  & 8 Jy & $\SNR_\mI = 1$\\ 
 \bottomrule 
 \end{longtable} 
-\caption*{\textbf{Notes}: $\SNR_\mI$ represents the \SNR in the interferogram, while $\SNR_k$ represents the spectral \SNR, or the \SNR for each wavenumber bin (see Chapter~\ref{chap:phasenoisepaper}).}
+%\caption*{\textbf{Notes}: $\SNR_\mI$ represents the \SNR in the interferogram.}
 \end{center}
 \end{table} 
 
@@ -571,7 +570,7 @@ The required flux density for a given \SNR is then found by solving the previous
 S\units{\si{\jansky}} = \frac{\SNR^2 + \sqrt{\SNR^4 + 4\SNR^2\beta\sigRON^2}}{2\Nel}.
 \end{align}
 
-For a $\SNR=10$, this corresponds to $\sim\SI{0.13}{\jansky}$, or $\sim$~9.66~H~magnitude. 
+For a $\SNR=10$, this corresponds to $\sim\SI{0.13}{\jansky}$, or $\sim$~9.66~H~magnitude.  For our first flight, all of our primary science targets have a star at least as bright within our field of view, which is usually embedded in the cluster itself.
 
 \section{Targets}
 
@@ -584,7 +583,7 @@ The science targets need to be available during our launch window, and preferabl
 
 Calibrators ideally need to be point sources $\gg\SI{100}\Smin$~\si{\jansky} in our FIR bands, and it is not straightforward to identify which astronomical sources exist that would provide this kind of flux density. The planets of the solar system and their moons are usually bright enough, but they are often resolved by our instrument, which dramatically reduce their interferometric contrast. For example, we estimate the Uranus is $>\SI{1000}{\jansky}$, but because it is so resolved, the actual fringe contrast if very small, hence drastically reducing the \SNR. Nearby, bright A stars such as Alpha Boo are most likely point sources, but are usually not as bright as we would want, especially not in Band 2 since they are essentially thermal sources with temperatures of thousands of Kelvin. It is possible to use actual science sources as calibrators, but of course it is unknown whether or not they actually are extended (this is the purpose of a mission like BETTII!). 
 
-We find that bright asteroids such as Ceres, Pallas and Vesta are the best candidates for bright calibrators (respectively $> 320, 150 and 120$~Jy, respectively. In addition, because of their albedo, they also reflect the sunlight so they would also be suitable for the tracking channels (e.g. Ceres has Hmag$\sim$3. Their only disadvantage is that they are not inertial targets - this complicates the pointing control system as their expected position moves across the sky, which requires the payload to have accurate timing capabilities to know where the object is at a given time.
+We find that bright asteroids such as Ceres, Pallas and Vesta are the best candidates for bright calibrators (respectively $> 320, 150 and 120$~Jy). In addition, because of their albedo, they also reflect the sunlight so they would also be suitable for the tracking channels (e.g. Ceres has Hmag$\sim$3. Their only disadvantage is that they are not inertial targets - this complicates the pointing control system as their expected position moves across the sky, which requires the payload to have accurate timing capabilities to know where the object is at a given time.
 
 \begin{figure}[!h]
 	\centering

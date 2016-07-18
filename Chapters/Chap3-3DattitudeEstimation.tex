@@ -242,16 +242,6 @@ While no new star camera measurement is available, the attitude transition is ex
 
 Hence, once we trigger the star camera, we need to start keeping track of the matrices $\A_k$, $\B_k$, and $\C_k = \boldsymbol\Pi_{i=k-N}^k\exp\left(\frac{1}{2}\matOmega(\EstGyroVec_{i})\Deltat\right)$, appropriately reset them when a new star camera trigger has occurred, and propagate them until the estimator receives the star camera value.
 
-\subsection{Summary of Kalman filter steps}
-All Kalman filter steps discussed in the previous are summarized in Fig.~\ref{fig:kalmanFilterSteps}.
-
-\begin{figure}[!h]
-	\centering
-	\includestandalone{Figures/KalmanFilter}
-\caption{Kalman filter steps}
-\label{fig:kalmanFilterSteps}
-\end{figure}
-
 \subsection{Enhancing the Kalman filter models}
 \label{subsec:enhancedKalman}
 
@@ -319,7 +309,16 @@ This is handy for data analysis on the ground, but not appropriate for flight si
 
 \subsection{Conclusions on sensor fusion}
 
-We have defined, designed, implemented and tested a complete sensor fusion algorithm based on an multiplicative, extended Kalman filter. This software, implemented entirely in Labview Real Time OS, has been the workhorse of our testing of the control system. Similarly, we have implemented several variations of the software for use on the ground, in order to estimate the residual misalignments between the individual gyroscopes, as well as between the gyroscope frame and the star cameras.
+We have defined, designed, implemented and tested a complete sensor fusion algorithm based on an multiplicative, extended Kalman filter, which has several steps summarized in Fig.~\ref{fig:kalmanFilterSteps}.
+
+\begin{figure}[!h]
+	\centering
+	\includestandalone{Figures/KalmanFilter}
+\caption{Kalman filter steps}
+\label{fig:kalmanFilterSteps}
+\end{figure}
+
+This software, implemented entirely in Labview Real Time OS, has been the workhorse of our testing of the control system. Similarly, we have implemented several variations of the software for use on the ground, in order to estimate the residual misalignments between the individual gyroscopes, as well as between the gyroscope frame and the star cameras.
 
 The software merges the information gathered from the gyroscopes and the star cameras, while appropriately correcting for the lag in the star camera measurements, and accounting for user-defined weights. 
 
