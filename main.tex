@@ -182,13 +182,36 @@ headsepline, % Uncomment to get a line under the header
 %----------------------------------------------------------------------------------------
 %	ABSTRACT PAGE
 %----------------------------------------------------------------------------------------
+\thispagestyle{empty}
+\hbox{\ }
 
-%\begin{abstract}
-%\addchaptertocentry{\abstractname} % Add the abstract to the table of contents
+\renewcommand{\baselinestretch}{1}
+\small \normalsize
 
-%The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+\begin{center}
+\large{{ABSTRACT}} 
 
-%\end{abstract}
+\vspace{3em} 
+
+\end{center}
+\hspace{-.15in}
+\begin{tabular}{ll}
+Title of dissertation:    & {\large  BETTII: A PATHFINDER FOR HIGH ANGULAR }\\
+&				      {\large  RESOLUTION OBSERVATIONS OF STAR-FORMING } \\
+&				      {\large REGIONS IN THE FAR-INFRARED} \\
+\ \\
+&                          {\large  Maxime J. Rizzo, Doctor of Philosophy, 2016} \\
+\ \\
+Dissertation directed by: & {\large  Professor Lee Mundy, Department of Astronomy} \\
+&  				{\large	 and Dr. Stephen Rinehart, NASA GSFC } \\
+\end{tabular}
+
+\vspace{3em}
+
+\renewcommand{\baselinestretch}{2}
+\large \normalsize
+
+In this thesis, we study clustered star formation in nearby star clusters and discuss how high angular resolution observations in the far-infrared regime could help us understand these important regions of stellar birth. We use the increased angular resolution from the FORCAST instrument on the SOFIA airborne observatory to study 10 nearby star-forming regions, and discuss the physical properties of sources in these regions that we can infer from radiative transfer modeling using these new observations. We discuss the design of BETTII, a pathfinder balloon-borne interferometer which will provide significantly better angular resolution in the far-infrared regime, and pave the way for future space-borne observatories. We elaborate on the details of BETTII's core technique, called Double-Fourier interferometry, and how to accurately compute the sensitivity of instruments which use this technique. Finally, we show our design and implementation results of the control system of the BETTII payload, which, as the first flying interferometer, proposes unique challenges.
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
@@ -266,8 +289,8 @@ Doctor of Philosophy \\
 Professor Lee G. Mundy, Chair/Advisor (UMD)\\
 Dr. Stephen A. Rinehart, Co-Advisor (NASA GSFC)\\
 Professor Andrew Harris (UMD)\\
-Dr. Mark Wolfire (UMD)\\
 Dr. Alison Nordt (Lockheed Martin)\\
+Dr. Mark Wolfire (UMD)\\
 Professor Eun-Suk Seo, Graduate Dean's representative (UMD)
 
 \end{titlepage}
@@ -288,11 +311,11 @@ Professor Eun-Suk Seo, Graduate Dean's representative (UMD)
 \begin{acknowledgements}
 \addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
 
-First and foremost, I would like to thank my advisors Lee~Mundy and Stephen~Rinehart for continuously supporting me during this thesis. Their guidance, knowledge and the trust they have put in me have been essential to the success of this work. Thanks for allowing me to do my first steps as a young instrument scientist, and giving me the opportunity to work on the BETTII project since day one. Special thanks also to Aki Roberge for her continued mentorship, and also to Richard Lyon, who originally inspired into getting my Ph.D. during my first internship at Goddard in 2008.
+First and foremost, I would like to thank my advisors Lee~Mundy and Stephen~Rinehart for continuously supporting me during this thesis. Their guidance, knowledge and the trust they have put in me have been essential to the success of this work. Thanks for allowing me to do my first steps as a young instrument scientist, and giving me the opportunity to work on the BETTII project since day one. Special thanks to Aki Roberge for her continued mentorship, and to Richard Lyon, who originally inspired into getting my Ph.D. during my first internship at Goddard in 2008. I would also like to thank Andrew Harris, Alison Nordt, Eun-Suk Seo, and Mark Wolfire for accepting to serve on my thesis committee.
 
 Much of what is written in this thesis is a result of discussions and reflections with members of the BETTII team, who have been supporting me during my entire graduate work. On the technical side, Dale Fixsen and Dominic Benford have inspired me tremendously with their all-around knowledge of physics and engineering and how they apply to astronomical instrumentation. I thank the rest of the team for the respect and trust they have given me: David Leisawitz, Stephen Maher, Eric Mentzell, Elmer Sharp, Robert Silverberg, Johannes Staguhn; but also Arnab Dhabal, Jordi Vila, Todd Veach and Roser Juanola-Parramon who, as graduate students and postdocs, have shared this wonderful experience with me. This extends to the entire Goddard community which has always been a friendly and welcoming group to work with.
 
-Working on BETTII would not have been the same without the community of the UMD Department of Astronomy. I shared my experience with wonderful classmates, who always provided friendship, technical assistance, and support when needed. I especially want to thank Vicki Toy and John Capone for being my Goddard crew, and of course my office mate Taro Shimizu for his patience and assistance with some aspects of my work. In addition, I wanted to thank my professors for always having their door open for my questions, in particular Andrew Harris, Richard Mushotzky, and Alberto Bolatto. Finally, I have had a fantastic experience with the research scientists and staff of the department. In particular I wanted to thank Peter Teuben and Adrienne Newman for their patience in assisting me all the time.
+Working on BETTII would not have been the same without the community of the UMD Department of Astronomy. I shared my experience with wonderful classmates, who always provided friendship, technical assistance, and support when needed. I especially want to thank Vicki Toy and John Capone for being my Goddard crew, and of course my office mate Taro Shimizu for his patience and assistance with some aspects of my work. In addition, I wanted to thank my professors for always having their door open for my questions, in particular Richard Mushotzky, and Alberto Bolatto. Finally, I have had a fantastic experience with the research scientists and staff of the department. In particular I wanted to thank Peter Teuben and Adrienne Newman for their patience in assisting me all the time.
 
 I am grateful for my friends and family in France, in the U.S., and elsewhere who have continually provided encouragements and support, despite the long distances that often separate us in this world that still doesn't seem connected enough. I want to thank especially my parents and my brother, who have been strong supporters of this endeavor. Thanks to Pauline Simonet, Jean-Baptiste Vallart, and the rest of my SUPAERO crew with who I learned so much. Thanks to Simon Oudin and Adrien Pavageau for those special moments together. Thanks to my old friends in Alsace, C\'{e}dric \& No\'{e}mie, Thibaut \& Jen, Adrien \& Aur\'{e}, and Ad\'{e}, for holding the fort and never missing an occasion to get together when I come home. 
 
