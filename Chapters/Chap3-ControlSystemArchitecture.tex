@@ -273,6 +273,14 @@ We purchased three SRS-2000 fiber-optic gyroscopes from Optolink. This gyroscope
 
 The devices have a bandwidth of \SI{50}{\hertz}, but can be triggered at up to \SI{2000}{\hertz}. Their extreme stability is contingent upon proper temperature stabilization, which is done with a closed-loop set at their calibration temperature of $\SI{23.5}{\celsius}\pm\SI{0.5}{\celsius}$ using an active built-in Peltier element. This Peltier element transforms electric power into either heating or cooling \citep{Peltier:1834vu}.
 
+\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=0.7\textwidth]{Figures/FOGs.jpg} 
+		\caption[Fiber optic gyro 3-axes mount]{Three single-axis Fiber Optic Gyroscopes are mounted in an orthogonal assembly and attached to the truss.}
+		\label{fig:GyroMount}
+\end{figure}
+
+
 The three single-axis gyroscopes are assembled in an orthogonal mount configuration shown in Fig.~\ref{fig:GyroMount}. In the following, we describe how we measure the various properties of the gyroscopes, and discuss how they compare to the specifications.
 The gyroscopes' sensitivity has complicated some of their testing. As soon as we attach a gyroscope to any structure, it measures its vibrational modes, which makes it hard to make a stable measurement of the gyroscope's drift stability. This includes the vibrations that are inherent to the building in which they are placed.
 
@@ -386,6 +394,7 @@ Another common tool to study of the gyroscope's performance is to plot the Allan
 \renewcommand{\arraystretch}{1.5}
 \begin{table}[htbp]
 \small
+\caption{Gyroscope properties}
 \begin{tabular}{p{5.5cm}P{2.5cm}P{2.5cm}P{2.5cm}}
 \toprule
 Measured property & Gyro \#11005 & Gyro \#12003 & Gyro \#12004\\
@@ -398,7 +407,7 @@ Bias instability (\si{\deg\per\hour}) & \num{3.11e-4} & \num{1.8e-3} & \num{3.05
 \bottomrule
 \end{tabular}
 \label{tab:gyroproperties}
-\caption[Gyroscope properties]{Properties of the gyroscopes determined from the Allan variance analysis on an \SI{8}{\hour} sample with a sampling rate at \SI{100}{\hertz}. Note that \SI{1}{\deg\per\hour} =  \SI{1}{\arcsec\per\second}, and the Earth rotates at about \SI{15}{\arcsec\per\second} about the line joining the two poles.}
+\caption*{\textbf{Notes}: Properties of the gyroscopes determined from the Allan variance analysis on an \SI{8}{\hour} sample with a sampling rate at \SI{100}{\hertz}. Note that \SI{1}{\deg\per\hour} =  \SI{1}{\arcsec\per\second}, and the Earth rotates at about \SI{15}{\arcsec\per\second} about the line joining the two poles.}
 \end{table}
 
 
